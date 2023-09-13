@@ -93,6 +93,15 @@ func main() {
 		}
 	}
 	t := template.Must(template.New("").ParseGlob("gen/templates/*"))
+	// generate dart code
+	generateModels(apiDocs, t)
+
+	for path, _ := range apiDocs.Paths {
+		fmt.Printf("path: %v\n", path)
+	}
+}
+
+func generateModels(apiDocs ApiDocs, t *template.Template) {
 	exportModels := []string{}
 	for k, m := range apiDocs.Definitions {
 		name := name(k)
@@ -160,7 +169,7 @@ func main() {
 		panic(err)
 	}
 	if build {
-		// generate dart code
+
 		buildCmd := exec.Command("dart", "run", "build_runner", "build", "--delete-conflicting-outputs")
 		if err := buildCmd.Run(); err != nil {
 			panic(err)

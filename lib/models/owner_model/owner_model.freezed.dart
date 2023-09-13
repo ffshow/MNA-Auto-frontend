@@ -20,14 +20,14 @@ OwnerModel _$OwnerModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OwnerModel {
-  String get phone => throw _privateConstructorUsedError;
-  String get photo => throw _privateConstructorUsedError;
   String get postal_code => throw _privateConstructorUsedError;
   DateTime get updated_at => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
+  String get photo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,14 +42,14 @@ abstract class $OwnerModelCopyWith<$Res> {
       _$OwnerModelCopyWithImpl<$Res, OwnerModel>;
   @useResult
   $Res call(
-      {String phone,
-      String photo,
-      String postal_code,
+      {String postal_code,
       DateTime updated_at,
       String address,
       DateTime created_at,
       String email,
-      String id});
+      String id,
+      String phone,
+      String photo});
 }
 
 /// @nodoc
@@ -65,24 +65,16 @@ class _$OwnerModelCopyWithImpl<$Res, $Val extends OwnerModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
-    Object? photo = null,
     Object? postal_code = null,
     Object? updated_at = null,
     Object? address = null,
     Object? created_at = null,
     Object? email = null,
     Object? id = null,
+    Object? phone = null,
+    Object? photo = null,
   }) {
     return _then(_value.copyWith(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
       postal_code: null == postal_code
           ? _value.postal_code
           : postal_code // ignore: cast_nullable_to_non_nullable
@@ -106,6 +98,14 @@ class _$OwnerModelCopyWithImpl<$Res, $Val extends OwnerModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -120,14 +120,14 @@ abstract class _$$_OwnerModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String phone,
-      String photo,
-      String postal_code,
+      {String postal_code,
       DateTime updated_at,
       String address,
       DateTime created_at,
       String email,
-      String id});
+      String id,
+      String phone,
+      String photo});
 }
 
 /// @nodoc
@@ -141,24 +141,16 @@ class __$$_OwnerModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
-    Object? photo = null,
     Object? postal_code = null,
     Object? updated_at = null,
     Object? address = null,
     Object? created_at = null,
     Object? email = null,
     Object? id = null,
+    Object? phone = null,
+    Object? photo = null,
   }) {
     return _then(_$_OwnerModel(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
       postal_code: null == postal_code
           ? _value.postal_code
           : postal_code // ignore: cast_nullable_to_non_nullable
@@ -183,6 +175,14 @@ class __$$_OwnerModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      photo: null == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -191,22 +191,18 @@ class __$$_OwnerModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_OwnerModel implements _OwnerModel {
   const _$_OwnerModel(
-      {required this.phone,
-      required this.photo,
-      required this.postal_code,
+      {required this.postal_code,
       required this.updated_at,
       required this.address,
       required this.created_at,
       required this.email,
-      required this.id});
+      required this.id,
+      required this.phone,
+      required this.photo});
 
   factory _$_OwnerModel.fromJson(Map<String, dynamic> json) =>
       _$$_OwnerModelFromJson(json);
 
-  @override
-  final String phone;
-  @override
-  final String photo;
   @override
   final String postal_code;
   @override
@@ -219,10 +215,14 @@ class _$_OwnerModel implements _OwnerModel {
   final String email;
   @override
   final String id;
+  @override
+  final String phone;
+  @override
+  final String photo;
 
   @override
   String toString() {
-    return 'OwnerModel(phone: $phone, photo: $photo, postal_code: $postal_code, updated_at: $updated_at, address: $address, created_at: $created_at, email: $email, id: $id)';
+    return 'OwnerModel(postal_code: $postal_code, updated_at: $updated_at, address: $address, created_at: $created_at, email: $email, id: $id, phone: $phone, photo: $photo)';
   }
 
   @override
@@ -230,8 +230,6 @@ class _$_OwnerModel implements _OwnerModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_OwnerModel &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.postal_code, postal_code) ||
                 other.postal_code == postal_code) &&
             (identical(other.updated_at, updated_at) ||
@@ -240,13 +238,15 @@ class _$_OwnerModel implements _OwnerModel {
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.photo, photo) || other.photo == photo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, phone, photo, postal_code,
-      updated_at, address, created_at, email, id);
+  int get hashCode => Object.hash(runtimeType, postal_code, updated_at, address,
+      created_at, email, id, phone, photo);
 
   @JsonKey(ignore: true)
   @override
@@ -264,22 +264,18 @@ class _$_OwnerModel implements _OwnerModel {
 
 abstract class _OwnerModel implements OwnerModel {
   const factory _OwnerModel(
-      {required final String phone,
-      required final String photo,
-      required final String postal_code,
+      {required final String postal_code,
       required final DateTime updated_at,
       required final String address,
       required final DateTime created_at,
       required final String email,
-      required final String id}) = _$_OwnerModel;
+      required final String id,
+      required final String phone,
+      required final String photo}) = _$_OwnerModel;
 
   factory _OwnerModel.fromJson(Map<String, dynamic> json) =
       _$_OwnerModel.fromJson;
 
-  @override
-  String get phone;
-  @override
-  String get photo;
   @override
   String get postal_code;
   @override
@@ -292,6 +288,10 @@ abstract class _OwnerModel implements OwnerModel {
   String get email;
   @override
   String get id;
+  @override
+  String get phone;
+  @override
+  String get photo;
   @override
   @JsonKey(ignore: true)
   _$$_OwnerModelCopyWith<_$_OwnerModel> get copyWith =>

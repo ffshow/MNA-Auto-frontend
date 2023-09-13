@@ -20,10 +20,10 @@ SupplierModel _$SupplierModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SupplierModel {
+  DateTime get created_at => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DateTime get updated_at => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $SupplierModelCopyWith<$Res> {
           SupplierModel value, $Res Function(SupplierModel) then) =
       _$SupplierModelCopyWithImpl<$Res, SupplierModel>;
   @useResult
-  $Res call({String id, String name, DateTime updated_at, DateTime created_at});
+  $Res call({DateTime created_at, String id, String name, DateTime updated_at});
 }
 
 /// @nodoc
@@ -53,12 +53,16 @@ class _$SupplierModelCopyWithImpl<$Res, $Val extends SupplierModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? created_at = null,
     Object? id = null,
     Object? name = null,
     Object? updated_at = null,
-    Object? created_at = null,
   }) {
     return _then(_value.copyWith(
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -70,10 +74,6 @@ class _$SupplierModelCopyWithImpl<$Res, $Val extends SupplierModel>
       updated_at: null == updated_at
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$_SupplierModelCopyWith<$Res>
       __$$_SupplierModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, DateTime updated_at, DateTime created_at});
+  $Res call({DateTime created_at, String id, String name, DateTime updated_at});
 }
 
 /// @nodoc
@@ -101,12 +101,16 @@ class __$$_SupplierModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? created_at = null,
     Object? id = null,
     Object? name = null,
     Object? updated_at = null,
-    Object? created_at = null,
   }) {
     return _then(_$_SupplierModel(
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -119,10 +123,6 @@ class __$$_SupplierModelCopyWithImpl<$Res>
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -131,26 +131,26 @@ class __$$_SupplierModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SupplierModel implements _SupplierModel {
   const _$_SupplierModel(
-      {required this.id,
+      {required this.created_at,
+      required this.id,
       required this.name,
-      required this.updated_at,
-      required this.created_at});
+      required this.updated_at});
 
   factory _$_SupplierModel.fromJson(Map<String, dynamic> json) =>
       _$$_SupplierModelFromJson(json);
 
+  @override
+  final DateTime created_at;
   @override
   final String id;
   @override
   final String name;
   @override
   final DateTime updated_at;
-  @override
-  final DateTime created_at;
 
   @override
   String toString() {
-    return 'SupplierModel(id: $id, name: $name, updated_at: $updated_at, created_at: $created_at)';
+    return 'SupplierModel(created_at: $created_at, id: $id, name: $name, updated_at: $updated_at)';
   }
 
   @override
@@ -158,18 +158,18 @@ class _$_SupplierModel implements _SupplierModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SupplierModel &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, updated_at, created_at);
+      Object.hash(runtimeType, created_at, id, name, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -187,22 +187,22 @@ class _$_SupplierModel implements _SupplierModel {
 
 abstract class _SupplierModel implements SupplierModel {
   const factory _SupplierModel(
-      {required final String id,
+      {required final DateTime created_at,
+      required final String id,
       required final String name,
-      required final DateTime updated_at,
-      required final DateTime created_at}) = _$_SupplierModel;
+      required final DateTime updated_at}) = _$_SupplierModel;
 
   factory _SupplierModel.fromJson(Map<String, dynamic> json) =
       _$_SupplierModel.fromJson;
 
+  @override
+  DateTime get created_at;
   @override
   String get id;
   @override
   String get name;
   @override
   DateTime get updated_at;
-  @override
-  DateTime get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_SupplierModelCopyWith<_$_SupplierModel> get copyWith =>

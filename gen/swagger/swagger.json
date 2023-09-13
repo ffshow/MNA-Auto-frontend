@@ -2073,6 +2073,7 @@
                 },
                 "updated_at": {
                     "type": "string",
+                    "format": "date-time",
                     "x-date": true
                 }
             }

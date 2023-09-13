@@ -1841,19 +1841,23 @@
             "type": "object",
             "properties": {
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "id": {
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1861,16 +1865,19 @@
             "type": "object",
             "properties": {
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "id": {
                     "type": "string"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1886,28 +1893,35 @@
             "type": "object",
             "properties": {
                 "address": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "id": {
                     "type": "string"
                 },
                 "phone": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "photo": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "postal_code": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1915,19 +1929,23 @@
             "type": "object",
             "properties": {
                 "available": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "x-nullable": false
                 },
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "id": {
                     "type": "string"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1935,19 +1953,23 @@
             "type": "object",
             "properties": {
                 "barcode": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "id": {
                     "type": "string"
                 },
                 "reference": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1955,16 +1977,19 @@
             "type": "object",
             "properties": {
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "id": {
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },
@@ -1972,58 +1997,83 @@
             "type": "object",
             "properties": {
                 "chrono": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "collection_date": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true,
+                    "x-nullable": false
                 },
                 "commercial_name": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 },
                 "current_status": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "delivery_date": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true,
+                    "x-nullable": false
                 },
                 "expertise": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "x-nullable": false
                 },
                 "first_circulation": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true,
+                    "x-nullable": false
                 },
                 "id": {
                     "type": "string"
                 },
                 "info": {
-                    "$ref": "#/definitions/models.InfoModel"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.InfoModel"
+                        }
+                    ],
+                    "x-nullable": false
                 },
                 "mileage": {
-                    "type": "integer"
+                    "type": "integer",
+                    "x-nullable": false
                 },
                 "note": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "owner_id": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "procedure_ve": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "x-nullable": false
                 },
                 "registration": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "serial_number": {
-                    "type": "string"
+                    "type": "string",
+                    "x-nullable": false
                 },
                 "sold_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true,
+                    "x-nullable": false
                 },
                 "updated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "x-date": true
                 }
             }
         },

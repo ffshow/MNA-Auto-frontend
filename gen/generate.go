@@ -22,7 +22,9 @@ type Model struct {
 }
 
 type Field struct {
-	Type string `json:"type"`
+	Type     string `json:"type"`
+	Nullable bool   `json:"x-nullable"`
+	IsDate   bool   `json:"x-date"`
 }
 
 type ApiDocs struct {
@@ -60,13 +62,21 @@ type Schema struct {
 	Ref string `json:"$ref"`
 }
 
+var (
+	swaggerFilePath string
+	build           bool
+)
+
 func main() {
-	var swaggerFilePath string
 	flag.StringVar(&swaggerFilePath, "path", "gen/swagger/swagger.json", "Swagger json file path")
+	flag.BoolVar(&build, "build", true, "Run dart build runner to generate the code")
 	flag.Parse()
 
-	log.Printf("swaggerFilePath: %v\n", swaggerFilePath)
-	log.Println("geneate Dart api client from swagger.json")
+	_, err := os.Lstat(swaggerFilePath)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Geneate Dart api client from swagger.json")
 
 	b, err := os.ReadFile(swaggerFilePath)
 	if err != nil {
@@ -84,7 +94,7 @@ func main() {
 	}
 	t := template.Must(template.New("").ParseGlob("gen/templates/*"))
 	exportModels := []string{}
-	for k, _ := range apiDocs.Definitions {
+	for k, m := range apiDocs.Definitions {
 		name := name(k)
 		nameSnakeCase := toSnakeCase(name)
 		namePascalCase := toPascalCase(nameSnakeCase)
@@ -98,9 +108,27 @@ func main() {
 			panic(err)
 		}
 		buffer := bytes.NewBuffer([]byte{})
+		dartFields := []DartField{}
+		for k, f := range m.Properties {
+			t := f.Type
+			var def strings.Builder
+			if f.IsDate {
+				t = "DateTime"
+			}
+			if !f.Nullable {
+				def.WriteString("required" + " " + MapToDartType(t) + " ")
+			} else {
+				def.WriteString("@Default(null) " + MapToDartType(t) + "? ")
+			}
+			def.WriteString(k + ",")
+			dartFields = append(dartFields, DartField{
+				Definition: def.String(),
+			})
+		}
 		if err := t.ExecuteTemplate(buffer, "model", &DartModel{
-			Name: namePascalCase,
-			Part: nameSnakeCase,
+			Name:   namePascalCase,
+			Part:   nameSnakeCase,
+			Fields: dartFields,
 		}); err != nil {
 			panic(err)
 		}
@@ -120,16 +148,38 @@ func main() {
 	if err := t.ExecuteTemplate(exportModelsFile, "models", exportModels); err != nil {
 		panic(err)
 	}
-	// generate dart code
-	build := exec.Command("dart", "run", "build_runner", "build", "--delete-conflicting-outputs")
-	if err := build.Run(); err != nil {
-		panic(err)
+	if build {
+		// generate dart code
+		buildCmd := exec.Command("dart", "run", "build_runner", "build", "--delete-conflicting-outputs")
+		if err := buildCmd.Run(); err != nil {
+			panic(err)
+		}
 	}
 }
 
 type DartModel struct {
-	Name string `json:"name"`
-	Part string `json:"part"`
+	Name   string      `json:"name"`
+	Part   string      `json:"part"`
+	Fields []DartField `json:"fields"`
+}
+
+type DartField struct {
+	Definition string
+}
+
+func MapToDartType(t string) string {
+	switch t {
+	case "string":
+		return "String"
+	case "integer":
+		return "int"
+	case "boolean":
+		return "bool"
+	case "DateTime":
+		return "DateTime"
+	default:
+		return "dynamic"
+	}
 }
 
 func (d DartModel) NameSnakeCase() string {

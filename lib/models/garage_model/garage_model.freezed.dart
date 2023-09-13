@@ -21,6 +21,9 @@ GarageModel _$GarageModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GarageModel {
   String get id => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+  DateTime get updated_at => throw _privateConstructorUsedError;
+  DateTime get created_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,8 @@ abstract class $GarageModelCopyWith<$Res> {
           GarageModel value, $Res Function(GarageModel) then) =
       _$GarageModelCopyWithImpl<$Res, GarageModel>;
   @useResult
-  $Res call({String id});
+  $Res call(
+      {String id, String label, DateTime updated_at, DateTime created_at});
 }
 
 /// @nodoc
@@ -51,12 +55,27 @@ class _$GarageModelCopyWithImpl<$Res, $Val extends GarageModel>
   @override
   $Res call({
     Object? id = null,
+    Object? label = null,
+    Object? updated_at = null,
+    Object? created_at = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -69,7 +88,8 @@ abstract class _$$_GarageModelCopyWith<$Res>
       __$$_GarageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call(
+      {String id, String label, DateTime updated_at, DateTime created_at});
 }
 
 /// @nodoc
@@ -84,12 +104,27 @@ class __$$_GarageModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? label = null,
+    Object? updated_at = null,
+    Object? created_at = null,
   }) {
     return _then(_$_GarageModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -97,17 +132,27 @@ class __$$_GarageModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_GarageModel implements _GarageModel {
-  const _$_GarageModel({required this.id});
+  const _$_GarageModel(
+      {required this.id,
+      required this.label,
+      required this.updated_at,
+      required this.created_at});
 
   factory _$_GarageModel.fromJson(Map<String, dynamic> json) =>
       _$$_GarageModelFromJson(json);
 
   @override
   final String id;
+  @override
+  final String label;
+  @override
+  final DateTime updated_at;
+  @override
+  final DateTime created_at;
 
   @override
   String toString() {
-    return 'GarageModel(id: $id)';
+    return 'GarageModel(id: $id, label: $label, updated_at: $updated_at, created_at: $created_at)';
   }
 
   @override
@@ -115,12 +160,18 @@ class _$_GarageModel implements _GarageModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GarageModel &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode =>
+      Object.hash(runtimeType, id, label, updated_at, created_at);
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +188,23 @@ class _$_GarageModel implements _GarageModel {
 }
 
 abstract class _GarageModel implements GarageModel {
-  const factory _GarageModel({required final String id}) = _$_GarageModel;
+  const factory _GarageModel(
+      {required final String id,
+      required final String label,
+      required final DateTime updated_at,
+      required final DateTime created_at}) = _$_GarageModel;
 
   factory _GarageModel.fromJson(Map<String, dynamic> json) =
       _$_GarageModel.fromJson;
 
   @override
   String get id;
+  @override
+  String get label;
+  @override
+  DateTime get updated_at;
+  @override
+  DateTime get created_at;
   @override
   @JsonKey(ignore: true)
   _$$_GarageModelCopyWith<_$_GarageModel> get copyWith =>

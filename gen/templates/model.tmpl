@@ -1,5 +1,6 @@
-{{define "model"}}
+{{define "model" -}}
 //CODE GENERATED, DO NOT EDIT
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '{{.Part}}.freezed.dart';
@@ -9,7 +10,9 @@ part '{{.Part}}.g.dart';
 @freezed
 class {{.Name}} with _${{.Name}} {
   const factory {{.Name}}({
-    required String id,
+  {{- range .Fields}}
+    {{.Definition}}
+  {{- end}}
   }) = _{{.Name}};
 
   factory {{.Name}}.fromJson(Map<String, Object?> json) =>

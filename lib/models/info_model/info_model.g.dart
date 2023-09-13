@@ -7,10 +7,10 @@ part of 'info_model.dart';
 // **************************************************************************
 
 _$_InfoModel _$$_InfoModelFromJson(Map<String, dynamic> json) => _$_InfoModel(
-      id: json['id'] as String,
+      label: json['label'] as String,
     );
 
 Map<String, dynamic> _$$_InfoModelToJson(_$_InfoModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'label': instance.label,
     };

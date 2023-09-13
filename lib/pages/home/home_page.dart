@@ -59,7 +59,7 @@ class VehicleListWidget extends StatelessWidget {
             .map((e) => TableRow(
                   children: [
                     TableCell(child: Text(e.id)),
-                    TableCell(child: Text('e.registration')),
+                    TableCell(child: Text(e.registration)),
                   ],
                 ))
             .toList(),

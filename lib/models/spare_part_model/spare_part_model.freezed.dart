@@ -20,7 +20,11 @@ SparePartModel _$SparePartModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SparePartModel {
+  String get barcode => throw _privateConstructorUsedError;
+  DateTime get created_at => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  String get reference => throw _privateConstructorUsedError;
+  DateTime get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +38,12 @@ abstract class $SparePartModelCopyWith<$Res> {
           SparePartModel value, $Res Function(SparePartModel) then) =
       _$SparePartModelCopyWithImpl<$Res, SparePartModel>;
   @useResult
-  $Res call({String id});
+  $Res call(
+      {String barcode,
+      DateTime created_at,
+      String id,
+      String reference,
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -50,13 +59,33 @@ class _$SparePartModelCopyWithImpl<$Res, $Val extends SparePartModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? barcode = null,
+    Object? created_at = null,
     Object? id = null,
+    Object? reference = null,
+    Object? updated_at = null,
   }) {
     return _then(_value.copyWith(
+      barcode: null == barcode
+          ? _value.barcode
+          : barcode // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      reference: null == reference
+          ? _value.reference
+          : reference // ignore: cast_nullable_to_non_nullable
+              as String,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -69,7 +98,12 @@ abstract class _$$_SparePartModelCopyWith<$Res>
       __$$_SparePartModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call(
+      {String barcode,
+      DateTime created_at,
+      String id,
+      String reference,
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -83,13 +117,33 @@ class __$$_SparePartModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? barcode = null,
+    Object? created_at = null,
     Object? id = null,
+    Object? reference = null,
+    Object? updated_at = null,
   }) {
     return _then(_$_SparePartModel(
+      barcode: null == barcode
+          ? _value.barcode
+          : barcode // ignore: cast_nullable_to_non_nullable
+              as String,
+      created_at: null == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      reference: null == reference
+          ? _value.reference
+          : reference // ignore: cast_nullable_to_non_nullable
+              as String,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -97,17 +151,30 @@ class __$$_SparePartModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_SparePartModel implements _SparePartModel {
-  const _$_SparePartModel({required this.id});
+  const _$_SparePartModel(
+      {required this.barcode,
+      required this.created_at,
+      required this.id,
+      required this.reference,
+      required this.updated_at});
 
   factory _$_SparePartModel.fromJson(Map<String, dynamic> json) =>
       _$$_SparePartModelFromJson(json);
 
   @override
+  final String barcode;
+  @override
+  final DateTime created_at;
+  @override
   final String id;
+  @override
+  final String reference;
+  @override
+  final DateTime updated_at;
 
   @override
   String toString() {
-    return 'SparePartModel(id: $id)';
+    return 'SparePartModel(barcode: $barcode, created_at: $created_at, id: $id, reference: $reference, updated_at: $updated_at)';
   }
 
   @override
@@ -115,12 +182,20 @@ class _$_SparePartModel implements _SparePartModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SparePartModel &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.reference, reference) ||
+                other.reference == reference) &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode =>
+      Object.hash(runtimeType, barcode, created_at, id, reference, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +212,26 @@ class _$_SparePartModel implements _SparePartModel {
 }
 
 abstract class _SparePartModel implements SparePartModel {
-  const factory _SparePartModel({required final String id}) = _$_SparePartModel;
+  const factory _SparePartModel(
+      {required final String barcode,
+      required final DateTime created_at,
+      required final String id,
+      required final String reference,
+      required final DateTime updated_at}) = _$_SparePartModel;
 
   factory _SparePartModel.fromJson(Map<String, dynamic> json) =
       _$_SparePartModel.fromJson;
 
   @override
+  String get barcode;
+  @override
+  DateTime get created_at;
+  @override
   String get id;
+  @override
+  String get reference;
+  @override
+  DateTime get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_SparePartModelCopyWith<_$_SparePartModel> get copyWith =>

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/models/vehicle/vehicle.dart';
+import 'package:mna/models/models.dart';
 import 'package:mna/pages/home/cubit/vehicle_cubit.dart';
 import 'package:mna/repository/repositories.dart';
 import 'package:mna/repository/vehicle.dart';
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               failed: (String error) => AppErrorWidget(
                 error: error,
                 tryAgainFunc: () {
-                  context.read<VehicleCubit>().getVehicles();
+                  context.read<VehicleCubit>().getVehicles(tryAgain: true);
                 },
               ),
             );
@@ -59,7 +59,7 @@ class VehicleListWidget extends StatelessWidget {
             .map((e) => TableRow(
                   children: [
                     TableCell(child: Text(e.id)),
-                    TableCell(child: Text(e.registration)),
+                    TableCell(child: Text('e.registration')),
                   ],
                 ))
             .toList(),

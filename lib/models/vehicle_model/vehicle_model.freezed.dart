@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'vehicle.dart';
+part of 'vehicle_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -21,7 +21,6 @@ VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$VehicleModel {
   String get id => throw _privateConstructorUsedError;
-  String get registration => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +34,7 @@ abstract class $VehicleModelCopyWith<$Res> {
           VehicleModel value, $Res Function(VehicleModel) then) =
       _$VehicleModelCopyWithImpl<$Res, VehicleModel>;
   @useResult
-  $Res call({String id, String registration});
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -52,16 +51,11 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
   @override
   $Res call({
     Object? id = null,
-    Object? registration = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      registration: null == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +69,7 @@ abstract class _$$_VehicleModelCopyWith<$Res>
       __$$_VehicleModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String registration});
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -90,16 +84,11 @@ class __$$_VehicleModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? registration = null,
   }) {
     return _then(_$_VehicleModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      registration: null == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -108,19 +97,17 @@ class __$$_VehicleModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_VehicleModel implements _VehicleModel {
-  const _$_VehicleModel({required this.id, required this.registration});
+  const _$_VehicleModel({required this.id});
 
   factory _$_VehicleModel.fromJson(Map<String, dynamic> json) =>
       _$$_VehicleModelFromJson(json);
 
   @override
   final String id;
-  @override
-  final String registration;
 
   @override
   String toString() {
-    return 'VehicleModel(id: $id, registration: $registration)';
+    return 'VehicleModel(id: $id)';
   }
 
   @override
@@ -128,14 +115,12 @@ class _$_VehicleModel implements _VehicleModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VehicleModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.registration, registration) ||
-                other.registration == registration));
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, registration);
+  int get hashCode => Object.hash(runtimeType, id);
 
   @JsonKey(ignore: true)
   @override
@@ -152,17 +137,13 @@ class _$_VehicleModel implements _VehicleModel {
 }
 
 abstract class _VehicleModel implements VehicleModel {
-  const factory _VehicleModel(
-      {required final String id,
-      required final String registration}) = _$_VehicleModel;
+  const factory _VehicleModel({required final String id}) = _$_VehicleModel;
 
   factory _VehicleModel.fromJson(Map<String, dynamic> json) =
       _$_VehicleModel.fromJson;
 
   @override
   String get id;
-  @override
-  String get registration;
   @override
   @JsonKey(ignore: true)
   _$$_VehicleModelCopyWith<_$_VehicleModel> get copyWith =>

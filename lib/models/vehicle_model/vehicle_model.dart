@@ -1,14 +1,15 @@
+
+//CODE GENERATED, DO NOT EDIT
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'vehicle.freezed.dart';
+part 'vehicle_model.freezed.dart';
 
-part 'vehicle.g.dart';
+part 'vehicle_model.g.dart';
 
 @freezed
 class VehicleModel with _$VehicleModel {
   const factory VehicleModel({
     required String id,
-    required String registration,
   }) = _VehicleModel;
 
   factory VehicleModel.fromJson(Map<String, Object?> json) =>

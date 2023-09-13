@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mna/utils/style.dart';
 
 class AppErrorWidget extends StatelessWidget {
   const AppErrorWidget({
@@ -12,17 +13,25 @@ class AppErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(error ?? "something went wrong"),
-        if (tryAgainFunc != null)
-          ElevatedButton(
-            onPressed: () {
-              tryAgainFunc?.call();
-            },
-            child: const Text('try again'),
-          ),
-      ],
+    return Padding(
+      padding: kEdgeAll16,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(error ?? "something went wrong"),
+          ...[
+            kH8,
+            if (tryAgainFunc != null)
+              ElevatedButton(
+                onPressed: () {
+                  tryAgainFunc?.call();
+                },
+                child: const Text('try again'),
+              ),
+          ]
+        ],
+      ),
     );
   }
 }

@@ -8,16 +8,16 @@ part of 'supplier_model.dart';
 
 _$_SupplierModel _$$_SupplierModelFromJson(Map<String, dynamic> json) =>
     _$_SupplierModel(
-      created_at: DateTime.parse(json['created_at'] as String),
       id: json['id'] as String,
       name: json['name'] as String,
       updated_at: DateTime.parse(json['updated_at'] as String),
+      created_at: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$_SupplierModelToJson(_$_SupplierModel instance) =>
     <String, dynamic>{
-      'created_at': instance.created_at.toIso8601String(),
       'id': instance.id,
       'name': instance.name,
       'updated_at': instance.updated_at.toIso8601String(),
+      'created_at': instance.created_at.toIso8601String(),
     };

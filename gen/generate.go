@@ -115,12 +115,23 @@ func main() {
 			if f.IsDate {
 				t = "DateTime"
 			}
+			dt := MapToDartType(t)
+			fmt.Printf("dt: %v\n", dt)
 			if !f.Nullable {
-				def.WriteString("required" + " " + MapToDartType(t) + " ")
+				if dt == "bool" {
+					def.WriteString("@Default(false)" + " " + dt + " ")
+				} else {
+					def.WriteString("required" + " " + dt + " ")
+				}
 			} else {
-				def.WriteString("@Default(null) " + MapToDartType(t) + "? ")
+				if dt == "bool" {
+					def.WriteString("@Default(false) " + dt + "? ")
+				} else {
+					def.WriteString("@Default(null) " + dt + "? ")
+				}
 			}
 			def.WriteString(k + ",")
+			fmt.Printf("def.String(): %v\n", def.String())
 			dartFields = append(dartFields, DartField{
 				Definition: def.String(),
 			})
@@ -168,6 +179,7 @@ type DartField struct {
 }
 
 func MapToDartType(t string) string {
+	//FIXME: if type is another model
 	switch t {
 	case "string":
 		return "String"

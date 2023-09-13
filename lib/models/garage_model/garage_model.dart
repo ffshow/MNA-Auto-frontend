@@ -9,10 +9,10 @@ part 'garage_model.g.dart';
 @freezed
 class GarageModel with _$GarageModel {
   const factory GarageModel({
-    required String id,
-    required String label,
     required DateTime updated_at,
     required DateTime created_at,
+    required String id,
+    required String label,
   }) = _GarageModel;
 
   factory GarageModel.fromJson(Map<String, Object?> json) =>

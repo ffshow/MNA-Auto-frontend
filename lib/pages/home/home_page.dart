@@ -47,23 +47,57 @@ class VehicleListWidget extends StatelessWidget {
   final Iterable<VehicleModel> vehicles;
   @override
   Widget build(BuildContext context) {
-    return Table(
-      children: [
-        const TableRow(
+    return SingleChildScrollView(
+      child: PaginatedDataTable(
+        source: VehicleDataSrouce(vehicles),
+        columns: const [
+          DataColumn(label: Text('Registration')),
+          DataColumn(label: Text('Created at')),
+          DataColumn(label: Text('Updated at')),
+          DataColumn(label: Text('Actions')),
+        ],
+      ),
+    );
+  }
+}
+
+class VehicleDataSrouce extends DataTableSource {
+  final Iterable<VehicleModel> vehicles;
+
+  VehicleDataSrouce(this.vehicles);
+
+  @override
+  DataRow? getRow(int index) {
+    final VehicleModel e = vehicles.elementAt(index);
+    return DataRow(
+      cells: [
+        DataCell(Text(e.serial_number)),
+        DataCell(Text(e.created_at.toIso8601String())),
+        DataCell(Text(e.updated_at.toIso8601String())),
+        DataCell(Row(
           children: [
-            TableCell(child: Text('id')),
-            TableCell(child: Text('registration')),
+            IconButton(
+              tooltip: 'Edit',
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
+              tooltip: 'Remove',
+              onPressed: () {},
+              icon: const Icon(Icons.delete),
+            ),
           ],
-        ),
-        ...vehicles
-            .map((e) => TableRow(
-                  children: [
-                    TableCell(child: Text(e.id)),
-                    TableCell(child: Text(e.registration)),
-                  ],
-                ))
-            .toList(),
+        )),
       ],
     );
   }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => vehicles.length;
+
+  @override
+  int get selectedRowCount => 0;
 }

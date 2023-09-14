@@ -1,0 +1,17 @@
+{{define "providers"}}
+//CODE GENERATED, DO NOT EDIT
+import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/services/services.dart';
+
+List getProviders(Dio dio) {
+  return [
+    {{- range .}}
+    RepositoryProvider(
+      create: (BuildContext context) => {{.}}(dio),
+    ),
+    {{- end}}
+  ];
+}
+{{end}}

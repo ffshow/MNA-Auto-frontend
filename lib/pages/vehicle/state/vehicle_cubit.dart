@@ -1,15 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mna/models/models.dart';
-import 'package:mna/repository/vehicle.dart';
+import 'package:mna/services/vehicle_service.dart';
 
 part 'vehicle_state.dart';
 part 'vehicle_cubit.freezed.dart';
 
 class VehicleCubit extends Cubit<VehicleState> {
-  final VehicleRepository _vehicleRepository;
+  final VehicleService _service;
 
-  VehicleCubit(this._vehicleRepository) : super(const VehicleState.initial());
+  VehicleCubit(this._service) : super(const VehicleState.initial());
 
   Future<void> getVehicles({bool tryAgain = false}) async {
     emit(const VehicleState.initial());
@@ -18,7 +18,7 @@ class VehicleCubit extends Cubit<VehicleState> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
     try {
-      final Iterable<VehicleModel> data = await _vehicleRepository.get();
+      final Iterable<VehicleModel> data = await _service.getApiVehicleList();
       emit(VehicleState.loaded(data));
     } catch (e) {
       emit(VehicleState.failed(e.toString()));

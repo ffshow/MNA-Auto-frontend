@@ -301,7 +301,9 @@ func generateServices(apiDocs ApiDocs) {
 			})
 		}
 	}
+	exportService := ""
 	for k, v := range tags {
+		exportService += fmt.Sprintf("export '%s_service.dart';\n", k)
 		services = append(services, Service{
 			Path:  fmt.Sprintf("lib/services/%s_service.dart", k),
 			Name:  toPascalCase(k) + "Service",
@@ -316,6 +318,26 @@ func generateServices(apiDocs ApiDocs) {
 		}
 		defer sf.Close()
 		s.ExecuteTemplate(sf, "service", v)
+	}
+	f, err := os.Create("lib/services/services.dart")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	if err := s.ExecuteTemplate(f, "services", exportService); err != nil {
+		panic(err)
+	}
+	providers := []string{}
+	for _, s2 := range services {
+		providers = append(providers, s2.Name)
+	}
+	providersFile, err := os.Create("lib/services/providers.dart")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	if err := s.ExecuteTemplate(providersFile, "providers", providers); err != nil {
+		panic(err)
 	}
 }
 

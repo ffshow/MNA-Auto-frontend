@@ -1,20 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:mna/repository/vehicle.dart';
 import 'package:mna/router.dart';
-import 'repository/repositories.dart';
+import 'package:mna/services/providers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://localhost:3000/api"),
+    BaseOptions(baseUrl: "http://localhost:3000/"),
   );
-  final VehicleRepository vehicleRepository = VehicleRepository(
-    dio,
-  );
-  runApp(RepositoryProvider(
-    create: (BuildContext context) => vehicleRepository,
+
+  runApp(MultiRepositoryProvider(
+    providers: [
+      ...getProviders(dio),
+    ],
     child: const MainApp(),
   ));
 }

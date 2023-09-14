@@ -9,8 +9,8 @@ part 'response_error.g.dart';
 @freezed
 class ResponseError with _$ResponseError {
   const factory ResponseError({
-    required String message,
     required int code,
+    required String message,
   }) = _ResponseError;
 
   factory ResponseError.fromJson(Map<String, Object?> json) =>

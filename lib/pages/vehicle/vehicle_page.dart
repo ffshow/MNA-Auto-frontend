@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/models/models.dart';
-import 'package:mna/pages/home/cubit/vehicle_cubit.dart';
-import 'package:mna/repository/repositories.dart';
-import 'package:mna/repository/vehicle.dart';
+import 'package:mna/services/vehicle_service.dart';
 import 'package:mna/widget/widget.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import 'state/vehicle_cubit.dart';
+
+class VehiclePage extends StatelessWidget {
+  const VehiclePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final VehicleRepository vehicleRepository =
-        RepositoryProvider.of<VehicleRepository>(context);
+    final VehicleService service =
+        RepositoryProvider.of<VehicleService>(context);
     return BlocProvider<VehicleCubit>(
       create: (BuildContext context) => VehicleCubit(
-        vehicleRepository,
+        service,
       )..getVehicles(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Home'),
+          title: const Text('Vehicle Page'),
         ),
         body: BlocBuilder<VehicleCubit, VehicleState>(
           builder: (BuildContext context, VehicleState state) {

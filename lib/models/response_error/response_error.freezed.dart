@@ -20,8 +20,8 @@ ResponseError _$ResponseErrorFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ResponseError {
-  int get code => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  int get code => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $ResponseErrorCopyWith<$Res> {
           ResponseError value, $Res Function(ResponseError) then) =
       _$ResponseErrorCopyWithImpl<$Res, ResponseError>;
   @useResult
-  $Res call({int code, String message});
+  $Res call({String message, int code});
 }
 
 /// @nodoc
@@ -51,18 +51,18 @@ class _$ResponseErrorCopyWithImpl<$Res, $Val extends ResponseError>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = null,
     Object? message = null,
+    Object? code = null,
   }) {
     return _then(_value.copyWith(
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$_ResponseErrorCopyWith<$Res>
       __$$_ResponseErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int code, String message});
+  $Res call({String message, int code});
 }
 
 /// @nodoc
@@ -89,18 +89,18 @@ class __$$_ResponseErrorCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = null,
     Object? message = null,
+    Object? code = null,
   }) {
     return _then(_$_ResponseError(
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -108,19 +108,19 @@ class __$$_ResponseErrorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ResponseError implements _ResponseError {
-  const _$_ResponseError({required this.code, required this.message});
+  const _$_ResponseError({required this.message, required this.code});
 
   factory _$_ResponseError.fromJson(Map<String, dynamic> json) =>
       _$$_ResponseErrorFromJson(json);
 
   @override
-  final int code;
-  @override
   final String message;
+  @override
+  final int code;
 
   @override
   String toString() {
-    return 'ResponseError(code: $code, message: $message)';
+    return 'ResponseError(message: $message, code: $code)';
   }
 
   @override
@@ -128,13 +128,13 @@ class _$_ResponseError implements _ResponseError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ResponseError &&
-            (identical(other.code, code) || other.code == code) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.code, code) || other.code == code));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, code, message);
+  int get hashCode => Object.hash(runtimeType, message, code);
 
   @JsonKey(ignore: true)
   @override
@@ -152,16 +152,16 @@ class _$_ResponseError implements _ResponseError {
 
 abstract class _ResponseError implements ResponseError {
   const factory _ResponseError(
-      {required final int code,
-      required final String message}) = _$_ResponseError;
+      {required final String message,
+      required final int code}) = _$_ResponseError;
 
   factory _ResponseError.fromJson(Map<String, dynamic> json) =
       _$_ResponseError.fromJson;
 
   @override
-  int get code;
-  @override
   String get message;
+  @override
+  int get code;
   @override
   @JsonKey(ignore: true)
   _$$_ResponseErrorCopyWith<_$_ResponseError> get copyWith =>

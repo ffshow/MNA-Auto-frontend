@@ -27,6 +27,7 @@ class {{.Name}}{
   {{.Return}} {{.Name}}({{.StrParams}}) async{
     final Response response = await _dio.{{.Method}}(
       "{{.SanitizePath}}",
+      {{- if .BodyParams }}data: data,{{end}}
       queryParameters: <String, dynamic>{
         {{- range .QueryParams}}
         if ({{.Name}} != null) "{{.Name}}": {{.Name}},
@@ -35,18 +36,22 @@ class {{.Name}}{
     );
     {{- range $key, $value := .Responses}}
     if (response.statusCode == {{$key}}){
-    {{- if eq $key 200}}
-        {{- if eq $value.Schema.Type "array"}}
-        return (response.data as List)
-          .map((e) => {{.Return}}.fromJson(e))
-          .toList();
+    {{ if .Return}}
+        {{- if eq $key 200}}
+            {{- if eq $value.Schema.Type "array"}}
+            return (response.data as List)
+            .map((e) => {{.Return}}.fromJson(e))
+            .toList();
+            {{- else}}
+            return {{.Return}}.fromJson(response.data as Map<String, Object?>);
+            {{- end}}
         {{- else}}
-        return {{.Return}}.fromJson(response.data as Map<String, Object?>);
+        final ResponseError error =
+            ResponseError.fromJson((response.data as Map<String, Object>));
+        throw Exception(error.message);
         {{- end}}
-    {{- else}}
-    final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
+    {{else}}
+        return;
     {{- end}}
     } 
     {{end}}

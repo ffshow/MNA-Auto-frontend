@@ -78,6 +78,7 @@ func (r Response) Return() string {
 		p := sp[len(sp)-1]
 		return p
 	}
+	log.Printf("Warning: %s does not have a return type", r.Description)
 	return ""
 }
 
@@ -116,6 +117,7 @@ type DartFunc struct {
 	Method      string
 	PathParams  []Param
 	QueryParams []Param
+	BodyParams  []Param
 	Responses   map[int]Response
 	Return      string
 	Summary     string `json:"summary"`
@@ -132,6 +134,13 @@ func (d DartFunc) StrParams() string {
 	required := ""
 	optional := ""
 	sep := ", "
+	for _, p := range d.BodyParams {
+		if p.Required {
+			required += p.Name + " data" + sep
+		} else {
+			optional += p.Name + "? data" + sep
+		}
+	}
 	for _, p := range d.PathParams {
 		t := MapToDartType(p.Type)
 		if p.Required {
@@ -140,7 +149,6 @@ func (d DartFunc) StrParams() string {
 			optional += t + "? " + p.Name + sep
 		}
 	}
-
 	for _, p := range d.QueryParams {
 		t := MapToDartType(p.Type)
 		if p.Required {
@@ -217,6 +225,31 @@ func main() {
 		panic(err)
 	}
 
+	_ = os.RemoveAll("lib/models")
+	if err := os.Mkdir("lib/models", os.ModePerm); err != nil {
+		if !errors.Is(err, os.ErrExist) {
+			panic(err)
+		}
+	}
+	t := template.Must(template.New("").ParseGlob("gen/templates/*"))
+	// generate dart code
+	generateModels(apiDocs, t)
+	generateServices(apiDocs)
+	if build {
+		buildCmd := exec.Command("dart", "run", "build_runner", "build", "--delete-conflicting-outputs")
+		if err := buildCmd.Run(); err != nil {
+			panic(err)
+		}
+	}
+	if format {
+		formatCmd := exec.Command("dart", "format", ".")
+		if err := formatCmd.Run(); err != nil {
+			panic(err)
+		}
+	}
+}
+
+func generateServices(apiDocs ApiDocs) {
 	services := []Service{}
 	tags := map[string][]DartFunc{}
 	for funcPath, v := range apiDocs.Paths {
@@ -243,13 +276,15 @@ func main() {
 			v2 := h.Tags[0]
 			pathParams := []Param{}
 			queryParams := []Param{}
+			bodyParams := []Param{}
 			for _, p := range h.Parameters {
 				if p.In == "path" {
 					pathParams = append(pathParams, p)
 				} else if p.In == "query" {
 					queryParams = append(queryParams, p)
 				} else {
-					fmt.Printf("p.In: %v\n", p.In)
+					p.Name = toPascalCase(p.Name + "_" + "model")
+					bodyParams = append(bodyParams, p)
 				}
 			}
 			tags[v2] = append(tags[v2], DartFunc{
@@ -259,6 +294,7 @@ func main() {
 				Method:      funcMethod,
 				PathParams:  pathParams,
 				QueryParams: queryParams,
+				BodyParams:  bodyParams,
 				Responses:   h.Responses,
 				Summary:     h.Summary,
 				Description: h.Description,
@@ -280,20 +316,6 @@ func main() {
 		}
 		defer sf.Close()
 		s.ExecuteTemplate(sf, "service", v)
-	}
-	return
-	_ = os.RemoveAll("lib/models")
-	if err := os.Mkdir("lib/models", os.ModePerm); err != nil {
-		if !errors.Is(err, os.ErrExist) {
-			panic(err)
-		}
-	}
-	t := template.Must(template.New("").ParseGlob("gen/templates/*"))
-	// generate dart code
-	generateModels(apiDocs, t)
-
-	for path, _ := range apiDocs.Paths {
-		fmt.Printf("path: %v\n", path)
 	}
 }
 
@@ -321,7 +343,6 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 				t = "DateTime"
 			}
 			dt := MapToDartType(t)
-			fmt.Printf("dt: %v\n", dt)
 			if !f.Nullable {
 				if dt == "bool" {
 					def.WriteString("@Default(false)" + " " + dt + " ")
@@ -336,7 +357,6 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 				}
 			}
 			def.WriteString(k + ",")
-			fmt.Printf("def.String(): %v\n", def.String())
 			dartFields = append(dartFields, DartField{
 				Definition: def.String(),
 			})
@@ -364,20 +384,7 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 	if err := t.ExecuteTemplate(exportModelsFile, "models", exportModels); err != nil {
 		panic(err)
 	}
-	if build {
 
-		buildCmd := exec.Command("dart", "run", "build_runner", "build", "--delete-conflicting-outputs")
-		if err := buildCmd.Run(); err != nil {
-			panic(err)
-		}
-	}
-	if format {
-
-		formatCmd := exec.Command("dart", "format", ".")
-		if err := formatCmd.Run(); err != nil {
-			panic(err)
-		}
-	}
 }
 
 func MapToDartType(t string) string {

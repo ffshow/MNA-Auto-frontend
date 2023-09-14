@@ -1894,7 +1894,7 @@
             "properties": {
                 "address": {
                     "type": "string",
-                    "x-nullable": false
+                    "x-nullable": true
                 },
                 "created_at": {
                     "type": "string",
@@ -1902,22 +1902,22 @@
                 },
                 "email": {
                     "type": "string",
-                    "x-nullable": false
+                    "x-nullable": true
                 },
                 "id": {
                     "type": "string"
                 },
                 "phone": {
                     "type": "string",
-                    "x-nullable": false
+                    "x-nullable": true
                 },
                 "photo": {
                     "type": "string",
-                    "x-nullable": false
+                    "x-nullable": true
                 },
                 "postal_code": {
                     "type": "string",
-                    "x-nullable": false
+                    "x-nullable": true
                 },
                 "updated_at": {
                     "type": "string",

@@ -8,6 +8,22 @@ class RootService {
 
   RootService(this._dio);
 
+  /// ### Show the status of server.
+  /// Description: get the status of server.
+  ///
+  /// Path /
+  void get() async {
+    final Response response = await _dio.get(
+      "/",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### Seed vehicles
   /// Description: Seed vehicles.
   ///
@@ -23,22 +39,6 @@ class RootService {
       queryParameters: <String, dynamic>{
         if (count != null) "count": count,
       },
-    );
-    if (response.statusCode == 200) {
-      return;
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Show the status of server.
-  /// Description: get the status of server.
-  ///
-  /// Path /
-  void get() async {
-    final Response response = await _dio.get(
-      "/",
-      queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return;

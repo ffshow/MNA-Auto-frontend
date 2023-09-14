@@ -13,8 +13,22 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const VehiclePage();
+        return const RootPage();
       },
+      routes: [
+        GoRoute(
+          path: 'vehicles',
+          builder: (BuildContext context, GoRouterState state) {
+            return const VehiclePage();
+          },
+        ),
+        GoRoute(
+          path: 'owners',
+          builder: (BuildContext context, GoRouterState state) {
+            return const OwnerPage();
+          },
+        ),
+      ],
     ),
   ],
 );

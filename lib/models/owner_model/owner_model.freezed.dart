@@ -20,14 +20,14 @@ OwnerModel _$OwnerModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OwnerModel {
-  String get phone => throw _privateConstructorUsedError;
-  String get photo => throw _privateConstructorUsedError;
-  String get postal_code => throw _privateConstructorUsedError;
-  DateTime get updated_at => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get postal_code => throw _privateConstructorUsedError;
+  DateTime get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,14 +42,14 @@ abstract class $OwnerModelCopyWith<$Res> {
       _$OwnerModelCopyWithImpl<$Res, OwnerModel>;
   @useResult
   $Res call(
-      {String phone,
-      String photo,
-      String postal_code,
-      DateTime updated_at,
-      String address,
+      {String? address,
       DateTime created_at,
-      String email,
-      String id});
+      String? email,
+      String id,
+      String? phone,
+      String? photo,
+      String? postal_code,
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -65,48 +65,48 @@ class _$OwnerModelCopyWithImpl<$Res, $Val extends OwnerModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
-    Object? photo = null,
-    Object? postal_code = null,
-    Object? updated_at = null,
-    Object? address = null,
+    Object? address = freezed,
     Object? created_at = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? id = null,
+    Object? phone = freezed,
+    Object? photo = freezed,
+    Object? postal_code = freezed,
+    Object? updated_at = null,
   }) {
     return _then(_value.copyWith(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
-      postal_code: null == postal_code
-          ? _value.postal_code
-          : postal_code // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postal_code: freezed == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -120,14 +120,14 @@ abstract class _$$_OwnerModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String phone,
-      String photo,
-      String postal_code,
-      DateTime updated_at,
-      String address,
+      {String? address,
       DateTime created_at,
-      String email,
-      String id});
+      String? email,
+      String id,
+      String? phone,
+      String? photo,
+      String? postal_code,
+      DateTime updated_at});
 }
 
 /// @nodoc
@@ -141,48 +141,48 @@ class __$$_OwnerModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
-    Object? photo = null,
-    Object? postal_code = null,
-    Object? updated_at = null,
-    Object? address = null,
+    Object? address = freezed,
     Object? created_at = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? id = null,
+    Object? phone = freezed,
+    Object? photo = freezed,
+    Object? postal_code = freezed,
+    Object? updated_at = null,
   }) {
     return _then(_$_OwnerModel(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
-      postal_code: null == postal_code
-          ? _value.postal_code
-          : postal_code // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       created_at: null == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      email: null == email
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postal_code: freezed == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -191,38 +191,43 @@ class __$$_OwnerModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_OwnerModel implements _OwnerModel {
   const _$_OwnerModel(
-      {required this.phone,
-      required this.photo,
-      required this.postal_code,
-      required this.updated_at,
-      required this.address,
+      {this.address = null,
       required this.created_at,
-      required this.email,
-      required this.id});
+      this.email = null,
+      required this.id,
+      this.phone = null,
+      this.photo = null,
+      this.postal_code = null,
+      required this.updated_at});
 
   factory _$_OwnerModel.fromJson(Map<String, dynamic> json) =>
       _$$_OwnerModelFromJson(json);
 
   @override
-  final String phone;
-  @override
-  final String photo;
-  @override
-  final String postal_code;
-  @override
-  final DateTime updated_at;
-  @override
-  final String address;
+  @JsonKey()
+  final String? address;
   @override
   final DateTime created_at;
   @override
-  final String email;
+  @JsonKey()
+  final String? email;
   @override
   final String id;
+  @override
+  @JsonKey()
+  final String? phone;
+  @override
+  @JsonKey()
+  final String? photo;
+  @override
+  @JsonKey()
+  final String? postal_code;
+  @override
+  final DateTime updated_at;
 
   @override
   String toString() {
-    return 'OwnerModel(phone: $phone, photo: $photo, postal_code: $postal_code, updated_at: $updated_at, address: $address, created_at: $created_at, email: $email, id: $id)';
+    return 'OwnerModel(address: $address, created_at: $created_at, email: $email, id: $id, phone: $phone, photo: $photo, postal_code: $postal_code, updated_at: $updated_at)';
   }
 
   @override
@@ -230,23 +235,23 @@ class _$_OwnerModel implements _OwnerModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_OwnerModel &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.postal_code, postal_code) ||
                 other.postal_code == postal_code) &&
             (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
-            (identical(other.address, address) || other.address == address) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.id, id) || other.id == id));
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, phone, photo, postal_code,
-      updated_at, address, created_at, email, id);
+  int get hashCode => Object.hash(runtimeType, address, created_at, email, id,
+      phone, photo, postal_code, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -264,34 +269,34 @@ class _$_OwnerModel implements _OwnerModel {
 
 abstract class _OwnerModel implements OwnerModel {
   const factory _OwnerModel(
-      {required final String phone,
-      required final String photo,
-      required final String postal_code,
-      required final DateTime updated_at,
-      required final String address,
+      {final String? address,
       required final DateTime created_at,
-      required final String email,
-      required final String id}) = _$_OwnerModel;
+      final String? email,
+      required final String id,
+      final String? phone,
+      final String? photo,
+      final String? postal_code,
+      required final DateTime updated_at}) = _$_OwnerModel;
 
   factory _OwnerModel.fromJson(Map<String, dynamic> json) =
       _$_OwnerModel.fromJson;
 
   @override
-  String get phone;
-  @override
-  String get photo;
-  @override
-  String get postal_code;
-  @override
-  DateTime get updated_at;
-  @override
-  String get address;
+  String? get address;
   @override
   DateTime get created_at;
   @override
-  String get email;
+  String? get email;
   @override
   String get id;
+  @override
+  String? get phone;
+  @override
+  String? get photo;
+  @override
+  String? get postal_code;
+  @override
+  DateTime get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_OwnerModelCopyWith<_$_OwnerModel> get copyWith =>

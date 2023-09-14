@@ -9,14 +9,14 @@ part 'owner_model.g.dart';
 @freezed
 class OwnerModel with _$OwnerModel {
   const factory OwnerModel({
-    required String phone,
-    required String photo,
-    required String postal_code,
-    required DateTime updated_at,
-    required String address,
+    @Default(null) String? address,
     required DateTime created_at,
-    required String email,
+    @Default(null) String? email,
     required String id,
+    @Default(null) String? phone,
+    @Default(null) String? photo,
+    @Default(null) String? postal_code,
+    required DateTime updated_at,
   }) = _OwnerModel;
 
   factory OwnerModel.fromJson(Map<String, Object?> json) =>

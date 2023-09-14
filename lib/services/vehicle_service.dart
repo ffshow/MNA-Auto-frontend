@@ -8,72 +8,6 @@ class VehicleService {
 
   VehicleService(this._dio);
 
-  /// ### Update a vehicle
-  /// Description: Edit vehicle
-  ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/vehicle/{id}
-  Future<VehicleModel> putApiVehicle(
-    VehicleModel data,
-    String id,
-  ) async {
-    final Response response = await _dio.put(
-      "/api/vehicle/$id",
-      data: data,
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return VehicleModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Get vehicle by ID
-  /// Description: Get vehicle by ID
-  ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/vehicle/{id}
-  Future<VehicleModel> getApiVehicle(
-    String id,
-  ) async {
-    final Response response = await _dio.get(
-      "/api/vehicle/$id",
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return VehicleModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### List vehicle
   /// Description: List vehicle
   ///
@@ -159,6 +93,72 @@ class VehicleService {
   ) async {
     final Response response = await _dio.post(
       "/api/vehicle",
+      data: data,
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return VehicleModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Get vehicle by ID
+  /// Description: Get vehicle by ID
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/vehicle/{id}
+  Future<VehicleModel> getApiVehicle(
+    String id,
+  ) async {
+    final Response response = await _dio.get(
+      "/api/vehicle/$id",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return VehicleModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Update a vehicle
+  /// Description: Edit vehicle
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/vehicle/{id}
+  Future<VehicleModel> putApiVehicle(
+    VehicleModel data,
+    String id,
+  ) async {
+    final Response response = await _dio.put(
+      "/api/vehicle/$id",
       data: data,
       queryParameters: <String, dynamic>{},
     );

@@ -11,8 +11,9 @@ class OwnerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OwnerService ownerService =
-        RepositoryProvider.of<OwnerService>(context);
+    final OwnerService ownerService = RepositoryProvider.of<OwnerService>(
+      context,
+    );
     return BlocProvider<OwnerCubit>(
       create: (BuildContext context) => OwnerCubit(
         ownerService,
@@ -71,8 +72,8 @@ class OwnerDataSrouce extends DataTableSource {
     final OwnerModel e = owners.elementAt(index);
     return DataRow(
       cells: [
-        DataCell(Text(e.email)),
-        DataCell(Text(e.address)),
+        DataCell(Text(e.email ?? '')),
+        DataCell(Text(e.address ?? '')),
         DataCell(Text(e.created_at.toIso8601String())),
         DataCell(Row(
           children: [

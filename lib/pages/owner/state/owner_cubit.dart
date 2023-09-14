@@ -20,7 +20,9 @@ class OwnerCubit extends Cubit<OwnerState> {
     try {
       final Iterable<OwnerModel> data = await _ownerService.getApiOwnerList();
       emit(OwnerState.loaded(data));
-    } catch (e) {
+    } catch (e, s) {
+      print(s);
+      print(e);
       emit(OwnerState.failed(e.toString()));
     }
   }

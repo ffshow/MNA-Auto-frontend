@@ -38,38 +38,168 @@ type ApiDocs struct {
 }
 
 type Info struct {
-	description    string
-	title          string
-	termsOfService string
-	version        string
+	Description    string
+	Title          string
+	TermsOfService string
+	Version        string
 }
 
 type Handler struct {
-	description string
-	consumes    []string
-	produces    []string
-	tags        []string
-	summary     string
-	responses   map[string]Response
+	Description string           `json:"description"`
+	Consumes    []string         `json:"consumes"`
+	Produces    []string         `json:"produces"`
+	Tags        []string         `json:"tags"`
+	Summary     string           `json:"summary"`
+	Parameters  []Param          `json:"parameters"`
+	Responses   map[int]Response `json:"responses"`
+}
+
+type Param struct {
+	Type        string `json:"type"`
+	Description string `json:"description"`
+	Name        string `json:"name"`
+	In          string `json:"in"`
+	Required    bool   `json:"required"`
 }
 
 type Response struct {
-	description string
-	schema      Schema
+	Description string `json:"description"`
+	Schema      Schema `json:"schema"`
+}
+
+func (r Response) Return() string {
+	if r.Schema.Type == "array" {
+		sp := strings.Split(r.Schema.Items.Ref, ".")
+		p := sp[len(sp)-1]
+		return p
+	}
+	if r.Schema.Ref != "" {
+		sp := strings.Split(r.Schema.Ref, ".")
+		p := sp[len(sp)-1]
+		return p
+	}
+	return ""
 }
 
 type Schema struct {
-	Ref string `json:"$ref"`
+	Type                 string `json:"type"`
+	AdditionalProperties bool   `json:"additionalProperties"`
+	Ref                  string `json:"$ref"`
+	Items                struct {
+		Ref string `json:"$ref"`
+	} `json:"items"`
+}
+
+type Service struct {
+	Path  string     `json:"path"`
+	Name  string     `json:"name"`
+	Funcs []DartFunc `json:"funcs"`
+}
+
+func (s Service) HasFuncs() bool {
+	return false
+}
+
+type DartModel struct {
+	Name   string      `json:"name"`
+	Part   string      `json:"part"`
+	Fields []DartField `json:"fields"`
+}
+
+type DartField struct {
+	Definition string
+}
+
+type DartFunc struct {
+	Name        string
+	Path        string
+	Method      string
+	PathParams  []Param
+	QueryParams []Param
+	Responses   map[int]Response
+	Return      string
+	Summary     string `json:"summary"`
+	Description string `json:"description"`
+}
+
+func (d DartFunc) SanitizePath() string {
+	p := strings.ReplaceAll(d.Path, "{", "$")
+	p = strings.ReplaceAll(p, "}", "")
+	return p
+}
+
+func (d DartFunc) StrParams() string {
+	required := ""
+	optional := ""
+	sep := ", "
+	for _, p := range d.PathParams {
+		t := MapToDartType(p.Type)
+		if p.Required {
+			required += t + " " + p.Name + sep
+		} else {
+			optional += t + "? " + p.Name + sep
+		}
+	}
+
+	for _, p := range d.QueryParams {
+		t := MapToDartType(p.Type)
+		if p.Required {
+			required += t + " " + p.Name + sep
+		} else {
+			optional += t + "? " + p.Name + sep
+		}
+	}
+	if optional != "" {
+		required += required + "{ " + optional + "}"
+	}
+	return required
+}
+
+func FuncName(funcPath string, funcMethod string) string {
+	p := strings.Split(funcPath, "/")
+	m := ""
+	for _, v := range p {
+		if strings.Contains(v, "{") {
+			continue
+		}
+		m += "_" + v
+	}
+
+	return toLowerCamelCase(funcMethod + "_" + m)
+}
+
+func (d DartModel) NameSnakeCase() string {
+	return toSnakeCase(d.Name)
+}
+
+func (d DartModel) NamePascalCase() string {
+	return toPascalCase(d.Name)
+}
+
+func toLowerCamelCase(input string) string {
+	words := strings.FieldsFunc(input, func(r rune) bool {
+		return !unicode.IsLetter(r) && !unicode.IsNumber(r)
+	})
+	var result string
+	for i, word := range words {
+		if i > 0 {
+			word = strings.Title(strings.ToLower(word))
+		}
+		result += word
+	}
+	return result
 }
 
 var (
 	swaggerFilePath string
 	build           bool
+	format          bool
 )
 
 func main() {
 	flag.StringVar(&swaggerFilePath, "path", "gen/swagger/swagger.json", "Swagger json file path")
 	flag.BoolVar(&build, "build", true, "Run dart build runner to generate the code")
+	flag.BoolVar(&format, "format", true, "Format code")
 	flag.Parse()
 
 	_, err := os.Lstat(swaggerFilePath)
@@ -86,6 +216,72 @@ func main() {
 	if err := json.Unmarshal(b, &apiDocs); err != nil {
 		panic(err)
 	}
+
+	services := []Service{}
+	tags := map[string][]DartFunc{}
+	for funcPath, v := range apiDocs.Paths {
+		for funcMethod, h := range v {
+			returnFunc := "void"
+			for k, r := range h.Responses {
+				if k == 200 {
+					if len(r.Schema.Ref) != 0 {
+						sp := strings.Split(r.Schema.Ref, ".")
+						m := sp[len(sp)-1]
+						returnFunc = "Future<" + m + ">"
+					}
+					if r.Schema.Type == "array" {
+						sp := strings.Split(r.Schema.Items.Ref, ".")
+						m := sp[len(sp)-1]
+						returnFunc = "Future<List<" + m + ">>"
+					}
+				}
+			}
+			if len(h.Tags) != 1 {
+				continue
+			}
+
+			v2 := h.Tags[0]
+			pathParams := []Param{}
+			queryParams := []Param{}
+			for _, p := range h.Parameters {
+				if p.In == "path" {
+					pathParams = append(pathParams, p)
+				} else if p.In == "query" {
+					queryParams = append(queryParams, p)
+				} else {
+					fmt.Printf("p.In: %v\n", p.In)
+				}
+			}
+			tags[v2] = append(tags[v2], DartFunc{
+				Return:      returnFunc,
+				Name:        FuncName(funcPath, funcMethod),
+				Path:        funcPath,
+				Method:      funcMethod,
+				PathParams:  pathParams,
+				QueryParams: queryParams,
+				Responses:   h.Responses,
+				Summary:     h.Summary,
+				Description: h.Description,
+			})
+		}
+	}
+	for k, v := range tags {
+		services = append(services, Service{
+			Path:  fmt.Sprintf("lib/services/%s_service.dart", k),
+			Name:  toPascalCase(k) + "Service",
+			Funcs: v,
+		})
+	}
+	s := template.Must(template.New("").ParseGlob("gen/templates/*"))
+	for _, v := range services {
+		sf, err := os.Create(v.Path)
+		if err != nil {
+			panic(err)
+		}
+		defer sf.Close()
+		s.ExecuteTemplate(sf, "service", v)
+	}
+	return
 	_ = os.RemoveAll("lib/models")
 	if err := os.Mkdir("lib/models", os.ModePerm); err != nil {
 		if !errors.Is(err, os.ErrExist) {
@@ -175,16 +371,13 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 			panic(err)
 		}
 	}
-}
+	if format {
 
-type DartModel struct {
-	Name   string      `json:"name"`
-	Part   string      `json:"part"`
-	Fields []DartField `json:"fields"`
-}
-
-type DartField struct {
-	Definition string
+		formatCmd := exec.Command("dart", "format", ".")
+		if err := formatCmd.Run(); err != nil {
+			panic(err)
+		}
+	}
 }
 
 func MapToDartType(t string) string {
@@ -201,14 +394,6 @@ func MapToDartType(t string) string {
 	default:
 		return "dynamic"
 	}
-}
-
-func (d DartModel) NameSnakeCase() string {
-	return toSnakeCase(d.Name)
-}
-
-func (d DartModel) NamePascalCase() string {
-	return toPascalCase(d.Name)
 }
 
 func name(input string) string {

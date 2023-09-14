@@ -46,6 +46,94 @@
             }
         },
         "/api/account": {
+            "post": {
+                "description": "Register account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "account"
+                ],
+                "summary": "Create a new account",
+                "parameters": [
+                    {
+                        "description": "Register account",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AccountModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.AccountModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/account/{id}": {
+            "get": {
+                "description": "Get account by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "account"
+                ],
+                "summary": "Get account by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Account ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.AccountModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit account",
                 "consumes": [
@@ -96,53 +184,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register account",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "account"
-                ],
-                "summary": "Create a new account",
-                "parameters": [
-                    {
-                        "description": "Register account",
-                        "name": "account",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.AccountModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.AccountModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/account/import": {
+        "/api/account_import": {
             "post": {
                 "description": "Register account (useful for importing data)",
                 "consumes": [
@@ -177,50 +221,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.AccountModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/account/{id}": {
-            "get": {
-                "description": "Get account by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "account"
-                ],
-                "summary": "Get account by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Account ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.AccountModel"
                         }
                     },
                     "404": {
@@ -297,6 +297,94 @@
             }
         },
         "/api/garage": {
+            "post": {
+                "description": "Register garage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "garage"
+                ],
+                "summary": "Create a new garage",
+                "parameters": [
+                    {
+                        "description": "Register garage",
+                        "name": "garage",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.GarageModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GarageModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/garage/{id}": {
+            "get": {
+                "description": "Get garage by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "garage"
+                ],
+                "summary": "Get garage by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Garage ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GarageModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit garage",
                 "consumes": [
@@ -347,53 +435,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register garage",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "garage"
-                ],
-                "summary": "Create a new garage",
-                "parameters": [
-                    {
-                        "description": "Register garage",
-                        "name": "garage",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.GarageModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.GarageModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/garage/import": {
+        "/api/garage_import": {
             "post": {
                 "description": "Register garage (useful for importing data)",
                 "consumes": [
@@ -428,50 +472,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.GarageModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/garage/{id}": {
-            "get": {
-                "description": "Get garage by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "garage"
-                ],
-                "summary": "Get garage by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Garage ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.GarageModel"
                         }
                     },
                     "404": {
@@ -548,6 +548,94 @@
             }
         },
         "/api/owner": {
+            "post": {
+                "description": "Register owner",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Create a new owner",
+                "parameters": [
+                    {
+                        "description": "Register owner",
+                        "name": "owner",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.OwnerModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.OwnerModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/owner/{id}": {
+            "get": {
+                "description": "Get owner by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "owner"
+                ],
+                "summary": "Get owner by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Owner ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.OwnerModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit owner",
                 "consumes": [
@@ -598,53 +686,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register owner",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "owner"
-                ],
-                "summary": "Create a new owner",
-                "parameters": [
-                    {
-                        "description": "Register owner",
-                        "name": "owner",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.OwnerModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.OwnerModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/owner/import": {
+        "/api/owner_import": {
             "post": {
                 "description": "Register owner (useful for importing data)",
                 "consumes": [
@@ -679,50 +723,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.OwnerModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/owner/{id}": {
-            "get": {
-                "description": "Get owner by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "owner"
-                ],
-                "summary": "Get owner by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Owner ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.OwnerModel"
                         }
                     },
                     "404": {
@@ -799,6 +799,94 @@
             }
         },
         "/api/permission": {
+            "post": {
+                "description": "Register permission",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "permission"
+                ],
+                "summary": "Create a new permission",
+                "parameters": [
+                    {
+                        "description": "Register permission",
+                        "name": "permission",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.PermissionModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.PermissionModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permission/{id}": {
+            "get": {
+                "description": "Get permission by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "permission"
+                ],
+                "summary": "Get permission by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.PermissionModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit permission",
                 "consumes": [
@@ -849,53 +937,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register permission",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "permission"
-                ],
-                "summary": "Create a new permission",
-                "parameters": [
-                    {
-                        "description": "Register permission",
-                        "name": "permission",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.PermissionModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.PermissionModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/permission/import": {
+        "/api/permission_import": {
             "post": {
                 "description": "Register permission (useful for importing data)",
                 "consumes": [
@@ -930,50 +974,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.PermissionModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/permission/{id}": {
-            "get": {
-                "description": "Get permission by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "permission"
-                ],
-                "summary": "Get permission by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Permission ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.PermissionModel"
                         }
                     },
                     "404": {
@@ -1050,6 +1050,94 @@
             }
         },
         "/api/spare_part": {
+            "post": {
+                "description": "Register spare_part",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "spare_part"
+                ],
+                "summary": "Create a new spare_part",
+                "parameters": [
+                    {
+                        "description": "Register spare_part",
+                        "name": "spare_part",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.SparePartModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SparePartModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/spare_part/{id}": {
+            "get": {
+                "description": "Get spare_part by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "spare_part"
+                ],
+                "summary": "Get spare_part by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SparePart ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SparePartModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit spare_part",
                 "consumes": [
@@ -1100,53 +1188,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register spare_part",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "spare_part"
-                ],
-                "summary": "Create a new spare_part",
-                "parameters": [
-                    {
-                        "description": "Register spare_part",
-                        "name": "spare_part",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.SparePartModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SparePartModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/spare_part/import": {
+        "/api/spare_part_import": {
             "post": {
                 "description": "Register spare_part (useful for importing data)",
                 "consumes": [
@@ -1181,50 +1225,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.SparePartModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/spare_part/{id}": {
-            "get": {
-                "description": "Get spare_part by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "spare_part"
-                ],
-                "summary": "Get spare_part by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "SparePart ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SparePartModel"
                         }
                     },
                     "404": {
@@ -1301,6 +1301,94 @@
             }
         },
         "/api/supplier": {
+            "post": {
+                "description": "Register supplier",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "supplier"
+                ],
+                "summary": "Create a new supplier",
+                "parameters": [
+                    {
+                        "description": "Register supplier",
+                        "name": "supplier",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.SupplierModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SupplierModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/supplier/{id}": {
+            "get": {
+                "description": "Get supplier by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "supplier"
+                ],
+                "summary": "Get supplier by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Supplier ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SupplierModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit supplier",
                 "consumes": [
@@ -1351,53 +1439,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register supplier",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "supplier"
-                ],
-                "summary": "Create a new supplier",
-                "parameters": [
-                    {
-                        "description": "Register supplier",
-                        "name": "supplier",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.SupplierModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SupplierModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/supplier/import": {
+        "/api/supplier_import": {
             "post": {
                 "description": "Register supplier (useful for importing data)",
                 "consumes": [
@@ -1432,50 +1476,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.SupplierModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/supplier/{id}": {
-            "get": {
-                "description": "Get supplier by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "supplier"
-                ],
-                "summary": "Get supplier by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Supplier ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SupplierModel"
                         }
                     },
                     "404": {
@@ -1552,6 +1552,94 @@
             }
         },
         "/api/vehicle": {
+            "post": {
+                "description": "Register vehicle",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "vehicle"
+                ],
+                "summary": "Create a new vehicle",
+                "parameters": [
+                    {
+                        "description": "Register vehicle",
+                        "name": "vehicle",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.VehicleModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.VehicleModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicle/{id}": {
+            "get": {
+                "description": "Get vehicle by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "vehicle"
+                ],
+                "summary": "Get vehicle by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Vehicle ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.VehicleModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseError"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Edit vehicle",
                 "consumes": [
@@ -1602,53 +1690,9 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Register vehicle",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "vehicle"
-                ],
-                "summary": "Create a new vehicle",
-                "parameters": [
-                    {
-                        "description": "Register vehicle",
-                        "name": "vehicle",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.VehicleModel"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.VehicleModel"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
             }
         },
-        "/api/vehicle/import": {
+        "/api/vehicle_import": {
             "post": {
                 "description": "Register vehicle (useful for importing data)",
                 "consumes": [
@@ -1683,50 +1727,6 @@
                             "items": {
                                 "$ref": "#/definitions/models.VehicleModel"
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.ResponseError"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/vehicle/{id}": {
-            "get": {
-                "description": "Get vehicle by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "vehicle"
-                ],
-                "summary": "Get vehicle by ID",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Vehicle ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.VehicleModel"
                         }
                     },
                     "404": {
@@ -2073,7 +2073,6 @@
                 },
                 "updated_at": {
                     "type": "string",
-                    "format": "date-time",
                     "x-date": true
                 }
             }

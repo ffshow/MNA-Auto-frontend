@@ -1,0 +1,57 @@
+{{define "service" -}}
+//CODE GENERATED, DO NOT EDIT.
+import 'package:dio/dio.dart';
+import 'package:mna/models/models.dart';
+
+// {{.Name}}
+class {{.Name}}{
+  final Dio _dio;
+
+  {{.Name}}(this._dio);
+{{range .Funcs}}
+  /// ### {{.Summary}}
+  /// Description: {{.Description}}
+  {{- range .QueryParams}}
+  ///
+  /// Query param: **{{.Name}}** {{.Type}} {{.Description}}
+  {{- end}}
+  {{- if .QueryParams}} 
+  /// 
+  {{- end}}
+  {{- range .PathParams}}
+  ///
+  /// Path param: **{{.Name}}** {{.Type}}
+  {{- end}}
+  /// 
+  /// Path {{.Path}}
+  {{.Return}} {{.Name}}({{.StrParams}}) async{
+    final Response response = await _dio.{{.Method}}(
+      "{{.SanitizePath}}",
+      queryParameters: <String, dynamic>{
+        {{- range .QueryParams}}
+        if ({{.Name}} != null) "{{.Name}}": {{.Name}},
+        {{- end -}}
+        },
+    );
+    {{- range $key, $value := .Responses}}
+    if (response.statusCode == {{$key}}){
+    {{- if eq $key 200}}
+        {{- if eq $value.Schema.Type "array"}}
+        return (response.data as List)
+          .map((e) => {{.Return}}.fromJson(e))
+          .toList();
+        {{- else}}
+        return {{.Return}}.fromJson(response.data as Map<String, Object?>);
+        {{- end}}
+    {{- else}}
+    final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    {{- end}}
+    } 
+    {{end}}
+    throw Exception("Something went wrong");
+  }
+{{end}}
+}
+{{end}}

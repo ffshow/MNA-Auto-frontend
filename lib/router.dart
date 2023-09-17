@@ -40,6 +40,12 @@ final GoRouter router = GoRouter(
             return const GaragePage();
           },
         ),
+        GoRoute(
+          path: 'suppliers',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SupplierPage();
+          },
+        ),
       ],
     ),
   ],

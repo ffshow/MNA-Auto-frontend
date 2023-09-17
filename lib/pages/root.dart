@@ -38,6 +38,13 @@ class RootPage extends StatelessWidget {
             },
             child: const Text('garages'),
           ),
+          kH8,
+          ElevatedButton(
+            onPressed: () {
+              context.go('/suppliers');
+            },
+            child: const Text('suppliers'),
+          ),
         ],
       ),
     );

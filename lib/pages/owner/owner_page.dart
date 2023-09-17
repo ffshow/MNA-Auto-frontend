@@ -41,6 +41,8 @@ class OwnerPage extends StatelessWidget {
       ),
     );
   }
+
+  void _addOwner(BuildContext context) {}
 }
 
 class OwnerListWidget extends StatelessWidget {

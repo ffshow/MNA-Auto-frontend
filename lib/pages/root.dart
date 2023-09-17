@@ -31,6 +31,13 @@ class RootPage extends StatelessWidget {
             },
             child: const Text('create vehicle'),
           ),
+          kH8,
+          ElevatedButton(
+            onPressed: () {
+              context.go('/garage');
+            },
+            child: const Text('garages'),
+          ),
         ],
       ),
     );

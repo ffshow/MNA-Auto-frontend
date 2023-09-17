@@ -34,6 +34,12 @@ final GoRouter router = GoRouter(
             return const CreateVechilePage();
           },
         ),
+        GoRoute(
+          path: 'garage',
+          builder: (BuildContext context, GoRouterState state) {
+            return const GaragePage();
+          },
+        ),
       ],
     ),
   ],

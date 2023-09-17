@@ -4,7 +4,10 @@ import 'package:mna/models/garage_model/garage_model.dart';
 import 'package:mna/pages/garage/state/garage_cubit.dart';
 import 'package:mna/services/services.dart';
 import 'package:mna/utils/extensions.dart';
+import 'package:mna/utils/style.dart';
 import 'package:mna/widget/widget.dart';
+
+import 'create/create_garage_widget.dart';
 
 class GaragePage extends StatelessWidget {
   const GaragePage({super.key});
@@ -18,30 +21,53 @@ class GaragePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Garage page'),
+          actions: [
+            IconButton(
+              tooltip: 'Import data',
+              onPressed: () {
+                ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                  const SnackBar(content: Text('not implemented yet!')),
+                );
+              },
+              icon: const Icon(Icons.import_contacts),
+            ),
+          ],
         ),
-        body: BlocBuilder<GarageCubit, GarageState>(
-          builder: (BuildContext context, GarageState state) {
-            return state.when(
-              success: (List<GarageModel> garages) {
-                return GarageListPage(source: GarageDataTableSource(garages));
-              },
-              initial: () {
-                return const LoadingWidget();
-              },
-              failure: (String error) {
-                return AppErrorWidget(error: error);
-              },
-            );
-          },
+        body: Padding(
+          padding: kEdgeAll8,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const CreateGarageWidget(),
+                kH16,
+                BlocBuilder<GarageCubit, GarageState>(
+                  builder: (BuildContext context, GarageState state) {
+                    return state.when(
+                      success: (List<GarageModel> garages) {
+                        return GarageListWidget(
+                            source: GarageDataTableSource(garages));
+                      },
+                      initial: () {
+                        return const LoadingWidget();
+                      },
+                      failure: (String error) {
+                        return AppErrorWidget(error: error);
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-class GarageListPage extends StatelessWidget {
+class GarageListWidget extends StatelessWidget {
   final GarageDataTableSource source;
-  const GarageListPage({super.key, required this.source});
+  const GarageListWidget({super.key, required this.source});
 
   @override
   Widget build(BuildContext context) {

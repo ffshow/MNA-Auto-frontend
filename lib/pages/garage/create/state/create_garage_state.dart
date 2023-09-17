@@ -1,4 +1,4 @@
-part of 'create_vehicle_cubit.dart';
+part of 'create_garage_cubit.dart';
 
 enum StateStatus {
   initial,
@@ -14,29 +14,29 @@ extension StateStatusX on StateStatus {
   bool get isFailure => this == StateStatus.failure;
 }
 
-final class CreateVehicleState extends Equatable {
+final class CreateGarageState extends Equatable {
   final StateStatus status;
-  final CreateVehicleModel? vehicle;
   final String? error;
+  final CreateGarageModel? model;
 
-  const CreateVehicleState({
+  const CreateGarageState({
     required this.status,
-    this.vehicle,
     this.error,
+    this.model,
   });
 
-  CreateVehicleState copyWith({
+  CreateGarageState copyWith({
     StateStatus? status,
     String? error,
-    CreateVehicleModel? vehicle,
+    CreateGarageModel? model,
   }) {
-    return CreateVehicleState(
+    return CreateGarageState(
       status: status ?? this.status,
       error: error ?? this.error,
-      vehicle: vehicle ?? this.vehicle,
+      model: model ?? this.model,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[status, vehicle, error];
+  List<Object?> get props => <Object?>[status, error, model];
 }

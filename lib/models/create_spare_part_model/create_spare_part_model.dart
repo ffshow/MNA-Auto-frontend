@@ -9,8 +9,8 @@ part 'create_spare_part_model.g.dart';
 @freezed
 class CreateSparePartModel with _$CreateSparePartModel {
   const factory CreateSparePartModel({
-    required String barcode,
-    required String reference,
+    @Default(null) String? barcode,
+    @Default(null) String? reference,
   }) = _CreateSparePartModel;
 
   factory CreateSparePartModel.fromJson(Map<String, Object?> json) =>

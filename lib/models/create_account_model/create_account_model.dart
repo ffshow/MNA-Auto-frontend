@@ -9,8 +9,8 @@ part 'create_account_model.g.dart';
 @freezed
 class CreateAccountModel with _$CreateAccountModel {
   const factory CreateAccountModel({
-    required String email,
-    required String name,
+    @Default(null) String? email,
+    @Default(null) String? name,
   }) = _CreateAccountModel;
 
   factory CreateAccountModel.fromJson(Map<String, Object?> json) =>

@@ -9,8 +9,8 @@ part of 'create_account_model.dart';
 _$_CreateAccountModel _$$_CreateAccountModelFromJson(
         Map<String, dynamic> json) =>
     _$_CreateAccountModel(
-      email: json['email'] as String,
-      name: json['name'] as String,
+      email: json['email'] as String? ?? null,
+      name: json['name'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreateAccountModelToJson(

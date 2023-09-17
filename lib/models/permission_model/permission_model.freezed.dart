@@ -20,11 +20,11 @@ PermissionModel _$PermissionModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PermissionModel {
-  String get label => throw _privateConstructorUsedError;
-  DateTime get updated_at => throw _privateConstructorUsedError;
-  bool get available => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
+  bool? get available => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
+  DateTime? get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $PermissionModelCopyWith<$Res> {
       _$PermissionModelCopyWithImpl<$Res, PermissionModel>;
   @useResult
   $Res call(
-      {String label,
-      DateTime updated_at,
-      bool available,
-      DateTime created_at,
-      String id});
+      {bool? available,
+      DateTime? created_at,
+      String? id,
+      String? label,
+      DateTime? updated_at});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$PermissionModelCopyWithImpl<$Res, $Val extends PermissionModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
-    Object? updated_at = null,
-    Object? available = null,
-    Object? created_at = null,
-    Object? id = null,
+    Object? available = freezed,
+    Object? created_at = freezed,
+    Object? id = freezed,
+    Object? label = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_value.copyWith(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      available: null == available
+      available: freezed == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
-              as bool,
-      created_at: null == created_at
+              as bool?,
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      id: null == id
+              as DateTime?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$_PermissionModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String label,
-      DateTime updated_at,
-      bool available,
-      DateTime created_at,
-      String id});
+      {bool? available,
+      DateTime? created_at,
+      String? id,
+      String? label,
+      DateTime? updated_at});
 }
 
 /// @nodoc
@@ -117,33 +117,33 @@ class __$$_PermissionModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
-    Object? updated_at = null,
-    Object? available = null,
-    Object? created_at = null,
-    Object? id = null,
+    Object? available = freezed,
+    Object? created_at = freezed,
+    Object? id = freezed,
+    Object? label = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_$_PermissionModel(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      available: null == available
+      available: freezed == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
-              as bool,
-      created_at: null == created_at
+              as bool?,
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      id: null == id
+              as DateTime?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -152,30 +152,34 @@ class __$$_PermissionModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PermissionModel implements _PermissionModel {
   const _$_PermissionModel(
-      {required this.label,
-      required this.updated_at,
-      this.available = false,
-      required this.created_at,
-      required this.id});
+      {this.available = null,
+      this.created_at = null,
+      this.id = null,
+      this.label = null,
+      this.updated_at = null});
 
   factory _$_PermissionModel.fromJson(Map<String, dynamic> json) =>
       _$$_PermissionModelFromJson(json);
 
   @override
-  final String label;
-  @override
-  final DateTime updated_at;
+  @JsonKey()
+  final bool? available;
   @override
   @JsonKey()
-  final bool available;
+  final DateTime? created_at;
   @override
-  final DateTime created_at;
+  @JsonKey()
+  final String? id;
   @override
-  final String id;
+  @JsonKey()
+  final String? label;
+  @override
+  @JsonKey()
+  final DateTime? updated_at;
 
   @override
   String toString() {
-    return 'PermissionModel(label: $label, updated_at: $updated_at, available: $available, created_at: $created_at, id: $id)';
+    return 'PermissionModel(available: $available, created_at: $created_at, id: $id, label: $label, updated_at: $updated_at)';
   }
 
   @override
@@ -183,20 +187,20 @@ class _$_PermissionModel implements _PermissionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PermissionModel &&
-            (identical(other.label, label) || other.label == label) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
             (identical(other.available, available) ||
                 other.available == available) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, label, updated_at, available, created_at, id);
+      Object.hash(runtimeType, available, created_at, id, label, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -214,25 +218,25 @@ class _$_PermissionModel implements _PermissionModel {
 
 abstract class _PermissionModel implements PermissionModel {
   const factory _PermissionModel(
-      {required final String label,
-      required final DateTime updated_at,
-      final bool available,
-      required final DateTime created_at,
-      required final String id}) = _$_PermissionModel;
+      {final bool? available,
+      final DateTime? created_at,
+      final String? id,
+      final String? label,
+      final DateTime? updated_at}) = _$_PermissionModel;
 
   factory _PermissionModel.fromJson(Map<String, dynamic> json) =
       _$_PermissionModel.fromJson;
 
   @override
-  String get label;
+  bool? get available;
   @override
-  DateTime get updated_at;
+  DateTime? get created_at;
   @override
-  bool get available;
+  String? get id;
   @override
-  DateTime get created_at;
+  String? get label;
   @override
-  String get id;
+  DateTime? get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_PermissionModelCopyWith<_$_PermissionModel> get copyWith =>

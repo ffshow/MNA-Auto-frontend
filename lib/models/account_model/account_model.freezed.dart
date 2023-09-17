@@ -20,11 +20,11 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AccountModel {
-  DateTime get created_at => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  DateTime get updated_at => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  DateTime? get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $AccountModelCopyWith<$Res> {
       _$AccountModelCopyWithImpl<$Res, AccountModel>;
   @useResult
   $Res call(
-      {DateTime created_at,
-      String email,
-      String id,
-      String name,
-      DateTime updated_at});
+      {DateTime? created_at,
+      String? email,
+      String? id,
+      String? name,
+      DateTime? updated_at});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? created_at = null,
-    Object? email = null,
-    Object? id = null,
-    Object? name = null,
-    Object? updated_at = null,
+    Object? created_at = freezed,
+    Object? email = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_value.copyWith(
-      created_at: null == created_at
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      email: null == email
+              as DateTime?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
+              as String?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
+              as String?,
+      updated_at: freezed == updated_at
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$_AccountModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DateTime created_at,
-      String email,
-      String id,
-      String name,
-      DateTime updated_at});
+      {DateTime? created_at,
+      String? email,
+      String? id,
+      String? name,
+      DateTime? updated_at});
 }
 
 /// @nodoc
@@ -117,33 +117,33 @@ class __$$_AccountModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? created_at = null,
-    Object? email = null,
-    Object? id = null,
-    Object? name = null,
-    Object? updated_at = null,
+    Object? created_at = freezed,
+    Object? email = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_$_AccountModel(
-      created_at: null == created_at
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      email: null == email
+              as DateTime?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
+              as String?,
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
+              as String?,
+      updated_at: freezed == updated_at
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -152,25 +152,30 @@ class __$$_AccountModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AccountModel implements _AccountModel {
   const _$_AccountModel(
-      {required this.created_at,
-      required this.email,
-      required this.id,
-      required this.name,
-      required this.updated_at});
+      {this.created_at = null,
+      this.email = null,
+      this.id = null,
+      this.name = null,
+      this.updated_at = null});
 
   factory _$_AccountModel.fromJson(Map<String, dynamic> json) =>
       _$$_AccountModelFromJson(json);
 
   @override
-  final DateTime created_at;
+  @JsonKey()
+  final DateTime? created_at;
   @override
-  final String email;
+  @JsonKey()
+  final String? email;
   @override
-  final String id;
+  @JsonKey()
+  final String? id;
   @override
-  final String name;
+  @JsonKey()
+  final String? name;
   @override
-  final DateTime updated_at;
+  @JsonKey()
+  final DateTime? updated_at;
 
   @override
   String toString() {
@@ -212,25 +217,25 @@ class _$_AccountModel implements _AccountModel {
 
 abstract class _AccountModel implements AccountModel {
   const factory _AccountModel(
-      {required final DateTime created_at,
-      required final String email,
-      required final String id,
-      required final String name,
-      required final DateTime updated_at}) = _$_AccountModel;
+      {final DateTime? created_at,
+      final String? email,
+      final String? id,
+      final String? name,
+      final DateTime? updated_at}) = _$_AccountModel;
 
   factory _AccountModel.fromJson(Map<String, dynamic> json) =
       _$_AccountModel.fromJson;
 
   @override
-  DateTime get created_at;
+  DateTime? get created_at;
   @override
-  String get email;
+  String? get email;
   @override
-  String get id;
+  String? get id;
   @override
-  String get name;
+  String? get name;
   @override
-  DateTime get updated_at;
+  DateTime? get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_AccountModelCopyWith<_$_AccountModel> get copyWith =>

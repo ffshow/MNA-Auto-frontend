@@ -9,7 +9,7 @@ part of 'create_supplier_model.dart';
 _$_CreateSupplierModel _$$_CreateSupplierModelFromJson(
         Map<String, dynamic> json) =>
     _$_CreateSupplierModel(
-      name: json['name'] as String,
+      name: json['name'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreateSupplierModelToJson(

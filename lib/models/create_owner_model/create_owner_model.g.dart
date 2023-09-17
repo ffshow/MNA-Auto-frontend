@@ -8,18 +8,18 @@ part of 'create_owner_model.dart';
 
 _$_CreateOwnerModel _$$_CreateOwnerModelFromJson(Map<String, dynamic> json) =>
     _$_CreateOwnerModel(
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      photo: json['photo'] as String,
-      postal_code: json['postal_code'] as String,
-      address: json['address'] as String,
+      address: json['address'] as String? ?? null,
+      email: json['email'] as String? ?? null,
+      phone: json['phone'] as String? ?? null,
+      photo: json['photo'] as String? ?? null,
+      postal_code: json['postal_code'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreateOwnerModelToJson(_$_CreateOwnerModel instance) =>
     <String, dynamic>{
+      'address': instance.address,
       'email': instance.email,
       'phone': instance.phone,
       'photo': instance.photo,
       'postal_code': instance.postal_code,
-      'address': instance.address,
     };

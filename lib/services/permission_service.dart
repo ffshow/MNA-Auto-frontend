@@ -105,39 +105,6 @@ class PermissionService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Create many permission
-  /// Description: Register permission (useful for importing data)
-  ///
-  /// Path /api/permission_import
-  Future<List<CreatePermissionModel>> postApiPermissionImport(
-    PermissionModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/permission_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreatePermissionModel.fromJson(e))
-          .toList();
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### List permission
   /// Description: List permission
   ///
@@ -173,6 +140,39 @@ class PermissionService {
     }
 
     if (response.statusCode == 503) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create many permission
+  /// Description: Register permission (useful for importing data)
+  ///
+  /// Path /api/permission_import
+  Future<List<CreatePermissionModel>> postApiPermissionImport(
+    PermissionModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/permission_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreatePermissionModel.fromJson(e))
+          .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

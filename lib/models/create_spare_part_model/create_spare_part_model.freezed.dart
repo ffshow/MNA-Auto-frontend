@@ -20,8 +20,8 @@ CreateSparePartModel _$CreateSparePartModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateSparePartModel {
-  String get barcode => throw _privateConstructorUsedError;
-  String get reference => throw _privateConstructorUsedError;
+  String? get barcode => throw _privateConstructorUsedError;
+  String? get reference => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $CreateSparePartModelCopyWith<$Res> {
           $Res Function(CreateSparePartModel) then) =
       _$CreateSparePartModelCopyWithImpl<$Res, CreateSparePartModel>;
   @useResult
-  $Res call({String barcode, String reference});
+  $Res call({String? barcode, String? reference});
 }
 
 /// @nodoc
@@ -52,18 +52,18 @@ class _$CreateSparePartModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? barcode = null,
-    Object? reference = null,
+    Object? barcode = freezed,
+    Object? reference = freezed,
   }) {
     return _then(_value.copyWith(
-      barcode: null == barcode
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
-              as String,
-      reference: null == reference
+              as String?,
+      reference: freezed == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -76,7 +76,7 @@ abstract class _$$_CreateSparePartModelCopyWith<$Res>
       __$$_CreateSparePartModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String barcode, String reference});
+  $Res call({String? barcode, String? reference});
 }
 
 /// @nodoc
@@ -90,18 +90,18 @@ class __$$_CreateSparePartModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? barcode = null,
-    Object? reference = null,
+    Object? barcode = freezed,
+    Object? reference = freezed,
   }) {
     return _then(_$_CreateSparePartModel(
-      barcode: null == barcode
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
-              as String,
-      reference: null == reference
+              as String?,
+      reference: freezed == reference
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -109,16 +109,17 @@ class __$$_CreateSparePartModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CreateSparePartModel implements _CreateSparePartModel {
-  const _$_CreateSparePartModel(
-      {required this.barcode, required this.reference});
+  const _$_CreateSparePartModel({this.barcode = null, this.reference = null});
 
   factory _$_CreateSparePartModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateSparePartModelFromJson(json);
 
   @override
-  final String barcode;
+  @JsonKey()
+  final String? barcode;
   @override
-  final String reference;
+  @JsonKey()
+  final String? reference;
 
   @override
   String toString() {
@@ -156,16 +157,16 @@ class _$_CreateSparePartModel implements _CreateSparePartModel {
 
 abstract class _CreateSparePartModel implements CreateSparePartModel {
   const factory _CreateSparePartModel(
-      {required final String barcode,
-      required final String reference}) = _$_CreateSparePartModel;
+      {final String? barcode,
+      final String? reference}) = _$_CreateSparePartModel;
 
   factory _CreateSparePartModel.fromJson(Map<String, dynamic> json) =
       _$_CreateSparePartModel.fromJson;
 
   @override
-  String get barcode;
+  String? get barcode;
   @override
-  String get reference;
+  String? get reference;
   @override
   @JsonKey(ignore: true)
   _$$_CreateSparePartModelCopyWith<_$_CreateSparePartModel> get copyWith =>

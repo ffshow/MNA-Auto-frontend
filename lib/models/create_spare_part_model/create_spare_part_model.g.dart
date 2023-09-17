@@ -9,8 +9,8 @@ part of 'create_spare_part_model.dart';
 _$_CreateSparePartModel _$$_CreateSparePartModelFromJson(
         Map<String, dynamic> json) =>
     _$_CreateSparePartModel(
-      barcode: json['barcode'] as String,
-      reference: json['reference'] as String,
+      barcode: json['barcode'] as String? ?? null,
+      reference: json['reference'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreateSparePartModelToJson(

@@ -20,7 +20,7 @@ CreateGarageModel _$CreateGarageModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateGarageModel {
-  String get label => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $CreateGarageModelCopyWith<$Res> {
           CreateGarageModel value, $Res Function(CreateGarageModel) then) =
       _$CreateGarageModelCopyWithImpl<$Res, CreateGarageModel>;
   @useResult
-  $Res call({String label});
+  $Res call({String? label});
 }
 
 /// @nodoc
@@ -50,13 +50,13 @@ class _$CreateGarageModelCopyWithImpl<$Res, $Val extends CreateGarageModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
+    Object? label = freezed,
   }) {
     return _then(_value.copyWith(
-      label: null == label
+      label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -69,7 +69,7 @@ abstract class _$$_CreateGarageModelCopyWith<$Res>
       __$$_CreateGarageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label});
+  $Res call({String? label});
 }
 
 /// @nodoc
@@ -83,13 +83,13 @@ class __$$_CreateGarageModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
+    Object? label = freezed,
   }) {
     return _then(_$_CreateGarageModel(
-      label: null == label
+      label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -97,13 +97,14 @@ class __$$_CreateGarageModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CreateGarageModel implements _CreateGarageModel {
-  const _$_CreateGarageModel({required this.label});
+  const _$_CreateGarageModel({this.label = null});
 
   factory _$_CreateGarageModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateGarageModelFromJson(json);
 
   @override
-  final String label;
+  @JsonKey()
+  final String? label;
 
   @override
   String toString() {
@@ -138,14 +139,14 @@ class _$_CreateGarageModel implements _CreateGarageModel {
 }
 
 abstract class _CreateGarageModel implements CreateGarageModel {
-  const factory _CreateGarageModel({required final String label}) =
+  const factory _CreateGarageModel({final String? label}) =
       _$_CreateGarageModel;
 
   factory _CreateGarageModel.fromJson(Map<String, dynamic> json) =
       _$_CreateGarageModel.fromJson;
 
   @override
-  String get label;
+  String? get label;
   @override
   @JsonKey(ignore: true)
   _$$_CreateGarageModelCopyWith<_$_CreateGarageModel> get copyWith =>

@@ -71,9 +71,9 @@ class VehicleDataSrouce extends DataTableSource {
     final VehicleModel e = vehicles.elementAt(index);
     return DataRow(
       cells: [
-        DataCell(Text(e.serial_number)),
-        DataCell(Text(e.created_at.toIso8601String())),
-        DataCell(Text(e.updated_at.toIso8601String())),
+        DataCell(Text(e.serial_number ?? '')),
+        DataCell(Text(e.created_at?.toIso8601String() ?? '')),
+        DataCell(Text(e.updated_at?.toIso8601String() ?? '')),
         DataCell(Row(
           children: [
             IconButton(

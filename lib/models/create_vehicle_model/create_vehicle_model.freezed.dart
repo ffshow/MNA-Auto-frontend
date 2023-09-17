@@ -20,21 +20,21 @@ CreateVehicleModel _$CreateVehicleModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateVehicleModel {
-  bool get procedure_ve => throw _privateConstructorUsedError;
-  String get sold_at => throw _privateConstructorUsedError;
-  String get chrono => throw _privateConstructorUsedError;
-  String get collection_date => throw _privateConstructorUsedError;
-  String get commercial_name => throw _privateConstructorUsedError;
-  bool get expertise => throw _privateConstructorUsedError;
-  int get mileage => throw _privateConstructorUsedError;
-  String get note => throw _privateConstructorUsedError;
-  String get owner_id => throw _privateConstructorUsedError;
-  String get registration => throw _privateConstructorUsedError;
-  String get serial_number => throw _privateConstructorUsedError;
-  String get delivery_date => throw _privateConstructorUsedError;
-  String get first_circulation => throw _privateConstructorUsedError;
-  dynamic get info => throw _privateConstructorUsedError;
-  String get current_status => throw _privateConstructorUsedError;
+  String? get chrono => throw _privateConstructorUsedError;
+  String? get commercial_name => throw _privateConstructorUsedError;
+  String? get sold_at => throw _privateConstructorUsedError;
+  bool? get expertise => throw _privateConstructorUsedError;
+  String? get first_circulation => throw _privateConstructorUsedError;
+  String? get serial_number => throw _privateConstructorUsedError;
+  int? get mileage => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
+  String? get owner_id => throw _privateConstructorUsedError;
+  String? get collection_date => throw _privateConstructorUsedError;
+  String? get current_status => throw _privateConstructorUsedError;
+  String? get delivery_date => throw _privateConstructorUsedError;
+  dynamic? get info => throw _privateConstructorUsedError;
+  bool? get procedure_ve => throw _privateConstructorUsedError;
+  String? get registration => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,21 +49,21 @@ abstract class $CreateVehicleModelCopyWith<$Res> {
       _$CreateVehicleModelCopyWithImpl<$Res, CreateVehicleModel>;
   @useResult
   $Res call(
-      {bool procedure_ve,
-      String sold_at,
-      String chrono,
-      String collection_date,
-      String commercial_name,
-      bool expertise,
-      int mileage,
-      String note,
-      String owner_id,
-      String registration,
-      String serial_number,
-      String delivery_date,
-      String first_circulation,
-      dynamic info,
-      String current_status});
+      {String? chrono,
+      String? commercial_name,
+      String? sold_at,
+      bool? expertise,
+      String? first_circulation,
+      String? serial_number,
+      int? mileage,
+      String? note,
+      String? owner_id,
+      String? collection_date,
+      String? current_status,
+      String? delivery_date,
+      dynamic? info,
+      bool? procedure_ve,
+      String? registration});
 }
 
 /// @nodoc
@@ -79,83 +79,83 @@ class _$CreateVehicleModelCopyWithImpl<$Res, $Val extends CreateVehicleModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? procedure_ve = null,
-    Object? sold_at = null,
-    Object? chrono = null,
-    Object? collection_date = null,
-    Object? commercial_name = null,
-    Object? expertise = null,
-    Object? mileage = null,
-    Object? note = null,
-    Object? owner_id = null,
-    Object? registration = null,
-    Object? serial_number = null,
-    Object? delivery_date = null,
-    Object? first_circulation = null,
+    Object? chrono = freezed,
+    Object? commercial_name = freezed,
+    Object? sold_at = freezed,
+    Object? expertise = freezed,
+    Object? first_circulation = freezed,
+    Object? serial_number = freezed,
+    Object? mileage = freezed,
+    Object? note = freezed,
+    Object? owner_id = freezed,
+    Object? collection_date = freezed,
+    Object? current_status = freezed,
+    Object? delivery_date = freezed,
     Object? info = freezed,
-    Object? current_status = null,
+    Object? procedure_ve = freezed,
+    Object? registration = freezed,
   }) {
     return _then(_value.copyWith(
-      procedure_ve: null == procedure_ve
-          ? _value.procedure_ve
-          : procedure_ve // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sold_at: null == sold_at
-          ? _value.sold_at
-          : sold_at // ignore: cast_nullable_to_non_nullable
-              as String,
-      chrono: null == chrono
+      chrono: freezed == chrono
           ? _value.chrono
           : chrono // ignore: cast_nullable_to_non_nullable
-              as String,
-      collection_date: null == collection_date
-          ? _value.collection_date
-          : collection_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      commercial_name: null == commercial_name
+              as String?,
+      commercial_name: freezed == commercial_name
           ? _value.commercial_name
           : commercial_name // ignore: cast_nullable_to_non_nullable
-              as String,
-      expertise: null == expertise
+              as String?,
+      sold_at: freezed == sold_at
+          ? _value.sold_at
+          : sold_at // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expertise: freezed == expertise
           ? _value.expertise
           : expertise // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mileage: null == mileage
-          ? _value.mileage
-          : mileage // ignore: cast_nullable_to_non_nullable
-              as int,
-      note: null == note
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String,
-      owner_id: null == owner_id
-          ? _value.owner_id
-          : owner_id // ignore: cast_nullable_to_non_nullable
-              as String,
-      registration: null == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
-              as String,
-      serial_number: null == serial_number
-          ? _value.serial_number
-          : serial_number // ignore: cast_nullable_to_non_nullable
-              as String,
-      delivery_date: null == delivery_date
-          ? _value.delivery_date
-          : delivery_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      first_circulation: null == first_circulation
+              as bool?,
+      first_circulation: freezed == first_circulation
           ? _value.first_circulation
           : first_circulation // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      serial_number: freezed == serial_number
+          ? _value.serial_number
+          : serial_number // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mileage: freezed == mileage
+          ? _value.mileage
+          : mileage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
+      owner_id: freezed == owner_id
+          ? _value.owner_id
+          : owner_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      collection_date: freezed == collection_date
+          ? _value.collection_date
+          : collection_date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      current_status: freezed == current_status
+          ? _value.current_status
+          : current_status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      delivery_date: freezed == delivery_date
+          ? _value.delivery_date
+          : delivery_date // ignore: cast_nullable_to_non_nullable
+              as String?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      current_status: null == current_status
-          ? _value.current_status
-          : current_status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic?,
+      procedure_ve: freezed == procedure_ve
+          ? _value.procedure_ve
+          : procedure_ve // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      registration: freezed == registration
+          ? _value.registration
+          : registration // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -169,21 +169,21 @@ abstract class _$$_CreateVehicleModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool procedure_ve,
-      String sold_at,
-      String chrono,
-      String collection_date,
-      String commercial_name,
-      bool expertise,
-      int mileage,
-      String note,
-      String owner_id,
-      String registration,
-      String serial_number,
-      String delivery_date,
-      String first_circulation,
-      dynamic info,
-      String current_status});
+      {String? chrono,
+      String? commercial_name,
+      String? sold_at,
+      bool? expertise,
+      String? first_circulation,
+      String? serial_number,
+      int? mileage,
+      String? note,
+      String? owner_id,
+      String? collection_date,
+      String? current_status,
+      String? delivery_date,
+      dynamic? info,
+      bool? procedure_ve,
+      String? registration});
 }
 
 /// @nodoc
@@ -197,83 +197,83 @@ class __$$_CreateVehicleModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? procedure_ve = null,
-    Object? sold_at = null,
-    Object? chrono = null,
-    Object? collection_date = null,
-    Object? commercial_name = null,
-    Object? expertise = null,
-    Object? mileage = null,
-    Object? note = null,
-    Object? owner_id = null,
-    Object? registration = null,
-    Object? serial_number = null,
-    Object? delivery_date = null,
-    Object? first_circulation = null,
+    Object? chrono = freezed,
+    Object? commercial_name = freezed,
+    Object? sold_at = freezed,
+    Object? expertise = freezed,
+    Object? first_circulation = freezed,
+    Object? serial_number = freezed,
+    Object? mileage = freezed,
+    Object? note = freezed,
+    Object? owner_id = freezed,
+    Object? collection_date = freezed,
+    Object? current_status = freezed,
+    Object? delivery_date = freezed,
     Object? info = freezed,
-    Object? current_status = null,
+    Object? procedure_ve = freezed,
+    Object? registration = freezed,
   }) {
     return _then(_$_CreateVehicleModel(
-      procedure_ve: null == procedure_ve
-          ? _value.procedure_ve
-          : procedure_ve // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sold_at: null == sold_at
-          ? _value.sold_at
-          : sold_at // ignore: cast_nullable_to_non_nullable
-              as String,
-      chrono: null == chrono
+      chrono: freezed == chrono
           ? _value.chrono
           : chrono // ignore: cast_nullable_to_non_nullable
-              as String,
-      collection_date: null == collection_date
-          ? _value.collection_date
-          : collection_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      commercial_name: null == commercial_name
+              as String?,
+      commercial_name: freezed == commercial_name
           ? _value.commercial_name
           : commercial_name // ignore: cast_nullable_to_non_nullable
-              as String,
-      expertise: null == expertise
+              as String?,
+      sold_at: freezed == sold_at
+          ? _value.sold_at
+          : sold_at // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expertise: freezed == expertise
           ? _value.expertise
           : expertise // ignore: cast_nullable_to_non_nullable
-              as bool,
-      mileage: null == mileage
-          ? _value.mileage
-          : mileage // ignore: cast_nullable_to_non_nullable
-              as int,
-      note: null == note
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String,
-      owner_id: null == owner_id
-          ? _value.owner_id
-          : owner_id // ignore: cast_nullable_to_non_nullable
-              as String,
-      registration: null == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
-              as String,
-      serial_number: null == serial_number
-          ? _value.serial_number
-          : serial_number // ignore: cast_nullable_to_non_nullable
-              as String,
-      delivery_date: null == delivery_date
-          ? _value.delivery_date
-          : delivery_date // ignore: cast_nullable_to_non_nullable
-              as String,
-      first_circulation: null == first_circulation
+              as bool?,
+      first_circulation: freezed == first_circulation
           ? _value.first_circulation
           : first_circulation // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      serial_number: freezed == serial_number
+          ? _value.serial_number
+          : serial_number // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mileage: freezed == mileage
+          ? _value.mileage
+          : mileage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
+      owner_id: freezed == owner_id
+          ? _value.owner_id
+          : owner_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      collection_date: freezed == collection_date
+          ? _value.collection_date
+          : collection_date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      current_status: freezed == current_status
+          ? _value.current_status
+          : current_status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      delivery_date: freezed == delivery_date
+          ? _value.delivery_date
+          : delivery_date // ignore: cast_nullable_to_non_nullable
+              as String?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      current_status: null == current_status
-          ? _value.current_status
-          : current_status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic?,
+      procedure_ve: freezed == procedure_ve
+          ? _value.procedure_ve
+          : procedure_ve // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      registration: freezed == registration
+          ? _value.registration
+          : registration // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -282,61 +282,74 @@ class __$$_CreateVehicleModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CreateVehicleModel implements _CreateVehicleModel {
   const _$_CreateVehicleModel(
-      {this.procedure_ve = false,
-      required this.sold_at,
-      required this.chrono,
-      required this.collection_date,
-      required this.commercial_name,
-      this.expertise = false,
-      required this.mileage,
-      required this.note,
-      required this.owner_id,
-      required this.registration,
-      required this.serial_number,
-      required this.delivery_date,
-      required this.first_circulation,
-      required this.info,
-      required this.current_status});
+      {this.chrono = null,
+      this.commercial_name = null,
+      this.sold_at = null,
+      this.expertise = null,
+      this.first_circulation = null,
+      this.serial_number = null,
+      this.mileage = null,
+      this.note = null,
+      this.owner_id = null,
+      this.collection_date = null,
+      this.current_status = null,
+      this.delivery_date = null,
+      this.info = null,
+      this.procedure_ve = null,
+      this.registration = null});
 
   factory _$_CreateVehicleModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateVehicleModelFromJson(json);
 
   @override
   @JsonKey()
-  final bool procedure_ve;
-  @override
-  final String sold_at;
-  @override
-  final String chrono;
-  @override
-  final String collection_date;
-  @override
-  final String commercial_name;
+  final String? chrono;
   @override
   @JsonKey()
-  final bool expertise;
+  final String? commercial_name;
   @override
-  final int mileage;
+  @JsonKey()
+  final String? sold_at;
   @override
-  final String note;
+  @JsonKey()
+  final bool? expertise;
   @override
-  final String owner_id;
+  @JsonKey()
+  final String? first_circulation;
   @override
-  final String registration;
+  @JsonKey()
+  final String? serial_number;
   @override
-  final String serial_number;
+  @JsonKey()
+  final int? mileage;
   @override
-  final String delivery_date;
+  @JsonKey()
+  final String? note;
   @override
-  final String first_circulation;
+  @JsonKey()
+  final String? owner_id;
   @override
-  final dynamic info;
+  @JsonKey()
+  final String? collection_date;
   @override
-  final String current_status;
+  @JsonKey()
+  final String? current_status;
+  @override
+  @JsonKey()
+  final String? delivery_date;
+  @override
+  @JsonKey()
+  final dynamic? info;
+  @override
+  @JsonKey()
+  final bool? procedure_ve;
+  @override
+  @JsonKey()
+  final String? registration;
 
   @override
   String toString() {
-    return 'CreateVehicleModel(procedure_ve: $procedure_ve, sold_at: $sold_at, chrono: $chrono, collection_date: $collection_date, commercial_name: $commercial_name, expertise: $expertise, mileage: $mileage, note: $note, owner_id: $owner_id, registration: $registration, serial_number: $serial_number, delivery_date: $delivery_date, first_circulation: $first_circulation, info: $info, current_status: $current_status)';
+    return 'CreateVehicleModel(chrono: $chrono, commercial_name: $commercial_name, sold_at: $sold_at, expertise: $expertise, first_circulation: $first_circulation, serial_number: $serial_number, mileage: $mileage, note: $note, owner_id: $owner_id, collection_date: $collection_date, current_status: $current_status, delivery_date: $delivery_date, info: $info, procedure_ve: $procedure_ve, registration: $registration)';
   }
 
   @override
@@ -344,52 +357,52 @@ class _$_CreateVehicleModel implements _CreateVehicleModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateVehicleModel &&
-            (identical(other.procedure_ve, procedure_ve) ||
-                other.procedure_ve == procedure_ve) &&
-            (identical(other.sold_at, sold_at) || other.sold_at == sold_at) &&
             (identical(other.chrono, chrono) || other.chrono == chrono) &&
-            (identical(other.collection_date, collection_date) ||
-                other.collection_date == collection_date) &&
             (identical(other.commercial_name, commercial_name) ||
                 other.commercial_name == commercial_name) &&
+            (identical(other.sold_at, sold_at) || other.sold_at == sold_at) &&
             (identical(other.expertise, expertise) ||
                 other.expertise == expertise) &&
+            (identical(other.first_circulation, first_circulation) ||
+                other.first_circulation == first_circulation) &&
+            (identical(other.serial_number, serial_number) ||
+                other.serial_number == serial_number) &&
             (identical(other.mileage, mileage) || other.mileage == mileage) &&
             (identical(other.note, note) || other.note == note) &&
             (identical(other.owner_id, owner_id) ||
                 other.owner_id == owner_id) &&
-            (identical(other.registration, registration) ||
-                other.registration == registration) &&
-            (identical(other.serial_number, serial_number) ||
-                other.serial_number == serial_number) &&
+            (identical(other.collection_date, collection_date) ||
+                other.collection_date == collection_date) &&
+            (identical(other.current_status, current_status) ||
+                other.current_status == current_status) &&
             (identical(other.delivery_date, delivery_date) ||
                 other.delivery_date == delivery_date) &&
-            (identical(other.first_circulation, first_circulation) ||
-                other.first_circulation == first_circulation) &&
             const DeepCollectionEquality().equals(other.info, info) &&
-            (identical(other.current_status, current_status) ||
-                other.current_status == current_status));
+            (identical(other.procedure_ve, procedure_ve) ||
+                other.procedure_ve == procedure_ve) &&
+            (identical(other.registration, registration) ||
+                other.registration == registration));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      procedure_ve,
-      sold_at,
       chrono,
-      collection_date,
       commercial_name,
+      sold_at,
       expertise,
+      first_circulation,
+      serial_number,
       mileage,
       note,
       owner_id,
-      registration,
-      serial_number,
+      collection_date,
+      current_status,
       delivery_date,
-      first_circulation,
       const DeepCollectionEquality().hash(info),
-      current_status);
+      procedure_ve,
+      registration);
 
   @JsonKey(ignore: true)
   @override
@@ -408,55 +421,55 @@ class _$_CreateVehicleModel implements _CreateVehicleModel {
 
 abstract class _CreateVehicleModel implements CreateVehicleModel {
   const factory _CreateVehicleModel(
-      {final bool procedure_ve,
-      required final String sold_at,
-      required final String chrono,
-      required final String collection_date,
-      required final String commercial_name,
-      final bool expertise,
-      required final int mileage,
-      required final String note,
-      required final String owner_id,
-      required final String registration,
-      required final String serial_number,
-      required final String delivery_date,
-      required final String first_circulation,
-      required final dynamic info,
-      required final String current_status}) = _$_CreateVehicleModel;
+      {final String? chrono,
+      final String? commercial_name,
+      final String? sold_at,
+      final bool? expertise,
+      final String? first_circulation,
+      final String? serial_number,
+      final int? mileage,
+      final String? note,
+      final String? owner_id,
+      final String? collection_date,
+      final String? current_status,
+      final String? delivery_date,
+      final dynamic? info,
+      final bool? procedure_ve,
+      final String? registration}) = _$_CreateVehicleModel;
 
   factory _CreateVehicleModel.fromJson(Map<String, dynamic> json) =
       _$_CreateVehicleModel.fromJson;
 
   @override
-  bool get procedure_ve;
+  String? get chrono;
   @override
-  String get sold_at;
+  String? get commercial_name;
   @override
-  String get chrono;
+  String? get sold_at;
   @override
-  String get collection_date;
+  bool? get expertise;
   @override
-  String get commercial_name;
+  String? get first_circulation;
   @override
-  bool get expertise;
+  String? get serial_number;
   @override
-  int get mileage;
+  int? get mileage;
   @override
-  String get note;
+  String? get note;
   @override
-  String get owner_id;
+  String? get owner_id;
   @override
-  String get registration;
+  String? get collection_date;
   @override
-  String get serial_number;
+  String? get current_status;
   @override
-  String get delivery_date;
+  String? get delivery_date;
   @override
-  String get first_circulation;
+  dynamic? get info;
   @override
-  dynamic get info;
+  bool? get procedure_ve;
   @override
-  String get current_status;
+  String? get registration;
   @override
   @JsonKey(ignore: true)
   _$$_CreateVehicleModelCopyWith<_$_CreateVehicleModel> get copyWith =>

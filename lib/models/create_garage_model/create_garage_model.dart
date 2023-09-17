@@ -9,7 +9,7 @@ part 'create_garage_model.g.dart';
 @freezed
 class CreateGarageModel with _$CreateGarageModel {
   const factory CreateGarageModel({
-    required String label,
+    @Default(null) String? label,
   }) = _CreateGarageModel;
 
   factory CreateGarageModel.fromJson(Map<String, Object?> json) =>

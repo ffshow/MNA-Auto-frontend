@@ -9,13 +9,13 @@ part of 'create_permission_model.dart';
 _$_CreatePermissionModel _$$_CreatePermissionModelFromJson(
         Map<String, dynamic> json) =>
     _$_CreatePermissionModel(
-      label: json['label'] as String,
-      available: json['available'] as bool? ?? false,
+      available: json['available'] as bool? ?? null,
+      label: json['label'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreatePermissionModelToJson(
         _$_CreatePermissionModel instance) =>
     <String, dynamic>{
-      'label': instance.label,
       'available': instance.available,
+      'label': instance.label,
     };

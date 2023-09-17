@@ -9,7 +9,7 @@ part 'create_supplier_model.g.dart';
 @freezed
 class CreateSupplierModel with _$CreateSupplierModel {
   const factory CreateSupplierModel({
-    required String name,
+    @Default(null) String? name,
   }) = _CreateSupplierModel;
 
   factory CreateSupplierModel.fromJson(Map<String, Object?> json) =>

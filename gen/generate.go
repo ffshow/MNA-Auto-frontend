@@ -377,19 +377,21 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 				t = "DateTime"
 			}
 			dt := MapToDartType(t)
-			if !f.Nullable {
-				if dt == "bool" {
-					def.WriteString("@Default(false)" + " " + dt + " ")
-				} else {
-					def.WriteString("required" + " " + dt + " ")
-				}
-			} else {
-				if dt == "bool" {
-					def.WriteString("@Default(false) " + dt + "? ")
-				} else {
-					def.WriteString("@Default(null) " + dt + "? ")
-				}
-			}
+			def.WriteString("@Default(null) " + dt + "? ")
+			//FIXME: all fields are nullable now
+			// if !f.Nullable {
+			// 	if dt == "bool" {
+			// 		def.WriteString("@Default(false)" + " " + dt + " ")
+			// 	} else {
+			// 		def.WriteString("required" + " " + dt + " ")
+			// 	}
+			// } else {
+			// 	if dt == "bool" {
+			// 		def.WriteString("@Default(false) " + dt + "? ")
+			// 	} else {
+			// 		def.WriteString("@Default(null) " + dt + "? ")
+			// 	}
+			// }
 			def.WriteString(k + ",")
 			dartFields = append(dartFields, DartField{
 				Definition: def.String(),

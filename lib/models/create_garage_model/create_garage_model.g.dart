@@ -8,7 +8,7 @@ part of 'create_garage_model.dart';
 
 _$_CreateGarageModel _$$_CreateGarageModelFromJson(Map<String, dynamic> json) =>
     _$_CreateGarageModel(
-      label: json['label'] as String,
+      label: json['label'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CreateGarageModelToJson(

@@ -20,7 +20,7 @@ InfoModel _$InfoModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$InfoModel {
-  String get label => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $InfoModelCopyWith<$Res> {
   factory $InfoModelCopyWith(InfoModel value, $Res Function(InfoModel) then) =
       _$InfoModelCopyWithImpl<$Res, InfoModel>;
   @useResult
-  $Res call({String label});
+  $Res call({String? label});
 }
 
 /// @nodoc
@@ -49,13 +49,13 @@ class _$InfoModelCopyWithImpl<$Res, $Val extends InfoModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
+    Object? label = freezed,
   }) {
     return _then(_value.copyWith(
-      label: null == label
+      label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -67,7 +67,7 @@ abstract class _$$_InfoModelCopyWith<$Res> implements $InfoModelCopyWith<$Res> {
       __$$_InfoModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label});
+  $Res call({String? label});
 }
 
 /// @nodoc
@@ -81,13 +81,13 @@ class __$$_InfoModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
+    Object? label = freezed,
   }) {
     return _then(_$_InfoModel(
-      label: null == label
+      label: freezed == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -95,13 +95,14 @@ class __$$_InfoModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_InfoModel implements _InfoModel {
-  const _$_InfoModel({required this.label});
+  const _$_InfoModel({this.label = null});
 
   factory _$_InfoModel.fromJson(Map<String, dynamic> json) =>
       _$$_InfoModelFromJson(json);
 
   @override
-  final String label;
+  @JsonKey()
+  final String? label;
 
   @override
   String toString() {
@@ -135,13 +136,13 @@ class _$_InfoModel implements _InfoModel {
 }
 
 abstract class _InfoModel implements InfoModel {
-  const factory _InfoModel({required final String label}) = _$_InfoModel;
+  const factory _InfoModel({final String? label}) = _$_InfoModel;
 
   factory _InfoModel.fromJson(Map<String, dynamic> json) =
       _$_InfoModel.fromJson;
 
   @override
-  String get label;
+  String? get label;
   @override
   @JsonKey(ignore: true)
   _$$_InfoModelCopyWith<_$_InfoModel> get copyWith =>

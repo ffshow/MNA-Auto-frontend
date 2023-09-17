@@ -20,11 +20,11 @@ CreateOwnerModel _$CreateOwnerModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateOwnerModel {
-  String get email => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
-  String get photo => throw _privateConstructorUsedError;
-  String get postal_code => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get postal_code => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $CreateOwnerModelCopyWith<$Res> {
       _$CreateOwnerModelCopyWithImpl<$Res, CreateOwnerModel>;
   @useResult
   $Res call(
-      {String email,
-      String phone,
-      String photo,
-      String postal_code,
-      String address});
+      {String? address,
+      String? email,
+      String? phone,
+      String? photo,
+      String? postal_code});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$CreateOwnerModelCopyWithImpl<$Res, $Val extends CreateOwnerModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? phone = null,
-    Object? photo = null,
-    Object? postal_code = null,
-    Object? address = null,
+    Object? address = freezed,
+    Object? email = freezed,
+    Object? phone = freezed,
+    Object? photo = freezed,
+    Object? postal_code = freezed,
   }) {
     return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
-      postal_code: null == postal_code
-          ? _value.postal_code
-          : postal_code // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postal_code: freezed == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$_CreateOwnerModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String email,
-      String phone,
-      String photo,
-      String postal_code,
-      String address});
+      {String? address,
+      String? email,
+      String? phone,
+      String? photo,
+      String? postal_code});
 }
 
 /// @nodoc
@@ -117,33 +117,33 @@ class __$$_CreateOwnerModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? phone = null,
-    Object? photo = null,
-    Object? postal_code = null,
-    Object? address = null,
+    Object? address = freezed,
+    Object? email = freezed,
+    Object? phone = freezed,
+    Object? photo = freezed,
+    Object? postal_code = freezed,
   }) {
     return _then(_$_CreateOwnerModel(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      photo: null == photo
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
-              as String,
-      postal_code: null == postal_code
-          ? _value.postal_code
-          : postal_code // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postal_code: freezed == postal_code
+          ? _value.postal_code
+          : postal_code // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,29 +152,34 @@ class __$$_CreateOwnerModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CreateOwnerModel implements _CreateOwnerModel {
   const _$_CreateOwnerModel(
-      {required this.email,
-      required this.phone,
-      required this.photo,
-      required this.postal_code,
-      required this.address});
+      {this.address = null,
+      this.email = null,
+      this.phone = null,
+      this.photo = null,
+      this.postal_code = null});
 
   factory _$_CreateOwnerModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateOwnerModelFromJson(json);
 
   @override
-  final String email;
+  @JsonKey()
+  final String? address;
   @override
-  final String phone;
+  @JsonKey()
+  final String? email;
   @override
-  final String photo;
+  @JsonKey()
+  final String? phone;
   @override
-  final String postal_code;
+  @JsonKey()
+  final String? photo;
   @override
-  final String address;
+  @JsonKey()
+  final String? postal_code;
 
   @override
   String toString() {
-    return 'CreateOwnerModel(email: $email, phone: $phone, photo: $photo, postal_code: $postal_code, address: $address)';
+    return 'CreateOwnerModel(address: $address, email: $email, phone: $phone, photo: $photo, postal_code: $postal_code)';
   }
 
   @override
@@ -182,18 +187,18 @@ class _$_CreateOwnerModel implements _CreateOwnerModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateOwnerModel &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.postal_code, postal_code) ||
-                other.postal_code == postal_code) &&
-            (identical(other.address, address) || other.address == address));
+                other.postal_code == postal_code));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, email, phone, photo, postal_code, address);
+      Object.hash(runtimeType, address, email, phone, photo, postal_code);
 
   @JsonKey(ignore: true)
   @override
@@ -211,25 +216,25 @@ class _$_CreateOwnerModel implements _CreateOwnerModel {
 
 abstract class _CreateOwnerModel implements CreateOwnerModel {
   const factory _CreateOwnerModel(
-      {required final String email,
-      required final String phone,
-      required final String photo,
-      required final String postal_code,
-      required final String address}) = _$_CreateOwnerModel;
+      {final String? address,
+      final String? email,
+      final String? phone,
+      final String? photo,
+      final String? postal_code}) = _$_CreateOwnerModel;
 
   factory _CreateOwnerModel.fromJson(Map<String, dynamic> json) =
       _$_CreateOwnerModel.fromJson;
 
   @override
-  String get email;
+  String? get address;
   @override
-  String get phone;
+  String? get email;
   @override
-  String get photo;
+  String? get phone;
   @override
-  String get postal_code;
+  String? get photo;
   @override
-  String get address;
+  String? get postal_code;
   @override
   @JsonKey(ignore: true)
   _$$_CreateOwnerModelCopyWith<_$_CreateOwnerModel> get copyWith =>

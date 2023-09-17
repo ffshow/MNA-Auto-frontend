@@ -74,7 +74,7 @@ class OwnerDataSrouce extends DataTableSource {
       cells: [
         DataCell(Text(e.email ?? '')),
         DataCell(Text(e.address ?? '')),
-        DataCell(Text(e.created_at.toIso8601String())),
+        DataCell(Text(e.created_at?.toIso8601String() ?? '')),
         DataCell(Row(
           children: [
             IconButton(

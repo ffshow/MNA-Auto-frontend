@@ -3,13 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mna/models/models.dart';
 import 'package:mna/pages/vehicle_create/state/create_vehicle_cubit.dart';
 import 'package:mna/services/services.dart';
 import 'package:mna/utils/recase.dart';
 import 'package:mna/utils/style.dart';
-
-final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
 const SnackBar successSnackBar = SnackBar(
   content: Text('Vehicle has been created successfully'),
@@ -18,6 +15,8 @@ const SnackBar successSnackBar = SnackBar(
 const SnackBar loadingSnackBar = SnackBar(
   content: Text('Creating a new vehicle...'),
 );
+
+final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
 class CreateVechilePage extends StatelessWidget {
   const CreateVechilePage({super.key});
@@ -103,7 +102,7 @@ class CreateVechilePage extends StatelessWidget {
                           FormBuilderValidators.required<DateTime?>(),
                         ]),
                         valueTransformer: (value) {
-                          return value?.toIso8601String();
+                          return value?.toUtc().toIso8601String();
                         },
                       ),
                       // serial number
@@ -136,7 +135,9 @@ class CreateVechilePage extends StatelessWidget {
                         items: List.generate(
                           3,
                           (int index) => DropdownMenuItem(
-                            value: index.toString(),
+                            value: index == 0
+                                ? '65005460b40777ab605fa163'
+                                : index.toString(),
                             child: Text('Fake owner ${index + 1}'),
                           ),
                         ).toList(),
@@ -148,12 +149,7 @@ class CreateVechilePage extends StatelessWidget {
                         // state.vehicle?.current_status as VehicleStatus?,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(labelText: 'Status'),
-                        valueTransformer: (VehicleStatus? value) {
-                          return value?.name;
-                          // return value?.toString();
-                          // print(value?.name);
-                          // return value?.name;
-                        },
+                        valueTransformer: (VehicleStatus? value) => value?.name,
                         items: VehicleStatus.values
                             .map((e) => DropdownMenuItem(
                                   value: e,
@@ -175,8 +171,8 @@ class CreateVechilePage extends StatelessWidget {
                         validator: FormBuilderValidators.compose<DateTime?>([
                           FormBuilderValidators.required<DateTime?>(),
                         ]),
-                        valueTransformer: (value) {
-                          return value?.toIso8601String();
+                        valueTransformer: (DateTime? value) {
+                          return value?.toUtc().toIso8601String();
                         },
                       ),
                       // collection date
@@ -193,7 +189,7 @@ class CreateVechilePage extends StatelessWidget {
                           FormBuilderValidators.required<DateTime?>(),
                         ]),
                         valueTransformer: (value) {
-                          return value?.toIso8601String();
+                          return value?.toUtc().toIso8601String();
                         },
                       ),
                       // delivery date
@@ -210,7 +206,7 @@ class CreateVechilePage extends StatelessWidget {
                           FormBuilderValidators.required<DateTime?>(),
                         ]),
                         valueTransformer: (value) {
-                          return value?.toIso8601String();
+                          return value?.toUtc().toIso8601String();
                         },
                       ),
                       // expertise
@@ -272,22 +268,6 @@ class CreateVechilePage extends StatelessWidget {
             }
 
             if (state.status.isSuccess) {
-              // _formKey.currentState?.patchValue({
-              //   'mileage': null,
-              //   'owner_id': null,
-              //   'procedure_ve': null,
-              //   'collection_date': null,
-              //   'delivery_date': null,
-              //   'commercial_name': null,
-              //   'first_circulation': null,
-              //   'registration': null,
-              //   'serial_number': null,
-              //   'note': null,
-              //   'sold_at': null,
-              //   'chrono': null,
-              //   'current_status': null,
-              //   'expertise': null,
-              // });
               ScaffoldMessenger.maybeOf(context)?.showSnackBar(successSnackBar);
             }
 
@@ -305,7 +285,9 @@ class CreateVechilePage extends StatelessWidget {
   void _create(BuildContext context) {
     final bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (isValid) {
-      final Map<String, Object?> value = _formKey.currentState!.value;
+      final Map<String, Object?> value = Map.of(_formKey.currentState!.value);
+      //FIXME:
+      value['owner_id'] = '65005460b40777ab605fa163';
       context.read<CreateVehicleCubit>().create(value);
     }
   }

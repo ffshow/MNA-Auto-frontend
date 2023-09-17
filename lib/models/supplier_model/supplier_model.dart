@@ -9,10 +9,10 @@ part 'supplier_model.g.dart';
 @freezed
 class SupplierModel with _$SupplierModel {
   const factory SupplierModel({
-    required String id,
-    required String name,
-    required DateTime updated_at,
-    required DateTime created_at,
+    @Default(null) DateTime? created_at,
+    @Default(null) String? id,
+    @Default(null) String? name,
+    @Default(null) DateTime? updated_at,
   }) = _SupplierModel;
 
   factory SupplierModel.fromJson(Map<String, Object?> json) =>

@@ -20,7 +20,7 @@ CreateSupplierModel _$CreateSupplierModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateSupplierModel {
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $CreateSupplierModelCopyWith<$Res> {
           CreateSupplierModel value, $Res Function(CreateSupplierModel) then) =
       _$CreateSupplierModelCopyWithImpl<$Res, CreateSupplierModel>;
   @useResult
-  $Res call({String name});
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -50,13 +50,13 @@ class _$CreateSupplierModelCopyWithImpl<$Res, $Val extends CreateSupplierModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -69,7 +69,7 @@ abstract class _$$_CreateSupplierModelCopyWith<$Res>
       __$$_CreateSupplierModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name});
+  $Res call({String? name});
 }
 
 /// @nodoc
@@ -83,13 +83,13 @@ class __$$_CreateSupplierModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
+    Object? name = freezed,
   }) {
     return _then(_$_CreateSupplierModel(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -97,13 +97,14 @@ class __$$_CreateSupplierModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CreateSupplierModel implements _CreateSupplierModel {
-  const _$_CreateSupplierModel({required this.name});
+  const _$_CreateSupplierModel({this.name = null});
 
   factory _$_CreateSupplierModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateSupplierModelFromJson(json);
 
   @override
-  final String name;
+  @JsonKey()
+  final String? name;
 
   @override
   String toString() {
@@ -138,14 +139,14 @@ class _$_CreateSupplierModel implements _CreateSupplierModel {
 }
 
 abstract class _CreateSupplierModel implements CreateSupplierModel {
-  const factory _CreateSupplierModel({required final String name}) =
+  const factory _CreateSupplierModel({final String? name}) =
       _$_CreateSupplierModel;
 
   factory _CreateSupplierModel.fromJson(Map<String, dynamic> json) =
       _$_CreateSupplierModel.fromJson;
 
   @override
-  String get name;
+  String? get name;
   @override
   @JsonKey(ignore: true)
   _$$_CreateSupplierModelCopyWith<_$_CreateSupplierModel> get copyWith =>

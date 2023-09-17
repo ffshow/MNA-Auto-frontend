@@ -9,11 +9,11 @@ part 'account_model.g.dart';
 @freezed
 class AccountModel with _$AccountModel {
   const factory AccountModel({
-    required DateTime created_at,
-    required String email,
-    required String id,
-    required String name,
-    required DateTime updated_at,
+    @Default(null) DateTime? created_at,
+    @Default(null) String? email,
+    @Default(null) String? id,
+    @Default(null) String? name,
+    @Default(null) DateTime? updated_at,
   }) = _AccountModel;
 
   factory AccountModel.fromJson(Map<String, Object?> json) =>

@@ -21,8 +21,8 @@ CreatePermissionModel _$CreatePermissionModelFromJson(
 
 /// @nodoc
 mixin _$CreatePermissionModel {
-  String get label => throw _privateConstructorUsedError;
-  bool get available => throw _privateConstructorUsedError;
+  bool? get available => throw _privateConstructorUsedError;
+  String? get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $CreatePermissionModelCopyWith<$Res> {
           $Res Function(CreatePermissionModel) then) =
       _$CreatePermissionModelCopyWithImpl<$Res, CreatePermissionModel>;
   @useResult
-  $Res call({String label, bool available});
+  $Res call({bool? available, String? label});
 }
 
 /// @nodoc
@@ -53,18 +53,18 @@ class _$CreatePermissionModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
-    Object? available = null,
+    Object? available = freezed,
+    Object? label = freezed,
   }) {
     return _then(_value.copyWith(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      available: null == available
+      available: freezed == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -77,7 +77,7 @@ abstract class _$$_CreatePermissionModelCopyWith<$Res>
       __$$_CreatePermissionModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String label, bool available});
+  $Res call({bool? available, String? label});
 }
 
 /// @nodoc
@@ -91,18 +91,18 @@ class __$$_CreatePermissionModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = null,
-    Object? available = null,
+    Object? available = freezed,
+    Object? label = freezed,
   }) {
     return _then(_$_CreatePermissionModel(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      available: null == available
+      available: freezed == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      label: freezed == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -110,20 +110,21 @@ class __$$_CreatePermissionModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CreatePermissionModel implements _CreatePermissionModel {
-  const _$_CreatePermissionModel({required this.label, this.available = false});
+  const _$_CreatePermissionModel({this.available = null, this.label = null});
 
   factory _$_CreatePermissionModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreatePermissionModelFromJson(json);
 
   @override
-  final String label;
+  @JsonKey()
+  final bool? available;
   @override
   @JsonKey()
-  final bool available;
+  final String? label;
 
   @override
   String toString() {
-    return 'CreatePermissionModel(label: $label, available: $available)';
+    return 'CreatePermissionModel(available: $available, label: $label)';
   }
 
   @override
@@ -131,14 +132,14 @@ class _$_CreatePermissionModel implements _CreatePermissionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreatePermissionModel &&
-            (identical(other.label, label) || other.label == label) &&
             (identical(other.available, available) ||
-                other.available == available));
+                other.available == available) &&
+            (identical(other.label, label) || other.label == label));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, label, available);
+  int get hashCode => Object.hash(runtimeType, available, label);
 
   @JsonKey(ignore: true)
   @override
@@ -157,16 +158,15 @@ class _$_CreatePermissionModel implements _CreatePermissionModel {
 
 abstract class _CreatePermissionModel implements CreatePermissionModel {
   const factory _CreatePermissionModel(
-      {required final String label,
-      final bool available}) = _$_CreatePermissionModel;
+      {final bool? available, final String? label}) = _$_CreatePermissionModel;
 
   factory _CreatePermissionModel.fromJson(Map<String, dynamic> json) =
       _$_CreatePermissionModel.fromJson;
 
   @override
-  String get label;
+  bool? get available;
   @override
-  bool get available;
+  String? get label;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePermissionModelCopyWith<_$_CreatePermissionModel> get copyWith =>

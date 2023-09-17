@@ -20,8 +20,8 @@ ResponseError _$ResponseErrorFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ResponseError {
-  int get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  int? get code => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $ResponseErrorCopyWith<$Res> {
           ResponseError value, $Res Function(ResponseError) then) =
       _$ResponseErrorCopyWithImpl<$Res, ResponseError>;
   @useResult
-  $Res call({int code, String message});
+  $Res call({int? code, String? message});
 }
 
 /// @nodoc
@@ -51,18 +51,18 @@ class _$ResponseErrorCopyWithImpl<$Res, $Val extends ResponseError>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = null,
-    Object? message = null,
+    Object? code = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      code: null == code
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as int,
-      message: null == message
+              as int?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$_ResponseErrorCopyWith<$Res>
       __$$_ResponseErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int code, String message});
+  $Res call({int? code, String? message});
 }
 
 /// @nodoc
@@ -89,18 +89,18 @@ class __$$_ResponseErrorCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = null,
-    Object? message = null,
+    Object? code = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$_ResponseError(
-      code: null == code
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as int,
-      message: null == message
+              as int?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -108,15 +108,17 @@ class __$$_ResponseErrorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ResponseError implements _ResponseError {
-  const _$_ResponseError({required this.code, required this.message});
+  const _$_ResponseError({this.code = null, this.message = null});
 
   factory _$_ResponseError.fromJson(Map<String, dynamic> json) =>
       _$$_ResponseErrorFromJson(json);
 
   @override
-  final int code;
+  @JsonKey()
+  final int? code;
   @override
-  final String message;
+  @JsonKey()
+  final String? message;
 
   @override
   String toString() {
@@ -151,17 +153,16 @@ class _$_ResponseError implements _ResponseError {
 }
 
 abstract class _ResponseError implements ResponseError {
-  const factory _ResponseError(
-      {required final int code,
-      required final String message}) = _$_ResponseError;
+  const factory _ResponseError({final int? code, final String? message}) =
+      _$_ResponseError;
 
   factory _ResponseError.fromJson(Map<String, dynamic> json) =
       _$_ResponseError.fromJson;
 
   @override
-  int get code;
+  int? get code;
   @override
-  String get message;
+  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$_ResponseErrorCopyWith<_$_ResponseError> get copyWith =>

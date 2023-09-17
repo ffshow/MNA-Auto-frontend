@@ -9,7 +9,7 @@ part 'info_model.g.dart';
 @freezed
 class InfoModel with _$InfoModel {
   const factory InfoModel({
-    required String label,
+    @Default(null) String? label,
   }) = _InfoModel;
 
   factory InfoModel.fromJson(Map<String, Object?> json) =>

@@ -20,10 +20,10 @@ SupplierModel _$SupplierModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SupplierModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  DateTime get updated_at => throw _privateConstructorUsedError;
-  DateTime get created_at => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  DateTime? get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,8 @@ abstract class $SupplierModelCopyWith<$Res> {
           SupplierModel value, $Res Function(SupplierModel) then) =
       _$SupplierModelCopyWithImpl<$Res, SupplierModel>;
   @useResult
-  $Res call({String id, String name, DateTime updated_at, DateTime created_at});
+  $Res call(
+      {DateTime? created_at, String? id, String? name, DateTime? updated_at});
 }
 
 /// @nodoc
@@ -53,28 +54,28 @@ class _$SupplierModelCopyWithImpl<$Res, $Val extends SupplierModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? updated_at = null,
-    Object? created_at = null,
+    Object? created_at = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: null == created_at
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -87,7 +88,8 @@ abstract class _$$_SupplierModelCopyWith<$Res>
       __$$_SupplierModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, DateTime updated_at, DateTime created_at});
+  $Res call(
+      {DateTime? created_at, String? id, String? name, DateTime? updated_at});
 }
 
 /// @nodoc
@@ -101,28 +103,28 @@ class __$$_SupplierModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? updated_at = null,
-    Object? created_at = null,
+    Object? created_at = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? updated_at = freezed,
   }) {
     return _then(_$_SupplierModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: null == created_at
+      created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -131,26 +133,30 @@ class __$$_SupplierModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SupplierModel implements _SupplierModel {
   const _$_SupplierModel(
-      {required this.id,
-      required this.name,
-      required this.updated_at,
-      required this.created_at});
+      {this.created_at = null,
+      this.id = null,
+      this.name = null,
+      this.updated_at = null});
 
   factory _$_SupplierModel.fromJson(Map<String, dynamic> json) =>
       _$$_SupplierModelFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final DateTime? created_at;
   @override
-  final String name;
+  @JsonKey()
+  final String? id;
   @override
-  final DateTime updated_at;
+  @JsonKey()
+  final String? name;
   @override
-  final DateTime created_at;
+  @JsonKey()
+  final DateTime? updated_at;
 
   @override
   String toString() {
-    return 'SupplierModel(id: $id, name: $name, updated_at: $updated_at, created_at: $created_at)';
+    return 'SupplierModel(created_at: $created_at, id: $id, name: $name, updated_at: $updated_at)';
   }
 
   @override
@@ -158,18 +164,18 @@ class _$_SupplierModel implements _SupplierModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SupplierModel &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at));
+                other.updated_at == updated_at));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, updated_at, created_at);
+      Object.hash(runtimeType, created_at, id, name, updated_at);
 
   @JsonKey(ignore: true)
   @override
@@ -187,22 +193,22 @@ class _$_SupplierModel implements _SupplierModel {
 
 abstract class _SupplierModel implements SupplierModel {
   const factory _SupplierModel(
-      {required final String id,
-      required final String name,
-      required final DateTime updated_at,
-      required final DateTime created_at}) = _$_SupplierModel;
+      {final DateTime? created_at,
+      final String? id,
+      final String? name,
+      final DateTime? updated_at}) = _$_SupplierModel;
 
   factory _SupplierModel.fromJson(Map<String, dynamic> json) =
       _$_SupplierModel.fromJson;
 
   @override
-  String get id;
+  DateTime? get created_at;
   @override
-  String get name;
+  String? get id;
   @override
-  DateTime get updated_at;
+  String? get name;
   @override
-  DateTime get created_at;
+  DateTime? get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_SupplierModelCopyWith<_$_SupplierModel> get copyWith =>

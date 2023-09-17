@@ -6,9 +6,6 @@ import 'package:mna/services/providers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  final now = DateTime.now();
-  print(now.toIso8601String());
-  print(now.toString());
   final Dio dio = Dio(
     BaseOptions(baseUrl: "http://localhost:3000/"),
   );

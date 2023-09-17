@@ -30,10 +30,12 @@ class CreateGarageWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Label',
                     suffixIcon: IconButton(
-                        tooltip: 'Create',
-                        onPressed: () => _create(context),
-                        icon: const Icon(Icons.create)),
+                      tooltip: 'Create',
+                      onPressed: () => _create(context),
+                      icon: const Icon(Icons.create),
+                    ),
                   ),
+                  onSubmitted: (value) => _create(context),
                   validator: FormBuilderValidators.compose<String>(
                     [
                       FormBuilderValidators.required<String>(),

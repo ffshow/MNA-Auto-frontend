@@ -8,37 +8,6 @@ class PermissionService {
 
   PermissionService(this._dio);
 
-  /// ### Create a new permission
-  /// Description: Register permission
-  ///
-  /// Path /api/permission
-  Future<PermissionModel> postApiPermission(
-    PermissionModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/permission",
-      data: data,
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return PermissionModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### Get permission by ID
   /// Description: Get permission by ID
   ///
@@ -83,7 +52,38 @@ class PermissionService {
   ) async {
     final Response response = await _dio.put(
       "/api/permission/$id",
-      data: data,
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return PermissionModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new permission
+  /// Description: Register permission
+  ///
+  /// Path /api/permission
+  Future<PermissionModel> postApiPermission(
+    CreatePermissionModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/permission",
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
@@ -109,17 +109,17 @@ class PermissionService {
   /// Description: Register permission (useful for importing data)
   ///
   /// Path /api/permission_import
-  Future<List<PermissionModel>> postApiPermissionImport(
+  Future<List<CreatePermissionModel>> postApiPermissionImport(
     PermissionModel data,
   ) async {
     final Response response = await _dio.post(
       "/api/permission_import",
-      data: data,
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return (response.data as List)
-          .map((e) => PermissionModel.fromJson(e))
+          .map((e) => CreatePermissionModel.fromJson(e))
           .toList();
     }
 

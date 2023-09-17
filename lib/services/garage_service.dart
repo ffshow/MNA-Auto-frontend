@@ -8,6 +8,37 @@ class GarageService {
 
   GarageService(this._dio);
 
+  /// ### Create a new garage
+  /// Description: Register garage
+  ///
+  /// Path /api/garage
+  Future<GarageModel> postApiGarage(
+    CreateGarageModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/garage",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return GarageModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### Get garage by ID
   /// Description: Get garage by ID
   ///
@@ -52,7 +83,7 @@ class GarageService {
   ) async {
     final Response response = await _dio.put(
       "/api/garage/$id",
-      data: data,
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
@@ -78,49 +109,18 @@ class GarageService {
   /// Description: Register garage (useful for importing data)
   ///
   /// Path /api/garage_import
-  Future<List<GarageModel>> postApiGarageImport(
+  Future<List<CreateGarageModel>> postApiGarageImport(
     GarageModel data,
   ) async {
     final Response response = await _dio.post(
       "/api/garage_import",
-      data: data,
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return (response.data as List)
-          .map((e) => GarageModel.fromJson(e))
+          .map((e) => CreateGarageModel.fromJson(e))
           .toList();
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create a new garage
-  /// Description: Register garage
-  ///
-  /// Path /api/garage
-  Future<GarageModel> postApiGarage(
-    GarageModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/garage",
-      data: data,
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return GarageModel.fromJson(response.data as Map<String, Object?>);
     }
 
     if (response.statusCode == 404) {

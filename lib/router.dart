@@ -28,6 +28,12 @@ final GoRouter router = GoRouter(
             return const OwnerPage();
           },
         ),
+        GoRoute(
+          path: 'create_vehicle',
+          builder: (BuildContext context, GoRouterState state) {
+            return const CreateVechilePage();
+          },
+        ),
       ],
     ),
   ],

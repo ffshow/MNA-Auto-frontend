@@ -65,7 +65,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.AccountModel"
+                            "$ref": "#/definitions/models.CreateAccountModel"
                         }
                     }
                 ],
@@ -219,7 +219,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.AccountModel"
+                                "$ref": "#/definitions/models.CreateAccountModel"
                             }
                         }
                     },
@@ -316,7 +316,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.GarageModel"
+                            "$ref": "#/definitions/models.CreateGarageModel"
                         }
                     }
                 ],
@@ -470,7 +470,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.GarageModel"
+                                "$ref": "#/definitions/models.CreateGarageModel"
                             }
                         }
                     },
@@ -567,7 +567,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.OwnerModel"
+                            "$ref": "#/definitions/models.CreateOwnerModel"
                         }
                     }
                 ],
@@ -721,7 +721,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.OwnerModel"
+                                "$ref": "#/definitions/models.CreateOwnerModel"
                             }
                         }
                     },
@@ -818,7 +818,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.PermissionModel"
+                            "$ref": "#/definitions/models.CreatePermissionModel"
                         }
                     }
                 ],
@@ -972,7 +972,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.PermissionModel"
+                                "$ref": "#/definitions/models.CreatePermissionModel"
                             }
                         }
                     },
@@ -1069,7 +1069,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.SparePartModel"
+                            "$ref": "#/definitions/models.CreateSparePartModel"
                         }
                     }
                 ],
@@ -1223,7 +1223,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.SparePartModel"
+                                "$ref": "#/definitions/models.CreateSparePartModel"
                             }
                         }
                     },
@@ -1320,7 +1320,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.SupplierModel"
+                            "$ref": "#/definitions/models.CreateSupplierModel"
                         }
                     }
                 ],
@@ -1474,7 +1474,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.SupplierModel"
+                                "$ref": "#/definitions/models.CreateSupplierModel"
                             }
                         }
                     },
@@ -1571,7 +1571,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.VehicleModel"
+                            "$ref": "#/definitions/models.CreateVehicleModel"
                         }
                     }
                 ],
@@ -1725,7 +1725,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.VehicleModel"
+                                "$ref": "#/definitions/models.CreateVehicleModel"
                             }
                         }
                     },
@@ -1858,6 +1858,125 @@
                 "updated_at": {
                     "type": "string",
                     "x-date": true
+                }
+            }
+        },
+        "models.CreateAccountModel": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateGarageModel": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateOwnerModel": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "postal_code": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreatePermissionModel": {
+            "type": "object",
+            "properties": {
+                "available": {
+                    "type": "boolean"
+                },
+                "label": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateSparePartModel": {
+            "type": "object",
+            "properties": {
+                "barcode": {
+                    "type": "string"
+                },
+                "reference": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateSupplierModel": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateVehicleModel": {
+            "type": "object",
+            "properties": {
+                "chrono": {
+                    "type": "string"
+                },
+                "collection_date": {
+                    "type": "string"
+                },
+                "commercial_name": {
+                    "type": "string"
+                },
+                "current_status": {
+                    "type": "string"
+                },
+                "delivery_date": {
+                    "type": "string"
+                },
+                "expertise": {
+                    "type": "boolean"
+                },
+                "first_circulation": {
+                    "type": "string"
+                },
+                "info": {
+                    "$ref": "#/definitions/models.InfoModel"
+                },
+                "mileage": {
+                    "type": "integer"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "owner_id": {
+                    "type": "string"
+                },
+                "procedure_ve": {
+                    "type": "boolean"
+                },
+                "registration": {
+                    "type": "string"
+                },
+                "serial_number": {
+                    "type": "string"
+                },
+                "sold_at": {
+                    "type": "string"
                 }
             }
         },

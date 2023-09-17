@@ -27,7 +27,7 @@ class {{.Name}}{
   {{.Return}} {{.Name}}({{.StrParams}}) async{
     final Response response = await _dio.{{.Method}}(
       "{{.SanitizePath}}",
-      {{- if .BodyParams }}data: data,{{end}}
+      {{- if .BodyParams }}data: data.toJson(),{{end}}
       queryParameters: <String, dynamic>{
         {{- range .QueryParams}}
         if ({{.Name}} != null) "{{.Name}}": {{.Name}},

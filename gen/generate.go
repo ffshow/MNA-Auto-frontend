@@ -60,6 +60,7 @@ type Param struct {
 	Name        string `json:"name"`
 	In          string `json:"in"`
 	Required    bool   `json:"required"`
+	Schema      Schema `json:"schema"`
 }
 
 type Response struct {
@@ -272,21 +273,32 @@ func generateServices(apiDocs ApiDocs) {
 			if len(h.Tags) != 1 {
 				continue
 			}
+			// fmt.Printf("h.Parameters: %v\n", h.Parameters)
 
-			v2 := h.Tags[0]
 			pathParams := []Param{}
 			queryParams := []Param{}
 			bodyParams := []Param{}
 			for _, p := range h.Parameters {
-				if p.In == "path" {
+				switch p.In {
+				case "path":
 					pathParams = append(pathParams, p)
-				} else if p.In == "query" {
+				case "query":
 					queryParams = append(queryParams, p)
-				} else {
-					p.Name = toPascalCase(p.Name + "_" + "model")
-					bodyParams = append(bodyParams, p)
+				case "body":
+					if p.Schema.Ref != "" {
+						sp := strings.Split(p.Schema.Ref, ".")
+						m := sp[len(sp)-1]
+						p.Name = m
+						bodyParams = append(bodyParams, p)
+					} else {
+						p.Name = toPascalCase(p.Name + "_" + "model")
+						bodyParams = append(bodyParams, p)
+					}
+				default:
+
 				}
 			}
+			v2 := h.Tags[0]
 			tags[v2] = append(tags[v2], DartFunc{
 				Return:      returnFunc,
 				Name:        FuncName(funcPath, funcMethod),

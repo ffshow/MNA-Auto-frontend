@@ -51,6 +51,70 @@ class OwnerService {
     throw Exception("Something went wrong");
   }
 
+  /// ### Create many owner
+  /// Description: Register owner (useful for importing data)
+  ///
+  /// Path /api/owner_import
+  Future<List<CreateOwnerModel>> postApiOwnerImport(
+    OwnerModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/owner_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateOwnerModel.fromJson(e))
+          .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new owner
+  /// Description: Register owner
+  ///
+  /// Path /api/owner
+  Future<OwnerModel> postApiOwner(
+    CreateOwnerModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/owner",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return OwnerModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### Get owner by ID
   /// Description: Get owner by ID
   ///
@@ -95,75 +159,11 @@ class OwnerService {
   ) async {
     final Response response = await _dio.put(
       "/api/owner/$id",
-      data: data,
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return OwnerModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create a new owner
-  /// Description: Register owner
-  ///
-  /// Path /api/owner
-  Future<OwnerModel> postApiOwner(
-    OwnerModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/owner",
-      data: data,
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return OwnerModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create many owner
-  /// Description: Register owner (useful for importing data)
-  ///
-  /// Path /api/owner_import
-  Future<List<OwnerModel>> postApiOwnerImport(
-    OwnerModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/owner_import",
-      data: data,
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => OwnerModel.fromJson(e))
-          .toList();
     }
 
     if (response.statusCode == 404) {

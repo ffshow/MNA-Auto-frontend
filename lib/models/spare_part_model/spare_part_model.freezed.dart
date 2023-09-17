@@ -20,11 +20,11 @@ SparePartModel _$SparePartModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SparePartModel {
+  DateTime get updated_at => throw _privateConstructorUsedError;
   String get barcode => throw _privateConstructorUsedError;
   DateTime get created_at => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get reference => throw _privateConstructorUsedError;
-  DateTime get updated_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $SparePartModelCopyWith<$Res> {
       _$SparePartModelCopyWithImpl<$Res, SparePartModel>;
   @useResult
   $Res call(
-      {String barcode,
+      {DateTime updated_at,
+      String barcode,
       DateTime created_at,
       String id,
-      String reference,
-      DateTime updated_at});
+      String reference});
 }
 
 /// @nodoc
@@ -59,13 +59,17 @@ class _$SparePartModelCopyWithImpl<$Res, $Val extends SparePartModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? updated_at = null,
     Object? barcode = null,
     Object? created_at = null,
     Object? id = null,
     Object? reference = null,
-    Object? updated_at = null,
   }) {
     return _then(_value.copyWith(
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       barcode: null == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
@@ -82,10 +86,6 @@ class _$SparePartModelCopyWithImpl<$Res, $Val extends SparePartModel>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$_SparePartModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String barcode,
+      {DateTime updated_at,
+      String barcode,
       DateTime created_at,
       String id,
-      String reference,
-      DateTime updated_at});
+      String reference});
 }
 
 /// @nodoc
@@ -117,13 +117,17 @@ class __$$_SparePartModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? updated_at = null,
     Object? barcode = null,
     Object? created_at = null,
     Object? id = null,
     Object? reference = null,
-    Object? updated_at = null,
   }) {
     return _then(_$_SparePartModel(
+      updated_at: null == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       barcode: null == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
@@ -140,10 +144,6 @@ class __$$_SparePartModelCopyWithImpl<$Res>
           ? _value.reference
           : reference // ignore: cast_nullable_to_non_nullable
               as String,
-      updated_at: null == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -152,15 +152,17 @@ class __$$_SparePartModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SparePartModel implements _SparePartModel {
   const _$_SparePartModel(
-      {required this.barcode,
+      {required this.updated_at,
+      required this.barcode,
       required this.created_at,
       required this.id,
-      required this.reference,
-      required this.updated_at});
+      required this.reference});
 
   factory _$_SparePartModel.fromJson(Map<String, dynamic> json) =>
       _$$_SparePartModelFromJson(json);
 
+  @override
+  final DateTime updated_at;
   @override
   final String barcode;
   @override
@@ -169,12 +171,10 @@ class _$_SparePartModel implements _SparePartModel {
   final String id;
   @override
   final String reference;
-  @override
-  final DateTime updated_at;
 
   @override
   String toString() {
-    return 'SparePartModel(barcode: $barcode, created_at: $created_at, id: $id, reference: $reference, updated_at: $updated_at)';
+    return 'SparePartModel(updated_at: $updated_at, barcode: $barcode, created_at: $created_at, id: $id, reference: $reference)';
   }
 
   @override
@@ -182,20 +182,20 @@ class _$_SparePartModel implements _SparePartModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SparePartModel &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at) &&
             (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.reference, reference) ||
-                other.reference == reference) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at));
+                other.reference == reference));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, barcode, created_at, id, reference, updated_at);
+      Object.hash(runtimeType, updated_at, barcode, created_at, id, reference);
 
   @JsonKey(ignore: true)
   @override
@@ -213,15 +213,17 @@ class _$_SparePartModel implements _SparePartModel {
 
 abstract class _SparePartModel implements SparePartModel {
   const factory _SparePartModel(
-      {required final String barcode,
+      {required final DateTime updated_at,
+      required final String barcode,
       required final DateTime created_at,
       required final String id,
-      required final String reference,
-      required final DateTime updated_at}) = _$_SparePartModel;
+      required final String reference}) = _$_SparePartModel;
 
   factory _SparePartModel.fromJson(Map<String, dynamic> json) =
       _$_SparePartModel.fromJson;
 
+  @override
+  DateTime get updated_at;
   @override
   String get barcode;
   @override
@@ -230,8 +232,6 @@ abstract class _SparePartModel implements SparePartModel {
   String get id;
   @override
   String get reference;
-  @override
-  DateTime get updated_at;
   @override
   @JsonKey(ignore: true)
   _$$_SparePartModelCopyWith<_$_SparePartModel> get copyWith =>

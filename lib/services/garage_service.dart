@@ -1,4 +1,6 @@
 //CODE GENERATED, DO NOT EDIT.
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:mna/models/models.dart';
 
@@ -8,37 +10,25 @@ class GarageService {
 
   GarageService(this._dio);
 
-  /// ### Create many garage
-  /// Description: Register garage (useful for importing data)
-  ///
-  /// Path /api/garage_import
-  Future<List<CreateGarageModel>> postApiGarageImport(
-    GarageModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/garage_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateGarageModel.fromJson(e))
-          .toList();
-    }
+  StreamController<GarageModel> createStream = StreamController.broadcast();
+  Stream<GarageModel> get onCreateGarage => createStream.stream;
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
+  StreamController<GarageModel> updateStream = StreamController.broadcast();
+  Stream<GarageModel> get onUpdateGarage => updateStream.stream;
 
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
+  StreamController<GarageModel> deleteStream = StreamController.broadcast();
+  Stream<GarageModel> get onDeleteGarage => deleteStream.stream;
 
-    throw Exception("Something went wrong");
+  void onCreate(GarageModel g) {
+    createStream.sink.add(g);
+  }
+
+  void onDelete(GarageModel g) {
+    deleteStream.sink.add(g);
+  }
+
+  void onUpdate(GarageModel g) {
+    updateStream.sink.add(g);
   }
 
   /// ### List garage
@@ -133,6 +123,39 @@ class GarageService {
     );
     if (response.statusCode == 200) {
       return GarageModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create many garage
+  /// Description: Register garage (useful for importing data)
+  ///
+  /// Path /api/garage_import
+  Future<List<CreateGarageModel>> postApiGarageImport(
+    GarageModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/garage_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateGarageModel.fromJson(e))
+          .toList();
     }
 
     if (response.statusCode == 404) {

@@ -1,5 +1,7 @@
 {{define "service" -}}
 //CODE GENERATED, DO NOT EDIT.
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:mna/models/models.dart';
 
@@ -8,6 +10,28 @@ class {{.Name}}{
   final Dio _dio;
 
   {{.Name}}(this._dio);
+
+  StreamController<{{.Model}}> createStream = StreamController.broadcast();
+  Stream<{{.Model}}> get onCreateGarage => createStream.stream;
+  
+  StreamController<{{.Model}}> updateStream = StreamController.broadcast();
+  Stream<{{.Model}}> get onUpdateGarage => updateStream.stream;
+
+  StreamController<{{.Model}}> deleteStream = StreamController.broadcast();
+  Stream<{{.Model}}> get onDeleteGarage => deleteStream.stream;
+
+  void onCreate({{.Model}} g) {
+    createStream.sink.add(g);
+  }
+
+  void onDelete({{.Model}} g) {
+    deleteStream.sink.add(g);
+  }
+
+  void onUpdate({{.Model}} g) {
+    updateStream.sink.add(g);
+  }
+
 {{range .Funcs}}
   /// ### {{.Summary}}
   /// Description: {{.Description}}

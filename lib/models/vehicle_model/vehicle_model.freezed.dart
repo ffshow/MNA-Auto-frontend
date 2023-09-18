@@ -20,24 +20,24 @@ VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VehicleModel {
-  int? get mileage => throw _privateConstructorUsedError;
-  DateTime? get sold_at => throw _privateConstructorUsedError;
-  DateTime? get created_at => throw _privateConstructorUsedError;
-  bool? get expertise => throw _privateConstructorUsedError;
-  String? get registration => throw _privateConstructorUsedError;
+  DateTime? get updated_at => throw _privateConstructorUsedError;
   String? get chrono => throw _privateConstructorUsedError;
   DateTime? get first_circulation => throw _privateConstructorUsedError;
-  String? get note => throw _privateConstructorUsedError;
-  String? get owner_id => throw _privateConstructorUsedError;
-  String? get serial_number => throw _privateConstructorUsedError;
-  DateTime? get delivery_date => throw _privateConstructorUsedError;
-  String? get commercial_name => throw _privateConstructorUsedError;
-  String? get current_status => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
-  dynamic? get info => throw _privateConstructorUsedError;
+  int? get mileage => throw _privateConstructorUsedError;
+  String? get serial_number => throw _privateConstructorUsedError;
+  DateTime? get created_at => throw _privateConstructorUsedError;
+  String? get registration => throw _privateConstructorUsedError;
+  String? get commercial_name => throw _privateConstructorUsedError;
+  bool? get expertise => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
+  DateTime? get sold_at => throw _privateConstructorUsedError;
   bool? get procedure_ve => throw _privateConstructorUsedError;
-  DateTime? get updated_at => throw _privateConstructorUsedError;
   DateTime? get collection_date => throw _privateConstructorUsedError;
+  String? get current_status => throw _privateConstructorUsedError;
+  DateTime? get delivery_date => throw _privateConstructorUsedError;
+  dynamic? get info => throw _privateConstructorUsedError;
+  String? get owner_id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,24 +52,24 @@ abstract class $VehicleModelCopyWith<$Res> {
       _$VehicleModelCopyWithImpl<$Res, VehicleModel>;
   @useResult
   $Res call(
-      {int? mileage,
-      DateTime? sold_at,
-      DateTime? created_at,
-      bool? expertise,
-      String? registration,
+      {DateTime? updated_at,
       String? chrono,
       DateTime? first_circulation,
-      String? note,
-      String? owner_id,
-      String? serial_number,
-      DateTime? delivery_date,
-      String? commercial_name,
-      String? current_status,
       String? id,
-      dynamic? info,
+      int? mileage,
+      String? serial_number,
+      DateTime? created_at,
+      String? registration,
+      String? commercial_name,
+      bool? expertise,
+      String? note,
+      DateTime? sold_at,
       bool? procedure_ve,
-      DateTime? updated_at,
-      DateTime? collection_date});
+      DateTime? collection_date,
+      String? current_status,
+      DateTime? delivery_date,
+      dynamic? info,
+      String? owner_id});
 }
 
 /// @nodoc
@@ -85,46 +85,30 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mileage = freezed,
-    Object? sold_at = freezed,
-    Object? created_at = freezed,
-    Object? expertise = freezed,
-    Object? registration = freezed,
+    Object? updated_at = freezed,
     Object? chrono = freezed,
     Object? first_circulation = freezed,
-    Object? note = freezed,
-    Object? owner_id = freezed,
-    Object? serial_number = freezed,
-    Object? delivery_date = freezed,
-    Object? commercial_name = freezed,
-    Object? current_status = freezed,
     Object? id = freezed,
-    Object? info = freezed,
+    Object? mileage = freezed,
+    Object? serial_number = freezed,
+    Object? created_at = freezed,
+    Object? registration = freezed,
+    Object? commercial_name = freezed,
+    Object? expertise = freezed,
+    Object? note = freezed,
+    Object? sold_at = freezed,
     Object? procedure_ve = freezed,
-    Object? updated_at = freezed,
     Object? collection_date = freezed,
+    Object? current_status = freezed,
+    Object? delivery_date = freezed,
+    Object? info = freezed,
+    Object? owner_id = freezed,
   }) {
     return _then(_value.copyWith(
-      mileage: freezed == mileage
-          ? _value.mileage
-          : mileage // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sold_at: freezed == sold_at
-          ? _value.sold_at
-          : sold_at // ignore: cast_nullable_to_non_nullable
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      expertise: freezed == expertise
-          ? _value.expertise
-          : expertise // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      registration: freezed == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
-              as String?,
       chrono: freezed == chrono
           ? _value.chrono
           : chrono // ignore: cast_nullable_to_non_nullable
@@ -133,50 +117,66 @@ class _$VehicleModelCopyWithImpl<$Res, $Val extends VehicleModel>
           ? _value.first_circulation
           : first_circulation // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mileage: freezed == mileage
+          ? _value.mileage
+          : mileage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      serial_number: freezed == serial_number
+          ? _value.serial_number
+          : serial_number // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      registration: freezed == registration
+          ? _value.registration
+          : registration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      commercial_name: freezed == commercial_name
+          ? _value.commercial_name
+          : commercial_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expertise: freezed == expertise
+          ? _value.expertise
+          : expertise // ignore: cast_nullable_to_non_nullable
+              as bool?,
       note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      owner_id: freezed == owner_id
-          ? _value.owner_id
-          : owner_id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serial_number: freezed == serial_number
-          ? _value.serial_number
-          : serial_number // ignore: cast_nullable_to_non_nullable
+      sold_at: freezed == sold_at
+          ? _value.sold_at
+          : sold_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      procedure_ve: freezed == procedure_ve
+          ? _value.procedure_ve
+          : procedure_ve // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      collection_date: freezed == collection_date
+          ? _value.collection_date
+          : collection_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      current_status: freezed == current_status
+          ? _value.current_status
+          : current_status // ignore: cast_nullable_to_non_nullable
               as String?,
       delivery_date: freezed == delivery_date
           ? _value.delivery_date
           : delivery_date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      commercial_name: freezed == commercial_name
-          ? _value.commercial_name
-          : commercial_name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      current_status: freezed == current_status
-          ? _value.current_status
-          : current_status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      procedure_ve: freezed == procedure_ve
-          ? _value.procedure_ve
-          : procedure_ve // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      collection_date: freezed == collection_date
-          ? _value.collection_date
-          : collection_date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      owner_id: freezed == owner_id
+          ? _value.owner_id
+          : owner_id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -190,24 +190,24 @@ abstract class _$$_VehicleModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? mileage,
-      DateTime? sold_at,
-      DateTime? created_at,
-      bool? expertise,
-      String? registration,
+      {DateTime? updated_at,
       String? chrono,
       DateTime? first_circulation,
-      String? note,
-      String? owner_id,
-      String? serial_number,
-      DateTime? delivery_date,
-      String? commercial_name,
-      String? current_status,
       String? id,
-      dynamic? info,
+      int? mileage,
+      String? serial_number,
+      DateTime? created_at,
+      String? registration,
+      String? commercial_name,
+      bool? expertise,
+      String? note,
+      DateTime? sold_at,
       bool? procedure_ve,
-      DateTime? updated_at,
-      DateTime? collection_date});
+      DateTime? collection_date,
+      String? current_status,
+      DateTime? delivery_date,
+      dynamic? info,
+      String? owner_id});
 }
 
 /// @nodoc
@@ -221,46 +221,30 @@ class __$$_VehicleModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mileage = freezed,
-    Object? sold_at = freezed,
-    Object? created_at = freezed,
-    Object? expertise = freezed,
-    Object? registration = freezed,
+    Object? updated_at = freezed,
     Object? chrono = freezed,
     Object? first_circulation = freezed,
-    Object? note = freezed,
-    Object? owner_id = freezed,
-    Object? serial_number = freezed,
-    Object? delivery_date = freezed,
-    Object? commercial_name = freezed,
-    Object? current_status = freezed,
     Object? id = freezed,
-    Object? info = freezed,
+    Object? mileage = freezed,
+    Object? serial_number = freezed,
+    Object? created_at = freezed,
+    Object? registration = freezed,
+    Object? commercial_name = freezed,
+    Object? expertise = freezed,
+    Object? note = freezed,
+    Object? sold_at = freezed,
     Object? procedure_ve = freezed,
-    Object? updated_at = freezed,
     Object? collection_date = freezed,
+    Object? current_status = freezed,
+    Object? delivery_date = freezed,
+    Object? info = freezed,
+    Object? owner_id = freezed,
   }) {
     return _then(_$_VehicleModel(
-      mileage: freezed == mileage
-          ? _value.mileage
-          : mileage // ignore: cast_nullable_to_non_nullable
-              as int?,
-      sold_at: freezed == sold_at
-          ? _value.sold_at
-          : sold_at // ignore: cast_nullable_to_non_nullable
+      updated_at: freezed == updated_at
+          ? _value.updated_at
+          : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      expertise: freezed == expertise
-          ? _value.expertise
-          : expertise // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      registration: freezed == registration
-          ? _value.registration
-          : registration // ignore: cast_nullable_to_non_nullable
-              as String?,
       chrono: freezed == chrono
           ? _value.chrono
           : chrono // ignore: cast_nullable_to_non_nullable
@@ -269,50 +253,66 @@ class __$$_VehicleModelCopyWithImpl<$Res>
           ? _value.first_circulation
           : first_circulation // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mileage: freezed == mileage
+          ? _value.mileage
+          : mileage // ignore: cast_nullable_to_non_nullable
+              as int?,
+      serial_number: freezed == serial_number
+          ? _value.serial_number
+          : serial_number // ignore: cast_nullable_to_non_nullable
+              as String?,
+      created_at: freezed == created_at
+          ? _value.created_at
+          : created_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      registration: freezed == registration
+          ? _value.registration
+          : registration // ignore: cast_nullable_to_non_nullable
+              as String?,
+      commercial_name: freezed == commercial_name
+          ? _value.commercial_name
+          : commercial_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expertise: freezed == expertise
+          ? _value.expertise
+          : expertise // ignore: cast_nullable_to_non_nullable
+              as bool?,
       note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      owner_id: freezed == owner_id
-          ? _value.owner_id
-          : owner_id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serial_number: freezed == serial_number
-          ? _value.serial_number
-          : serial_number // ignore: cast_nullable_to_non_nullable
+      sold_at: freezed == sold_at
+          ? _value.sold_at
+          : sold_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      procedure_ve: freezed == procedure_ve
+          ? _value.procedure_ve
+          : procedure_ve // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      collection_date: freezed == collection_date
+          ? _value.collection_date
+          : collection_date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      current_status: freezed == current_status
+          ? _value.current_status
+          : current_status // ignore: cast_nullable_to_non_nullable
               as String?,
       delivery_date: freezed == delivery_date
           ? _value.delivery_date
           : delivery_date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      commercial_name: freezed == commercial_name
-          ? _value.commercial_name
-          : commercial_name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      current_status: freezed == current_status
-          ? _value.current_status
-          : current_status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      procedure_ve: freezed == procedure_ve
-          ? _value.procedure_ve
-          : procedure_ve // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      collection_date: freezed == collection_date
-          ? _value.collection_date
-          : collection_date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      owner_id: freezed == owner_id
+          ? _value.owner_id
+          : owner_id // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -321,43 +321,31 @@ class __$$_VehicleModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VehicleModel implements _VehicleModel {
   const _$_VehicleModel(
-      {this.mileage = null,
-      this.sold_at = null,
-      this.created_at = null,
-      this.expertise = null,
-      this.registration = null,
+      {this.updated_at = null,
       this.chrono = null,
       this.first_circulation = null,
-      this.note = null,
-      this.owner_id = null,
-      this.serial_number = null,
-      this.delivery_date = null,
-      this.commercial_name = null,
-      this.current_status = null,
       this.id = null,
-      this.info = null,
+      this.mileage = null,
+      this.serial_number = null,
+      this.created_at = null,
+      this.registration = null,
+      this.commercial_name = null,
+      this.expertise = null,
+      this.note = null,
+      this.sold_at = null,
       this.procedure_ve = null,
-      this.updated_at = null,
-      this.collection_date = null});
+      this.collection_date = null,
+      this.current_status = null,
+      this.delivery_date = null,
+      this.info = null,
+      this.owner_id = null});
 
   factory _$_VehicleModel.fromJson(Map<String, dynamic> json) =>
       _$$_VehicleModelFromJson(json);
 
   @override
   @JsonKey()
-  final int? mileage;
-  @override
-  @JsonKey()
-  final DateTime? sold_at;
-  @override
-  @JsonKey()
-  final DateTime? created_at;
-  @override
-  @JsonKey()
-  final bool? expertise;
-  @override
-  @JsonKey()
-  final String? registration;
+  final DateTime? updated_at;
   @override
   @JsonKey()
   final String? chrono;
@@ -366,41 +354,53 @@ class _$_VehicleModel implements _VehicleModel {
   final DateTime? first_circulation;
   @override
   @JsonKey()
-  final String? note;
+  final String? id;
   @override
   @JsonKey()
-  final String? owner_id;
+  final int? mileage;
   @override
   @JsonKey()
   final String? serial_number;
   @override
   @JsonKey()
-  final DateTime? delivery_date;
+  final DateTime? created_at;
+  @override
+  @JsonKey()
+  final String? registration;
   @override
   @JsonKey()
   final String? commercial_name;
   @override
   @JsonKey()
-  final String? current_status;
+  final bool? expertise;
   @override
   @JsonKey()
-  final String? id;
+  final String? note;
   @override
   @JsonKey()
-  final dynamic? info;
+  final DateTime? sold_at;
   @override
   @JsonKey()
   final bool? procedure_ve;
   @override
   @JsonKey()
-  final DateTime? updated_at;
+  final DateTime? collection_date;
   @override
   @JsonKey()
-  final DateTime? collection_date;
+  final String? current_status;
+  @override
+  @JsonKey()
+  final DateTime? delivery_date;
+  @override
+  @JsonKey()
+  final dynamic? info;
+  @override
+  @JsonKey()
+  final String? owner_id;
 
   @override
   String toString() {
-    return 'VehicleModel(mileage: $mileage, sold_at: $sold_at, created_at: $created_at, expertise: $expertise, registration: $registration, chrono: $chrono, first_circulation: $first_circulation, note: $note, owner_id: $owner_id, serial_number: $serial_number, delivery_date: $delivery_date, commercial_name: $commercial_name, current_status: $current_status, id: $id, info: $info, procedure_ve: $procedure_ve, updated_at: $updated_at, collection_date: $collection_date)';
+    return 'VehicleModel(updated_at: $updated_at, chrono: $chrono, first_circulation: $first_circulation, id: $id, mileage: $mileage, serial_number: $serial_number, created_at: $created_at, registration: $registration, commercial_name: $commercial_name, expertise: $expertise, note: $note, sold_at: $sold_at, procedure_ve: $procedure_ve, collection_date: $collection_date, current_status: $current_status, delivery_date: $delivery_date, info: $info, owner_id: $owner_id)';
   }
 
   @override
@@ -408,60 +408,60 @@ class _$_VehicleModel implements _VehicleModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VehicleModel &&
-            (identical(other.mileage, mileage) || other.mileage == mileage) &&
-            (identical(other.sold_at, sold_at) || other.sold_at == sold_at) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
-            (identical(other.expertise, expertise) ||
-                other.expertise == expertise) &&
-            (identical(other.registration, registration) ||
-                other.registration == registration) &&
+            (identical(other.updated_at, updated_at) ||
+                other.updated_at == updated_at) &&
             (identical(other.chrono, chrono) || other.chrono == chrono) &&
             (identical(other.first_circulation, first_circulation) ||
                 other.first_circulation == first_circulation) &&
-            (identical(other.note, note) || other.note == note) &&
-            (identical(other.owner_id, owner_id) ||
-                other.owner_id == owner_id) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.mileage, mileage) || other.mileage == mileage) &&
             (identical(other.serial_number, serial_number) ||
                 other.serial_number == serial_number) &&
-            (identical(other.delivery_date, delivery_date) ||
-                other.delivery_date == delivery_date) &&
+            (identical(other.created_at, created_at) ||
+                other.created_at == created_at) &&
+            (identical(other.registration, registration) ||
+                other.registration == registration) &&
             (identical(other.commercial_name, commercial_name) ||
                 other.commercial_name == commercial_name) &&
-            (identical(other.current_status, current_status) ||
-                other.current_status == current_status) &&
-            (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other.info, info) &&
+            (identical(other.expertise, expertise) ||
+                other.expertise == expertise) &&
+            (identical(other.note, note) || other.note == note) &&
+            (identical(other.sold_at, sold_at) || other.sold_at == sold_at) &&
             (identical(other.procedure_ve, procedure_ve) ||
                 other.procedure_ve == procedure_ve) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
             (identical(other.collection_date, collection_date) ||
-                other.collection_date == collection_date));
+                other.collection_date == collection_date) &&
+            (identical(other.current_status, current_status) ||
+                other.current_status == current_status) &&
+            (identical(other.delivery_date, delivery_date) ||
+                other.delivery_date == delivery_date) &&
+            const DeepCollectionEquality().equals(other.info, info) &&
+            (identical(other.owner_id, owner_id) ||
+                other.owner_id == owner_id));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      mileage,
-      sold_at,
-      created_at,
-      expertise,
-      registration,
+      updated_at,
       chrono,
       first_circulation,
-      note,
-      owner_id,
-      serial_number,
-      delivery_date,
-      commercial_name,
-      current_status,
       id,
-      const DeepCollectionEquality().hash(info),
+      mileage,
+      serial_number,
+      created_at,
+      registration,
+      commercial_name,
+      expertise,
+      note,
+      sold_at,
       procedure_ve,
-      updated_at,
-      collection_date);
+      collection_date,
+      current_status,
+      delivery_date,
+      const DeepCollectionEquality().hash(info),
+      owner_id);
 
   @JsonKey(ignore: true)
   @override
@@ -479,64 +479,64 @@ class _$_VehicleModel implements _VehicleModel {
 
 abstract class _VehicleModel implements VehicleModel {
   const factory _VehicleModel(
-      {final int? mileage,
-      final DateTime? sold_at,
-      final DateTime? created_at,
-      final bool? expertise,
-      final String? registration,
+      {final DateTime? updated_at,
       final String? chrono,
       final DateTime? first_circulation,
-      final String? note,
-      final String? owner_id,
-      final String? serial_number,
-      final DateTime? delivery_date,
-      final String? commercial_name,
-      final String? current_status,
       final String? id,
-      final dynamic? info,
+      final int? mileage,
+      final String? serial_number,
+      final DateTime? created_at,
+      final String? registration,
+      final String? commercial_name,
+      final bool? expertise,
+      final String? note,
+      final DateTime? sold_at,
       final bool? procedure_ve,
-      final DateTime? updated_at,
-      final DateTime? collection_date}) = _$_VehicleModel;
+      final DateTime? collection_date,
+      final String? current_status,
+      final DateTime? delivery_date,
+      final dynamic? info,
+      final String? owner_id}) = _$_VehicleModel;
 
   factory _VehicleModel.fromJson(Map<String, dynamic> json) =
       _$_VehicleModel.fromJson;
 
   @override
-  int? get mileage;
-  @override
-  DateTime? get sold_at;
-  @override
-  DateTime? get created_at;
-  @override
-  bool? get expertise;
-  @override
-  String? get registration;
+  DateTime? get updated_at;
   @override
   String? get chrono;
   @override
   DateTime? get first_circulation;
   @override
-  String? get note;
+  String? get id;
   @override
-  String? get owner_id;
+  int? get mileage;
   @override
   String? get serial_number;
   @override
-  DateTime? get delivery_date;
+  DateTime? get created_at;
+  @override
+  String? get registration;
   @override
   String? get commercial_name;
   @override
-  String? get current_status;
+  bool? get expertise;
   @override
-  String? get id;
+  String? get note;
   @override
-  dynamic? get info;
+  DateTime? get sold_at;
   @override
   bool? get procedure_ve;
   @override
-  DateTime? get updated_at;
-  @override
   DateTime? get collection_date;
+  @override
+  String? get current_status;
+  @override
+  DateTime? get delivery_date;
+  @override
+  dynamic? get info;
+  @override
+  String? get owner_id;
   @override
   @JsonKey(ignore: true)
   _$$_VehicleModelCopyWith<_$_VehicleModel> get copyWith =>

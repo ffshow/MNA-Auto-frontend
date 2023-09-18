@@ -1,4 +1,6 @@
 //CODE GENERATED, DO NOT EDIT.
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:mna/models/models.dart';
 
@@ -8,18 +10,36 @@ class SparePartService {
 
   SparePartService(this._dio);
 
-  /// ### Update a spare_part
-  /// Description: Edit spare_part
+  StreamController<SparePartModel> createStream = StreamController.broadcast();
+  Stream<SparePartModel> get onCreateGarage => createStream.stream;
+
+  StreamController<SparePartModel> updateStream = StreamController.broadcast();
+  Stream<SparePartModel> get onUpdateGarage => updateStream.stream;
+
+  StreamController<SparePartModel> deleteStream = StreamController.broadcast();
+  Stream<SparePartModel> get onDeleteGarage => deleteStream.stream;
+
+  void onCreate(SparePartModel g) {
+    createStream.sink.add(g);
+  }
+
+  void onDelete(SparePartModel g) {
+    deleteStream.sink.add(g);
+  }
+
+  void onUpdate(SparePartModel g) {
+    updateStream.sink.add(g);
+  }
+
+  /// ### Create a new spare_part
+  /// Description: Register spare_part
   ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/spare_part/{id}
-  Future<SparePartModel> putApiSparePart(
-    SparePartModel data,
-    String id,
+  /// Path /api/spare_part
+  Future<SparePartModel> postApiSparePart(
+    CreateSparePartModel data,
   ) async {
-    final Response response = await _dio.put(
-      "/api/spare_part/$id",
+    final Response response = await _dio.post(
+      "/api/spare_part",
       data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
@@ -74,15 +94,18 @@ class SparePartService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Create a new spare_part
-  /// Description: Register spare_part
+  /// ### Update a spare_part
+  /// Description: Edit spare_part
   ///
-  /// Path /api/spare_part
-  Future<SparePartModel> postApiSparePart(
-    CreateSparePartModel data,
+  /// Path param: **id** string
+  ///
+  /// Path /api/spare_part/{id}
+  Future<SparePartModel> putApiSparePart(
+    SparePartModel data,
+    String id,
   ) async {
-    final Response response = await _dio.post(
-      "/api/spare_part",
+    final Response response = await _dio.put(
+      "/api/spare_part/$id",
       data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );

@@ -8,7 +8,6 @@ part of 'owner_model.dart';
 
 _$_OwnerModel _$$_OwnerModelFromJson(Map<String, dynamic> json) =>
     _$_OwnerModel(
-      postal_code: json['postal_code'] as String? ?? null,
       updated_at: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
@@ -20,11 +19,11 @@ _$_OwnerModel _$$_OwnerModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String? ?? null,
       phone: json['phone'] as String? ?? null,
       photo: json['photo'] as String? ?? null,
+      postal_code: json['postal_code'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_OwnerModelToJson(_$_OwnerModel instance) =>
     <String, dynamic>{
-      'postal_code': instance.postal_code,
       'updated_at': instance.updated_at?.toIso8601String(),
       'address': instance.address,
       'created_at': instance.created_at?.toIso8601String(),
@@ -32,4 +31,5 @@ Map<String, dynamic> _$$_OwnerModelToJson(_$_OwnerModel instance) =>
       'id': instance.id,
       'phone': instance.phone,
       'photo': instance.photo,
+      'postal_code': instance.postal_code,
     };

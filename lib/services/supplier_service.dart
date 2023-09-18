@@ -1,4 +1,6 @@
 //CODE GENERATED, DO NOT EDIT.
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:mna/models/models.dart';
 
@@ -8,53 +10,42 @@ class SupplierService {
 
   SupplierService(this._dio);
 
-  /// ### Create a new supplier
-  /// Description: Register supplier
+  StreamController<SupplierModel> createStream = StreamController.broadcast();
+  Stream<SupplierModel> get onCreateGarage => createStream.stream;
+
+  StreamController<SupplierModel> updateStream = StreamController.broadcast();
+  Stream<SupplierModel> get onUpdateGarage => updateStream.stream;
+
+  StreamController<SupplierModel> deleteStream = StreamController.broadcast();
+  Stream<SupplierModel> get onDeleteGarage => deleteStream.stream;
+
+  void onCreate(SupplierModel g) {
+    createStream.sink.add(g);
+  }
+
+  void onDelete(SupplierModel g) {
+    deleteStream.sink.add(g);
+  }
+
+  void onUpdate(SupplierModel g) {
+    updateStream.sink.add(g);
+  }
+
+  /// ### Get supplier by ID
+  /// Description: Get supplier by ID
   ///
-  /// Path /api/supplier
-  Future<SupplierModel> postApiSupplier(
-    CreateSupplierModel data,
+  /// Path param: **id** string
+  ///
+  /// Path /api/supplier/{id}
+  Future<SupplierModel> getApiSupplier(
+    String id,
   ) async {
-    final Response response = await _dio.post(
-      "/api/supplier",
-      data: data.toJson(),
+    final Response response = await _dio.get(
+      "/api/supplier/$id",
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return SupplierModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create many supplier
-  /// Description: Register supplier (useful for importing data)
-  ///
-  /// Path /api/supplier_import
-  Future<List<CreateSupplierModel>> postApiSupplierImport(
-    SupplierModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/supplier_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateSupplierModel.fromJson(e))
-          .toList();
     }
 
     if (response.statusCode == 404) {
@@ -106,21 +97,53 @@ class SupplierService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Get supplier by ID
-  /// Description: Get supplier by ID
+  /// ### Create a new supplier
+  /// Description: Register supplier
   ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/supplier/{id}
-  Future<SupplierModel> getApiSupplier(
-    String id,
+  /// Path /api/supplier
+  Future<SupplierModel> postApiSupplier(
+    CreateSupplierModel data,
   ) async {
-    final Response response = await _dio.get(
-      "/api/supplier/$id",
+    final Response response = await _dio.post(
+      "/api/supplier",
+      data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
       return SupplierModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create many supplier
+  /// Description: Register supplier (useful for importing data)
+  ///
+  /// Path /api/supplier_import
+  Future<List<CreateSupplierModel>> postApiSupplierImport(
+    SupplierModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/supplier_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateSupplierModel.fromJson(e))
+          .toList();
     }
 
     if (response.statusCode == 404) {

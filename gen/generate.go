@@ -95,6 +95,7 @@ type Schema struct {
 type Service struct {
 	Path  string     `json:"path"`
 	Name  string     `json:"name"`
+	Model string     `json:"model"`
 	Funcs []DartFunc `json:"funcs"`
 }
 
@@ -315,10 +316,15 @@ func generateServices(apiDocs ApiDocs) {
 	}
 	exportService := ""
 	for k, v := range tags {
+		//FIXME: root service doesn't have a model 😢
+		if k == "root" {
+			continue
+		}
 		exportService += fmt.Sprintf("export '%s_service.dart';\n", k)
 		services = append(services, Service{
 			Path:  fmt.Sprintf("lib/services/%s_service.dart", k),
 			Name:  toPascalCase(k) + "Service",
+			Model: toPascalCase(k) + "Model",
 			Funcs: v,
 		})
 	}

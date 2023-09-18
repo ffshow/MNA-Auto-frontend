@@ -1,4 +1,6 @@
 //CODE GENERATED, DO NOT EDIT.
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:mna/models/models.dart';
 
@@ -8,35 +10,25 @@ class AccountService {
 
   AccountService(this._dio);
 
-  /// ### Create a new account
-  /// Description: Register account
-  ///
-  /// Path /api/account
-  Future<AccountModel> postApiAccount(
-    CreateAccountModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/account",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return AccountModel.fromJson(response.data as Map<String, Object?>);
-    }
+  StreamController<AccountModel> createStream = StreamController.broadcast();
+  Stream<AccountModel> get onCreateGarage => createStream.stream;
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
+  StreamController<AccountModel> updateStream = StreamController.broadcast();
+  Stream<AccountModel> get onUpdateGarage => updateStream.stream;
 
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
+  StreamController<AccountModel> deleteStream = StreamController.broadcast();
+  Stream<AccountModel> get onDeleteGarage => deleteStream.stream;
 
-    throw Exception("Something went wrong");
+  void onCreate(AccountModel g) {
+    createStream.sink.add(g);
+  }
+
+  void onDelete(AccountModel g) {
+    deleteStream.sink.add(g);
+  }
+
+  void onUpdate(AccountModel g) {
+    updateStream.sink.add(g);
   }
 
   /// ### Create many account
@@ -55,6 +47,37 @@ class AccountService {
       return (response.data as List)
           .map((e) => CreateAccountModel.fromJson(e))
           .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new account
+  /// Description: Register account
+  ///
+  /// Path /api/account
+  Future<AccountModel> postApiAccount(
+    CreateAccountModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/account",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return AccountModel.fromJson(response.data as Map<String, Object?>);
     }
 
     if (response.statusCode == 404) {

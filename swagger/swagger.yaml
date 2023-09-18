@@ -1,0 +1,1672 @@
+basePath: /
+definitions:
+  models.AccountModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      email:
+        type: string
+        x-nullable: false
+      id:
+        type: string
+      name:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.CreateAccountModel:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+    type: object
+  models.CreateGarageModel:
+    properties:
+      label:
+        type: string
+    type: object
+  models.CreateOwnerModel:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      photo:
+        type: string
+      postal_code:
+        type: string
+    type: object
+  models.CreatePermissionModel:
+    properties:
+      available:
+        type: boolean
+      label:
+        type: string
+    type: object
+  models.CreateSparePartModel:
+    properties:
+      barcode:
+        type: string
+      reference:
+        type: string
+    type: object
+  models.CreateSupplierModel:
+    properties:
+      name:
+        type: string
+    type: object
+  models.CreateVehicleModel:
+    properties:
+      chrono:
+        type: string
+      collection_date:
+        type: string
+      commercial_name:
+        type: string
+      current_status:
+        type: string
+      delivery_date:
+        type: string
+      expertise:
+        type: boolean
+      first_circulation:
+        type: string
+      info:
+        $ref: '#/definitions/models.InfoModel'
+      mileage:
+        type: integer
+      note:
+        type: string
+      owner_id:
+        type: string
+      procedure_ve:
+        type: boolean
+      registration:
+        type: string
+      serial_number:
+        type: string
+      sold_at:
+        type: string
+    type: object
+  models.GarageModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.InfoModel:
+    properties:
+      label:
+        type: string
+    type: object
+  models.ListAccountModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.AccountModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListGarageModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.GarageModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListOwnerModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.OwnerModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListPermissionModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.PermissionModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListSparePartModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.SparePartModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListSupplierModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.SupplierModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListVehicleModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.VehicleModel'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.OwnerModel:
+    properties:
+      address:
+        type: string
+        x-nullable: true
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      email:
+        type: string
+        x-nullable: true
+      id:
+        type: string
+      phone:
+        type: string
+        x-nullable: true
+      photo:
+        type: string
+        x-nullable: true
+      postal_code:
+        type: string
+        x-nullable: true
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.PermissionModel:
+    properties:
+      available:
+        type: boolean
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.SparePartModel:
+    properties:
+      barcode:
+        type: string
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      reference:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.SupplierModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      name:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.TotalCount:
+    properties:
+      count:
+        type: integer
+    type: object
+  models.VehicleModel:
+    properties:
+      chrono:
+        type: string
+        x-nullable: true
+      collection_date:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      commercial_name:
+        type: string
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      current_status:
+        type: string
+        x-nullable: true
+      delivery_date:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      expertise:
+        type: boolean
+        x-nullable: false
+      first_circulation:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      id:
+        type: string
+      info:
+        allOf:
+        - $ref: '#/definitions/models.InfoModel'
+        x-nullable: false
+      mileage:
+        type: integer
+        x-nullable: false
+      note:
+        type: string
+        x-nullable: false
+      owner_id:
+        type: string
+        x-nullable: false
+      procedure_ve:
+        type: boolean
+        x-nullable: false
+      registration:
+        type: string
+        x-nullable: false
+      serial_number:
+        type: string
+        x-nullable: false
+      sold_at:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  utils.ResponseError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@mna-auto.io
+    name: API Support
+    url: http://www.mna-auto.io/support
+  description: This is a sample server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://mna-auto.io/terms/
+  title: MNA-Automobile Swagger API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+      tags:
+      - root
+  /api/account:
+    post:
+      consumes:
+      - application/json
+      description: Register account
+      parameters:
+      - description: Register account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAccountModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AccountModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new account
+      tags:
+      - account
+  /api/account/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get account by ID
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AccountModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get account by ID
+      tags:
+      - account
+    put:
+      consumes:
+      - application/json
+      description: Edit account
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.AccountModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AccountModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a account
+      tags:
+      - account
+  /api/account/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - account
+  /api/account_import:
+    post:
+      consumes:
+      - application/json
+      description: Register account (useful for importing data)
+      parameters:
+      - description: Register account
+        in: body
+        name: account
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.AccountModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateAccountModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many account
+      tags:
+      - account
+  /api/account_list:
+    get:
+      consumes:
+      - application/json
+      description: List account
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListAccountModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List account
+      tags:
+      - account
+  /api/garage:
+    post:
+      consumes:
+      - application/json
+      description: Register garage
+      parameters:
+      - description: Register garage
+        in: body
+        name: garage
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateGarageModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GarageModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new garage
+      tags:
+      - garage
+  /api/garage/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get garage by ID
+      parameters:
+      - description: Garage ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GarageModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get garage by ID
+      tags:
+      - garage
+    put:
+      consumes:
+      - application/json
+      description: Edit garage
+      parameters:
+      - description: Garage ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register garage
+        in: body
+        name: garage
+        required: true
+        schema:
+          $ref: '#/definitions/models.GarageModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GarageModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a garage
+      tags:
+      - garage
+  /api/garage/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - garage
+  /api/garage_import:
+    post:
+      consumes:
+      - application/json
+      description: Register garage (useful for importing data)
+      parameters:
+      - description: Register garage
+        in: body
+        name: garage
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.GarageModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateGarageModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many garage
+      tags:
+      - garage
+  /api/garage_list:
+    get:
+      consumes:
+      - application/json
+      description: List garage
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListGarageModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List garage
+      tags:
+      - garage
+  /api/owner:
+    post:
+      consumes:
+      - application/json
+      description: Register owner
+      parameters:
+      - description: Register owner
+        in: body
+        name: owner
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOwnerModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.OwnerModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new owner
+      tags:
+      - owner
+  /api/owner/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get owner by ID
+      parameters:
+      - description: Owner ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.OwnerModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get owner by ID
+      tags:
+      - owner
+    put:
+      consumes:
+      - application/json
+      description: Edit owner
+      parameters:
+      - description: Owner ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register owner
+        in: body
+        name: owner
+        required: true
+        schema:
+          $ref: '#/definitions/models.OwnerModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.OwnerModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a owner
+      tags:
+      - owner
+  /api/owner/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - owner
+  /api/owner_import:
+    post:
+      consumes:
+      - application/json
+      description: Register owner (useful for importing data)
+      parameters:
+      - description: Register owner
+        in: body
+        name: owner
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.OwnerModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateOwnerModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many owner
+      tags:
+      - owner
+  /api/owner_list:
+    get:
+      consumes:
+      - application/json
+      description: List owner
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListOwnerModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List owner
+      tags:
+      - owner
+  /api/permission:
+    post:
+      consumes:
+      - application/json
+      description: Register permission
+      parameters:
+      - description: Register permission
+        in: body
+        name: permission
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePermissionModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PermissionModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new permission
+      tags:
+      - permission
+  /api/permission/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get permission by ID
+      parameters:
+      - description: Permission ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PermissionModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get permission by ID
+      tags:
+      - permission
+    put:
+      consumes:
+      - application/json
+      description: Edit permission
+      parameters:
+      - description: Permission ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register permission
+        in: body
+        name: permission
+        required: true
+        schema:
+          $ref: '#/definitions/models.PermissionModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PermissionModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a permission
+      tags:
+      - permission
+  /api/permission/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - permission
+  /api/permission_import:
+    post:
+      consumes:
+      - application/json
+      description: Register permission (useful for importing data)
+      parameters:
+      - description: Register permission
+        in: body
+        name: permission
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.PermissionModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreatePermissionModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many permission
+      tags:
+      - permission
+  /api/permission_list:
+    get:
+      consumes:
+      - application/json
+      description: List permission
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListPermissionModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List permission
+      tags:
+      - permission
+  /api/spare_part:
+    post:
+      consumes:
+      - application/json
+      description: Register spare_part
+      parameters:
+      - description: Register spare_part
+        in: body
+        name: spare_part
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateSparePartModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SparePartModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new spare_part
+      tags:
+      - spare_part
+  /api/spare_part/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get spare_part by ID
+      parameters:
+      - description: SparePart ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SparePartModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get spare_part by ID
+      tags:
+      - spare_part
+    put:
+      consumes:
+      - application/json
+      description: Edit spare_part
+      parameters:
+      - description: SparePart ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register spare_part
+        in: body
+        name: spare_part
+        required: true
+        schema:
+          $ref: '#/definitions/models.SparePartModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SparePartModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a spare_part
+      tags:
+      - spare_part
+  /api/spare_part/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - spare_part
+  /api/spare_part_import:
+    post:
+      consumes:
+      - application/json
+      description: Register spare_part (useful for importing data)
+      parameters:
+      - description: Register spare_part
+        in: body
+        name: spare_part
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.SparePartModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateSparePartModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many spare_part
+      tags:
+      - spare_part
+  /api/spare_part_list:
+    get:
+      consumes:
+      - application/json
+      description: List spare_part
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListSparePartModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List spare_part
+      tags:
+      - spare_part
+  /api/supplier:
+    post:
+      consumes:
+      - application/json
+      description: Register supplier
+      parameters:
+      - description: Register supplier
+        in: body
+        name: supplier
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateSupplierModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SupplierModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new supplier
+      tags:
+      - supplier
+  /api/supplier/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get supplier by ID
+      parameters:
+      - description: Supplier ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SupplierModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get supplier by ID
+      tags:
+      - supplier
+    put:
+      consumes:
+      - application/json
+      description: Edit supplier
+      parameters:
+      - description: Supplier ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register supplier
+        in: body
+        name: supplier
+        required: true
+        schema:
+          $ref: '#/definitions/models.SupplierModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SupplierModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a supplier
+      tags:
+      - supplier
+  /api/supplier/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - supplier
+  /api/supplier_import:
+    post:
+      consumes:
+      - application/json
+      description: Register supplier (useful for importing data)
+      parameters:
+      - description: Register supplier
+        in: body
+        name: supplier
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.SupplierModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateSupplierModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many supplier
+      tags:
+      - supplier
+  /api/supplier_list:
+    get:
+      consumes:
+      - application/json
+      description: List supplier
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListSupplierModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List supplier
+      tags:
+      - supplier
+  /api/vehicle:
+    post:
+      consumes:
+      - application/json
+      description: Register vehicle
+      parameters:
+      - description: Register vehicle
+        in: body
+        name: vehicle
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateVehicleModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new vehicle
+      tags:
+      - vehicle
+  /api/vehicle/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get vehicle by ID
+      parameters:
+      - description: Vehicle ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get vehicle by ID
+      tags:
+      - vehicle
+    put:
+      consumes:
+      - application/json
+      description: Edit vehicle
+      parameters:
+      - description: Vehicle ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register vehicle
+        in: body
+        name: vehicle
+        required: true
+        schema:
+          $ref: '#/definitions/models.VehicleModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a vehicle
+      tags:
+      - vehicle
+  /api/vehicle/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - vehicle
+  /api/vehicle_import:
+    post:
+      consumes:
+      - application/json
+      description: Register vehicle (useful for importing data)
+      parameters:
+      - description: Register vehicle
+        in: body
+        name: vehicle
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.VehicleModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.CreateVehicleModel'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many vehicle
+      tags:
+      - vehicle
+  /api/vehicle_list:
+    get:
+      consumes:
+      - application/json
+      description: List vehicle
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListVehicleModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List vehicle
+      tags:
+      - vehicle
+  /api/vehicles_seed:
+    post:
+      consumes:
+      - '*/*'
+      description: Seed vehicles.
+      parameters:
+      - description: count
+        in: query
+        name: count
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Seed vehicles
+      tags:
+      - root
+schemes:
+- http
+swagger: "2.0"

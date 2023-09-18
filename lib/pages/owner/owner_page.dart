@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/models/models.dart';
-import 'package:mna/services/owner_service.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/widget/widget.dart';
 
 import 'state/owner_cubit.dart';
@@ -11,12 +10,9 @@ class OwnerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OwnerService ownerService = RepositoryProvider.of<OwnerService>(
-      context,
-    );
     return BlocProvider<OwnerCubit>(
       create: (BuildContext context) => OwnerCubit(
-        ownerService,
+        RepositoryProvider.of<Swagger>(context),
       )..getOwners(),
       child: Scaffold(
         appBar: AppBar(
@@ -25,7 +21,7 @@ class OwnerPage extends StatelessWidget {
         body: BlocBuilder<OwnerCubit, OwnerState>(
           builder: (BuildContext context, OwnerState state) {
             return state.when<Widget>(
-              loaded: (Iterable<OwnerModel> owners) {
+              loaded: (Iterable<ModelsOwnerModel> owners) {
                 return OwnerListWidget(owners: owners);
               },
               initial: () => const LoadingWidget(),
@@ -47,7 +43,7 @@ class OwnerPage extends StatelessWidget {
 
 class OwnerListWidget extends StatelessWidget {
   const OwnerListWidget({super.key, required this.owners});
-  final Iterable<OwnerModel> owners;
+  final Iterable<ModelsOwnerModel> owners;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -65,18 +61,18 @@ class OwnerListWidget extends StatelessWidget {
 }
 
 class OwnerDataSrouce extends DataTableSource {
-  final Iterable<OwnerModel> owners;
+  final Iterable<ModelsOwnerModel> owners;
 
   OwnerDataSrouce(this.owners);
 
   @override
   DataRow? getRow(int index) {
-    final OwnerModel e = owners.elementAt(index);
+    final ModelsOwnerModel e = owners.elementAt(index);
     return DataRow(
       cells: [
         DataCell(Text(e.email ?? '')),
         DataCell(Text(e.address ?? '')),
-        DataCell(Text(e.created_at?.toIso8601String() ?? '')),
+        DataCell(Text(e.createdAt ?? '')),
         DataCell(Row(
           children: [
             IconButton(

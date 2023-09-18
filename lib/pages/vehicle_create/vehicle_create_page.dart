@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mna/pages/vehicle_create/state/create_vehicle_cubit.dart';
-import 'package:mna/services/services.dart';
+import 'package:mna/swagger_generated_code/client_index.dart';
 import 'package:mna/utils/recase.dart';
 import 'package:mna/utils/style.dart';
 
@@ -23,11 +23,9 @@ class CreateVechilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final VehicleService vehicleService =
-        RepositoryProvider.of<VehicleService>(context);
     return BlocProvider<CreateVehicleCubit>(
       create: (BuildContext context) => CreateVehicleCubit(
-        vehicleService,
+        RepositoryProvider.of<Swagger>(context),
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -61,7 +59,7 @@ class CreateVechilePage extends StatelessWidget {
                       // commercial domination
                       FormBuilderTextField(
                         name: 'commercial_name',
-                        initialValue: state.vehicle?.commercial_name,
+                        initialValue: state.vehicle?.commercialName,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(
                             labelText: 'Commercial domination'),
@@ -91,7 +89,7 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'first_circulation',
                         initialValue: DateTime.tryParse(
-                          state.vehicle?.first_circulation ?? '',
+                          state.vehicle?.firstCirculation ?? '',
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
@@ -108,7 +106,7 @@ class CreateVechilePage extends StatelessWidget {
                       // serial number
                       FormBuilderTextField(
                         name: 'serial_number',
-                        initialValue: state.vehicle?.serial_number,
+                        initialValue: state.vehicle?.serialNumber,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration:
                             const InputDecoration(labelText: 'Serial number'),
@@ -129,7 +127,7 @@ class CreateVechilePage extends StatelessWidget {
                       // owner
                       FormBuilderDropdown(
                         name: 'owner_id',
-                        initialValue: state.vehicle?.owner_id,
+                        initialValue: state.vehicle?.ownerId,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: const InputDecoration(labelText: 'Owner'),
                         items: List.generate(
@@ -161,7 +159,7 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'sold_at',
                         initialValue: DateTime.tryParse(
-                          state.vehicle?.sold_at ?? '',
+                          state.vehicle?.soldAt ?? '',
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
@@ -179,7 +177,7 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'collection_date',
                         initialValue: DateTime.tryParse(
-                            state.vehicle?.collection_date ?? ''),
+                            state.vehicle?.collectionDate ?? ''),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
                         decoration: const InputDecoration(
@@ -196,7 +194,7 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'delivery_date',
                         initialValue: DateTime.tryParse(
-                            state.vehicle?.delivery_date ?? ''),
+                            state.vehicle?.deliveryDate ?? ''),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
                         decoration: const InputDecoration(
@@ -223,7 +221,7 @@ class CreateVechilePage extends StatelessWidget {
                       // procedure ve
                       FormBuilderChoiceChip(
                         name: 'procedure_ve',
-                        initialValue: state.vehicle?.procedure_ve ?? false,
+                        initialValue: state.vehicle?.procedureVe ?? false,
                         options: const [
                           FormBuilderChipOption(
                             value: true,

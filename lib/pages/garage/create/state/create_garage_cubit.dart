@@ -1,21 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/models/models.dart';
-import 'package:mna/services/services.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 part 'create_garage_state.dart';
 
 class CreateGarageCubit extends Cubit<CreateGarageState> {
-  final GarageService _garageService;
+  final Swagger swagger;
 
-  CreateGarageCubit(this._garageService)
+  CreateGarageCubit(this.swagger)
       : super(const CreateGarageState(
           status: StateStatus.initial,
         ));
 
-  Future<void> create(CreateGarageModel model) async {
+  Future<void> create(ModelsCreateGarageModel model) async {
     emit(state.copyWith(status: StateStatus.loading, model: model));
     try {
-      final GarageModel garage = await _garageService.postApiGarage(model);
+      await swagger.apiGaragePost(garage: model);
       emit(state.copyWith(status: StateStatus.success, model: null));
     } catch (e) {
       emit(state.copyWith(status: StateStatus.failure, error: e.toString()));

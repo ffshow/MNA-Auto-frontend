@@ -1,14 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mna/models/models.dart';
-import 'package:mna/services/services.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 
 part 'supplier_state.dart';
 part 'supplier_cubit.freezed.dart';
 
 class SupplierCubit extends Cubit<SupplierState> {
-  final SupplierService _supplierService;
-  SupplierCubit(this._supplierService) : super(const SupplierState.initial());
+  final Swagger swagger;
+  SupplierCubit(this.swagger) : super(const SupplierState.initial());
 
   Future<void> init({bool tryAgain = false}) async {
     emit(const SupplierState.initial());
@@ -17,9 +16,11 @@ class SupplierCubit extends Cubit<SupplierState> {
     }
 
     try {
-      final res = await _supplierService.getApiSupplierList(
-          sort_by: 'created_at', descending: true);
-      emit(SupplierState.success(res.data ?? []));
+      final res = await swagger.apiSupplierListGet(
+        sortBy: 'created_at',
+        descending: true,
+      );
+      emit(SupplierState.success(res.body?.data ?? []));
     } on Exception catch (e) {
       emit(SupplierState.failure(e.toString()));
     }

@@ -1,12 +1,10 @@
 import 'dart:async';
 
+import 'package:chopper/chopper.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/models/garage_model/garage_model.dart';
-import 'package:mna/models/list_garage_model/list_garage_model.dart';
-import 'package:mna/services/services.dart';
-import 'package:mna/utils/extensions.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/style.dart';
 
 import 'create/create_garage_widget.dart';
@@ -31,16 +29,12 @@ class GaragePage extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              GarageService garageService =
-                  RepositoryProvider.of<GarageService>(context);
+              final Swagger swagger = RepositoryProvider.of<Swagger>(context);
               final DateTime now = DateTime.now();
-              final g = GarageModel(
-                id: now.millisecondsSinceEpoch.toString(),
+              final g = ModelsCreateGarageModel(
                 label: 'garage ${now.microsecond}',
-                created_at: now,
-                updated_at: now,
               );
-              garageService.create(g);
+              swagger.apiGaragePost(garage: g);
             },
             icon: const Icon(Icons.add),
           ),
@@ -75,9 +69,8 @@ class _GarageListWidgetState extends State<GarageListWidget> {
 
   @override
   void didChangeDependencies() {
-    final GarageService garageService =
-        RepositoryProvider.of<GarageService>(context);
-    source ??= GarageDataTableSource(garageService);
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    source ??= GarageDataTableSource(swagger);
     super.didChangeDependencies();
   }
 
@@ -139,79 +132,74 @@ class _GarageListWidgetState extends State<GarageListWidget> {
 }
 
 class GarageDataTableSource extends AsyncDataTableSource {
-  final GarageService garageService;
+  final Swagger service;
 
-  GarageDataTableSource(this.garageService) {
-    // garageService.getApiGarageTotal().then((total) {
+  GarageDataTableSource(this.service) {
+    // service.getApiGarageTotal().then((total) {
     //   totalCount = total.count ?? 0;
     //   notifyListeners();
     // });
-    onCreate = garageService.onCreate.listen(
-      (GarageModel g) {
-        debugPrint('garage created ${g.id}');
-        items.insert(0, g);
-        refreshDatasource();
-      },
-    );
-    onUpdate = garageService.onUpdate.listen(
-      (GarageModel g) {
-        debugPrint('garage updated ${g.id}');
-        final int index = items.indexWhere((e) => e.id == g.id);
-        if (index > -1) {
-          items[index] = g;
-          refreshDatasource();
-        }
-      },
-    );
-    onDelete = garageService.onDelete.listen(
-      (GarageModel g) {
-        debugPrint('garage deleted ${g.id}');
-        items.removeWhere((e) => e.id == g.id);
-        refreshDatasource();
-      },
-    );
+    // onCreate = service.onCreate.listen(
+    //   (GarageModel g) {
+    //     debugPrint('garage created ${g.id}');
+    //     items.insert(0, g);
+    //     refreshDatasource();
+    //   },
+    // );
+    // onUpdate = service.onUpdate.listen(
+    //   (GarageModel g) {
+    //     debugPrint('garage updated ${g.id}');
+    //     final int index = items.indexWhere((e) => e.id == g.id);
+    //     if (index > -1) {
+    //       items[index] = g;
+    //       refreshDatasource();
+    //     }
+    //   },
+    // );
+    // onDelete = service.onDelete.listen(
+    //   (GarageModel g) {
+    //     debugPrint('garage deleted ${g.id}');
+    //     items.removeWhere((e) => e.id == g.id);
+    //     refreshDatasource();
+    //   },
+    // );
   }
 
-  final List<GarageModel> items = [];
+  final List<ModelsGarageModel> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
-  late final StreamSubscription<GarageModel>? onCreate;
-  late final StreamSubscription<GarageModel>? onUpdate;
-  late final StreamSubscription<GarageModel>? onDelete;
+  late final StreamSubscription<ModelsGarageModel>? onCreate;
+  late final StreamSubscription<ModelsGarageModel>? onUpdate;
+  late final StreamSubscription<ModelsGarageModel>? onDelete;
 
-  DataRow2 toRow(GarageModel item) {
+  DataRow2 toRow(ModelsGarageModel item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.label ?? '')),
         DataCell(
           Tooltip(
-            message: item.created_at.dateTime,
-            child: Text(item.created_at?.date ?? ''),
+            message: item.createdAt,
+            child: Text(item.createdAt ?? ''),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updated_at.dateTime,
-            child: Text(item.updated_at?.date ?? ''),
+            message: item.updatedAt,
+            child: Text(item.updatedAt ?? ''),
           ),
         ),
-        DataCell(Row(
+        const DataCell(Row(
           children: <Widget>[
             IconButton(
-              onPressed: () => garageService.delete(item),
-              icon: const Icon(Icons.delete),
+              // onPressed: () => service.delete(item),
+              onPressed: null,
+              icon: Icon(Icons.delete),
             ),
             IconButton(
-              onPressed: () {
-                final GarageModel i = item.copyWith(
-                  label: '${item.label} updated',
-                  updated_at: DateTime.now(),
-                );
-                garageService.update(i);
-              },
-              icon: const Icon(Icons.edit),
+              onPressed: null,
+              icon: Icon(Icons.edit),
             ),
           ],
         )),
@@ -235,18 +223,18 @@ class GarageDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final ListGarageModel res = await garageService.getApiGarageList(
+    final Response<ModelsListGarageModel> res = await service.apiGarageListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
-      per_page: count,
-      sort_by: sortBy(sortColumnIndex),
+      perPage: count,
+      sortBy: sortBy(sortColumnIndex),
       descending: !sortAscending,
     );
-    if (res.total != null) {
-      totalCount = res.total!;
+    if (res.body?.total != null) {
+      totalCount = res.body!.total!;
     }
     return AsyncRowsResponse(
       totalCount,
-      res.data?.map((e) => toRow(e)).toList() ?? [],
+      res.body?.data?.map((e) => toRow(e)).toList() ?? [],
     );
   }
 
@@ -270,8 +258,8 @@ class GarageDataTableSource extends AsyncDataTableSource {
   }
 
   void cancel() {
-    onCreate?.cancel();
-    onUpdate?.cancel();
-    onDelete?.cancel();
+    // onCreate?.cancel();
+    // onUpdate?.cancel();
+    // onDelete?.cancel();
   }
 }

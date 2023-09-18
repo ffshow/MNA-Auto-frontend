@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:mna/models/models.dart';
 import 'package:mna/pages/garage/create/state/create_garage_cubit.dart';
-import 'package:mna/services/services.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 
 final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
@@ -13,9 +12,9 @@ class CreateGarageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GarageService garageService = context.read<GarageService>();
     return BlocProvider<CreateGarageCubit>(
-      create: (BuildContext context) => CreateGarageCubit(garageService),
+      create: (BuildContext context) =>
+          CreateGarageCubit(RepositoryProvider.of<Swagger>(context)),
       child: Builder(builder: (BuildContext context) {
         return BlocConsumer<CreateGarageCubit, CreateGarageState>(
           builder: (BuildContext context, CreateGarageState state) {
@@ -73,7 +72,7 @@ class CreateGarageWidget extends StatelessWidget {
   void _create(BuildContext context) {
     final bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (isValid) {
-      final CreateGarageModel model = CreateGarageModel.fromJson(
+      final ModelsCreateGarageModel model = ModelsCreateGarageModel.fromJson(
         _formKey.currentState!.value,
       );
 

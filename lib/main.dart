@@ -1,18 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/router.dart';
-import 'package:mna/services/providers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/swagger_generated_code/client_index.dart';
 
 void main() {
-  final Dio dio = Dio(
-    BaseOptions(baseUrl: "http://localhost:3000/"),
-  );
-
+  final Swagger swagger = Swagger.create();
   runApp(MultiRepositoryProvider(
     providers: [
-      ...getProviders(dio),
+      RepositoryProvider(create: (context) => swagger),
     ],
     child: const MainApp(),
   ));

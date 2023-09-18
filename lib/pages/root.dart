@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mna/services/notification_service.dart';
-import 'package:mna/services/services.dart';
 import 'package:mna/utils/style.dart';
-import 'package:toastification/toastification.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -17,15 +14,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    final GarageService garageService =
-        RepositoryProvider.of<GarageService>(context);
-    final VehicleService vehicleService =
-        RepositoryProvider.of<VehicleService>(context);
-    NotificationService(
-      context,
-      garageService,
-      vehicleService,
-    ).init();
+    NotificationService(context).init();
   }
 
   @override
@@ -67,6 +56,13 @@ class _RootPageState extends State<RootPage> {
               context.go('/suppliers');
             },
             child: const Text('suppliers'),
+          ),
+          kH8,
+          ElevatedButton(
+            onPressed: () {
+              context.go('/dev');
+            },
+            child: const Text('dev'),
           ),
         ],
       ),

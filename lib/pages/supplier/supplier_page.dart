@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/models/supplier_model/supplier_model.dart';
 import 'package:mna/pages/supplier/state/supplier_cubit.dart';
-import 'package:mna/services/services.dart';
-import 'package:mna/utils/extensions.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/widget/widget.dart';
 
 class SupplierPage extends StatelessWidget {
@@ -11,10 +9,9 @@ class SupplierPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SupplierService supplierService =
-        RepositoryProvider.of<SupplierService>(context);
     return BlocProvider<SupplierCubit>(
-      create: (BuildContext context) => SupplierCubit(supplierService)..init(),
+      create: (BuildContext context) =>
+          SupplierCubit(RepositoryProvider.of<Swagger>(context))..init(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Supplier page'),
@@ -22,7 +19,7 @@ class SupplierPage extends StatelessWidget {
         body: BlocBuilder<SupplierCubit, SupplierState>(
           builder: (BuildContext context, SupplierState state) {
             return state.when(
-              success: (List<SupplierModel> suppliers) {
+              success: (List<ModelsSupplierModel> suppliers) {
                 return SupplierListPage(
                     source: SupplierDataTableSource(suppliers));
               },
@@ -58,26 +55,26 @@ class SupplierListPage extends StatelessWidget {
 }
 
 class SupplierDataTableSource extends DataTableSource {
-  final List<SupplierModel> suppliers;
+  final List<ModelsSupplierModel> suppliers;
 
   SupplierDataTableSource(this.suppliers);
 
   @override
   DataRow? getRow(int index) {
-    final SupplierModel item = suppliers[index];
+    final ModelsSupplierModel item = suppliers[index];
     return DataRow(
       cells: [
         DataCell(Text(item.name ?? '')),
         DataCell(
           Tooltip(
-            message: item.created_at.dateTime,
-            child: Text(item.created_at?.date ?? ''),
+            message: item.createdAt,
+            child: Text(item.createdAt ?? ''),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updated_at.dateTime,
-            child: Text(item.updated_at?.date ?? ''),
+            message: item.updatedAt,
+            child: Text(item.updatedAt ?? ''),
           ),
         ),
       ],

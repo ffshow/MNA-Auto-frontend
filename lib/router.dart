@@ -46,6 +46,12 @@ final GoRouter router = GoRouter(
             return const SupplierPage();
           },
         ),
+        GoRoute(
+          path: 'dev',
+          builder: (BuildContext context, GoRouterState state) {
+            return const DevPage();
+          },
+        ),
       ],
     ),
   ],

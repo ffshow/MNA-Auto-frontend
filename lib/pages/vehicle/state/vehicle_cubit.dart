@@ -1,15 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mna/models/models.dart';
-import 'package:mna/services/vehicle_service.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 
 part 'vehicle_state.dart';
 part 'vehicle_cubit.freezed.dart';
 
 class VehicleCubit extends Cubit<VehicleState> {
-  final VehicleService _service;
+  final Swagger swagger;
 
-  VehicleCubit(this._service) : super(const VehicleState.initial());
+  VehicleCubit(this.swagger) : super(const VehicleState.initial());
 
   Future<void> getVehicles({bool tryAgain = false}) async {
     emit(const VehicleState.initial());
@@ -18,11 +17,11 @@ class VehicleCubit extends Cubit<VehicleState> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
     try {
-      final res = await _service.getApiVehicleList(
-        sort_by: 'created_at',
+      final res = await swagger.apiVehicleListGet(
+        sortBy: 'created_at',
         descending: true,
       );
-      emit(VehicleState.loaded(res.data ?? []));
+      emit(VehicleState.loaded(res.body?.data ?? []));
     } catch (e, s) {
       print(s);
       emit(VehicleState.failed(e.toString()));

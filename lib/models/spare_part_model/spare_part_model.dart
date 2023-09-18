@@ -19,3 +19,11 @@ class SparePartModel with _$SparePartModel {
   factory SparePartModel.fromJson(Map<String, Object?> json) =>
       _$SparePartModelFromJson(json);
 }
+
+const List<String> kSparePartModelColumns = [
+  'barcode',
+  'created_at',
+  'id',
+  'reference',
+  'updated_at',
+];

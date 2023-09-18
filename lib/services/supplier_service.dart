@@ -31,6 +31,37 @@ class SupplierService {
     updateStream.sink.add(g);
   }
 
+  /// ### Create a new supplier
+  /// Description: Register supplier
+  ///
+  /// Path /api/supplier
+  Future<SupplierModel> postApiSupplier(
+    CreateSupplierModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/supplier",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return SupplierModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### Get supplier by ID
   /// Description: Get supplier by ID
   ///
@@ -97,62 +128,20 @@ class SupplierService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Create a new supplier
-  /// Description: Register supplier
+  /// ### Total records
+  /// Description: Total records
   ///
-  /// Path /api/supplier
-  Future<SupplierModel> postApiSupplier(
-    CreateSupplierModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/supplier",
-      data: data.toJson(),
+  /// Path /api/supplier/total
+  Future<TotalCount> getApiSupplierTotal() async {
+    final Response response = await _dio.get(
+      "/api/supplier/total",
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return SupplierModel.fromJson(response.data as Map<String, Object?>);
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
     }
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create many supplier
-  /// Description: Register supplier (useful for importing data)
-  ///
-  /// Path /api/supplier_import
-  Future<List<CreateSupplierModel>> postApiSupplierImport(
-    SupplierModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/supplier_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateSupplierModel.fromJson(e))
-          .toList();
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);
@@ -196,6 +185,39 @@ class SupplierService {
     }
 
     if (response.statusCode == 503) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create many supplier
+  /// Description: Register supplier (useful for importing data)
+  ///
+  /// Path /api/supplier_import
+  Future<List<CreateSupplierModel>> postApiSupplierImport(
+    SupplierModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/supplier_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateSupplierModel.fromJson(e))
+          .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

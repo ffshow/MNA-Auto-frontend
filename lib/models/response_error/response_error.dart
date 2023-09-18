@@ -16,3 +16,8 @@ class ResponseError with _$ResponseError {
   factory ResponseError.fromJson(Map<String, Object?> json) =>
       _$ResponseErrorFromJson(json);
 }
+
+const List<String> kResponseErrorColumns = [
+  'code',
+  'message',
+];

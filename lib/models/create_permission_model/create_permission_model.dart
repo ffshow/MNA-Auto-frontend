@@ -16,3 +16,8 @@ class CreatePermissionModel with _$CreatePermissionModel {
   factory CreatePermissionModel.fromJson(Map<String, Object?> json) =>
       _$CreatePermissionModelFromJson(json);
 }
+
+const List<String> kCreatePermissionModelColumns = [
+  'available',
+  'label',
+];

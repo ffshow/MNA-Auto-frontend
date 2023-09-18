@@ -31,29 +31,20 @@ class SparePartService {
     updateStream.sink.add(g);
   }
 
-  /// ### Create a new spare_part
-  /// Description: Register spare_part
+  /// ### Total records
+  /// Description: Total records
   ///
-  /// Path /api/spare_part
-  Future<SparePartModel> postApiSparePart(
-    CreateSparePartModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/spare_part",
-      data: data.toJson(),
+  /// Path /api/spare_part/total
+  Future<TotalCount> getApiSparePartTotal() async {
+    final Response response = await _dio.get(
+      "/api/spare_part/total",
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return SparePartModel.fromJson(response.data as Map<String, Object?>);
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
     }
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);
@@ -128,39 +119,6 @@ class SparePartService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Create many spare_part
-  /// Description: Register spare_part (useful for importing data)
-  ///
-  /// Path /api/spare_part_import
-  Future<List<CreateSparePartModel>> postApiSparePartImport(
-    SparePartModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/spare_part_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateSparePartModel.fromJson(e))
-          .toList();
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### List spare_part
   /// Description: List spare_part
   ///
@@ -196,6 +154,70 @@ class SparePartService {
     }
 
     if (response.statusCode == 503) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create many spare_part
+  /// Description: Register spare_part (useful for importing data)
+  ///
+  /// Path /api/spare_part_import
+  Future<List<CreateSparePartModel>> postApiSparePartImport(
+    SparePartModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/spare_part_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateSparePartModel.fromJson(e))
+          .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new spare_part
+  /// Description: Register spare_part
+  ///
+  /// Path /api/spare_part
+  Future<SparePartModel> postApiSparePart(
+    CreateSparePartModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/spare_part",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return SparePartModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

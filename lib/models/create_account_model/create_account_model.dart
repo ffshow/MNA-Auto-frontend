@@ -16,3 +16,8 @@ class CreateAccountModel with _$CreateAccountModel {
   factory CreateAccountModel.fromJson(Map<String, Object?> json) =>
       _$CreateAccountModelFromJson(json);
 }
+
+const List<String> kCreateAccountModelColumns = [
+  'email',
+  'name',
+];

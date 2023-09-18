@@ -31,31 +31,20 @@ class AccountService {
     updateStream.sink.add(g);
   }
 
-  /// ### Create many account
-  /// Description: Register account (useful for importing data)
+  /// ### Total records
+  /// Description: Total records
   ///
-  /// Path /api/account_import
-  Future<List<CreateAccountModel>> postApiAccountImport(
-    AccountModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/account_import",
-      data: data.toJson(),
+  /// Path /api/account/total
+  Future<TotalCount> getApiAccountTotal() async {
+    final Response response = await _dio.get(
+      "/api/account/total",
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateAccountModel.fromJson(e))
-          .toList();
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
     }
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);
@@ -73,6 +62,72 @@ class AccountService {
   ) async {
     final Response response = await _dio.post(
       "/api/account",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return AccountModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Get account by ID
+  /// Description: Get account by ID
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/account/{id}
+  Future<AccountModel> getApiAccount(
+    String id,
+  ) async {
+    final Response response = await _dio.get(
+      "/api/account/$id",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return AccountModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Update a account
+  /// Description: Edit account
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/account/{id}
+  Future<AccountModel> putApiAccount(
+    AccountModel data,
+    String id,
+  ) async {
+    final Response response = await _dio.put(
+      "/api/account/$id",
       data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
@@ -138,55 +193,22 @@ class AccountService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Get account by ID
-  /// Description: Get account by ID
+  /// ### Create many account
+  /// Description: Register account (useful for importing data)
   ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/account/{id}
-  Future<AccountModel> getApiAccount(
-    String id,
-  ) async {
-    final Response response = await _dio.get(
-      "/api/account/$id",
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return AccountModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Update a account
-  /// Description: Edit account
-  ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/account/{id}
-  Future<AccountModel> putApiAccount(
+  /// Path /api/account_import
+  Future<List<CreateAccountModel>> postApiAccountImport(
     AccountModel data,
-    String id,
   ) async {
-    final Response response = await _dio.put(
-      "/api/account/$id",
+    final Response response = await _dio.post(
+      "/api/account_import",
       data: data.toJson(),
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return AccountModel.fromJson(response.data as Map<String, Object?>);
+      return (response.data as List)
+          .map((e) => CreateAccountModel.fromJson(e))
+          .toList();
     }
 
     if (response.statusCode == 404) {

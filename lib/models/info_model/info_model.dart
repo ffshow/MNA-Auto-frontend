@@ -15,3 +15,7 @@ class InfoModel with _$InfoModel {
   factory InfoModel.fromJson(Map<String, Object?> json) =>
       _$InfoModelFromJson(json);
 }
+
+const List<String> kInfoModelColumns = [
+  'label',
+];

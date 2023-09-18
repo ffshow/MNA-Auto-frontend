@@ -19,3 +19,11 @@ class AccountModel with _$AccountModel {
   factory AccountModel.fromJson(Map<String, Object?> json) =>
       _$AccountModelFromJson(json);
 }
+
+const List<String> kAccountModelColumns = [
+  'email',
+  'id',
+  'name',
+  'updated_at',
+  'created_at',
+];

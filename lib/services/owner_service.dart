@@ -31,6 +31,72 @@ class OwnerService {
     updateStream.sink.add(g);
   }
 
+  /// ### Get owner by ID
+  /// Description: Get owner by ID
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/owner/{id}
+  Future<OwnerModel> getApiOwner(
+    String id,
+  ) async {
+    final Response response = await _dio.get(
+      "/api/owner/$id",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return OwnerModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Update a owner
+  /// Description: Edit owner
+  ///
+  /// Path param: **id** string
+  ///
+  /// Path /api/owner/{id}
+  Future<OwnerModel> putApiOwner(
+    OwnerModel data,
+    String id,
+  ) async {
+    final Response response = await _dio.put(
+      "/api/owner/$id",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return OwnerModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### List owner
   /// Description: List owner
   ///
@@ -74,72 +140,6 @@ class OwnerService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Update a owner
-  /// Description: Edit owner
-  ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/owner/{id}
-  Future<OwnerModel> putApiOwner(
-    OwnerModel data,
-    String id,
-  ) async {
-    final Response response = await _dio.put(
-      "/api/owner/$id",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return OwnerModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Get owner by ID
-  /// Description: Get owner by ID
-  ///
-  /// Path param: **id** string
-  ///
-  /// Path /api/owner/{id}
-  Future<OwnerModel> getApiOwner(
-    String id,
-  ) async {
-    final Response response = await _dio.get(
-      "/api/owner/$id",
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return OwnerModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### Create a new owner
   /// Description: Register owner
   ///
@@ -163,6 +163,28 @@ class OwnerService {
     }
 
     if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Total records
+  /// Description: Total records
+  ///
+  /// Path /api/owner/total
+  Future<TotalCount> getApiOwnerTotal() async {
+    final Response response = await _dio.get(
+      "/api/owner/total",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

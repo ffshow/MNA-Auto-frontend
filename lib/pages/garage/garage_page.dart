@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/models/garage_model/garage_model.dart';
-import 'package:mna/pages/garage/state/garage_cubit.dart';
 import 'package:mna/services/services.dart';
 import 'package:mna/utils/extensions.dart';
 import 'package:mna/utils/style.dart';
-import 'package:mna/widget/widget.dart';
 
 import 'create/create_garage_widget.dart';
 
@@ -16,8 +15,6 @@ class GaragePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GarageService garageService =
-        RepositoryProvider.of<GarageService>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Garage page'),
@@ -48,93 +45,144 @@ class GaragePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
+      body: const Padding(
         padding: kEdgeAll8,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              const CreateGarageWidget(),
-              kH16,
-              GarageListWidget(
-                source: GarageDataTableSource(garageService),
-              ),
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            CreateGarageWidget(),
+            kH16,
+            Expanded(child: GarageListWidget()),
+          ],
         ),
       ),
     );
   }
 }
 
-class GarageListWidget extends StatelessWidget {
-  final GarageDataTableSource source;
-  const GarageListWidget({super.key, required this.source});
+class GarageListWidget extends StatefulWidget {
+  const GarageListWidget({super.key});
+
+  @override
+  State<GarageListWidget> createState() => _GarageListWidgetState();
+}
+
+class _GarageListWidgetState extends State<GarageListWidget> {
+  GarageDataTableSource? source;
+
+  bool sortAscending = false;
+  int sortColumnIndex = 1;
+
+  @override
+  void didChangeDependencies() {
+    final GarageService garageService =
+        RepositoryProvider.of<GarageService>(context);
+    source ??= GarageDataTableSource(garageService);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    source?.cancel();
+    source?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PaginatedDataTable(
-      columns: const [
-        DataColumn(label: Text('Label')),
-        DataColumn(label: Text('Created at')),
-        DataColumn(label: Text('Updated at')),
-        DataColumn(label: Text('Actions')),
+    return AsyncPaginatedDataTable2(
+      source: source!,
+      initialFirstRowIndex: 0,
+      rowsPerPage: source!.defaultRowsPerPage,
+      showCheckboxColumn: true,
+      sortAscending: sortAscending,
+      sortColumnIndex: sortColumnIndex,
+      showFirstLastButtons: true,
+      columns: <DataColumn>[
+        DataColumn(
+          label: const Text('Label'),
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        DataColumn(
+          label: const Text('Created at'),
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        DataColumn(
+          label: const Text('Updated at'),
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        const DataColumn(label: Text('Actions')),
       ],
-      source: source,
-      onPageChanged: (value) {
-        print(value);
+      onRowsPerPageChanged: (value) {
+        source!.onRowsPerPageChanged(value);
       },
     );
   }
 }
 
-class GarageDataTableSource extends DataTableSource {
+class GarageDataTableSource extends AsyncDataTableSource {
   final GarageService garageService;
+
   GarageDataTableSource(this.garageService) {
-    garageService
-        .getApiGarageList(
-      sort_by: 'created_at',
-      descending: true,
-    )
-        .then((garages) {
-      this.garages = garages;
+    garageService.getApiGarageTotal().then((total) {
+      totalCount = total.count ?? 0;
       notifyListeners();
-      garageService.onCreateGarage.listen(
-        (GarageModel g) {
-          debugPrint('garage created ${g.id}');
-          garages.insert(0, g);
-          notifyListeners();
-        },
-      );
-      garageService.onUpdateGarage.listen(
-        (GarageModel g) {
-          debugPrint('garage updated ${g.id}');
-          final int index = garages.indexWhere((e) => e.id == g.id);
-          if (index > -1) {
-            garages[index] = g;
-            notifyListeners();
-          }
-        },
-      );
-      garageService.onDeleteGarage.listen(
-        (GarageModel g) {
-          debugPrint('garage deleted ${g.id}');
-          garages.removeWhere((e) => e.id == g.id);
-          notifyListeners();
-        },
-      );
     });
+    onCreate = garageService.onCreateGarage.listen(
+      (GarageModel g) {
+        debugPrint('garage created ${g.id}');
+        items.insert(0, g);
+        refreshDatasource();
+      },
+    );
+    onUpdate = garageService.onUpdateGarage.listen(
+      (GarageModel g) {
+        debugPrint('garage updated ${g.id}');
+        final int index = items.indexWhere((e) => e.id == g.id);
+        if (index > -1) {
+          items[index] = g;
+          refreshDatasource();
+        }
+      },
+    );
+    onDelete = garageService.onDeleteGarage.listen(
+      (GarageModel g) {
+        debugPrint('garage deleted ${g.id}');
+        items.removeWhere((e) => e.id == g.id);
+        refreshDatasource();
+      },
+    );
   }
 
-  List<GarageModel> garages = [];
+  final List<GarageModel> items = [];
+  bool sortAscending = false;
+  int sortColumnIndex = 1;
+  int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+  int totalCount = 0;
+  late final StreamSubscription<GarageModel>? onCreate;
+  late final StreamSubscription<GarageModel>? onUpdate;
+  late final StreamSubscription<GarageModel>? onDelete;
 
-  @override
-  DataRow? getRow(int index) {
-    if (index >= garages.length) {
-      return null;
-    }
-    final GarageModel item = garages[index];
-    return DataRow(
-      cells: [
+  DataRow2 toRow(GarageModel item) {
+    return DataRow2(
+      cells: <DataCell>[
         DataCell(Text(item.label ?? '')),
         DataCell(
           Tooltip(
@@ -149,16 +197,14 @@ class GarageDataTableSource extends DataTableSource {
           ),
         ),
         DataCell(Row(
-          children: [
+          children: <Widget>[
             IconButton(
-              onPressed: () {
-                garageService.onDelete(item);
-              },
+              onPressed: () => garageService.onDelete(item),
               icon: const Icon(Icons.delete),
             ),
             IconButton(
               onPressed: () {
-                final i = item.copyWith(
+                final GarageModel i = item.copyWith(
                   label: '${item.label} updated',
                   updated_at: DateTime.now(),
                 );
@@ -176,8 +222,52 @@ class GarageDataTableSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => garages.length;
+  int get rowCount => totalCount;
 
   @override
   int get selectedRowCount => 0;
+
+  void onRowsPerPageChanged(int? value) {
+    defaultRowsPerPage = value ?? defaultRowsPerPage;
+    notifyListeners();
+  }
+
+  @override
+  Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
+    final List<GarageModel> data = await garageService.getApiGarageList(
+      page: startIndex ~/ defaultRowsPerPage,
+      per_page: count,
+      sort_by: sortBy(sortColumnIndex),
+      descending: !sortAscending,
+    );
+    return AsyncRowsResponse(
+      totalCount,
+      data.map((e) => toRow(e)).toList(),
+    );
+  }
+
+  void sort(int columnIndex, bool ascending) {
+    sortAscending = ascending;
+    sortColumnIndex = columnIndex;
+    refreshDatasource();
+  }
+
+  String? sortBy(int sortColumnIndex) {
+    switch (sortColumnIndex) {
+      case 0:
+        return "label";
+      case 1:
+        return "created_at";
+      case 2:
+        return "updated_at";
+      default:
+        return "created_at";
+    }
+  }
+
+  void cancel() {
+    onCreate?.cancel();
+    onUpdate?.cancel();
+    onDelete?.cancel();
+  }
 }

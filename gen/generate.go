@@ -45,13 +45,13 @@ type Info struct {
 }
 
 type Handler struct {
-	Description string           `json:"description"`
-	Consumes    []string         `json:"consumes"`
-	Produces    []string         `json:"produces"`
-	Tags        []string         `json:"tags"`
-	Summary     string           `json:"summary"`
-	Parameters  []Param          `json:"parameters"`
-	Responses   map[int]Response `json:"responses"`
+	Description string              `json:"description"`
+	Consumes    []string            `json:"consumes"`
+	Produces    []string            `json:"produces"`
+	Tags        []string            `json:"tags"`
+	Summary     string              `json:"summary"`
+	Parameters  []Param             `json:"parameters"`
+	Responses   map[string]Response `json:"responses"`
 }
 
 type Param struct {
@@ -104,9 +104,10 @@ func (s Service) HasFuncs() bool {
 }
 
 type DartModel struct {
-	Name   string      `json:"name"`
-	Part   string      `json:"part"`
-	Fields []DartField `json:"fields"`
+	Name    string      `json:"name"`
+	Part    string      `json:"part"`
+	Fields  []DartField `json:"fields"`
+	Columns string      `json:"columns"`
 }
 
 type DartField struct {
@@ -120,7 +121,7 @@ type DartFunc struct {
 	PathParams  []Param
 	QueryParams []Param
 	BodyParams  []Param
-	Responses   map[int]Response
+	Responses   map[string]Response
 	Return      string
 	Summary     string `json:"summary"`
 	Description string `json:"description"`
@@ -257,24 +258,34 @@ func generateServices(apiDocs ApiDocs) {
 	for funcPath, v := range apiDocs.Paths {
 		for funcMethod, h := range v {
 			returnFunc := "void"
+			if r, ok := h.Responses["default"]; ok {
+				h.Responses["599"] = r
+				delete(h.Responses, "default")
+			}
 			for k, r := range h.Responses {
-				if k == 200 {
+				if k == "200" {
 					if len(r.Schema.Ref) != 0 {
 						sp := strings.Split(r.Schema.Ref, ".")
 						m := sp[len(sp)-1]
 						returnFunc = "Future<" + m + ">"
+						continue
 					}
 					if r.Schema.Type == "array" {
 						sp := strings.Split(r.Schema.Items.Ref, ".")
 						m := sp[len(sp)-1]
 						returnFunc = "Future<List<" + m + ">>"
+						continue
 					}
+					t := MapToDartType(r.Schema.Type)
+					if t == "dynamic" {
+						t = "void"
+					}
+					returnFunc = "Future<" + t + ">"
 				}
 			}
 			if len(h.Tags) != 1 {
 				continue
 			}
-			// fmt.Printf("h.Parameters: %v\n", h.Parameters)
 
 			pathParams := []Param{}
 			queryParams := []Param{}
@@ -376,7 +387,9 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 		}
 		buffer := bytes.NewBuffer([]byte{})
 		dartFields := []DartField{}
+		columns := ""
 		for k, f := range m.Properties {
+			columns += fmt.Sprintf("'%s',", k)
 			t := f.Type
 			var def strings.Builder
 			if f.IsDate {
@@ -404,9 +417,10 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 			})
 		}
 		if err := t.ExecuteTemplate(buffer, "model", &DartModel{
-			Name:   namePascalCase,
-			Part:   nameSnakeCase,
-			Fields: dartFields,
+			Name:    namePascalCase,
+			Part:    nameSnakeCase,
+			Fields:  dartFields,
+			Columns: columns,
 		}); err != nil {
 			panic(err)
 		}

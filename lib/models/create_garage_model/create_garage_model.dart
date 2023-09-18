@@ -15,3 +15,7 @@ class CreateGarageModel with _$CreateGarageModel {
   factory CreateGarageModel.fromJson(Map<String, Object?> json) =>
       _$CreateGarageModelFromJson(json);
 }
+
+const List<String> kCreateGarageModelColumns = [
+  'label',
+];

@@ -61,7 +61,7 @@ class {{.Name}}{
     {{- range $key, $value := .Responses}}
     if (response.statusCode == {{$key}}){
     {{ if .Return}}
-        {{- if eq $key 200}}
+        {{- if eq $key "200"}}
             {{- if eq $value.Schema.Type "array"}}
             return (response.data as List)
             .map((e) => {{.Return}}.fromJson(e))

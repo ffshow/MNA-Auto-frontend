@@ -31,6 +31,39 @@ class VehicleService {
     updateStream.sink.add(g);
   }
 
+  /// ### Create many vehicle
+  /// Description: Register vehicle (useful for importing data)
+  ///
+  /// Path /api/vehicle_import
+  Future<List<CreateVehicleModel>> postApiVehicleImport(
+    VehicleModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/vehicle_import",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => CreateVehicleModel.fromJson(e))
+          .toList();
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### Get vehicle by ID
   /// Description: Get vehicle by ID
   ///
@@ -97,6 +130,59 @@ class VehicleService {
     throw Exception("Something went wrong");
   }
 
+  /// ### Total records
+  /// Description: Total records
+  ///
+  /// Path /api/vehicle/total
+  Future<TotalCount> getApiVehicleTotal() async {
+    final Response response = await _dio.get(
+      "/api/vehicle/total",
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 599) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new vehicle
+  /// Description: Register vehicle
+  ///
+  /// Path /api/vehicle
+  Future<VehicleModel> postApiVehicle(
+    CreateVehicleModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/vehicle",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return VehicleModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
   /// ### List vehicle
   /// Description: List vehicle
   ///
@@ -132,70 +218,6 @@ class VehicleService {
     }
 
     if (response.statusCode == 503) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create many vehicle
-  /// Description: Register vehicle (useful for importing data)
-  ///
-  /// Path /api/vehicle_import
-  Future<List<CreateVehicleModel>> postApiVehicleImport(
-    VehicleModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/vehicle_import",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => CreateVehicleModel.fromJson(e))
-          .toList();
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### Create a new vehicle
-  /// Description: Register vehicle
-  ///
-  /// Path /api/vehicle
-  Future<VehicleModel> postApiVehicle(
-    CreateVehicleModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/vehicle",
-      data: data.toJson(),
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return VehicleModel.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

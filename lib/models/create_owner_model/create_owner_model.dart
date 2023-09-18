@@ -19,3 +19,11 @@ class CreateOwnerModel with _$CreateOwnerModel {
   factory CreateOwnerModel.fromJson(Map<String, Object?> json) =>
       _$CreateOwnerModelFromJson(json);
 }
+
+const List<String> kCreateOwnerModelColumns = [
+  'address',
+  'email',
+  'phone',
+  'photo',
+  'postal_code',
+];

@@ -15,3 +15,7 @@ class CreateSupplierModel with _$CreateSupplierModel {
   factory CreateSupplierModel.fromJson(Map<String, Object?> json) =>
       _$CreateSupplierModelFromJson(json);
 }
+
+const List<String> kCreateSupplierModelColumns = [
+  'name',
+];

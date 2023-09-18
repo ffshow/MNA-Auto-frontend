@@ -18,8 +18,8 @@ class OwnerCubit extends Cubit<OwnerState> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
     try {
-      final Iterable<OwnerModel> data = await _ownerService.getApiOwnerList();
-      emit(OwnerState.loaded(data));
+      final res = await _ownerService.getApiOwnerList();
+      emit(OwnerState.loaded(res.data ?? []));
     } catch (e, s) {
       print(s);
       print(e);

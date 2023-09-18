@@ -18,11 +18,11 @@ class VehicleCubit extends Cubit<VehicleState> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
     try {
-      final Iterable<VehicleModel> data = await _service.getApiVehicleList(
+      final res = await _service.getApiVehicleList(
         sort_by: 'created_at',
         descending: true,
       );
-      emit(VehicleState.loaded(data));
+      emit(VehicleState.loaded(res.data ?? []));
     } catch (e, s) {
       print(s);
       emit(VehicleState.failed(e.toString()));

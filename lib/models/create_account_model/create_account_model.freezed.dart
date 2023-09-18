@@ -20,8 +20,8 @@ CreateAccountModel _$CreateAccountModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateAccountModel {
-  String? get email => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $CreateAccountModelCopyWith<$Res> {
           CreateAccountModel value, $Res Function(CreateAccountModel) then) =
       _$CreateAccountModelCopyWithImpl<$Res, CreateAccountModel>;
   @useResult
-  $Res call({String? email, String? name});
+  $Res call({String? name, String? email});
 }
 
 /// @nodoc
@@ -51,17 +51,17 @@ class _$CreateAccountModelCopyWithImpl<$Res, $Val extends CreateAccountModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
     Object? name = freezed,
+    Object? email = freezed,
   }) {
     return _then(_value.copyWith(
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -75,7 +75,7 @@ abstract class _$$_CreateAccountModelCopyWith<$Res>
       __$$_CreateAccountModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? email, String? name});
+  $Res call({String? name, String? email});
 }
 
 /// @nodoc
@@ -89,17 +89,17 @@ class __$$_CreateAccountModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
     Object? name = freezed,
+    Object? email = freezed,
   }) {
     return _then(_$_CreateAccountModel(
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -108,21 +108,21 @@ class __$$_CreateAccountModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CreateAccountModel implements _CreateAccountModel {
-  const _$_CreateAccountModel({this.email = null, this.name = null});
+  const _$_CreateAccountModel({this.name = null, this.email = null});
 
   factory _$_CreateAccountModel.fromJson(Map<String, dynamic> json) =>
       _$$_CreateAccountModelFromJson(json);
 
   @override
   @JsonKey()
-  final String? email;
+  final String? name;
   @override
   @JsonKey()
-  final String? name;
+  final String? email;
 
   @override
   String toString() {
-    return 'CreateAccountModel(email: $email, name: $name)';
+    return 'CreateAccountModel(name: $name, email: $email)';
   }
 
   @override
@@ -130,13 +130,13 @@ class _$_CreateAccountModel implements _CreateAccountModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateAccountModel &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, email, name);
+  int get hashCode => Object.hash(runtimeType, name, email);
 
   @JsonKey(ignore: true)
   @override
@@ -154,16 +154,16 @@ class _$_CreateAccountModel implements _CreateAccountModel {
 }
 
 abstract class _CreateAccountModel implements CreateAccountModel {
-  const factory _CreateAccountModel({final String? email, final String? name}) =
+  const factory _CreateAccountModel({final String? name, final String? email}) =
       _$_CreateAccountModel;
 
   factory _CreateAccountModel.fromJson(Map<String, dynamic> json) =
       _$_CreateAccountModel.fromJson;
 
   @override
-  String? get email;
-  @override
   String? get name;
+  @override
+  String? get email;
   @override
   @JsonKey(ignore: true)
   _$$_CreateAccountModelCopyWith<_$_CreateAccountModel> get copyWith =>

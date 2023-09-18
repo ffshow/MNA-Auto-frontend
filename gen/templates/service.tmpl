@@ -12,23 +12,23 @@ class {{.Name}}{
   {{.Name}}(this._dio);
 
   StreamController<{{.Model}}> createStream = StreamController.broadcast();
-  Stream<{{.Model}}> get onCreateGarage => createStream.stream;
+  Stream<{{.Model}}> get onCreate => createStream.stream;
   
   StreamController<{{.Model}}> updateStream = StreamController.broadcast();
-  Stream<{{.Model}}> get onUpdateGarage => updateStream.stream;
+  Stream<{{.Model}}> get onUpdate => updateStream.stream;
 
   StreamController<{{.Model}}> deleteStream = StreamController.broadcast();
-  Stream<{{.Model}}> get onDeleteGarage => deleteStream.stream;
+  Stream<{{.Model}}> get onDelete => deleteStream.stream;
 
-  void onCreate({{.Model}} g) {
+  void create({{.Model}} g) {
     createStream.sink.add(g);
   }
 
-  void onDelete({{.Model}} g) {
+  void delete({{.Model}} g) {
     deleteStream.sink.add(g);
   }
 
-  void onUpdate({{.Model}} g) {
+  void update({{.Model}} g) {
     updateStream.sink.add(g);
   }
 

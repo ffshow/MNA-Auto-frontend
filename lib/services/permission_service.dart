@@ -11,61 +11,40 @@ class PermissionService {
   PermissionService(this._dio);
 
   StreamController<PermissionModel> createStream = StreamController.broadcast();
-  Stream<PermissionModel> get onCreateGarage => createStream.stream;
+  Stream<PermissionModel> get onCreate => createStream.stream;
 
   StreamController<PermissionModel> updateStream = StreamController.broadcast();
-  Stream<PermissionModel> get onUpdateGarage => updateStream.stream;
+  Stream<PermissionModel> get onUpdate => updateStream.stream;
 
   StreamController<PermissionModel> deleteStream = StreamController.broadcast();
-  Stream<PermissionModel> get onDeleteGarage => deleteStream.stream;
+  Stream<PermissionModel> get onDelete => deleteStream.stream;
 
-  void onCreate(PermissionModel g) {
+  void create(PermissionModel g) {
     createStream.sink.add(g);
   }
 
-  void onDelete(PermissionModel g) {
+  void delete(PermissionModel g) {
     deleteStream.sink.add(g);
   }
 
-  void onUpdate(PermissionModel g) {
+  void update(PermissionModel g) {
     updateStream.sink.add(g);
   }
 
-  /// ### List permission
-  /// Description: List permission
+  /// ### Total records
+  /// Description: Total records
   ///
-  /// Query param: **page** integer page
-  ///
-  /// Query param: **per_page** integer page size
-  ///
-  /// Query param: **sort_by** string sort field
-  ///
-  /// Query param: **descending** boolean order
-  ///
-  ///
-  /// Path /api/permission_list
-  Future<List<PermissionModel>> getApiPermissionList({
-    int? page,
-    int? per_page,
-    String? sort_by,
-    bool? descending,
-  }) async {
+  /// Path /api/permission/total
+  Future<TotalCount> getApiPermissionTotal() async {
     final Response response = await _dio.get(
-      "/api/permission_list",
-      queryParameters: <String, dynamic>{
-        if (page != null) "page": page,
-        if (per_page != null) "per_page": per_page,
-        if (sort_by != null) "sort_by": sort_by,
-        if (descending != null) "descending": descending,
-      },
+      "/api/permission/total",
+      queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => PermissionModel.fromJson(e))
-          .toList();
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
     }
 
-    if (response.statusCode == 503) {
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);
@@ -171,28 +150,6 @@ class PermissionService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Total records
-  /// Description: Total records
-  ///
-  /// Path /api/permission/total
-  Future<TotalCount> getApiPermissionTotal() async {
-    final Response response = await _dio.get(
-      "/api/permission/total",
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return TotalCount.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 599) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### Create many permission
   /// Description: Register permission (useful for importing data)
   ///
@@ -218,6 +175,48 @@ class PermissionService {
     }
 
     if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### List permission
+  /// Description: List permission
+  ///
+  /// Query param: **page** integer page
+  ///
+  /// Query param: **per_page** integer page size
+  ///
+  /// Query param: **sort_by** string sort field
+  ///
+  /// Query param: **descending** boolean order
+  ///
+  ///
+  /// Path /api/permission_list
+  Future<ListPermissionModel> getApiPermissionList({
+    int? page,
+    int? per_page,
+    String? sort_by,
+    bool? descending,
+  }) async {
+    final Response response = await _dio.get(
+      "/api/permission_list",
+      queryParameters: <String, dynamic>{
+        if (page != null) "page": page,
+        if (per_page != null) "per_page": per_page,
+        if (sort_by != null) "sort_by": sort_by,
+        if (descending != null) "descending": descending,
+      },
+    );
+    if (response.statusCode == 200) {
+      return ListPermissionModel.fromJson(
+          response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 503) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

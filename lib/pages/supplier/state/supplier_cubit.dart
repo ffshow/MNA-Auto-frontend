@@ -17,9 +17,9 @@ class SupplierCubit extends Cubit<SupplierState> {
     }
 
     try {
-      final List<SupplierModel> suppliers = await _supplierService
-          .getApiSupplierList(sort_by: 'created_at', descending: true);
-      emit(SupplierState.success(suppliers));
+      final res = await _supplierService.getApiSupplierList(
+          sort_by: 'created_at', descending: true);
+      emit(SupplierState.success(res.data ?? []));
     } on Exception catch (e) {
       emit(SupplierState.failure(e.toString()));
     }

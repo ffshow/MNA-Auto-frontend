@@ -22,9 +22,12 @@ type Model struct {
 }
 
 type Field struct {
-	Type     string `json:"type"`
-	Nullable bool   `json:"x-nullable"`
-	IsDate   bool   `json:"x-date"`
+	Type  string `json:"type"`
+	Items struct {
+		Ref string `json:"$ref"`
+	} `json:"items"`
+	Nullable bool `json:"x-nullable"`
+	IsDate   bool `json:"x-date"`
 }
 
 type ApiDocs struct {
@@ -395,8 +398,15 @@ func generateModels(apiDocs ApiDocs, t *template.Template) {
 			if f.IsDate {
 				t = "DateTime"
 			}
-			dt := MapToDartType(t)
-			def.WriteString("@Default(null) " + dt + "? ")
+			if f.Type == "array" {
+				sp := strings.Split(f.Items.Ref, ".")
+				m := sp[len(sp)-1]
+				t = "List<" + m + ">"
+				def.WriteString("@Default(null) " + t + "? ")
+			} else {
+				dt := MapToDartType(t)
+				def.WriteString("@Default(null) " + dt + "? ")
+			}
 			//FIXME: all fields are nullable now
 			// if !f.Nullable {
 			// 	if dt == "bool" {

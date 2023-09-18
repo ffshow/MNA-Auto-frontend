@@ -1,4 +1,5 @@
 //CODE GENERATED, DO NOT EDIT
+import 'package:mna/models/models.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 

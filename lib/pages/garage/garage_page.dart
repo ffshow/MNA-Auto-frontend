@@ -4,6 +4,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/models/garage_model/garage_model.dart';
+import 'package:mna/models/list_garage_model/list_garage_model.dart';
 import 'package:mna/services/services.dart';
 import 'package:mna/utils/extensions.dart';
 import 'package:mna/utils/style.dart';
@@ -39,7 +40,7 @@ class GaragePage extends StatelessWidget {
                 created_at: now,
                 updated_at: now,
               );
-              garageService.onCreate(g);
+              garageService.create(g);
             },
             icon: const Icon(Icons.add),
           ),
@@ -141,18 +142,18 @@ class GarageDataTableSource extends AsyncDataTableSource {
   final GarageService garageService;
 
   GarageDataTableSource(this.garageService) {
-    garageService.getApiGarageTotal().then((total) {
-      totalCount = total.count ?? 0;
-      notifyListeners();
-    });
-    onCreate = garageService.onCreateGarage.listen(
+    // garageService.getApiGarageTotal().then((total) {
+    //   totalCount = total.count ?? 0;
+    //   notifyListeners();
+    // });
+    onCreate = garageService.onCreate.listen(
       (GarageModel g) {
         debugPrint('garage created ${g.id}');
         items.insert(0, g);
         refreshDatasource();
       },
     );
-    onUpdate = garageService.onUpdateGarage.listen(
+    onUpdate = garageService.onUpdate.listen(
       (GarageModel g) {
         debugPrint('garage updated ${g.id}');
         final int index = items.indexWhere((e) => e.id == g.id);
@@ -162,7 +163,7 @@ class GarageDataTableSource extends AsyncDataTableSource {
         }
       },
     );
-    onDelete = garageService.onDeleteGarage.listen(
+    onDelete = garageService.onDelete.listen(
       (GarageModel g) {
         debugPrint('garage deleted ${g.id}');
         items.removeWhere((e) => e.id == g.id);
@@ -199,7 +200,7 @@ class GarageDataTableSource extends AsyncDataTableSource {
         DataCell(Row(
           children: <Widget>[
             IconButton(
-              onPressed: () => garageService.onDelete(item),
+              onPressed: () => garageService.delete(item),
               icon: const Icon(Icons.delete),
             ),
             IconButton(
@@ -208,7 +209,7 @@ class GarageDataTableSource extends AsyncDataTableSource {
                   label: '${item.label} updated',
                   updated_at: DateTime.now(),
                 );
-                garageService.onUpdate(i);
+                garageService.update(i);
               },
               icon: const Icon(Icons.edit),
             ),
@@ -234,15 +235,18 @@ class GarageDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final List<GarageModel> data = await garageService.getApiGarageList(
-      page: startIndex ~/ defaultRowsPerPage,
+    final ListGarageModel res = await garageService.getApiGarageList(
+      page: (startIndex ~/ defaultRowsPerPage) + 1,
       per_page: count,
       sort_by: sortBy(sortColumnIndex),
       descending: !sortAscending,
     );
+    if (res.total != null) {
+      totalCount = res.total!;
+    }
     return AsyncRowsResponse(
       totalCount,
-      data.map((e) => toRow(e)).toList(),
+      res.data?.map((e) => toRow(e)).toList() ?? [],
     );
   }
 

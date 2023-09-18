@@ -11,49 +11,40 @@ class SupplierService {
   SupplierService(this._dio);
 
   StreamController<SupplierModel> createStream = StreamController.broadcast();
-  Stream<SupplierModel> get onCreateGarage => createStream.stream;
+  Stream<SupplierModel> get onCreate => createStream.stream;
 
   StreamController<SupplierModel> updateStream = StreamController.broadcast();
-  Stream<SupplierModel> get onUpdateGarage => updateStream.stream;
+  Stream<SupplierModel> get onUpdate => updateStream.stream;
 
   StreamController<SupplierModel> deleteStream = StreamController.broadcast();
-  Stream<SupplierModel> get onDeleteGarage => deleteStream.stream;
+  Stream<SupplierModel> get onDelete => deleteStream.stream;
 
-  void onCreate(SupplierModel g) {
+  void create(SupplierModel g) {
     createStream.sink.add(g);
   }
 
-  void onDelete(SupplierModel g) {
+  void delete(SupplierModel g) {
     deleteStream.sink.add(g);
   }
 
-  void onUpdate(SupplierModel g) {
+  void update(SupplierModel g) {
     updateStream.sink.add(g);
   }
 
-  /// ### Create a new supplier
-  /// Description: Register supplier
+  /// ### Total records
+  /// Description: Total records
   ///
-  /// Path /api/supplier
-  Future<SupplierModel> postApiSupplier(
-    CreateSupplierModel data,
-  ) async {
-    final Response response = await _dio.post(
-      "/api/supplier",
-      data: data.toJson(),
+  /// Path /api/supplier/total
+  Future<TotalCount> getApiSupplierTotal() async {
+    final Response response = await _dio.get(
+      "/api/supplier/total",
       queryParameters: <String, dynamic>{},
     );
     if (response.statusCode == 200) {
-      return SupplierModel.fromJson(response.data as Map<String, Object?>);
+      return TotalCount.fromJson(response.data as Map<String, Object?>);
     }
 
-    if (response.statusCode == 404) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    if (response.statusCode == 500) {
+    if (response.statusCode == 599) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);
@@ -128,71 +119,6 @@ class SupplierService {
     throw Exception("Something went wrong");
   }
 
-  /// ### Total records
-  /// Description: Total records
-  ///
-  /// Path /api/supplier/total
-  Future<TotalCount> getApiSupplierTotal() async {
-    final Response response = await _dio.get(
-      "/api/supplier/total",
-      queryParameters: <String, dynamic>{},
-    );
-    if (response.statusCode == 200) {
-      return TotalCount.fromJson(response.data as Map<String, Object?>);
-    }
-
-    if (response.statusCode == 599) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
-  /// ### List supplier
-  /// Description: List supplier
-  ///
-  /// Query param: **page** integer page
-  ///
-  /// Query param: **per_page** integer page size
-  ///
-  /// Query param: **sort_by** string sort field
-  ///
-  /// Query param: **descending** boolean order
-  ///
-  ///
-  /// Path /api/supplier_list
-  Future<List<SupplierModel>> getApiSupplierList({
-    int? page,
-    int? per_page,
-    String? sort_by,
-    bool? descending,
-  }) async {
-    final Response response = await _dio.get(
-      "/api/supplier_list",
-      queryParameters: <String, dynamic>{
-        if (page != null) "page": page,
-        if (per_page != null) "per_page": per_page,
-        if (sort_by != null) "sort_by": sort_by,
-        if (descending != null) "descending": descending,
-      },
-    );
-    if (response.statusCode == 200) {
-      return (response.data as List)
-          .map((e) => SupplierModel.fromJson(e))
-          .toList();
-    }
-
-    if (response.statusCode == 503) {
-      final ResponseError error =
-          ResponseError.fromJson((response.data as Map<String, Object>));
-      throw Exception(error.message);
-    }
-
-    throw Exception("Something went wrong");
-  }
-
   /// ### Create many supplier
   /// Description: Register supplier (useful for importing data)
   ///
@@ -218,6 +144,78 @@ class SupplierService {
     }
 
     if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### Create a new supplier
+  /// Description: Register supplier
+  ///
+  /// Path /api/supplier
+  Future<SupplierModel> postApiSupplier(
+    CreateSupplierModel data,
+  ) async {
+    final Response response = await _dio.post(
+      "/api/supplier",
+      data: data.toJson(),
+      queryParameters: <String, dynamic>{},
+    );
+    if (response.statusCode == 200) {
+      return SupplierModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 404) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    if (response.statusCode == 500) {
+      final ResponseError error =
+          ResponseError.fromJson((response.data as Map<String, Object>));
+      throw Exception(error.message);
+    }
+
+    throw Exception("Something went wrong");
+  }
+
+  /// ### List supplier
+  /// Description: List supplier
+  ///
+  /// Query param: **page** integer page
+  ///
+  /// Query param: **per_page** integer page size
+  ///
+  /// Query param: **sort_by** string sort field
+  ///
+  /// Query param: **descending** boolean order
+  ///
+  ///
+  /// Path /api/supplier_list
+  Future<ListSupplierModel> getApiSupplierList({
+    int? page,
+    int? per_page,
+    String? sort_by,
+    bool? descending,
+  }) async {
+    final Response response = await _dio.get(
+      "/api/supplier_list",
+      queryParameters: <String, dynamic>{
+        if (page != null) "page": page,
+        if (per_page != null) "per_page": per_page,
+        if (sort_by != null) "sort_by": sort_by,
+        if (descending != null) "descending": descending,
+      },
+    );
+    if (response.statusCode == 200) {
+      return ListSupplierModel.fromJson(response.data as Map<String, Object?>);
+    }
+
+    if (response.statusCode == 503) {
       final ResponseError error =
           ResponseError.fromJson((response.data as Map<String, Object>));
       throw Exception(error.message);

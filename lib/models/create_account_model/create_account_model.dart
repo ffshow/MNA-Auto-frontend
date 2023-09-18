@@ -1,4 +1,5 @@
 //CODE GENERATED, DO NOT EDIT
+import 'package:mna/models/models.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,8 +10,8 @@ part 'create_account_model.g.dart';
 @freezed
 class CreateAccountModel with _$CreateAccountModel {
   const factory CreateAccountModel({
-    @Default(null) String? email,
     @Default(null) String? name,
+    @Default(null) String? email,
   }) = _CreateAccountModel;
 
   factory CreateAccountModel.fromJson(Map<String, Object?> json) =>
@@ -18,6 +19,6 @@ class CreateAccountModel with _$CreateAccountModel {
 }
 
 const List<String> kCreateAccountModelColumns = [
-  'email',
   'name',
+  'email',
 ];

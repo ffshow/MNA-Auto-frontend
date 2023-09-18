@@ -17,9 +17,10 @@ class GarageCubit extends Cubit<GarageState> {
     }
 
     try {
-      final List<GarageModel> garages = await _garageService.getApiGarageList(
+      final res = await _garageService.getApiGarageList(
           sort_by: 'created_at', descending: true);
-      emit(GarageState.success(garages));
+
+      emit(GarageState.success(res.data ?? []));
     } on Exception catch (e) {
       emit(GarageState.failure(e.toString()));
     }

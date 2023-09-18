@@ -310,10 +310,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.AccountModel"
-                            }
+                            "$ref": "#/definitions/models.ListAccountModel"
                         }
                     },
                     "503": {
@@ -590,10 +587,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.GarageModel"
-                            }
+                            "$ref": "#/definitions/models.ListGarageModel"
                         }
                     },
                     "503": {
@@ -870,10 +864,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.OwnerModel"
-                            }
+                            "$ref": "#/definitions/models.ListOwnerModel"
                         }
                     },
                     "503": {
@@ -1150,10 +1141,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.PermissionModel"
-                            }
+                            "$ref": "#/definitions/models.ListPermissionModel"
                         }
                     },
                     "503": {
@@ -1430,10 +1418,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.SparePartModel"
-                            }
+                            "$ref": "#/definitions/models.ListSparePartModel"
                         }
                     },
                     "503": {
@@ -1710,10 +1695,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.SupplierModel"
-                            }
+                            "$ref": "#/definitions/models.ListSupplierModel"
                         }
                     },
                     "503": {
@@ -1990,10 +1972,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.VehicleModel"
-                            }
+                            "$ref": "#/definitions/models.ListVehicleModel"
                         }
                     },
                     "503": {
@@ -2208,6 +2187,104 @@
             "properties": {
                 "label": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ListAccountModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.AccountModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListGarageModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.GarageModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListOwnerModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.OwnerModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListPermissionModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PermissionModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListSparePartModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SparePartModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListSupplierModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SupplierModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ListVehicleModel": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.VehicleModel"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },

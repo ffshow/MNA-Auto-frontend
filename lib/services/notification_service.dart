@@ -39,7 +39,7 @@ class NotificationService {
             );
             title = model.label ?? 'Notification';
             description = 'New garage has been created';
-            _garageService.onCreate(model);
+            _garageService.create(model);
             break;
           case 'Garage.Update':
             final GarageModel model = GarageModel.fromJson(
@@ -47,7 +47,7 @@ class NotificationService {
             );
             title = model.label ?? 'Notification';
             description = 'Garage ${model.label} has bee updated';
-            _garageService.onUpdate(model);
+            _garageService.update(model);
             break;
           case 'Garage.Delete':
             final GarageModel model = GarageModel.fromJson(
@@ -55,7 +55,7 @@ class NotificationService {
             );
             title = model.label ?? 'Notification';
             description = 'Garage ${model.label} has been deleted';
-            _garageService.onDelete(model);
+            _garageService.delete(model);
             break;
           case 'Vehicle.Create':
             final VehicleModel model = VehicleModel.fromJson(
@@ -63,7 +63,7 @@ class NotificationService {
             );
             title = 'Vehicle created';
             description = 'A new vehicle has been created';
-            _vehicleService.onCreate(model);
+            _vehicleService.create(model);
             break;
           case 'Vehicle.Update':
             final VehicleModel model = VehicleModel.fromJson(
@@ -71,7 +71,7 @@ class NotificationService {
             );
             title = 'Vehicle updated';
             description = 'A vehicle has been updated';
-            _vehicleService.onUpdate(model);
+            _vehicleService.update(model);
             break;
           case 'Vehicle.Delete':
             final VehicleModel model = VehicleModel.fromJson(
@@ -79,7 +79,7 @@ class NotificationService {
             );
             title = 'Vehicle deleted';
             description = 'A vehicle has been deleted';
-            _vehicleService.onDelete(model);
+            _vehicleService.delete(model);
             break;
           default:
             title = '$topic Notification';

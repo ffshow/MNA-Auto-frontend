@@ -1,16 +1,29 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:mna/cubits/cubit/notification_cubit.dart';
 import 'package:mna/router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/client_index.dart';
 
 void main() {
   final Swagger swagger = Swagger.create();
+  final NotificationCubit notificationCubit = NotificationCubit();
+  final NotificationService notificationService = NotificationService(
+    notificationCubit,
+  );
   runApp(MultiRepositoryProvider(
     providers: [
-      RepositoryProvider(create: (context) => swagger),
+      RepositoryProvider<Swagger>(create: (BuildContext context) => swagger),
+      RepositoryProvider<NotificationService>(
+        create: (BuildContext context) => notificationService..init(),
+        lazy: false,
+      ),
     ],
-    child: const MainApp(),
+    child: BlocProvider<NotificationCubit>(
+      create: (context) => notificationCubit,
+      child: const MainApp(),
+    ),
   ));
 }
 

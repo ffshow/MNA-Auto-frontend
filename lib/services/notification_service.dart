@@ -1,20 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:toastification/toastification.dart';
+import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-const Duration autoCloseDuration = Duration(seconds: 5);
-
 class NotificationService {
-  final BuildContext context;
-  NotificationService(
-    this.context,
-  );
+  final NotificationCubit _notificationCubit;
+  NotificationService(this._notificationCubit);
 
   String topic = '';
   String title = '';
   String description = '';
+  int listeners = 0;
+  late final StreamController<int> _onCreateVehicleStream =
+      StreamController.broadcast();
+  Stream get onCreateVehicle => _onCreateVehicleStream.stream;
+
+  late final StreamController<ModelsSupplierModel> _onCreateSupplierStream =
+      StreamController.broadcast();
+
+  Stream get onCreateSupplier => _onCreateSupplierStream.stream;
 
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
@@ -26,9 +33,14 @@ class NotificationService {
             jsonDecode(utf8.decode(message)) as Map<String, Object?>;
         debugPrint('ws message: $json');
         topic = json['topic'] as String? ?? '';
+        title = '$topic Notification';
         switch (topic) {
+          case "Supplier.Create":
+            _onCreateSupplierStream.sink.add(ModelsSupplierModel.fromJson(
+                json['data'] as Map<String, dynamic>));
+          case "Vehicle.Create":
+            _onCreateVehicleStream.sink.add(1);
           default:
-            title = '$topic Notification';
             description = '';
         }
         _notify();
@@ -36,27 +48,23 @@ class NotificationService {
       onDone: () {
         //TODO: reconnect or do something
         debugPrint('ws closed');
-        toastification.showError(
-          context: context,
-          title: 'Notification System',
-          description: '',
-          autoCloseDuration: const Duration(seconds: 5),
-        );
       },
       onError: (err) {
         //TODO: handle error
         debugPrint('ws error: $err');
+        title = 'Notification System';
+        description = '';
+        _notify(type: Type.error);
       },
     );
   }
 
-  void _notify() {
-    toastification.showSuccess(
-      context: context,
+  void _notify({Type? type}) {
+    _notificationCubit.add(NotificationModel(
       title: title,
       description: description,
-      autoCloseDuration: autoCloseDuration,
-      closeOnClick: true,
-    );
+      type: type ?? Type.info,
+      time: DateTime.now(),
+    ));
   }
 }

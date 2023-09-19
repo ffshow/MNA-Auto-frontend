@@ -1,10 +1,18 @@
+import 'dart:io';
+
 import 'package:data_table_2/data_table_2.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/utils/style.dart';
 import 'package:mna/widget/widget.dart';
 
 import 'data_source.dart';
+
+final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
 class OwnerPage extends StatelessWidget {
   const OwnerPage({super.key});
@@ -15,9 +23,177 @@ class OwnerPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Owners Page'),
         centerTitle: false,
+        actions: [
+          IconButton(
+            tooltip: 'Add an owner',
+            onPressed: () {
+              _create(context);
+            },
+            icon: const Icon(Icons.create),
+          ),
+        ],
       ),
       body: const OwnerListWidget(),
     );
+  }
+
+  Future<void> _create(BuildContext context) async {
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    final ScaffoldMessengerState scaffoldState = ScaffoldMessenger.of(context);
+
+    final Map<String, Object?>? data =
+        await showModalBottomSheet<Map<String, Object?>?>(
+      context: context,
+      builder: (BuildContext context) {
+        return FormBuilder(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  FormBuilderField<String>(
+                    name: 'photo',
+                    builder: (FormFieldState<String> field) {
+                      return InkWell(
+                        onTap: () async {
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles(
+                            allowedExtensions: <String>['jpg', 'png', 'jpeg'],
+                            allowMultiple: false,
+                            dialogTitle: 'Owner photo',
+                            type: FileType.image,
+                          );
+                          if (result != null && result.files.isNotEmpty) {
+                            final String? p = result.files.single.path;
+                            if (p != null) {
+                              _formKey.currentState?.fields['photo']
+                                  ?.didChange(p);
+                            }
+                          } else {
+                            // iser canceled the picker
+                          }
+                        },
+                        child: field.value == null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: const Icon(Icons.person, size: 100),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.file(
+                                  File(field.value!),
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                      );
+                    },
+                  ),
+                  kH8,
+                  FormBuilderTextField(
+                    name: 'email',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                    ),
+                    validator: FormBuilderValidators.compose<String>(
+                      [
+                        FormBuilderValidators.email(),
+                        FormBuilderValidators.required<String>(),
+                      ],
+                    ),
+                  ),
+                  kH8,
+                  FormBuilderTextField(
+                    name: 'phone',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                      labelText: 'Phone',
+                    ),
+                    validator: FormBuilderValidators.compose<String>(
+                      [
+                        FormBuilderValidators.required<String>(),
+                      ],
+                    ),
+                  ),
+                  kH8,
+                  FormBuilderTextField(
+                    name: 'address',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                      labelText: 'Address',
+                    ),
+                    validator: FormBuilderValidators.compose<String>(
+                      [
+                        FormBuilderValidators.required<String>(),
+                      ],
+                    ),
+                  ),
+                  kH8,
+                  FormBuilderTextField(
+                    name: 'postal_code',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: const InputDecoration(
+                      labelText: 'Zip code',
+                    ),
+                    validator: FormBuilderValidators.compose<String>(
+                      [
+                        FormBuilderValidators.required<String>(),
+                      ],
+                    ),
+                  ),
+                  kH16,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      kW8,
+                      OutlinedButton(
+                        onPressed: () {
+                          final bool isValid =
+                              _formKey.currentState?.saveAndValidate() ?? false;
+                          if (isValid) {
+                            Navigator.pop(
+                              context,
+                              _formKey.currentState!.value,
+                            );
+                          }
+                        },
+                        child: const Text('Sumbit'),
+                      ),
+                    ],
+                  ),
+                  kH8,
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    if (data != null) {
+      // create
+      try {
+        scaffoldState.showSnackBar(const SnackBar(
+          content: Text('Creating a new owner...'),
+          duration: Duration(seconds: 1),
+        ));
+        swagger.apiOwnerPost(owner: ModelsCreateOwnerModel.fromJson(data));
+      } on Exception catch (e) {
+        scaffoldState.showSnackBar(const SnackBar(
+          content: Text('Failed'),
+          duration: Duration(seconds: 3),
+        ));
+      }
+    }
   }
 }
 

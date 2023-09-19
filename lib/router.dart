@@ -52,12 +52,18 @@ final GoRouter router = GoRouter(
             return const DevPage();
           },
         ),
+        GoRoute(
+          path: 'notifications',
+          builder: (BuildContext context, GoRouterState state) {
+            return const NotificationPage();
+          },
+        ),
       ],
     ),
   ],
 );
 
-Widget _errorPageBuilder(context, state) {
+Widget _errorPageBuilder(BuildContext context, _) {
   return Scaffold(
     body: Column(
       mainAxisAlignment: MainAxisAlignment.center,

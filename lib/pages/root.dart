@@ -64,6 +64,13 @@ class _RootPageState extends State<RootPage> {
             },
             child: const Text('dev'),
           ),
+          kH8,
+          ElevatedButton(
+            onPressed: () {
+              context.go('/notifications');
+            },
+            child: const Text('notifications'),
+          ),
         ],
       ),
     );

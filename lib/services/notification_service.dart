@@ -17,7 +17,6 @@ class NotificationService {
   String description = '';
 
   void init() {
-    return;
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
 
@@ -35,6 +34,7 @@ class NotificationService {
         _notify();
       },
       onDone: () {
+        //TODO: reconnect or do something
         debugPrint('ws closed');
         toastification.showError(
           context: context,
@@ -44,13 +44,8 @@ class NotificationService {
         );
       },
       onError: (err) {
+        //TODO: handle error
         debugPrint('ws error: $err');
-        toastification.showError(
-          context: context,
-          title: 'Notification System',
-          description: '',
-          autoCloseDuration: const Duration(seconds: 5),
-        );
       },
     );
   }

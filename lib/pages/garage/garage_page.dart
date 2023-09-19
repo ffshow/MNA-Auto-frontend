@@ -229,7 +229,7 @@ class GarageDataTableSource extends AsyncDataTableSource {
       sortBy: sortBy(sortColumnIndex),
       descending: !sortAscending,
     );
-    if (res.body?.total != null) {
+    if (res.body?.total != null && res.body!.total != 0) {
       totalCount = res.body!.total!;
     }
     return AsyncRowsResponse(

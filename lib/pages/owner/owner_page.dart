@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:data_table_2/data_table_2.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/style.dart';
@@ -53,44 +51,28 @@ class OwnerPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  FormBuilderField<String>(
-                    name: 'photo',
-                    builder: (FormFieldState<String> field) {
-                      return InkWell(
-                        onTap: () async {
-                          FilePickerResult? result =
-                              await FilePicker.platform.pickFiles(
-                            allowedExtensions: <String>['jpg', 'png', 'jpeg'],
-                            allowMultiple: false,
-                            dialogTitle: 'Owner photo',
-                            type: FileType.image,
-                          );
-                          if (result != null && result.files.isNotEmpty) {
-                            final String? p = result.files.single.path;
-                            if (p != null) {
-                              _formKey.currentState?.fields['photo']
-                                  ?.didChange(p);
-                            }
-                          } else {
-                            // iser canceled the picker
-                          }
-                        },
-                        child: field.value == null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: const Icon(Icons.person, size: 100),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.file(
-                                  File(field.value!),
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                      );
-                    },
+                  FormBuilderFilePicker(
+                    //FIXME:
+                    name: "photo__",
+                    decoration: const InputDecoration(
+                      labelText: "Attachment",
+                    ),
+                    maxFiles: 1,
+                    previewImages: true,
+                    typeSelectors: const [
+                      TypeSelector(
+                        type: FileType.image,
+                        selector: Row(
+                          children: <Widget>[
+                            Icon(Icons.add_circle),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("Add photo"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   kH8,
                   FormBuilderTextField(

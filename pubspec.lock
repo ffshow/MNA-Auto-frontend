@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.1"
+  community_material_icon:
+    dependency: transitive
+    description:
+      name: community_material_icon
+      sha256: bb389689f6278158d7b9d9b0c9433e603933283104fea226594590f61503fd08
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.55"
   convert:
     dependency: transitive
     description:
@@ -250,7 +258,7 @@ packages:
     source: hosted
     version: "7.0.0"
   file_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: file_picker
       sha256: be325344c1f3070354a1d84a231a1ba75ea85d413774ec4bdf444c023342e030
@@ -333,6 +341,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  form_builder_file_picker:
+    dependency: "direct main"
+    description:
+      name: form_builder_file_picker
+      sha256: "4d115d0c2d7754576866d7a4d4e364bd095bf368297c40a66209ac70bd2e3d0f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   form_builder_validators:
     dependency: "direct main"
     description:

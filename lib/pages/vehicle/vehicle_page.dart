@@ -1,6 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/widget/widget.dart';
 
@@ -14,6 +16,36 @@ class VehiclePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vehicles Page'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final faker = Faker();
+              final String date = faker.date
+                  .dateTime(minYear: 1999, maxYear: 2022)
+                  .toUtc()
+                  .toIso8601String();
+              final v = ModelsCreateVehicleModel(
+                chrono: faker.vehicle.make(),
+                collectionDate: date,
+                deliveryDate: date,
+                firstCirculation: date,
+                soldAt: date,
+                commercialName: faker.vehicle.model(),
+                currentStatus: 'toGetBack',
+                expertise: faker.randomGenerator.boolean(),
+                mileage: faker.randomGenerator.integer(1000, min: 20),
+                note: faker.lorem.sentence(),
+                ownerId: '65005460b40777ab605fa163',
+                procedureVe: faker.randomGenerator.boolean(),
+                registration: faker.vehicle.yearMakeModel(),
+                serialNumber: faker.vehicle.vin(),
+              );
+              RepositoryProvider.of<Swagger>(context)
+                  .apiVehiclePost(vehicle: v);
+            },
+            icon: const Icon(Icons.create),
+          ),
+        ],
       ),
       body: const VehicleListWidget(),
     );
@@ -34,13 +66,17 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
   @override
   void didChangeDependencies() {
     final Swagger swagger = RepositoryProvider.of<Swagger>(context);
-    source ??= VehicleDataTableSource(swagger);
+    final NotificationService notificationService =
+        RepositoryProvider.of<NotificationService>(context);
+    source ??= VehicleDataTableSource(
+      swagger,
+      notificationService,
+    );
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    source?.cancel();
     source?.dispose();
     super.dispose();
   }

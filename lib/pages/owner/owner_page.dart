@@ -216,6 +216,12 @@ class _OwnerListWidgetState extends State<OwnerListWidget> {
   }
 
   @override
+  void dispose() {
+    source?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AsyncPaginatedDataTable2(
       source: source!,

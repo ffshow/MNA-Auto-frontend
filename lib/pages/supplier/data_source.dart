@@ -1,27 +1,31 @@
+import 'dart:async';
+
 import 'package:chopper/chopper.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 
-class VehicleDataTableSource extends AsyncDataTableSource {
+class SupplierDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  VehicleDataTableSource(this.service, this.notificationService) {
-    notificationService.onCreateVehicle.listen((_) {
+  SupplierDataTableSource(this.service, this.notificationService) {
+    onCreate = notificationService.onCreateSupplier.listen((supplier) {
       refreshDatasource();
     });
   }
-  final List<ModelsVehicleModel> items = [];
+
+  final List<ModelsSupplierModel> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
+  late final StreamSubscription? onCreate;
 
-  DataRow2 toRow(ModelsVehicleModel item) {
+  DataRow2 toRow(ModelsSupplierModel item) {
     return DataRow2(
       cells: <DataCell>[
-        DataCell(Text(item.registration ?? '')),
+        DataCell(Text(item.name ?? '')),
         DataCell(
           Tooltip(
             message: item.createdAt,
@@ -67,8 +71,8 @@ class VehicleDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListVehicleModel> res =
-        await service.apiVehicleListGet(
+    final Response<ModelsListSupplierModel> res =
+        await service.apiSupplierListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),
@@ -92,7 +96,7 @@ class VehicleDataTableSource extends AsyncDataTableSource {
   String? sortBy(int sortColumnIndex) {
     switch (sortColumnIndex) {
       case 0:
-        return "registration";
+        return "name";
       case 1:
         return "created_at";
       case 2:
@@ -104,7 +108,8 @@ class VehicleDataTableSource extends AsyncDataTableSource {
 
   @override
   void dispose() {
-    //TODO:
+    print('******* dispose');
+    onCreate?.cancel();
     super.dispose();
   }
 }

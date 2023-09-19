@@ -91,6 +91,7 @@ class _GarageListWidgetState extends State<GarageListWidget> {
       sortAscending: sortAscending,
       sortColumnIndex: sortColumnIndex,
       showFirstLastButtons: true,
+      autoRowsToHeight: true,
       columns: <DataColumn>[
         DataColumn(
           label: const Text('Label'),

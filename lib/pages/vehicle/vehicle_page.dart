@@ -1,100 +1,141 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/widget/widget.dart';
 
-import 'state/vehicle_cubit.dart';
+import 'data_source.dart';
 
 class VehiclePage extends StatelessWidget {
   const VehiclePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VehicleCubit>(
-      create: (BuildContext context) => VehicleCubit(
-        RepositoryProvider.of<Swagger>(context),
-      )..getVehicles(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Vehicle Page'),
-        ),
-        body: BlocBuilder<VehicleCubit, VehicleState>(
-          builder: (BuildContext context, VehicleState state) {
-            return state.when<Widget>(
-              loaded: (Iterable<ModelsVehicleModel> vehicles) {
-                return VehicleListWidget(vehicles: vehicles);
-              },
-              initial: () => const LoadingWidget(),
-              failed: (String error) => AppErrorWidget(
-                error: error,
-                tryAgainFunc: () {
-                  context.read<VehicleCubit>().getVehicles(tryAgain: true);
-                },
-              ),
-            );
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Vehicles Page'),
       ),
+      body: const VehicleListWidget(),
     );
   }
 }
 
-class VehicleListWidget extends StatelessWidget {
-  const VehicleListWidget({super.key, required this.vehicles});
-  final Iterable<ModelsVehicleModel> vehicles;
+class VehicleListWidget extends StatefulWidget {
+  const VehicleListWidget({super.key});
+
+  @override
+  State<VehicleListWidget> createState() => _VehicleListWidgetState();
+}
+
+class _VehicleListWidgetState extends State<VehicleListWidget> {
+  VehicleDataTableSource? source;
+  bool sortAscending = false;
+  int sortColumnIndex = 1;
+  @override
+  void didChangeDependencies() {
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    source ??= VehicleDataTableSource(swagger);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    source?.cancel();
+    source?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: PaginatedDataTable(
-        source: VehicleDataSrouce(vehicles),
-        columns: const [
-          DataColumn(label: Text('Registration')),
-          DataColumn(label: Text('Created at')),
-          DataColumn(label: Text('Updated at')),
-          DataColumn(label: Text('Actions')),
+    return AsyncPaginatedDataTable2(
+      source: source!,
+      initialFirstRowIndex: 0,
+      rowsPerPage: source!.defaultRowsPerPage,
+      showCheckboxColumn: true,
+      sortAscending: sortAscending,
+      sortColumnIndex: sortColumnIndex,
+      showFirstLastButtons: true,
+      pageSyncApproach: PageSyncApproach.doNothing,
+      onRowsPerPageChanged: (int? value) {
+        source!.onRowsPerPageChanged(value);
+      },
+      loading: const LoadingWidget(),
+      empty: const Center(
+        child: Text('No data!'),
+      ),
+      horizontalMargin: 20,
+      // checkboxHorizontalMargin: 12,
+      columnSpacing: 0,
+      wrapInCard: false,
+      autoRowsToHeight: true,
+      header: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: TextFormField(
+              expands: false,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                labelText: 'Search',
+                hintText: 'not implemented yet!',
+              ),
+            ),
+          ),
+          const Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                IconButton(
+                  tooltip: 'Filter',
+                  onPressed: null,
+                  icon: Icon(Icons.filter_alt),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class VehicleDataSrouce extends DataTableSource {
-  final Iterable<ModelsVehicleModel> vehicles;
-
-  VehicleDataSrouce(this.vehicles);
-
-  @override
-  DataRow? getRow(int index) {
-    final ModelsVehicleModel e = vehicles.elementAt(index);
-    return DataRow(
-      cells: [
-        DataCell(Text(e.serialNumber ?? '')),
-        DataCell(Text(e.createdAt ?? '')),
-        DataCell(Text(e.updatedAt ?? '')),
-        DataCell(Row(
-          children: [
-            IconButton(
-              tooltip: 'Edit',
-              onPressed: () {},
-              icon: const Icon(Icons.edit),
-            ),
-            IconButton(
-              tooltip: 'Remove',
-              onPressed: () {},
-              icon: const Icon(Icons.delete),
-            ),
-          ],
-        )),
+      columns: <DataColumn2>[
+        DataColumn2(
+          label: const Text('Registration'),
+          size: ColumnSize.L,
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        DataColumn2(
+          label: const Text('Created at'),
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        DataColumn2(
+          label: const Text('Updated at'),
+          onSort: (int columnIndex, bool ascending) {
+            setState(() {
+              sortAscending = ascending;
+              sortColumnIndex = columnIndex;
+            });
+            source!.sort(columnIndex, ascending);
+          },
+        ),
+        const DataColumn2(
+          label: Text('Actions'),
+          size: ColumnSize.S,
+        ),
       ],
     );
   }
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => vehicles.length;
-
-  @override
-  int get selectedRowCount => 0;
 }

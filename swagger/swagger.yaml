@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  models.AccountModel:
+  models.AccountModelResponse:
     properties:
       created_at:
         format: date-time
@@ -96,7 +96,7 @@ definitions:
       sold_at:
         type: string
     type: object
-  models.GarageModel:
+  models.GarageModelResponse:
     properties:
       created_at:
         format: date-time
@@ -121,7 +121,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.AccountModel'
+          $ref: '#/definitions/models.AccountModelResponse'
         type: array
       total:
         type: integer
@@ -130,7 +130,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.GarageModel'
+          $ref: '#/definitions/models.GarageModelResponse'
         type: array
       total:
         type: integer
@@ -139,7 +139,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.OwnerModel'
+          $ref: '#/definitions/models.OwnerModelResponse'
         type: array
       total:
         type: integer
@@ -148,7 +148,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.PermissionModel'
+          $ref: '#/definitions/models.PermissionModelResponse'
         type: array
       total:
         type: integer
@@ -157,7 +157,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.SparePartModel'
+          $ref: '#/definitions/models.SparePartModelResponse'
         type: array
       total:
         type: integer
@@ -166,7 +166,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.SupplierModel'
+          $ref: '#/definitions/models.SupplierModelResponse'
         type: array
       total:
         type: integer
@@ -175,7 +175,7 @@ definitions:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.VehicleModel'
+          $ref: '#/definitions/models.VehicleModelResponse'
         type: array
       total:
         type: integer
@@ -208,7 +208,35 @@ definitions:
         type: string
         x-date: true
     type: object
-  models.PermissionModel:
+  models.OwnerModelResponse:
+    properties:
+      address:
+        type: string
+        x-nullable: true
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      email:
+        type: string
+        x-nullable: true
+      id:
+        type: string
+      phone:
+        type: string
+        x-nullable: true
+      photo:
+        type: string
+        x-nullable: true
+      postal_code:
+        type: string
+        x-nullable: true
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.PermissionModelResponse:
     properties:
       available:
         type: boolean
@@ -227,7 +255,7 @@ definitions:
         type: string
         x-date: true
     type: object
-  models.SparePartModel:
+  models.SparePartModelResponse:
     properties:
       barcode:
         type: string
@@ -246,7 +274,7 @@ definitions:
         type: string
         x-date: true
     type: object
-  models.SupplierModel:
+  models.SupplierModelResponse:
     properties:
       created_at:
         format: date-time
@@ -267,7 +295,98 @@ definitions:
       count:
         type: integer
     type: object
-  models.VehicleModel:
+  models.UpdateAccountModel:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdateGarageModel:
+    properties:
+      label:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdateOwnerModel:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      photo:
+        type: string
+      postal_code:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdatePermissionModel:
+    properties:
+      available:
+        type: boolean
+      label:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdateSparePartModel:
+    properties:
+      barcode:
+        type: string
+      reference:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdateSupplierModel:
+    properties:
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.UpdateVehicleModel:
+    properties:
+      chrono:
+        type: string
+      collection_date:
+        type: string
+      commercial_name:
+        type: string
+      current_status:
+        type: string
+      delivery_date:
+        type: string
+      expertise:
+        type: boolean
+      first_circulation:
+        type: string
+      info:
+        $ref: '#/definitions/models.InfoModel'
+      mileage:
+        type: integer
+      note:
+        type: string
+      owner_id:
+        type: string
+      procedure_ve:
+        type: boolean
+      registration:
+        type: string
+      serial_number:
+        type: string
+      sold_at:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.VehicleModelResponse:
     properties:
       chrono:
         type: string
@@ -311,6 +430,10 @@ definitions:
         x-nullable: false
       note:
         type: string
+        x-nullable: false
+      owner:
+        allOf:
+        - $ref: '#/definitions/models.OwnerModel'
         x-nullable: false
       owner_id:
         type: string
@@ -389,7 +512,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModel'
+            $ref: '#/definitions/models.AccountModelResponse'
         "404":
           description: Not Found
           schema:
@@ -418,7 +541,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModel'
+            $ref: '#/definitions/models.AccountModelResponse'
         "404":
           description: Not Found
           schema:
@@ -445,14 +568,14 @@ paths:
         name: account
         required: true
         schema:
-          $ref: '#/definitions/models.AccountModel'
+          $ref: '#/definitions/models.UpdateAccountModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModel'
+            $ref: '#/definitions/models.AccountModelResponse'
         "404":
           description: Not Found
           schema:
@@ -495,7 +618,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.AccountModel'
+            $ref: '#/definitions/models.CreateAccountModel'
           type: array
       produces:
       - application/json
@@ -504,7 +627,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateAccountModel'
+              $ref: '#/definitions/models.AccountModelResponse'
             type: array
         "404":
           description: Not Found
@@ -571,7 +694,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModel'
+            $ref: '#/definitions/models.GarageModelResponse'
         "404":
           description: Not Found
           schema:
@@ -600,7 +723,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModel'
+            $ref: '#/definitions/models.GarageModelResponse'
         "404":
           description: Not Found
           schema:
@@ -627,14 +750,14 @@ paths:
         name: garage
         required: true
         schema:
-          $ref: '#/definitions/models.GarageModel'
+          $ref: '#/definitions/models.UpdateGarageModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModel'
+            $ref: '#/definitions/models.GarageModelResponse'
         "404":
           description: Not Found
           schema:
@@ -677,7 +800,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.GarageModel'
+            $ref: '#/definitions/models.CreateGarageModel'
           type: array
       produces:
       - application/json
@@ -686,7 +809,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateGarageModel'
+              $ref: '#/definitions/models.GarageModelResponse'
             type: array
         "404":
           description: Not Found
@@ -753,7 +876,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModel'
+            $ref: '#/definitions/models.OwnerModelResponse'
         "404":
           description: Not Found
           schema:
@@ -782,7 +905,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModel'
+            $ref: '#/definitions/models.OwnerModelResponse'
         "404":
           description: Not Found
           schema:
@@ -809,14 +932,14 @@ paths:
         name: owner
         required: true
         schema:
-          $ref: '#/definitions/models.OwnerModel'
+          $ref: '#/definitions/models.UpdateOwnerModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModel'
+            $ref: '#/definitions/models.OwnerModelResponse'
         "404":
           description: Not Found
           schema:
@@ -859,7 +982,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.OwnerModel'
+            $ref: '#/definitions/models.CreateOwnerModel'
           type: array
       produces:
       - application/json
@@ -868,7 +991,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateOwnerModel'
+              $ref: '#/definitions/models.OwnerModelResponse'
             type: array
         "404":
           description: Not Found
@@ -935,7 +1058,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModel'
+            $ref: '#/definitions/models.PermissionModelResponse'
         "404":
           description: Not Found
           schema:
@@ -964,7 +1087,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModel'
+            $ref: '#/definitions/models.PermissionModelResponse'
         "404":
           description: Not Found
           schema:
@@ -991,14 +1114,14 @@ paths:
         name: permission
         required: true
         schema:
-          $ref: '#/definitions/models.PermissionModel'
+          $ref: '#/definitions/models.UpdatePermissionModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModel'
+            $ref: '#/definitions/models.PermissionModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1041,7 +1164,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.PermissionModel'
+            $ref: '#/definitions/models.CreatePermissionModel'
           type: array
       produces:
       - application/json
@@ -1050,7 +1173,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreatePermissionModel'
+              $ref: '#/definitions/models.PermissionModelResponse'
             type: array
         "404":
           description: Not Found
@@ -1117,7 +1240,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModel'
+            $ref: '#/definitions/models.SparePartModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1146,7 +1269,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModel'
+            $ref: '#/definitions/models.SparePartModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1173,14 +1296,14 @@ paths:
         name: spare_part
         required: true
         schema:
-          $ref: '#/definitions/models.SparePartModel'
+          $ref: '#/definitions/models.UpdateSparePartModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModel'
+            $ref: '#/definitions/models.SparePartModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1223,7 +1346,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.SparePartModel'
+            $ref: '#/definitions/models.CreateSparePartModel'
           type: array
       produces:
       - application/json
@@ -1232,7 +1355,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateSparePartModel'
+              $ref: '#/definitions/models.SparePartModelResponse'
             type: array
         "404":
           description: Not Found
@@ -1299,7 +1422,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModel'
+            $ref: '#/definitions/models.SupplierModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1328,7 +1451,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModel'
+            $ref: '#/definitions/models.SupplierModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1355,14 +1478,14 @@ paths:
         name: supplier
         required: true
         schema:
-          $ref: '#/definitions/models.SupplierModel'
+          $ref: '#/definitions/models.UpdateSupplierModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModel'
+            $ref: '#/definitions/models.SupplierModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1405,7 +1528,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.SupplierModel'
+            $ref: '#/definitions/models.CreateSupplierModel'
           type: array
       produces:
       - application/json
@@ -1414,7 +1537,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateSupplierModel'
+              $ref: '#/definitions/models.SupplierModelResponse'
             type: array
         "404":
           description: Not Found
@@ -1481,7 +1604,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModel'
+            $ref: '#/definitions/models.VehicleModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1504,13 +1627,17 @@ paths:
         name: id
         required: true
         type: string
+      - description: with owner data
+        in: query
+        name: owner
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModel'
+            $ref: '#/definitions/models.VehicleModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1537,14 +1664,14 @@ paths:
         name: vehicle
         required: true
         schema:
-          $ref: '#/definitions/models.VehicleModel'
+          $ref: '#/definitions/models.UpdateVehicleModel'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModel'
+            $ref: '#/definitions/models.VehicleModelResponse'
         "404":
           description: Not Found
           schema:
@@ -1587,7 +1714,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.VehicleModel'
+            $ref: '#/definitions/models.CreateVehicleModel'
           type: array
       produces:
       - application/json
@@ -1596,7 +1723,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.CreateVehicleModel'
+              $ref: '#/definitions/models.VehicleModelResponse'
             type: array
         "404":
           description: Not Found
@@ -1630,6 +1757,10 @@ paths:
       - description: order
         in: query
         name: descending
+        type: boolean
+      - description: with owner data
+        in: query
+        name: owner
         type: boolean
       produces:
       - application/json

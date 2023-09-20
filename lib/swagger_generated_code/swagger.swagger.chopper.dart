@@ -28,7 +28,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsAccountModel>> _apiAccountPost(
+  Future<Response<ModelsAccountModelResponse>> _apiAccountPost(
       {required ModelsCreateAccountModel? account}) {
     final Uri $url = Uri.parse('/api/account');
     final $body = account;
@@ -38,24 +38,27 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsAccountModel, ModelsAccountModel>($request);
+    return client
+        .send<ModelsAccountModelResponse, ModelsAccountModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsAccountModel>> _apiAccountIdGet({required String? id}) {
+  Future<Response<ModelsAccountModelResponse>> _apiAccountIdGet(
+      {required String? id}) {
     final Uri $url = Uri.parse('/api/account/${id}');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsAccountModel, ModelsAccountModel>($request);
+    return client
+        .send<ModelsAccountModelResponse, ModelsAccountModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsAccountModel>> _apiAccountIdPut({
+  Future<Response<ModelsAccountModelResponse>> _apiAccountIdPut({
     required String? id,
-    required ModelsAccountModel? account,
+    required ModelsUpdateAccountModel? account,
   }) {
     final Uri $url = Uri.parse('/api/account/${id}');
     final $body = account;
@@ -65,7 +68,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsAccountModel, ModelsAccountModel>($request);
+    return client
+        .send<ModelsAccountModelResponse, ModelsAccountModelResponse>($request);
   }
 
   @override
@@ -81,7 +85,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiAccountImportPost(
-      {required List<ModelsAccountModel>? account}) {
+      {required List<ModelsCreateAccountModel>? account}) {
     final Uri $url = Uri.parse('/api/account_import');
     final $body = account;
     final Request $request = Request(
@@ -118,7 +122,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsGarageModel>> _apiGaragePost(
+  Future<Response<ModelsGarageModelResponse>> _apiGaragePost(
       {required ModelsCreateGarageModel? garage}) {
     final Uri $url = Uri.parse('/api/garage');
     final $body = garage;
@@ -128,24 +132,27 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsGarageModel, ModelsGarageModel>($request);
+    return client
+        .send<ModelsGarageModelResponse, ModelsGarageModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsGarageModel>> _apiGarageIdGet({required String? id}) {
+  Future<Response<ModelsGarageModelResponse>> _apiGarageIdGet(
+      {required String? id}) {
     final Uri $url = Uri.parse('/api/garage/${id}');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsGarageModel, ModelsGarageModel>($request);
+    return client
+        .send<ModelsGarageModelResponse, ModelsGarageModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsGarageModel>> _apiGarageIdPut({
+  Future<Response<ModelsGarageModelResponse>> _apiGarageIdPut({
     required String? id,
-    required ModelsGarageModel? garage,
+    required ModelsUpdateGarageModel? garage,
   }) {
     final Uri $url = Uri.parse('/api/garage/${id}');
     final $body = garage;
@@ -155,7 +162,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsGarageModel, ModelsGarageModel>($request);
+    return client
+        .send<ModelsGarageModelResponse, ModelsGarageModelResponse>($request);
   }
 
   @override
@@ -171,7 +179,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiGarageImportPost(
-      {required List<ModelsGarageModel>? garage}) {
+      {required List<ModelsCreateGarageModel>? garage}) {
     final Uri $url = Uri.parse('/api/garage_import');
     final $body = garage;
     final Request $request = Request(
@@ -207,7 +215,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsOwnerModel>> _apiOwnerPost(
+  Future<Response<ModelsOwnerModelResponse>> _apiOwnerPost(
       {required ModelsCreateOwnerModel? owner}) {
     final Uri $url = Uri.parse('/api/owner');
     final $body = owner;
@@ -217,24 +225,27 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsOwnerModel, ModelsOwnerModel>($request);
+    return client
+        .send<ModelsOwnerModelResponse, ModelsOwnerModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsOwnerModel>> _apiOwnerIdGet({required String? id}) {
+  Future<Response<ModelsOwnerModelResponse>> _apiOwnerIdGet(
+      {required String? id}) {
     final Uri $url = Uri.parse('/api/owner/${id}');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsOwnerModel, ModelsOwnerModel>($request);
+    return client
+        .send<ModelsOwnerModelResponse, ModelsOwnerModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsOwnerModel>> _apiOwnerIdPut({
+  Future<Response<ModelsOwnerModelResponse>> _apiOwnerIdPut({
     required String? id,
-    required ModelsOwnerModel? owner,
+    required ModelsUpdateOwnerModel? owner,
   }) {
     final Uri $url = Uri.parse('/api/owner/${id}');
     final $body = owner;
@@ -244,7 +255,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsOwnerModel, ModelsOwnerModel>($request);
+    return client
+        .send<ModelsOwnerModelResponse, ModelsOwnerModelResponse>($request);
   }
 
   @override
@@ -260,7 +272,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiOwnerImportPost(
-      {required List<ModelsOwnerModel>? owner}) {
+      {required List<ModelsCreateOwnerModel>? owner}) {
     final Uri $url = Uri.parse('/api/owner_import');
     final $body = owner;
     final Request $request = Request(
@@ -296,7 +308,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsPermissionModel>> _apiPermissionPost(
+  Future<Response<ModelsPermissionModelResponse>> _apiPermissionPost(
       {required ModelsCreatePermissionModel? permission}) {
     final Uri $url = Uri.parse('/api/permission');
     final $body = permission;
@@ -306,11 +318,12 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsPermissionModel, ModelsPermissionModel>($request);
+    return client.send<ModelsPermissionModelResponse,
+        ModelsPermissionModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsPermissionModel>> _apiPermissionIdGet(
+  Future<Response<ModelsPermissionModelResponse>> _apiPermissionIdGet(
       {required String? id}) {
     final Uri $url = Uri.parse('/api/permission/${id}');
     final Request $request = Request(
@@ -318,13 +331,14 @@ final class _$Swagger extends Swagger {
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsPermissionModel, ModelsPermissionModel>($request);
+    return client.send<ModelsPermissionModelResponse,
+        ModelsPermissionModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsPermissionModel>> _apiPermissionIdPut({
+  Future<Response<ModelsPermissionModelResponse>> _apiPermissionIdPut({
     required String? id,
-    required ModelsPermissionModel? permission,
+    required ModelsUpdatePermissionModel? permission,
   }) {
     final Uri $url = Uri.parse('/api/permission/${id}');
     final $body = permission;
@@ -334,7 +348,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsPermissionModel, ModelsPermissionModel>($request);
+    return client.send<ModelsPermissionModelResponse,
+        ModelsPermissionModelResponse>($request);
   }
 
   @override
@@ -350,7 +365,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiPermissionImportPost(
-      {required List<ModelsPermissionModel>? permission}) {
+      {required List<ModelsCreatePermissionModel>? permission}) {
     final Uri $url = Uri.parse('/api/permission_import');
     final $body = permission;
     final Request $request = Request(
@@ -387,7 +402,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsSparePartModel>> _apiSparePartPost(
+  Future<Response<ModelsSparePartModelResponse>> _apiSparePartPost(
       {required ModelsCreateSparePartModel? sparePart}) {
     final Uri $url = Uri.parse('/api/spare_part');
     final $body = sparePart;
@@ -397,11 +412,12 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsSparePartModel, ModelsSparePartModel>($request);
+    return client.send<ModelsSparePartModelResponse,
+        ModelsSparePartModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsSparePartModel>> _apiSparePartIdGet(
+  Future<Response<ModelsSparePartModelResponse>> _apiSparePartIdGet(
       {required String? id}) {
     final Uri $url = Uri.parse('/api/spare_part/${id}');
     final Request $request = Request(
@@ -409,13 +425,14 @@ final class _$Swagger extends Swagger {
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsSparePartModel, ModelsSparePartModel>($request);
+    return client.send<ModelsSparePartModelResponse,
+        ModelsSparePartModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsSparePartModel>> _apiSparePartIdPut({
+  Future<Response<ModelsSparePartModelResponse>> _apiSparePartIdPut({
     required String? id,
-    required ModelsSparePartModel? sparePart,
+    required ModelsUpdateSparePartModel? sparePart,
   }) {
     final Uri $url = Uri.parse('/api/spare_part/${id}');
     final $body = sparePart;
@@ -425,7 +442,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsSparePartModel, ModelsSparePartModel>($request);
+    return client.send<ModelsSparePartModelResponse,
+        ModelsSparePartModelResponse>($request);
   }
 
   @override
@@ -441,7 +459,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiSparePartImportPost(
-      {required List<ModelsSparePartModel>? sparePart}) {
+      {required List<ModelsCreateSparePartModel>? sparePart}) {
     final Uri $url = Uri.parse('/api/spare_part_import');
     final $body = sparePart;
     final Request $request = Request(
@@ -478,7 +496,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsSupplierModel>> _apiSupplierPost(
+  Future<Response<ModelsSupplierModelResponse>> _apiSupplierPost(
       {required ModelsCreateSupplierModel? supplier}) {
     final Uri $url = Uri.parse('/api/supplier');
     final $body = supplier;
@@ -488,11 +506,12 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsSupplierModel, ModelsSupplierModel>($request);
+    return client.send<ModelsSupplierModelResponse,
+        ModelsSupplierModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsSupplierModel>> _apiSupplierIdGet(
+  Future<Response<ModelsSupplierModelResponse>> _apiSupplierIdGet(
       {required String? id}) {
     final Uri $url = Uri.parse('/api/supplier/${id}');
     final Request $request = Request(
@@ -500,13 +519,14 @@ final class _$Swagger extends Swagger {
       $url,
       client.baseUrl,
     );
-    return client.send<ModelsSupplierModel, ModelsSupplierModel>($request);
+    return client.send<ModelsSupplierModelResponse,
+        ModelsSupplierModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsSupplierModel>> _apiSupplierIdPut({
+  Future<Response<ModelsSupplierModelResponse>> _apiSupplierIdPut({
     required String? id,
-    required ModelsSupplierModel? supplier,
+    required ModelsUpdateSupplierModel? supplier,
   }) {
     final Uri $url = Uri.parse('/api/supplier/${id}');
     final $body = supplier;
@@ -516,7 +536,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsSupplierModel, ModelsSupplierModel>($request);
+    return client.send<ModelsSupplierModelResponse,
+        ModelsSupplierModelResponse>($request);
   }
 
   @override
@@ -532,7 +553,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiSupplierImportPost(
-      {required List<ModelsSupplierModel>? supplier}) {
+      {required List<ModelsCreateSupplierModel>? supplier}) {
     final Uri $url = Uri.parse('/api/supplier_import');
     final $body = supplier;
     final Request $request = Request(
@@ -569,7 +590,7 @@ final class _$Swagger extends Swagger {
   }
 
   @override
-  Future<Response<ModelsVehicleModel>> _apiVehiclePost(
+  Future<Response<ModelsVehicleModelResponse>> _apiVehiclePost(
       {required ModelsCreateVehicleModel? vehicle}) {
     final Uri $url = Uri.parse('/api/vehicle');
     final $body = vehicle;
@@ -579,24 +600,31 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsVehicleModel, ModelsVehicleModel>($request);
+    return client
+        .send<ModelsVehicleModelResponse, ModelsVehicleModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsVehicleModel>> _apiVehicleIdGet({required String? id}) {
+  Future<Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
+    required String? id,
+    bool? owner,
+  }) {
     final Uri $url = Uri.parse('/api/vehicle/${id}');
+    final Map<String, dynamic> $params = <String, dynamic>{'owner': owner};
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
+      parameters: $params,
     );
-    return client.send<ModelsVehicleModel, ModelsVehicleModel>($request);
+    return client
+        .send<ModelsVehicleModelResponse, ModelsVehicleModelResponse>($request);
   }
 
   @override
-  Future<Response<ModelsVehicleModel>> _apiVehicleIdPut({
+  Future<Response<ModelsVehicleModelResponse>> _apiVehicleIdPut({
     required String? id,
-    required ModelsVehicleModel? vehicle,
+    required ModelsUpdateVehicleModel? vehicle,
   }) {
     final Uri $url = Uri.parse('/api/vehicle/${id}');
     final $body = vehicle;
@@ -606,7 +634,8 @@ final class _$Swagger extends Swagger {
       client.baseUrl,
       body: $body,
     );
-    return client.send<ModelsVehicleModel, ModelsVehicleModel>($request);
+    return client
+        .send<ModelsVehicleModelResponse, ModelsVehicleModelResponse>($request);
   }
 
   @override
@@ -622,7 +651,7 @@ final class _$Swagger extends Swagger {
 
   @override
   Future<Response<List<dynamic>>> _apiVehicleImportPost(
-      {required List<ModelsVehicleModel>? vehicle}) {
+      {required List<ModelsCreateVehicleModel>? vehicle}) {
     final Uri $url = Uri.parse('/api/vehicle_import');
     final $body = vehicle;
     final Request $request = Request(
@@ -640,6 +669,7 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
+    bool? owner,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -647,6 +677,7 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
+      'owner': owner,
     };
     final Request $request = Request(
       'GET',

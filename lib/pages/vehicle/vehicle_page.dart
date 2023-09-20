@@ -147,8 +147,13 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
             source!.sort(columnIndex, ascending);
           },
         ),
+        const DataColumn2(
+          label: Text('Owner'),
+          size: ColumnSize.M,
+        ),
         DataColumn2(
           label: const Text('Created at'),
+          size: ColumnSize.S,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;
@@ -159,6 +164,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
         ),
         DataColumn2(
           label: const Text('Updated at'),
+          size: ColumnSize.S,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;

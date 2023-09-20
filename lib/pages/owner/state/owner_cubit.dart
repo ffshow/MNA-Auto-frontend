@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
@@ -19,8 +20,7 @@ class OwnerCubit extends Cubit<OwnerState> {
       final res = await swagger.apiOwnerListGet();
       emit(OwnerState.loaded(res.body?.data ?? []));
     } catch (e, s) {
-      print(s);
-      print(e);
+      debugPrint(s.toString());
       emit(OwnerState.failed(e.toString()));
     }
   }

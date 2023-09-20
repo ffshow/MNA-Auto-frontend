@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
@@ -23,7 +24,7 @@ class VehicleCubit extends Cubit<VehicleState> {
       );
       emit(VehicleState.loaded(res.body?.data ?? []));
     } catch (e, s) {
-      print(s);
+      debugPrint(s.toString());
       emit(VehicleState.failed(e.toString()));
     }
   }

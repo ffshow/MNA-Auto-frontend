@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/utils/extensions.dart';
 
 class OwnerDataTableSource extends AsyncDataTableSource {
   final Swagger service;
@@ -14,7 +15,7 @@ class OwnerDataTableSource extends AsyncDataTableSource {
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
 
-  DataRow2 toRow(ModelsOwnerModel item) {
+  DataRow2 toRow(ModelsOwnerModelResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.email ?? '')),
@@ -22,14 +23,14 @@ class OwnerDataTableSource extends AsyncDataTableSource {
         DataCell(Text(item.address ?? '')),
         DataCell(
           Tooltip(
-            message: item.createdAt,
-            child: Text(item.createdAt ?? ''),
+            message: item.createdAt.date,
+            child: Text(item.createdAt.date),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updatedAt,
-            child: Text(item.updatedAt ?? ''),
+            message: item.updatedAt.date,
+            child: Text(item.updatedAt.date),
           ),
         ),
         const DataCell(Row(

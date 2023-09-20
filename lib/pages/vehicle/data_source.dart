@@ -3,6 +3,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/utils/extensions.dart';
 
 class VehicleDataTableSource extends AsyncDataTableSource {
   final Swagger service;
@@ -12,32 +13,32 @@ class VehicleDataTableSource extends AsyncDataTableSource {
       refreshDatasource();
     });
   }
-  final List<ModelsVehicleModel> items = [];
+  final List<ModelsVehicleModelResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
 
-  DataRow2 toRow(ModelsVehicleModel item) {
+  DataRow2 toRow(ModelsVehicleModelResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.registration ?? '')),
+        DataCell(Text(item.owner?.email ?? '')),
         DataCell(
           Tooltip(
-            message: item.createdAt,
-            child: Text(item.createdAt ?? ''),
+            message: item.createdAt.dateTime,
+            child: Text(item.createdAt.date),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updatedAt,
-            child: Text(item.updatedAt ?? ''),
+            message: item.updatedAt.dateTime,
+            child: Text(item.updatedAt.date),
           ),
         ),
         const DataCell(Row(
           children: <Widget>[
             IconButton(
-              // onPressed: () => service.delete(item),
               onPressed: null,
               icon: Icon(Icons.delete),
             ),
@@ -73,6 +74,7 @@ class VehicleDataTableSource extends AsyncDataTableSource {
       perPage: count,
       sortBy: sortBy(sortColumnIndex),
       descending: !sortAscending,
+      owner: true, //FIXME:
     );
     if (res.body?.total != null && res.body!.total != 0) {
       totalCount = res.body!.total!;
@@ -93,9 +95,9 @@ class VehicleDataTableSource extends AsyncDataTableSource {
     switch (sortColumnIndex) {
       case 0:
         return "registration";
-      case 1:
-        return "created_at";
       case 2:
+        return "created_at";
+      case 3:
         return "updated_at";
       default:
         return "created_at";

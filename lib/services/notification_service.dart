@@ -18,8 +18,8 @@ class NotificationService {
       StreamController.broadcast();
   Stream get onCreateVehicle => _onCreateVehicleStream.stream;
 
-  late final StreamController<ModelsSupplierModel> _onCreateSupplierStream =
-      StreamController.broadcast();
+  late final StreamController<ModelsSupplierModelResponse>
+      _onCreateSupplierStream = StreamController.broadcast();
 
   Stream get onCreateSupplier => _onCreateSupplierStream.stream;
 
@@ -34,14 +34,15 @@ class NotificationService {
         debugPrint('ws message: $json');
         topic = json['topic'] as String? ?? '';
         title = '$topic Notification';
+        description = '';
         switch (topic) {
           case "Supplier.Create":
-            _onCreateSupplierStream.sink.add(ModelsSupplierModel.fromJson(
-                json['data'] as Map<String, dynamic>));
+            _onCreateSupplierStream.sink.add(
+                ModelsSupplierModelResponse.fromJson(
+                    json['data'] as Map<String, dynamic>));
           case "Vehicle.Create":
             _onCreateVehicleStream.sink.add(1);
           default:
-            description = '';
         }
         _notify();
       },
@@ -66,5 +67,7 @@ class NotificationService {
       type: type ?? Type.info,
       time: DateTime.now(),
     ));
+    title = '';
+    description = '';
   }
 }

@@ -5,6 +5,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/utils/extensions.dart';
 
 class SupplierDataTableSource extends AsyncDataTableSource {
   final Swagger service;
@@ -15,27 +16,27 @@ class SupplierDataTableSource extends AsyncDataTableSource {
     });
   }
 
-  final List<ModelsSupplierModel> items = [];
+  final List<ModelsSupplierModelResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
   late final StreamSubscription? onCreate;
 
-  DataRow2 toRow(ModelsSupplierModel item) {
+  DataRow2 toRow(ModelsSupplierModelResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.name ?? '')),
         DataCell(
           Tooltip(
-            message: item.createdAt,
-            child: Text(item.createdAt ?? ''),
+            message: item.createdAt.date,
+            child: Text(item.createdAt.date),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updatedAt,
-            child: Text(item.updatedAt ?? ''),
+            message: item.updatedAt.date,
+            child: Text(item.updatedAt.date),
           ),
         ),
         const DataCell(Row(
@@ -108,7 +109,7 @@ class SupplierDataTableSource extends AsyncDataTableSource {
 
   @override
   void dispose() {
-    print('******* dispose');
+    debugPrint('******* dispose');
     onCreate?.cancel();
     super.dispose();
   }

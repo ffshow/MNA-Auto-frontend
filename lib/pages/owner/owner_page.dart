@@ -261,7 +261,7 @@ class _OwnerListWidgetState extends State<OwnerListWidget> {
       columns: <DataColumn2>[
         DataColumn2(
           label: const Text('Email'),
-          size: ColumnSize.L,
+          size: ColumnSize.M,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;
@@ -272,7 +272,7 @@ class _OwnerListWidgetState extends State<OwnerListWidget> {
         ),
         DataColumn2(
           label: const Text('Phone'),
-          size: ColumnSize.L,
+          size: ColumnSize.M,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;
@@ -294,6 +294,7 @@ class _OwnerListWidgetState extends State<OwnerListWidget> {
         ),
         DataColumn2(
           label: const Text('Created at'),
+          size: ColumnSize.S,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;
@@ -304,6 +305,7 @@ class _OwnerListWidgetState extends State<OwnerListWidget> {
         ),
         DataColumn2(
           label: const Text('Updated at'),
+          size: ColumnSize.S,
           onSort: (int columnIndex, bool ascending) {
             setState(() {
               sortAscending = ascending;

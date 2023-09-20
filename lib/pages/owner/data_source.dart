@@ -23,13 +23,13 @@ class OwnerDataTableSource extends AsyncDataTableSource {
         DataCell(Text(item.address ?? '')),
         DataCell(
           Tooltip(
-            message: item.createdAt.date,
+            message: item.createdAt.dateTime,
             child: Text(item.createdAt.date),
           ),
         ),
         DataCell(
           Tooltip(
-            message: item.updatedAt.date,
+            message: item.updatedAt.dateTime,
             child: Text(item.updatedAt.date),
           ),
         ),

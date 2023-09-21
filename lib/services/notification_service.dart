@@ -47,6 +47,10 @@ class NotificationService {
                     json['data'] as Map<String, dynamic>));
           case "Vehicle.Create":
             _onCreateVehicleStream.sink.add(1);
+          case "Task.Create":
+            _onCreateTaskStream.sink.add(1);
+          case "Task.Update":
+            _onCreateTaskStream.sink.add(1);
           default:
         }
         _notify();

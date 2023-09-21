@@ -1,6 +1,7 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mna/pages/task/data_source.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
@@ -14,9 +15,83 @@ class TaskPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Task page'),
+        actions: <Widget>[
+          IconButton(
+            tooltip: 'Add task',
+            onPressed: () {
+              _create(context);
+            },
+            icon: const Icon(Icons.create),
+          ),
+        ],
       ),
       body: const TaskListWidget(),
     );
+  }
+
+  Future<void> _create(BuildContext context) async {
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+    final Map<String, dynamic>? value = await showDialog<Map<String, dynamic>?>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add task'),
+          content: FormBuilder(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                FormBuilderTextField(
+                  name: 'label',
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Label',
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (value == null) {
+                      return null;
+                    }
+                    if (value.trim().isEmpty) {
+                      return "required";
+                    }
+                    if (value.trim().length < 3) {
+                      return "min length is 3 chars";
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                final bool valid =
+                    formKey.currentState?.saveAndValidate() ?? false;
+                if (valid) {
+                  final Map<String, dynamic> value =
+                      formKey.currentState!.value;
+                  Navigator.pop(context, value);
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+    if (value != null) {
+      // create task
+      swagger.apiTaskPost(task: ModelsCreateTaskModel.fromJson(value));
+    }
   }
 }
 

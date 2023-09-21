@@ -112,8 +112,11 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     final NotificationService notificationService =
         RepositoryProvider.of<NotificationService>(context);
     source ??= TaskDataTableSource(
-      swagger,
-      notificationService,
+      service: swagger,
+      notificationService: notificationService,
+      onEdit: (ModelsTaskModelResponse task) {
+        _update(context, task);
+      },
     );
     super.didChangeDependencies();
   }
@@ -218,5 +221,78 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         ),
       ],
     );
+  }
+
+  Future<void> _update(
+      BuildContext context, ModelsTaskModelResponse task) async {
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+    final Map<String, dynamic>? value = await showDialog<Map<String, dynamic>?>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add task'),
+          content: FormBuilder(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                FormBuilderTextField(
+                  name: 'label',
+                  initialValue: task.label,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Label',
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (value == null) {
+                      return null;
+                    }
+                    if (value.trim().isEmpty) {
+                      return "required";
+                    }
+                    if (value.trim().length < 3) {
+                      return "min length is 3 chars";
+                    }
+                    if (value == task.label) {
+                      return "nothing to change";
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                final bool valid =
+                    formKey.currentState?.saveAndValidate() ?? false;
+                if (valid) {
+                  final Map<String, dynamic> value =
+                      formKey.currentState!.value;
+                  Navigator.pop(context, value);
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+    if (value != null) {
+      // update task
+      swagger.apiTaskIdPut(
+        id: task.id,
+        task: ModelsUpdateTaskModel.fromJson(value),
+      );
+    }
   }
 }

@@ -10,7 +10,12 @@ import 'package:mna/utils/extensions.dart';
 class TaskDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  TaskDataTableSource(this.service, this.notificationService) {
+  final void Function(ModelsTaskModelResponse task)? onEdit;
+  TaskDataTableSource({
+    required this.service,
+    required this.notificationService,
+    this.onEdit,
+  }) {
     sub = notificationService.onCreateTask.listen((_) {
       refreshDatasource();
     });
@@ -38,15 +43,15 @@ class TaskDataTableSource extends AsyncDataTableSource {
             child: Text(item.updatedAt.date),
           ),
         ),
-        const DataCell(Row(
+        DataCell(Row(
           children: <Widget>[
-            IconButton(
+            const IconButton(
               onPressed: null,
               icon: Icon(Icons.delete),
             ),
             IconButton(
-              onPressed: null,
-              icon: Icon(Icons.edit),
+              onPressed: onEdit != null ? () => onEdit?.call(item) : null,
+              icon: const Icon(Icons.edit),
             ),
           ],
         )),

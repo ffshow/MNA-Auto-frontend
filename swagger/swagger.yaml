@@ -63,6 +63,11 @@ definitions:
       name:
         type: string
     type: object
+  models.CreateTaskModel:
+    properties:
+      label:
+        type: string
+    type: object
   models.CreateVehicleModel:
     properties:
       chrono:
@@ -95,6 +100,10 @@ definitions:
         type: string
       sold_at:
         type: string
+      task_ids:
+        items:
+          type: string
+        type: array
     type: object
   models.GarageModelResponse:
     properties:
@@ -167,6 +176,15 @@ definitions:
       data:
         items:
           $ref: '#/definitions/models.SupplierModelResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListTaskModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.TaskModelResponse'
         type: array
       total:
         type: integer
@@ -290,6 +308,38 @@ definitions:
         type: string
         x-date: true
     type: object
+  models.TaskModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
+  models.TaskModelResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+    type: object
   models.TotalCount:
     properties:
       count:
@@ -351,6 +401,13 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.UpdateTaskModel:
+    properties:
+      label:
+        type: string
+      updated_at:
+        type: string
+    type: object
   models.UpdateVehicleModel:
     properties:
       chrono:
@@ -383,6 +440,10 @@ definitions:
         type: string
       sold_at:
         type: string
+      task_ids:
+        items:
+          type: string
+        type: array
       updated_at:
         type: string
     type: object
@@ -451,6 +512,16 @@ definitions:
         format: date-time
         type: string
         x-date: true
+        x-nullable: false
+      task:
+        items:
+          $ref: '#/definitions/models.TaskModel'
+        type: array
+        x-nullable: false
+      task_ids:
+        items:
+          type: string
+        type: array
         x-nullable: false
       updated_at:
         format: date-time
@@ -1586,6 +1657,188 @@ paths:
       summary: List supplier
       tags:
       - supplier
+  /api/task:
+    post:
+      consumes:
+      - application/json
+      description: Register task
+      parameters:
+      - description: Register task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTaskModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new task
+      tags:
+      - task
+  /api/task/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get task by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get task by ID
+      tags:
+      - task
+    put:
+      consumes:
+      - application/json
+      description: Edit task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateTaskModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a task
+      tags:
+      - task
+  /api/task/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
+      tags:
+      - task
+  /api/task_import:
+    post:
+      consumes:
+      - application/json
+      description: Register task (useful for importing data)
+      parameters:
+      - description: Register task
+        in: body
+        name: task
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.CreateTaskModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.TaskModelResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many task
+      tags:
+      - task
+  /api/task_list:
+    get:
+      consumes:
+      - application/json
+      description: List task
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListTaskModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List task
+      tags:
+      - task
   /api/vehicle:
     post:
       consumes:
@@ -1630,6 +1883,10 @@ paths:
       - description: with owner data
         in: query
         name: owner
+        type: boolean
+      - description: with task data
+        in: query
+        name: task
         type: boolean
       produces:
       - application/json
@@ -1761,6 +2018,10 @@ paths:
       - description: with owner data
         in: query
         name: owner
+        type: boolean
+      - description: with task data
+        in: query
+        name: task
         type: boolean
       produces:
       - application/json

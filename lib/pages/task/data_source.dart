@@ -7,25 +7,25 @@ import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/extensions.dart';
 
-class VehicleDataTableSource extends AsyncDataTableSource {
+class TaskDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  VehicleDataTableSource(this.service, this.notificationService) {
-    sub ??= notificationService.onCreateVehicle.listen((_) {
+  TaskDataTableSource(this.service, this.notificationService) {
+    sub = notificationService.onCreateTask.listen((_) {
       refreshDatasource();
     });
   }
-  final List<ModelsVehicleModelResponse> items = [];
+  final List<ModelsTaskModelResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
   late final StreamSubscription? sub;
-  DataRow2 toRow(ModelsVehicleModelResponse item) {
+
+  DataRow2 toRow(ModelsTaskModelResponse item) {
     return DataRow2(
       cells: <DataCell>[
-        DataCell(Text(item.registration ?? '')),
-        DataCell(Text(item.owner?.email ?? '')),
+        DataCell(Text(item.label ?? '')),
         DataCell(
           Tooltip(
             message: item.createdAt.dateTime,
@@ -70,13 +70,11 @@ class VehicleDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListVehicleModel> res =
-        await service.apiVehicleListGet(
+    final Response<ModelsListTaskModel> res = await service.apiTaskListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),
       descending: !sortAscending,
-      owner: true, //FIXME:
     );
     if (res.body?.total != null && res.body!.total != 0) {
       totalCount = res.body!.total!;
@@ -96,10 +94,10 @@ class VehicleDataTableSource extends AsyncDataTableSource {
   String? sortBy(int sortColumnIndex) {
     switch (sortColumnIndex) {
       case 0:
-        return "registration";
-      case 2:
+        return "label";
+      case 1:
         return "created_at";
-      case 3:
+      case 2:
         return "updated_at";
       default:
         return "created_at";

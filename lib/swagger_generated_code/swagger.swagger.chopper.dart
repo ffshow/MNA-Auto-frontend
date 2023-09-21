@@ -590,6 +590,99 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<ModelsTaskModelResponse>> _apiTaskPost(
+      {required ModelsCreateTaskModel? task}) {
+    final Uri $url = Uri.parse('/api/task');
+    final $body = task;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client
+        .send<ModelsTaskModelResponse, ModelsTaskModelResponse>($request);
+  }
+
+  @override
+  Future<Response<ModelsTaskModelResponse>> _apiTaskIdGet(
+      {required String? id}) {
+    final Uri $url = Uri.parse('/api/task/${id}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client
+        .send<ModelsTaskModelResponse, ModelsTaskModelResponse>($request);
+  }
+
+  @override
+  Future<Response<ModelsTaskModelResponse>> _apiTaskIdPut({
+    required String? id,
+    required ModelsUpdateTaskModel? task,
+  }) {
+    final Uri $url = Uri.parse('/api/task/${id}');
+    final $body = task;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client
+        .send<ModelsTaskModelResponse, ModelsTaskModelResponse>($request);
+  }
+
+  @override
+  Future<Response<ModelsTotalCount>> _apiTaskTotalGet() {
+    final Uri $url = Uri.parse('/api/task/total');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<ModelsTotalCount, ModelsTotalCount>($request);
+  }
+
+  @override
+  Future<Response<List<dynamic>>> _apiTaskImportPost(
+      {required List<ModelsCreateTaskModel>? task}) {
+    final Uri $url = Uri.parse('/api/task_import');
+    final $body = task;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<List<dynamic>, List<dynamic>>($request);
+  }
+
+  @override
+  Future<Response<ModelsListTaskModel>> _apiTaskListGet({
+    int? page,
+    int? perPage,
+    String? sortBy,
+    bool? descending,
+  }) {
+    final Uri $url = Uri.parse('/api/task_list');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'page': page,
+      'per_page': perPage,
+      'sort_by': sortBy,
+      'descending': descending,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<ModelsListTaskModel, ModelsListTaskModel>($request);
+  }
+
+  @override
   Future<Response<ModelsVehicleModelResponse>> _apiVehiclePost(
       {required ModelsCreateVehicleModel? vehicle}) {
     final Uri $url = Uri.parse('/api/vehicle');
@@ -608,9 +701,13 @@ final class _$Swagger extends Swagger {
   Future<Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
     required String? id,
     bool? owner,
+    bool? task,
   }) {
     final Uri $url = Uri.parse('/api/vehicle/${id}');
-    final Map<String, dynamic> $params = <String, dynamic>{'owner': owner};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'owner': owner,
+      'task': task,
+    };
     final Request $request = Request(
       'GET',
       $url,
@@ -670,6 +767,7 @@ final class _$Swagger extends Swagger {
     String? sortBy,
     bool? descending,
     bool? owner,
+    bool? task,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -678,6 +776,7 @@ final class _$Swagger extends Swagger {
       'sort_by': sortBy,
       'descending': descending,
       'owner': owner,
+      'task': task,
     };
     final Request $request = Request(
       'GET',

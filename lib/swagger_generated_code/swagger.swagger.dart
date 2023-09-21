@@ -736,6 +736,120 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
   });
 
+  ///Create a new task
+  ///@param task Register task
+  Future<chopper.Response<ModelsTaskModelResponse>> apiTaskPost(
+      {required ModelsCreateTaskModel? task}) {
+    generatedMapping.putIfAbsent(
+        ModelsCreateTaskModel, () => ModelsCreateTaskModel.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+        ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
+
+    return _apiTaskPost(task: task);
+  }
+
+  ///Create a new task
+  ///@param task Register task
+  @Post(path: '/api/task')
+  Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskPost(
+      {@Body() required ModelsCreateTaskModel? task});
+
+  ///Get task by ID
+  ///@param id Task ID
+  Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdGet(
+      {required String? id}) {
+    generatedMapping.putIfAbsent(
+        ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
+
+    return _apiTaskIdGet(id: id);
+  }
+
+  ///Get task by ID
+  ///@param id Task ID
+  @Get(path: '/api/task/{id}')
+  Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdGet(
+      {@Path('id') required String? id});
+
+  ///Update a task
+  ///@param id Task ID
+  ///@param task Register task
+  Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdPut({
+    required String? id,
+    required ModelsUpdateTaskModel? task,
+  }) {
+    generatedMapping.putIfAbsent(
+        ModelsUpdateTaskModel, () => ModelsUpdateTaskModel.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+        ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
+
+    return _apiTaskIdPut(id: id, task: task);
+  }
+
+  ///Update a task
+  ///@param id Task ID
+  ///@param task Register task
+  @Put(path: '/api/task/{id}')
+  Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdPut({
+    @Path('id') required String? id,
+    @Body() required ModelsUpdateTaskModel? task,
+  });
+
+  ///Total records
+  Future<chopper.Response<ModelsTotalCount>> apiTaskTotalGet() {
+    generatedMapping.putIfAbsent(
+        ModelsTotalCount, () => ModelsTotalCount.fromJsonFactory);
+
+    return _apiTaskTotalGet();
+  }
+
+  ///Total records
+  @Get(path: '/api/task/total')
+  Future<chopper.Response<ModelsTotalCount>> _apiTaskTotalGet();
+
+  ///Create many task
+  ///@param task Register task
+  Future<chopper.Response<List<dynamic>>> apiTaskImportPost(
+      {required List<ModelsCreateTaskModel>? task}) {
+    return _apiTaskImportPost(task: task);
+  }
+
+  ///Create many task
+  ///@param task Register task
+  @Post(path: '/api/task_import')
+  Future<chopper.Response<List<dynamic>>> _apiTaskImportPost(
+      {@Body() required List<ModelsCreateTaskModel>? task});
+
+  ///List task
+  ///@param page page
+  ///@param per_page page size
+  ///@param sort_by sort field
+  ///@param descending order
+  Future<chopper.Response<ModelsListTaskModel>> apiTaskListGet({
+    int? page,
+    int? perPage,
+    String? sortBy,
+    bool? descending,
+  }) {
+    generatedMapping.putIfAbsent(
+        ModelsListTaskModel, () => ModelsListTaskModel.fromJsonFactory);
+
+    return _apiTaskListGet(
+        page: page, perPage: perPage, sortBy: sortBy, descending: descending);
+  }
+
+  ///List task
+  ///@param page page
+  ///@param per_page page size
+  ///@param sort_by sort field
+  ///@param descending order
+  @Get(path: '/api/task_list')
+  Future<chopper.Response<ModelsListTaskModel>> _apiTaskListGet({
+    @Query('page') int? page,
+    @Query('per_page') int? perPage,
+    @Query('sort_by') String? sortBy,
+    @Query('descending') bool? descending,
+  });
+
   ///Create a new vehicle
   ///@param vehicle Register vehicle
   Future<chopper.Response<ModelsVehicleModelResponse>> apiVehiclePost(
@@ -757,23 +871,27 @@ abstract class Swagger extends ChopperService {
   ///Get vehicle by ID
   ///@param id Vehicle ID
   ///@param owner with owner data
+  ///@param task with task data
   Future<chopper.Response<ModelsVehicleModelResponse>> apiVehicleIdGet({
     required String? id,
     bool? owner,
+    bool? task,
   }) {
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
-    return _apiVehicleIdGet(id: id, owner: owner);
+    return _apiVehicleIdGet(id: id, owner: owner, task: task);
   }
 
   ///Get vehicle by ID
   ///@param id Vehicle ID
   ///@param owner with owner data
+  ///@param task with task data
   @Get(path: '/api/vehicle/{id}')
   Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
     @Path('id') required String? id,
     @Query('owner') bool? owner,
+    @Query('task') bool? task,
   });
 
   ///Update a vehicle
@@ -831,12 +949,14 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param owner with owner data
+  ///@param task with task data
   Future<chopper.Response<ModelsListVehicleModel>> apiVehicleListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? owner,
+    bool? task,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListVehicleModel, () => ModelsListVehicleModel.fromJsonFactory);
@@ -846,7 +966,8 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        owner: owner);
+        owner: owner,
+        task: task);
   }
 
   ///List vehicle
@@ -855,6 +976,7 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param owner with owner data
+  ///@param task with task data
   @Get(path: '/api/vehicle_list')
   Future<chopper.Response<ModelsListVehicleModel>> _apiVehicleListGet({
     @Query('page') int? page,
@@ -862,6 +984,7 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('owner') bool? owner,
+    @Query('task') bool? task,
   });
 
   ///Seed vehicles

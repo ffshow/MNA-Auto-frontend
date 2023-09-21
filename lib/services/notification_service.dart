@@ -14,6 +14,7 @@ class NotificationService {
   String title = '';
   String description = '';
   int listeners = 0;
+
   late final StreamController<int> _onCreateVehicleStream =
       StreamController.broadcast();
   Stream get onCreateVehicle => _onCreateVehicleStream.stream;
@@ -22,6 +23,10 @@ class NotificationService {
       _onCreateSupplierStream = StreamController.broadcast();
 
   Stream get onCreateSupplier => _onCreateSupplierStream.stream;
+
+  late final StreamController<int> _onCreateTaskStream =
+      StreamController.broadcast();
+  Stream get onCreateTask => _onCreateTaskStream.stream;
 
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');

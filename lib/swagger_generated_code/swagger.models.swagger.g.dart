@@ -116,6 +116,18 @@ Map<String, dynamic> _$ModelsCreateSupplierModelToJson(
       'name': instance.name,
     };
 
+ModelsCreateTaskModel _$ModelsCreateTaskModelFromJson(
+        Map<String, dynamic> json) =>
+    ModelsCreateTaskModel(
+      label: json['label'] as String?,
+    );
+
+Map<String, dynamic> _$ModelsCreateTaskModelToJson(
+        ModelsCreateTaskModel instance) =>
+    <String, dynamic>{
+      'label': instance.label,
+    };
+
 ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
         Map<String, dynamic> json) =>
     ModelsCreateVehicleModel(
@@ -136,6 +148,10 @@ ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
       registration: json['registration'] as String?,
       serialNumber: json['serial_number'] as String?,
       soldAt: json['sold_at'] as String?,
+      taskIds: (json['task_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
@@ -156,6 +172,7 @@ Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
       'registration': instance.registration,
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt,
+      'task_ids': instance.taskIds,
     };
 
 ModelsGarageModelResponse _$ModelsGarageModelResponseFromJson(
@@ -293,6 +310,23 @@ ModelsListSupplierModel _$ModelsListSupplierModelFromJson(
 
 Map<String, dynamic> _$ModelsListSupplierModelToJson(
         ModelsListSupplierModel instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ModelsListTaskModel _$ModelsListTaskModelFromJson(Map<String, dynamic> json) =>
+    ModelsListTaskModel(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) =>
+                  ModelsTaskModelResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ModelsListTaskModelToJson(
+        ModelsListTaskModel instance) =>
     <String, dynamic>{
       'data': instance.data?.map((e) => e.toJson()).toList(),
       'total': instance.total,
@@ -444,6 +478,48 @@ Map<String, dynamic> _$ModelsSupplierModelResponseToJson(
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
+ModelsTaskModel _$ModelsTaskModelFromJson(Map<String, dynamic> json) =>
+    ModelsTaskModel(
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      id: json['id'] as String?,
+      label: json['label'] as String?,
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$ModelsTaskModelToJson(ModelsTaskModel instance) =>
+    <String, dynamic>{
+      'created_at': instance.createdAt?.toIso8601String(),
+      'id': instance.id,
+      'label': instance.label,
+      'updated_at': instance.updatedAt?.toIso8601String(),
+    };
+
+ModelsTaskModelResponse _$ModelsTaskModelResponseFromJson(
+        Map<String, dynamic> json) =>
+    ModelsTaskModelResponse(
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      id: json['id'] as String?,
+      label: json['label'] as String?,
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$ModelsTaskModelResponseToJson(
+        ModelsTaskModelResponse instance) =>
+    <String, dynamic>{
+      'created_at': instance.createdAt?.toIso8601String(),
+      'id': instance.id,
+      'label': instance.label,
+      'updated_at': instance.updatedAt?.toIso8601String(),
+    };
+
 ModelsTotalCount _$ModelsTotalCountFromJson(Map<String, dynamic> json) =>
     ModelsTotalCount(
       count: json['count'] as int?,
@@ -552,6 +628,20 @@ Map<String, dynamic> _$ModelsUpdateSupplierModelToJson(
       'updated_at': instance.updatedAt,
     };
 
+ModelsUpdateTaskModel _$ModelsUpdateTaskModelFromJson(
+        Map<String, dynamic> json) =>
+    ModelsUpdateTaskModel(
+      label: json['label'] as String?,
+      updatedAt: json['updated_at'] as String?,
+    );
+
+Map<String, dynamic> _$ModelsUpdateTaskModelToJson(
+        ModelsUpdateTaskModel instance) =>
+    <String, dynamic>{
+      'label': instance.label,
+      'updated_at': instance.updatedAt,
+    };
+
 ModelsUpdateVehicleModel _$ModelsUpdateVehicleModelFromJson(
         Map<String, dynamic> json) =>
     ModelsUpdateVehicleModel(
@@ -572,6 +662,10 @@ ModelsUpdateVehicleModel _$ModelsUpdateVehicleModelFromJson(
       registration: json['registration'] as String?,
       serialNumber: json['serial_number'] as String?,
       soldAt: json['sold_at'] as String?,
+      taskIds: (json['task_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
       updatedAt: json['updated_at'] as String?,
     );
 
@@ -593,6 +687,7 @@ Map<String, dynamic> _$ModelsUpdateVehicleModelToJson(
       'registration': instance.registration,
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt,
+      'task_ids': instance.taskIds,
       'updated_at': instance.updatedAt,
     };
 
@@ -631,6 +726,14 @@ ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
       soldAt: json['sold_at'] == null
           ? null
           : DateTime.parse(json['sold_at'] as String),
+      task: (json['task'] as List<dynamic>?)
+              ?.map((e) => ModelsTaskModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      taskIds: (json['task_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
@@ -657,6 +760,8 @@ Map<String, dynamic> _$ModelsVehicleModelResponseToJson(
       'registration': instance.registration,
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt?.toIso8601String(),
+      'task': instance.task?.map((e) => e.toJson()).toList(),
+      'task_ids': instance.taskIds,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 

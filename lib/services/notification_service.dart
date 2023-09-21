@@ -19,14 +19,18 @@ class NotificationService {
       StreamController.broadcast();
   Stream get onCreateVehicle => _onCreateVehicleStream.stream;
 
-  late final StreamController<ModelsSupplierModelResponse>
-      _onCreateSupplierStream = StreamController.broadcast();
+  late final StreamController<int> _onCreateSupplierStream =
+      StreamController.broadcast();
 
   Stream get onCreateSupplier => _onCreateSupplierStream.stream;
 
   late final StreamController<int> _onCreateTaskStream =
       StreamController.broadcast();
   Stream get onCreateTask => _onCreateTaskStream.stream;
+
+  late final StreamController<int> _onCreateGarageStream =
+      StreamController.broadcast();
+  Stream get onCreateGarage => _onCreateGarageStream.stream;
 
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
@@ -40,17 +44,15 @@ class NotificationService {
         topic = json['topic'] as String? ?? '';
         title = '$topic Notification';
         description = '';
-        switch (topic) {
-          case "Supplier.Create":
-            _onCreateSupplierStream.sink.add(
-                ModelsSupplierModelResponse.fromJson(
-                    json['data'] as Map<String, dynamic>));
-          case "Vehicle.Create":
+        switch (topic.split('.').first) {
+          case "Supplier":
+            _onCreateSupplierStream.sink.add(1);
+          case "Vehicle":
             _onCreateVehicleStream.sink.add(1);
-          case "Task.Create":
+          case "Task":
             _onCreateTaskStream.sink.add(1);
-          case "Task.Update":
-            _onCreateTaskStream.sink.add(1);
+          case "Garage":
+            _onCreateGarageStream.sink.add(1);
           default:
         }
         _notify();

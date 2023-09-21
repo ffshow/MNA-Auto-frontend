@@ -4,6 +4,7 @@ import 'package:chopper/chopper.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/extensions.dart';
 import 'package:mna/utils/style.dart';
@@ -71,13 +72,15 @@ class _GarageListWidgetState extends State<GarageListWidget> {
   @override
   void didChangeDependencies() {
     final Swagger swagger = RepositoryProvider.of<Swagger>(context);
-    source ??= GarageDataTableSource(swagger);
+    final NotificationService notificationService =
+        RepositoryProvider.of<NotificationService>(context);
+
+    source ??= GarageDataTableSource(swagger, notificationService);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    source?.cancel();
     source?.dispose();
     super.dispose();
   }
@@ -135,46 +138,18 @@ class _GarageListWidgetState extends State<GarageListWidget> {
 
 class GarageDataTableSource extends AsyncDataTableSource {
   final Swagger service;
-
-  GarageDataTableSource(this.service) {
-    // service.getApiGarageTotal().then((total) {
-    //   totalCount = total.count ?? 0;
-    //   notifyListeners();
-    // });
-    // onCreate = service.onCreate.listen(
-    //   (GarageModel g) {
-    //     debugPrint('garage created ${g.id}');
-    //     items.insert(0, g);
-    //     refreshDatasource();
-    //   },
-    // );
-    // onUpdate = service.onUpdate.listen(
-    //   (GarageModel g) {
-    //     debugPrint('garage updated ${g.id}');
-    //     final int index = items.indexWhere((e) => e.id == g.id);
-    //     if (index > -1) {
-    //       items[index] = g;
-    //       refreshDatasource();
-    //     }
-    //   },
-    // );
-    // onDelete = service.onDelete.listen(
-    //   (GarageModel g) {
-    //     debugPrint('garage deleted ${g.id}');
-    //     items.removeWhere((e) => e.id == g.id);
-    //     refreshDatasource();
-    //   },
-    // );
+  final NotificationService notificationService;
+  GarageDataTableSource(this.service, this.notificationService) {
+    sub = notificationService.onCreateGarage.listen((event) {
+      refreshDatasource();
+    });
   }
-
+  late final StreamSubscription? sub;
   final List<ModelsGarageModelResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
-  late final StreamSubscription<ModelsGarageModelResponse>? onCreate;
-  late final StreamSubscription<ModelsGarageModelResponse>? onUpdate;
-  late final StreamSubscription<ModelsGarageModelResponse>? onDelete;
 
   DataRow2 toRow(ModelsGarageModelResponse item) {
     return DataRow2(
@@ -259,9 +234,9 @@ class GarageDataTableSource extends AsyncDataTableSource {
     }
   }
 
-  void cancel() {
-    // onCreate?.cancel();
-    // onUpdate?.cancel();
-    // onDelete?.cancel();
+  @override
+  void dispose() {
+    sub?.cancel();
+    super.dispose();
   }
 }

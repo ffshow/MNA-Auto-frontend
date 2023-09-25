@@ -7,3 +7,4 @@ export 'supplier/supplier_page.dart';
 export 'notification/notification_page.dart';
 export 'dev.dart';
 export 'task/task_page.dart';
+export 'signin/signin_page.dart';

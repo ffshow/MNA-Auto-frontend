@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/cubits/auth/auth_cubit.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
 import 'package:mna/router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/services/notification_service.dart';
@@ -12,6 +13,7 @@ void main() {
   final NotificationService notificationService = NotificationService(
     notificationCubit,
   );
+  final AuthCubit authCubit = AuthCubit();
   runApp(MultiRepositoryProvider(
     providers: [
       RepositoryProvider<Swagger>(create: (BuildContext context) => swagger),
@@ -20,8 +22,16 @@ void main() {
         lazy: false,
       ),
     ],
-    child: BlocProvider<NotificationCubit>(
-      create: (context) => notificationCubit,
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (BuildContext context) => authCubit..init(),
+          lazy: false,
+        ),
+        BlocProvider<NotificationCubit>(
+          create: (BuildContext context) => notificationCubit,
+        ),
+      ],
       child: const MainApp(),
     ),
   ));
@@ -32,8 +42,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthCubit authCubit = context.read<AuthCubit>();
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: router(authCubit),
       debugShowCheckedModeBanner: false,
       theme: FlexThemeData.light(
         useMaterial3: true,

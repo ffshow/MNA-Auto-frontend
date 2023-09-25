@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/cubits/auth/auth_cubit.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
 import 'package:mna/utils/style.dart';
 import 'package:toastification/toastification.dart';
 
@@ -50,7 +51,6 @@ class RootPage extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(),
         body: Column(
           children: [
             ElevatedButton(
@@ -107,6 +107,13 @@ class RootPage extends StatelessWidget {
                 context.go('/tasks');
               },
               child: const Text('tasks'),
+            ),
+            kH8,
+            ElevatedButton(
+              onPressed: () {
+                context.read<AuthCubit>().signOut();
+              },
+              child: const Text('sign out'),
             ),
           ],
         ),

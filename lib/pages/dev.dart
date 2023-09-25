@@ -3,7 +3,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/style.dart';
 import 'package:mna/widget/widget.dart';

@@ -11,7 +11,7 @@ class VehicleDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
   VehicleDataTableSource(this.service, this.notificationService) {
-    sub ??= notificationService.onCreateVehicle.listen((_) {
+    sub = notificationService.onCreateVehicle.listen((_) {
       refreshDatasource();
     });
   }
@@ -70,21 +70,25 @@ class VehicleDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListVehicleModel> res =
-        await service.apiVehicleListGet(
-      page: (startIndex ~/ defaultRowsPerPage) + 1,
-      perPage: count,
-      sortBy: sortBy(sortColumnIndex),
-      descending: !sortAscending,
-      owner: true, //FIXME:
-    );
-    if (res.body?.total != null && res.body!.total != 0) {
-      totalCount = res.body!.total!;
+    try {
+      final Response<ModelsListVehicleModel> res =
+          await service.apiVehicleListGet(
+        page: (startIndex ~/ defaultRowsPerPage) + 1,
+        perPage: count,
+        sortBy: sortBy(sortColumnIndex),
+        descending: !sortAscending,
+        owner: true, //FIXME:
+      );
+      if (res.body?.total != null && res.body!.total != 0) {
+        totalCount = res.body!.total!;
+      }
+      return AsyncRowsResponse(
+        totalCount,
+        res.body?.data?.map((e) => toRow(e)).toList() ?? [],
+      );
+    } on Exception catch (_) {
+      return AsyncRowsResponse(0, []);
     }
-    return AsyncRowsResponse(
-      totalCount,
-      res.body?.data?.map((e) => toRow(e)).toList() ?? [],
-    );
   }
 
   void sort(int columnIndex, bool ascending) {

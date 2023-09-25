@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mna/cubits/auth/auth_cubit.dart';
 
 class SignInPage extends StatelessWidget {
@@ -14,6 +15,7 @@ class SignInPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               BlocProvider.of<AuthCubit>(context).signIn();
+              context.go('/');
             },
             child: const Text('sign in'),
           ),

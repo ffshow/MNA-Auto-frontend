@@ -17,7 +17,7 @@ GoRouter router(AuthCubit authCubit) => GoRouter(
       redirect: (BuildContext context, GoRouterState state) {
         return context.read<AuthCubit>().state.when(
               initial: () => '/signin',
-              authenticated: () => '/',
+              authenticated: () => state.path == '/' ? '/' : null,
               failed: () => '/signin',
             );
       },

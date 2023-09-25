@@ -18,4 +18,11 @@ class AuthCubit extends Cubit<AuthState> {
   void signOut() {
     emit(const AuthState.initial());
   }
+
+  Future<String?> getToken({bool refresh = false}) {
+    if (refresh) {
+      return Future.value("Bearer authToken");
+    }
+    return Future.value(null);
+  }
 }

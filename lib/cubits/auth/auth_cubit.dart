@@ -20,9 +20,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<String?> getToken({bool refresh = false}) {
-    if (refresh) {
-      return Future.value("Bearer authToken");
-    }
-    return Future.value(null);
+    return Future.value("Bearer authToken");
   }
 }

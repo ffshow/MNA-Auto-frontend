@@ -18,7 +18,7 @@ class Auth extends Authenticator {
   FutureOr<Request?> authenticate(Request request, Response response,
       [Request? originalRequest]) async {
     if (response.statusCode == 401) {
-      final token = await authCubit.getToken(refresh: true);
+      final String? token = await authCubit.getToken(refresh: true);
       if (token == null) {
         return null;
       }

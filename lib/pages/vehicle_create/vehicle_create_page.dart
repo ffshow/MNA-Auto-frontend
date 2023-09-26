@@ -3,10 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:mna/cubits/owner/owner_cubit.dart';
 import 'package:mna/pages/vehicle_create/state/create_vehicle_cubit.dart';
 import 'package:mna/swagger_generated_code/client_index.dart';
+import 'package:mna/swagger_generated_code/swagger.models.swagger.dart';
 import 'package:mna/utils/recase.dart';
 import 'package:mna/utils/style.dart';
+import 'package:mna/widget/widget.dart';
 
 const SnackBar successSnackBar = SnackBar(
   content: Text('Vehicle has been created successfully'),
@@ -125,20 +128,39 @@ class CreateVechilePage extends StatelessWidget {
                         ]),
                       ),
                       // owner
-                      FormBuilderDropdown(
-                        name: 'owner_id',
-                        initialValue: state.vehicle?.ownerId,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: const InputDecoration(labelText: 'Owner'),
-                        items: List.generate(
-                          3,
-                          (int index) => DropdownMenuItem(
-                            value: index == 0
-                                ? '65005460b40777ab605fa163'
-                                : index.toString(),
-                            child: Text('Fake owner ${index + 1}'),
-                          ),
-                        ).toList(),
+                      BlocBuilder<OwnerCubit, OwnerState>(
+                        builder: (BuildContext context, OwnerState ownerState) {
+                          return ownerState.when(
+                            initial: () {
+                              return const LoadingWidget();
+                            },
+                            loaded:
+                                (Iterable<ModelsOwnerModelResponse> owners) {
+                              return FormBuilderDropdown<String>(
+                                name: 'owner_id',
+                                initialValue: state.vehicle?.ownerId,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                decoration:
+                                    const InputDecoration(labelText: 'Owner'),
+                                items: owners.map<DropdownMenuItem<String>>(
+                                    (ModelsOwnerModelResponse e) {
+                                  return DropdownMenuItem<String>(
+                                    value: e.id,
+                                    child: Text(e.email ?? ''),
+                                  );
+                                }).toList(),
+                                validator:
+                                    FormBuilderValidators.compose<String>([
+                                  FormBuilderValidators.required<String>(),
+                                ]),
+                              );
+                            },
+                            failed: (String error) {
+                              return const SizedBox();
+                            },
+                          );
+                        },
                       ),
                       // vehicle status
                       FormBuilderDropdown(
@@ -284,8 +306,10 @@ class CreateVechilePage extends StatelessWidget {
     final bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (isValid) {
       final Map<String, Object?> value = Map.of(_formKey.currentState!.value);
-      //FIXME:
-      value['owner_id'] = '65005460b40777ab605fa163';
+      final String? ownerID = value['owner_id'] as String?;
+      if (ownerID == null) {
+        return;
+      }
       context.read<CreateVehicleCubit>().create(value);
     }
   }

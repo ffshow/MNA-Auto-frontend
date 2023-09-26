@@ -19,22 +19,21 @@ mixin _$OwnerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<ModelsOwnerModelResponse> owners) loaded,
     required TResult Function(String error) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult? Function(String error)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) =>
@@ -119,8 +118,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<ModelsOwnerModelResponse> owners) loaded,
     required TResult Function(String error) failed,
   }) {
     return initial();
@@ -130,7 +128,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return initial?.call();
@@ -140,7 +138,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -194,7 +192,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({Iterable<ModelsOwnerModelResponse> vehicles});
+  $Res call({Iterable<ModelsOwnerModelResponse> owners});
 }
 
 /// @nodoc
@@ -207,12 +205,12 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vehicles = null,
+    Object? owners = null,
   }) {
     return _then(_$_Loaded(
-      null == vehicles
-          ? _value.vehicles
-          : vehicles // ignore: cast_nullable_to_non_nullable
+      null == owners
+          ? _value.owners
+          : owners // ignore: cast_nullable_to_non_nullable
               as Iterable<ModelsOwnerModelResponse>,
     ));
   }
@@ -221,14 +219,14 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.vehicles);
+  const _$_Loaded(this.owners);
 
   @override
-  final Iterable<ModelsOwnerModelResponse> vehicles;
+  final Iterable<ModelsOwnerModelResponse> owners;
 
   @override
   String toString() {
-    return 'OwnerState.loaded(vehicles: $vehicles)';
+    return 'OwnerState.loaded(owners: $owners)';
   }
 
   @override
@@ -236,12 +234,12 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other.vehicles, vehicles));
+            const DeepCollectionEquality().equals(other.owners, owners));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(vehicles));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(owners));
 
   @JsonKey(ignore: true)
   @override
@@ -253,33 +251,32 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<ModelsOwnerModelResponse> owners) loaded,
     required TResult Function(String error) failed,
   }) {
-    return loaded(vehicles);
+    return loaded(owners);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult? Function(String error)? failed,
   }) {
-    return loaded?.call(vehicles);
+    return loaded?.call(owners);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(vehicles);
+      return loaded(owners);
     }
     return orElse();
   }
@@ -320,10 +317,10 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements OwnerState {
-  const factory _Loaded(final Iterable<ModelsOwnerModelResponse> vehicles) =
+  const factory _Loaded(final Iterable<ModelsOwnerModelResponse> owners) =
       _$_Loaded;
 
-  Iterable<ModelsOwnerModelResponse> get vehicles;
+  Iterable<ModelsOwnerModelResponse> get owners;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -392,8 +389,7 @@ class _$_failed implements _failed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<ModelsOwnerModelResponse> owners) loaded,
     required TResult Function(String error) failed,
   }) {
     return failed(error);
@@ -403,7 +399,7 @@ class _$_failed implements _failed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return failed?.call(error);
@@ -413,7 +409,7 @@ class _$_failed implements _failed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsOwnerModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<ModelsOwnerModelResponse> owners)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {

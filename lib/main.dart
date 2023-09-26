@@ -1,6 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
+import 'package:mna/cubits/owner/owner_cubit.dart';
+import 'package:mna/repositories/owner.dart';
 import 'package:mna/router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/services/notification_service.dart';
@@ -12,16 +14,30 @@ void main() {
   final NotificationService notificationService = NotificationService(
     notificationCubit,
   );
+  final OwnerRepository ownerRepository = OwnerRepository(swagger);
+
   runApp(MultiRepositoryProvider(
     providers: [
       RepositoryProvider<Swagger>(create: (BuildContext context) => swagger),
+      RepositoryProvider<OwnerRepository>(
+        create: (BuildContext context) => ownerRepository,
+      ),
       RepositoryProvider<NotificationService>(
         create: (BuildContext context) => notificationService..init(),
         lazy: false,
       ),
     ],
-    child: BlocProvider<NotificationCubit>(
-      create: (context) => notificationCubit,
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider<NotificationCubit>(
+          create: (context) => notificationCubit,
+        ),
+        BlocProvider<OwnerCubit>(
+          create: (BuildContext context) => OwnerCubit(
+            RepositoryProvider.of<OwnerRepository>(context),
+          )..getOwners(),
+        ),
+      ],
       child: const MainApp(),
     ),
   ));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
 import 'package:mna/utils/style.dart';
 import 'package:toastification/toastification.dart';
 
@@ -49,68 +49,70 @@ class RootPage extends StatelessWidget {
             );
         }
       },
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                context.go('/vehicles');
-              },
-              child: const Text('vehicles'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/owners');
-              },
-              child: const Text('owners'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/create_vehicle');
-              },
-              child: const Text('create vehicle'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/garage');
-              },
-              child: const Text('garages'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/suppliers');
-              },
-              child: const Text('suppliers'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/dev');
-              },
-              child: const Text('dev'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/notifications');
-              },
-              child: const Text('notifications'),
-            ),
-            kH8,
-            ElevatedButton(
-              onPressed: () {
-                context.go('/tasks');
-              },
-              child: const Text('tasks'),
-            ),
-          ],
-        ),
-      ),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/vehicles');
+                },
+                child: const Text('vehicles'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/owners');
+                },
+                child: const Text('owners'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/create_vehicle');
+                },
+                child: const Text('create vehicle'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/garage');
+                },
+                child: const Text('garages'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/suppliers');
+                },
+                child: const Text('suppliers'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/dev');
+                },
+                child: const Text('dev'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/notifications');
+                },
+                child: const Text('notifications'),
+              ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/tasks');
+                },
+                child: const Text('tasks'),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

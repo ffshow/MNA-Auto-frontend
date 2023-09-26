@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mna/cubits/cubit/notification_cubit.dart';
-import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/cubits/notification/notification_cubit.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NotificationService {

@@ -8,7 +8,7 @@ part 'swagger.models.swagger.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ModelsAccountModelResponse {
-  ModelsAccountModelResponse({
+  const ModelsAccountModelResponse({
     this.createdAt,
     this.email,
     this.id,
@@ -97,7 +97,7 @@ extension $ModelsAccountModelResponseExtension on ModelsAccountModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateAccountModel {
-  ModelsCreateAccountModel({
+  const ModelsCreateAccountModel({
     this.email,
     this.name,
   });
@@ -150,7 +150,7 @@ extension $ModelsCreateAccountModelExtension on ModelsCreateAccountModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateGarageModel {
-  ModelsCreateGarageModel({
+  const ModelsCreateGarageModel({
     this.label,
   });
 
@@ -193,7 +193,7 @@ extension $ModelsCreateGarageModelExtension on ModelsCreateGarageModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateOwnerModel {
-  ModelsCreateOwnerModel({
+  const ModelsCreateOwnerModel({
     this.address,
     this.email,
     this.phone,
@@ -282,7 +282,7 @@ extension $ModelsCreateOwnerModelExtension on ModelsCreateOwnerModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreatePermissionModel {
-  ModelsCreatePermissionModel({
+  const ModelsCreatePermissionModel({
     this.available,
     this.label,
   });
@@ -336,7 +336,7 @@ extension $ModelsCreatePermissionModelExtension on ModelsCreatePermissionModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateSparePartModel {
-  ModelsCreateSparePartModel({
+  const ModelsCreateSparePartModel({
     this.barcode,
     this.reference,
   });
@@ -392,7 +392,7 @@ extension $ModelsCreateSparePartModelExtension on ModelsCreateSparePartModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateSupplierModel {
-  ModelsCreateSupplierModel({
+  const ModelsCreateSupplierModel({
     this.name,
   });
 
@@ -435,7 +435,7 @@ extension $ModelsCreateSupplierModelExtension on ModelsCreateSupplierModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateTaskModel {
-  ModelsCreateTaskModel({
+  const ModelsCreateTaskModel({
     this.label,
   });
 
@@ -478,7 +478,7 @@ extension $ModelsCreateTaskModelExtension on ModelsCreateTaskModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateVehicleModel {
-  ModelsCreateVehicleModel({
+  const ModelsCreateVehicleModel({
     this.chrono,
     this.collectionDate,
     this.commercialName,
@@ -697,7 +697,7 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsGarageModelResponse {
-  ModelsGarageModelResponse({
+  const ModelsGarageModelResponse({
     this.createdAt,
     this.id,
     this.label,
@@ -773,7 +773,7 @@ extension $ModelsGarageModelResponseExtension on ModelsGarageModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsInfoModel {
-  ModelsInfoModel({
+  const ModelsInfoModel({
     this.label,
   });
 
@@ -815,7 +815,7 @@ extension $ModelsInfoModelExtension on ModelsInfoModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListAccountModel {
-  ModelsListAccountModel({
+  const ModelsListAccountModel({
     this.data,
     this.total,
   });
@@ -870,7 +870,7 @@ extension $ModelsListAccountModelExtension on ModelsListAccountModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListGarageModel {
-  ModelsListGarageModel({
+  const ModelsListGarageModel({
     this.data,
     this.total,
   });
@@ -924,7 +924,7 @@ extension $ModelsListGarageModelExtension on ModelsListGarageModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListOwnerModel {
-  ModelsListOwnerModel({
+  const ModelsListOwnerModel({
     this.data,
     this.total,
   });
@@ -978,7 +978,7 @@ extension $ModelsListOwnerModelExtension on ModelsListOwnerModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListPermissionModel {
-  ModelsListPermissionModel({
+  const ModelsListPermissionModel({
     this.data,
     this.total,
   });
@@ -1033,7 +1033,7 @@ extension $ModelsListPermissionModelExtension on ModelsListPermissionModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListSparePartModel {
-  ModelsListSparePartModel({
+  const ModelsListSparePartModel({
     this.data,
     this.total,
   });
@@ -1088,7 +1088,7 @@ extension $ModelsListSparePartModelExtension on ModelsListSparePartModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListSupplierModel {
-  ModelsListSupplierModel({
+  const ModelsListSupplierModel({
     this.data,
     this.total,
   });
@@ -1143,7 +1143,7 @@ extension $ModelsListSupplierModelExtension on ModelsListSupplierModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListTaskModel {
-  ModelsListTaskModel({
+  const ModelsListTaskModel({
     this.data,
     this.total,
   });
@@ -1197,7 +1197,7 @@ extension $ModelsListTaskModelExtension on ModelsListTaskModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsListVehicleModel {
-  ModelsListVehicleModel({
+  const ModelsListVehicleModel({
     this.data,
     this.total,
   });
@@ -1252,7 +1252,7 @@ extension $ModelsListVehicleModelExtension on ModelsListVehicleModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsOwnerModel {
-  ModelsOwnerModel({
+  const ModelsOwnerModel({
     this.address,
     this.createdAt,
     this.email,
@@ -1373,7 +1373,7 @@ extension $ModelsOwnerModelExtension on ModelsOwnerModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsOwnerModelResponse {
-  ModelsOwnerModelResponse({
+  const ModelsOwnerModelResponse({
     this.address,
     this.createdAt,
     this.email,
@@ -1494,7 +1494,7 @@ extension $ModelsOwnerModelResponseExtension on ModelsOwnerModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsPermissionModelResponse {
-  ModelsPermissionModelResponse({
+  const ModelsPermissionModelResponse({
     this.available,
     this.createdAt,
     this.id,
@@ -1585,7 +1585,7 @@ extension $ModelsPermissionModelResponseExtension
 
 @JsonSerializable(explicitToJson: true)
 class ModelsSparePartModelResponse {
-  ModelsSparePartModelResponse({
+  const ModelsSparePartModelResponse({
     this.barcode,
     this.createdAt,
     this.id,
@@ -1677,7 +1677,7 @@ extension $ModelsSparePartModelResponseExtension
 
 @JsonSerializable(explicitToJson: true)
 class ModelsSupplierModelResponse {
-  ModelsSupplierModelResponse({
+  const ModelsSupplierModelResponse({
     this.createdAt,
     this.id,
     this.name,
@@ -1753,7 +1753,7 @@ extension $ModelsSupplierModelResponseExtension on ModelsSupplierModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsTaskModel {
-  ModelsTaskModel({
+  const ModelsTaskModel({
     this.createdAt,
     this.id,
     this.label,
@@ -1829,7 +1829,7 @@ extension $ModelsTaskModelExtension on ModelsTaskModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsTaskModelResponse {
-  ModelsTaskModelResponse({
+  const ModelsTaskModelResponse({
     this.createdAt,
     this.id,
     this.label,
@@ -1905,7 +1905,7 @@ extension $ModelsTaskModelResponseExtension on ModelsTaskModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsTotalCount {
-  ModelsTotalCount({
+  const ModelsTotalCount({
     this.count,
   });
 
@@ -1947,7 +1947,7 @@ extension $ModelsTotalCountExtension on ModelsTotalCount {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateAccountModel {
-  ModelsUpdateAccountModel({
+  const ModelsUpdateAccountModel({
     this.email,
     this.name,
     this.updatedAt,
@@ -2013,7 +2013,7 @@ extension $ModelsUpdateAccountModelExtension on ModelsUpdateAccountModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateGarageModel {
-  ModelsUpdateGarageModel({
+  const ModelsUpdateGarageModel({
     this.label,
     this.updatedAt,
   });
@@ -2067,7 +2067,7 @@ extension $ModelsUpdateGarageModelExtension on ModelsUpdateGarageModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateOwnerModel {
-  ModelsUpdateOwnerModel({
+  const ModelsUpdateOwnerModel({
     this.address,
     this.email,
     this.phone,
@@ -2167,7 +2167,7 @@ extension $ModelsUpdateOwnerModelExtension on ModelsUpdateOwnerModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdatePermissionModel {
-  ModelsUpdatePermissionModel({
+  const ModelsUpdatePermissionModel({
     this.available,
     this.label,
     this.updatedAt,
@@ -2234,7 +2234,7 @@ extension $ModelsUpdatePermissionModelExtension on ModelsUpdatePermissionModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateSparePartModel {
-  ModelsUpdateSparePartModel({
+  const ModelsUpdateSparePartModel({
     this.barcode,
     this.reference,
     this.updatedAt,
@@ -2302,7 +2302,7 @@ extension $ModelsUpdateSparePartModelExtension on ModelsUpdateSparePartModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateSupplierModel {
-  ModelsUpdateSupplierModel({
+  const ModelsUpdateSupplierModel({
     this.name,
     this.updatedAt,
   });
@@ -2356,7 +2356,7 @@ extension $ModelsUpdateSupplierModelExtension on ModelsUpdateSupplierModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateTaskModel {
-  ModelsUpdateTaskModel({
+  const ModelsUpdateTaskModel({
     this.label,
     this.updatedAt,
   });
@@ -2410,7 +2410,7 @@ extension $ModelsUpdateTaskModelExtension on ModelsUpdateTaskModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsUpdateVehicleModel {
-  ModelsUpdateVehicleModel({
+  const ModelsUpdateVehicleModel({
     this.chrono,
     this.collectionDate,
     this.commercialName,
@@ -2641,7 +2641,7 @@ extension $ModelsUpdateVehicleModelExtension on ModelsUpdateVehicleModel {
 
 @JsonSerializable(explicitToJson: true)
 class ModelsVehicleModelResponse {
-  ModelsVehicleModelResponse({
+  const ModelsVehicleModelResponse({
     this.chrono,
     this.collectionDate,
     this.commercialName,
@@ -2913,7 +2913,7 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
 
 @JsonSerializable(explicitToJson: true)
 class UtilsResponseError {
-  UtilsResponseError({
+  const UtilsResponseError({
     this.code,
     this.message,
   });

@@ -14,7 +14,6 @@ class OwnerCubit extends Cubit<OwnerState> {
   OwnerCubit(this._ownerRepository) : super(const OwnerState.initial());
 
   Future<void> getOwners({bool tryAgain = false}) async {
-    debugPrint("get owner cubit");
     emit(const OwnerState.initial());
     if (tryAgain) {
       await Future.delayed(const Duration(milliseconds: 500));

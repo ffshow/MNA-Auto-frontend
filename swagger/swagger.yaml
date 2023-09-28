@@ -588,6 +588,10 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "500":
           description: Internal Server Error
           schema:
@@ -613,6 +617,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.AccountModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -647,8 +655,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.AccountModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -656,25 +672,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a account
-      tags:
-      - account
-  /api/account/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - account
   /api/account_import:
@@ -702,6 +699,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -740,11 +741,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListAccountModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List account
+      tags:
+      - account
+  /api/account_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - account
   /api/garage:
@@ -768,6 +792,10 @@ paths:
             $ref: '#/definitions/models.GarageModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -795,6 +823,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.GarageModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -829,8 +861,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.GarageModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -838,25 +878,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a garage
-      tags:
-      - garage
-  /api/garage/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - garage
   /api/garage_import:
@@ -884,6 +905,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -922,11 +947,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListGarageModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List garage
+      tags:
+      - garage
+  /api/garage_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - garage
   /api/owner:
@@ -950,6 +998,10 @@ paths:
             $ref: '#/definitions/models.OwnerModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -977,6 +1029,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.OwnerModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1011,8 +1067,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.OwnerModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1020,25 +1084,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a owner
-      tags:
-      - owner
-  /api/owner/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - owner
   /api/owner_import:
@@ -1066,6 +1111,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1104,11 +1153,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListOwnerModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List owner
+      tags:
+      - owner
+  /api/owner_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - owner
   /api/permission:
@@ -1132,6 +1204,10 @@ paths:
             $ref: '#/definitions/models.PermissionModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1159,6 +1235,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.PermissionModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1193,8 +1273,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.PermissionModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1202,25 +1290,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a permission
-      tags:
-      - permission
-  /api/permission/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - permission
   /api/permission_import:
@@ -1248,6 +1317,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1286,11 +1359,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListPermissionModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List permission
+      tags:
+      - permission
+  /api/permission_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - permission
   /api/spare_part:
@@ -1314,6 +1410,10 @@ paths:
             $ref: '#/definitions/models.SparePartModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1341,6 +1441,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SparePartModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1375,8 +1479,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SparePartModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1384,25 +1496,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a spare_part
-      tags:
-      - spare_part
-  /api/spare_part/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - spare_part
   /api/spare_part_import:
@@ -1430,6 +1523,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1468,11 +1565,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListSparePartModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List spare_part
+      tags:
+      - spare_part
+  /api/spare_part_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - spare_part
   /api/supplier:
@@ -1496,6 +1616,10 @@ paths:
             $ref: '#/definitions/models.SupplierModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1523,6 +1647,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SupplierModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1557,8 +1685,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SupplierModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1566,25 +1702,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a supplier
-      tags:
-      - supplier
-  /api/supplier/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - supplier
   /api/supplier_import:
@@ -1612,6 +1729,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1650,11 +1771,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListSupplierModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List supplier
+      tags:
+      - supplier
+  /api/supplier_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - supplier
   /api/task:
@@ -1678,6 +1822,10 @@ paths:
             $ref: '#/definitions/models.TaskModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1705,6 +1853,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TaskModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1739,8 +1891,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TaskModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1748,25 +1908,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a task
-      tags:
-      - task
-  /api/task/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - task
   /api/task_import:
@@ -1794,6 +1935,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1832,11 +1977,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListTaskModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List task
+      tags:
+      - task
+  /api/task_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - task
   /api/vehicle:
@@ -1860,6 +2028,10 @@ paths:
             $ref: '#/definitions/models.VehicleModelResponse'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1895,6 +2067,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.VehicleModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1929,8 +2105,16 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.VehicleModelResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1938,25 +2122,6 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a vehicle
-      tags:
-      - vehicle
-  /api/vehicle/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - vehicle
   /api/vehicle_import:
@@ -1984,6 +2149,10 @@ paths:
             type: array
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -2030,11 +2199,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListVehicleModel'
-        "503":
-          description: Service Unavailable
+        "500":
+          description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List vehicle
+      tags:
+      - vehicle
+  /api/vehicle_total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - vehicle
   /api/vehicles_seed:

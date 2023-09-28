@@ -82,24 +82,25 @@ class _$VehicleStateCopyWithImpl<$Res, $Val extends VehicleState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$VehicleStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$VehicleStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -109,7 +110,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -186,22 +187,24 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements VehicleState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedCopyWith<$Res> {
-  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
-      __$$_LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedImplCopyWith<$Res> {
+  factory _$$LoadedImplCopyWith(
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Iterable<ModelsVehicleModelResponse> vehicles});
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res>
-    extends _$VehicleStateCopyWithImpl<$Res, _$_Loaded>
-    implements _$$_LoadedCopyWith<$Res> {
-  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+class __$$LoadedImplCopyWithImpl<$Res>
+    extends _$VehicleStateCopyWithImpl<$Res, _$LoadedImpl>
+    implements _$$LoadedImplCopyWith<$Res> {
+  __$$LoadedImplCopyWithImpl(
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -209,7 +212,7 @@ class __$$_LoadedCopyWithImpl<$Res>
   $Res call({
     Object? vehicles = null,
   }) {
-    return _then(_$_Loaded(
+    return _then(_$LoadedImpl(
       null == vehicles
           ? _value.vehicles
           : vehicles // ignore: cast_nullable_to_non_nullable
@@ -220,8 +223,8 @@ class __$$_LoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.vehicles);
+class _$LoadedImpl implements _Loaded {
+  const _$LoadedImpl(this.vehicles);
 
   @override
   final Iterable<ModelsVehicleModelResponse> vehicles;
@@ -235,7 +238,7 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Loaded &&
+            other is _$LoadedImpl &&
             const DeepCollectionEquality().equals(other.vehicles, vehicles));
   }
 
@@ -246,8 +249,8 @@ class _$_Loaded implements _Loaded {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
-      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -321,27 +324,29 @@ class _$_Loaded implements _Loaded {
 
 abstract class _Loaded implements VehicleState {
   const factory _Loaded(final Iterable<ModelsVehicleModelResponse> vehicles) =
-      _$_Loaded;
+      _$LoadedImpl;
 
   Iterable<ModelsVehicleModelResponse> get vehicles;
   @JsonKey(ignore: true)
-  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_failedCopyWith<$Res> {
-  factory _$$_failedCopyWith(_$_failed value, $Res Function(_$_failed) then) =
-      __$$_failedCopyWithImpl<$Res>;
+abstract class _$$failedImplCopyWith<$Res> {
+  factory _$$failedImplCopyWith(
+          _$failedImpl value, $Res Function(_$failedImpl) then) =
+      __$$failedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
 
 /// @nodoc
-class __$$_failedCopyWithImpl<$Res>
-    extends _$VehicleStateCopyWithImpl<$Res, _$_failed>
-    implements _$$_failedCopyWith<$Res> {
-  __$$_failedCopyWithImpl(_$_failed _value, $Res Function(_$_failed) _then)
+class __$$failedImplCopyWithImpl<$Res>
+    extends _$VehicleStateCopyWithImpl<$Res, _$failedImpl>
+    implements _$$failedImplCopyWith<$Res> {
+  __$$failedImplCopyWithImpl(
+      _$failedImpl _value, $Res Function(_$failedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -349,7 +354,7 @@ class __$$_failedCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
   }) {
-    return _then(_$_failed(
+    return _then(_$failedImpl(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -360,8 +365,8 @@ class __$$_failedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_failed implements _failed {
-  const _$_failed(this.error);
+class _$failedImpl implements _failed {
+  const _$failedImpl(this.error);
 
   @override
   final String error;
@@ -375,7 +380,7 @@ class _$_failed implements _failed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_failed &&
+            other is _$failedImpl &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -385,8 +390,8 @@ class _$_failed implements _failed {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_failedCopyWith<_$_failed> get copyWith =>
-      __$$_failedCopyWithImpl<_$_failed>(this, _$identity);
+  _$$failedImplCopyWith<_$failedImpl> get copyWith =>
+      __$$failedImplCopyWithImpl<_$failedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -459,10 +464,10 @@ class _$_failed implements _failed {
 }
 
 abstract class _failed implements VehicleState {
-  const factory _failed(final String error) = _$_failed;
+  const factory _failed(final String error) = _$failedImpl;
 
   String get error;
   @JsonKey(ignore: true)
-  _$$_failedCopyWith<_$_failed> get copyWith =>
+  _$$failedImplCopyWith<_$failedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

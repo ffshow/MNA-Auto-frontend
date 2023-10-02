@@ -119,9 +119,9 @@ class _VehicleDetailsWidget extends StatelessWidget {
                     icon: const Icon(Icons.add_task),
                   ),
                 ),
-                ...?response.task
+                ...?response.vehicleTask
                     ?.map((e) => ListTile(
-                          title: Text(e.label ?? ''),
+                          title: Text(e.task?.label ?? ''),
                         ))
                     .toList(),
               ],

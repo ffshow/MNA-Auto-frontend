@@ -14,7 +14,12 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
   Future<void> getVehicle(String id) async {
     try {
       final Response<ModelsVehicleModelResponse> response =
-          await _swagger.apiVehicleIdGet(id: id, owner: true, task: true);
+          await _swagger.apiVehicleIdGet(
+        id: id,
+        owner: true,
+        employee: true,
+        vehicleTask: true,
+      );
       emit(VehicleDetailsState.loaded(response.body!));
     } catch (e) {
       emit(VehicleDetailsState.failed(e.toString()));

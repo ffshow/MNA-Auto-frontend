@@ -92,7 +92,8 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'first_circulation',
                         initialValue: DateTime.tryParse(
-                          state.vehicle?.firstCirculation ?? '',
+                          state.vehicle?.firstCirculation?.toIso8601String() ??
+                              '',
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
@@ -138,7 +139,7 @@ class CreateVechilePage extends StatelessWidget {
                                 (Iterable<ModelsOwnerModelResponse> owners) {
                               return FormBuilderDropdown<String>(
                                 name: 'owner_id',
-                                initialValue: state.vehicle?.ownerId,
+                                initialValue: state.vehicle?.owner,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 decoration:
@@ -181,7 +182,7 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'sold_at',
                         initialValue: DateTime.tryParse(
-                          state.vehicle?.soldAt ?? '',
+                          state.vehicle?.soldAt?.toIso8601String() ?? '',
                         ),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
@@ -199,7 +200,8 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'collection_date',
                         initialValue: DateTime.tryParse(
-                            state.vehicle?.collectionDate ?? ''),
+                            state.vehicle?.collectionDate?.toIso8601String() ??
+                                ''),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
                         decoration: const InputDecoration(
@@ -216,7 +218,8 @@ class CreateVechilePage extends StatelessWidget {
                       FormBuilderDateTimePicker(
                         name: 'delivery_date',
                         initialValue: DateTime.tryParse(
-                            state.vehicle?.deliveryDate ?? ''),
+                            state.vehicle?.deliveryDate?.toIso8601String() ??
+                                ''),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputType: InputType.date,
                         decoration: const InputDecoration(

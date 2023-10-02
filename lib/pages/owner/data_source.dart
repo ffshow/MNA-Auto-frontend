@@ -9,7 +9,7 @@ class OwnerDataTableSource extends AsyncDataTableSource {
 
   OwnerDataTableSource(this.service);
 
-  final List<ModelsOwnerModel> items = [];
+  final List<ModelsOwnerModelResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 3;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;

@@ -21,10 +21,8 @@ class VehiclePage extends StatelessWidget {
           IconButton(
             onPressed: () {
               final faker = Faker();
-              final String date = faker.date
-                  .dateTime(minYear: 1999, maxYear: 2022)
-                  .toUtc()
-                  .toIso8601String();
+              final date =
+                  faker.date.dateTime(minYear: 1999, maxYear: 2022).toUtc();
               final v = ModelsCreateVehicleModel(
                 chrono: faker.vehicle.make(),
                 collectionDate: date,
@@ -32,11 +30,10 @@ class VehiclePage extends StatelessWidget {
                 firstCirculation: date,
                 soldAt: date,
                 commercialName: faker.vehicle.model(),
-                currentStatus: 'toGetBack',
                 expertise: faker.randomGenerator.boolean(),
                 mileage: faker.randomGenerator.integer(1000, min: 20),
                 note: faker.lorem.sentence(),
-                ownerId: '65005460b40777ab605fa163',
+                owner: '65005460b40777ab605fa163',
                 procedureVe: faker.randomGenerator.boolean(),
                 registration: faker.vehicle.yearMakeModel(),
                 serialNumber: faker.vehicle.vin(),

@@ -100,7 +100,7 @@ class CreateTaskWidgt extends StatelessWidget {
               swagger.apiTaskPost(
                 task: ModelsCreateTaskModel(
                   label: value['label'],
-                  task: tasks,
+                  subTasks: tasks,
                 ),
               );
             },
@@ -242,10 +242,17 @@ class _TasksWidgetState extends State<_TasksWidget> {
             }).toList(),
           ),
           kH16,
-          if (_selected?.taskIds?.isEmpty ?? false)
+          if (_selected?.subTasksIds?.isEmpty ?? false)
             const Text('This task has no sub-tasks'),
-          ...?_selected?.taskIds?.map((String e) {
-            return Text(e);
+          ...?_selected?.subTasksIds?.map((String e) {
+            return ListTile(
+              leading: Text(e),
+            );
+          }).toList(),
+          ...?_selected?.subTasks?.map((ModelsTaskModelResponse e) {
+            return ListTile(
+              leading: Text(e.label ?? ''),
+            );
           }).toList(),
         ],
       ),

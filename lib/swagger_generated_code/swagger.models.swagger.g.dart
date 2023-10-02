@@ -133,13 +133,13 @@ ModelsCreateTaskModel _$ModelsCreateTaskModelFromJson(
     ModelsCreateTaskModel(
       label: json['label'] as String?,
       parentId: json['parent_id'] as String?,
-      subTasksIds: (json['sub_tasks_ids'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
-      task: (json['task'] as List<dynamic>?)
+      subTasks: (json['sub_tasks'] as List<dynamic>?)
               ?.map((e) =>
                   ModelsCreateTaskModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      subTasksIds: (json['sub_tasks_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
               .toList() ??
           [],
     );
@@ -149,8 +149,8 @@ Map<String, dynamic> _$ModelsCreateTaskModelToJson(
     <String, dynamic>{
       'label': instance.label,
       'parent_id': instance.parentId,
+      'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
       'sub_tasks_ids': instance.subTasksIds,
-      'task': instance.task?.map((e) => e.toJson()).toList(),
     };
 
 ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
@@ -161,14 +161,14 @@ ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
           ? null
           : DateTime.parse(json['collection_date'] as String),
       commercialName: json['commercial_name'] as String?,
+      createdBy: json['created_by'] == null
+          ? null
+          : ModelsCreateEmployeeModel.fromJson(
+              json['created_by'] as Map<String, dynamic>),
       createdById: json['created_by_id'] as String?,
       deliveryDate: json['delivery_date'] == null
           ? null
           : DateTime.parse(json['delivery_date'] as String),
-      employee: json['employee'] == null
-          ? null
-          : ModelsCreateEmployeeModel.fromJson(
-              json['employee'] as Map<String, dynamic>),
       expertise: json['expertise'] as bool?,
       firstCirculation: json['first_circulation'] == null
           ? null
@@ -203,9 +203,9 @@ Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
       'commercial_name': instance.commercialName,
+      'created_by': instance.createdBy?.toJson(),
       'created_by_id': instance.createdById,
       'delivery_date': instance.deliveryDate?.toIso8601String(),
-      'employee': instance.employee?.toJson(),
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
       'mileage': instance.mileage,
@@ -593,12 +593,12 @@ ModelsTaskModelResponse _$ModelsTaskModelResponseFromJson(
       id: json['id'] as String?,
       label: json['label'] as String?,
       parentId: json['parent_id'] as String?,
-      task: (json['task'] as List<dynamic>?)
+      subTasks: (json['sub_tasks'] as List<dynamic>?)
               ?.map((e) =>
                   ModelsTaskModelResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      taskIds: (json['task_ids'] as List<dynamic>?)
+      subTasksIds: (json['sub_tasks_ids'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [],
@@ -614,8 +614,8 @@ Map<String, dynamic> _$ModelsTaskModelResponseToJson(
       'id': instance.id,
       'label': instance.label,
       'parent_id': instance.parentId,
-      'task': instance.task?.map((e) => e.toJson()).toList(),
-      'task_ids': instance.taskIds,
+      'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
+      'sub_tasks_ids': instance.subTasksIds,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
@@ -814,14 +814,14 @@ ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      createdBy: json['created_by'] == null
+          ? null
+          : ModelsEmployeeModelResponse.fromJson(
+              json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as String?,
       deliveryDate: json['delivery_date'] == null
           ? null
           : DateTime.parse(json['delivery_date'] as String),
-      employee: json['employee'] == null
-          ? null
-          : ModelsEmployeeModelResponse.fromJson(
-              json['employee'] as Map<String, dynamic>),
-      employeeId: json['employee_id'] as String?,
       expertise: json['expertise'] as bool?,
       firstCirculation: json['first_circulation'] == null
           ? null
@@ -861,9 +861,9 @@ Map<String, dynamic> _$ModelsVehicleModelResponseToJson(
       'collection_date': instance.collectionDate?.toIso8601String(),
       'commercial_name': instance.commercialName,
       'created_at': instance.createdAt?.toIso8601String(),
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
       'delivery_date': instance.deliveryDate?.toIso8601String(),
-      'employee': instance.employee?.toJson(),
-      'employee_id': instance.employeeId,
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
       'id': instance.id,

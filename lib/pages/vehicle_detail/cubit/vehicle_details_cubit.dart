@@ -16,9 +16,9 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
       final Response<ModelsVehicleModelResponse> response =
           await _swagger.apiVehicleIdGet(
         id: id,
-        owner: true,
-        employee: true,
-        vehicleTask: true,
+        withOwner: true,
+        withCreatedBy: true,
+        withVehicleTask: true,
       );
       emit(VehicleDetailsState.loaded(response.body!));
     } catch (e) {

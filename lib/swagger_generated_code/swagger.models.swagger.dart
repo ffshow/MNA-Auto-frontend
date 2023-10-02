@@ -481,8 +481,8 @@ class ModelsCreateTaskModel {
   const ModelsCreateTaskModel({
     this.label,
     this.parentId,
+    this.subTasks,
     this.subTasksIds,
-    this.task,
   });
 
   factory ModelsCreateTaskModel.fromJson(Map<String, dynamic> json) =>
@@ -495,10 +495,10 @@ class ModelsCreateTaskModel {
   final String? label;
   @JsonKey(name: 'parent_id')
   final String? parentId;
+  @JsonKey(name: 'sub_tasks', defaultValue: <ModelsCreateTaskModel>[])
+  final List<ModelsCreateTaskModel>? subTasks;
   @JsonKey(name: 'sub_tasks_ids', defaultValue: <String>[])
   final List<String>? subTasksIds;
-  @JsonKey(name: 'task', defaultValue: <ModelsCreateTaskModel>[])
-  final List<ModelsCreateTaskModel>? task;
   static const fromJsonFactory = _$ModelsCreateTaskModelFromJson;
 
   @override
@@ -510,11 +510,12 @@ class ModelsCreateTaskModel {
             (identical(other.parentId, parentId) ||
                 const DeepCollectionEquality()
                     .equals(other.parentId, parentId)) &&
+            (identical(other.subTasks, subTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.subTasks, subTasks)) &&
             (identical(other.subTasksIds, subTasksIds) ||
                 const DeepCollectionEquality()
-                    .equals(other.subTasksIds, subTasksIds)) &&
-            (identical(other.task, task) ||
-                const DeepCollectionEquality().equals(other.task, task)));
+                    .equals(other.subTasksIds, subTasksIds)));
   }
 
   @override
@@ -524,8 +525,8 @@ class ModelsCreateTaskModel {
   int get hashCode =>
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(parentId) ^
+      const DeepCollectionEquality().hash(subTasks) ^
       const DeepCollectionEquality().hash(subTasksIds) ^
-      const DeepCollectionEquality().hash(task) ^
       runtimeType.hashCode;
 }
 
@@ -533,26 +534,26 @@ extension $ModelsCreateTaskModelExtension on ModelsCreateTaskModel {
   ModelsCreateTaskModel copyWith(
       {String? label,
       String? parentId,
-      List<String>? subTasksIds,
-      List<ModelsCreateTaskModel>? task}) {
+      List<ModelsCreateTaskModel>? subTasks,
+      List<String>? subTasksIds}) {
     return ModelsCreateTaskModel(
         label: label ?? this.label,
         parentId: parentId ?? this.parentId,
-        subTasksIds: subTasksIds ?? this.subTasksIds,
-        task: task ?? this.task);
+        subTasks: subTasks ?? this.subTasks,
+        subTasksIds: subTasksIds ?? this.subTasksIds);
   }
 
   ModelsCreateTaskModel copyWithWrapped(
       {Wrapped<String?>? label,
       Wrapped<String?>? parentId,
-      Wrapped<List<String>?>? subTasksIds,
-      Wrapped<List<ModelsCreateTaskModel>?>? task}) {
+      Wrapped<List<ModelsCreateTaskModel>?>? subTasks,
+      Wrapped<List<String>?>? subTasksIds}) {
     return ModelsCreateTaskModel(
         label: (label != null ? label.value : this.label),
         parentId: (parentId != null ? parentId.value : this.parentId),
+        subTasks: (subTasks != null ? subTasks.value : this.subTasks),
         subTasksIds:
-            (subTasksIds != null ? subTasksIds.value : this.subTasksIds),
-        task: (task != null ? task.value : this.task));
+            (subTasksIds != null ? subTasksIds.value : this.subTasksIds));
   }
 }
 
@@ -562,9 +563,9 @@ class ModelsCreateVehicleModel {
     this.chrono,
     this.collectionDate,
     this.commercialName,
+    this.createdBy,
     this.createdById,
     this.deliveryDate,
-    this.employee,
     this.expertise,
     this.firstCirculation,
     this.mileage,
@@ -591,12 +592,12 @@ class ModelsCreateVehicleModel {
   final DateTime? collectionDate;
   @JsonKey(name: 'commercial_name')
   final String? commercialName;
+  @JsonKey(name: 'created_by')
+  final ModelsCreateEmployeeModel? createdBy;
   @JsonKey(name: 'created_by_id')
   final String? createdById;
   @JsonKey(name: 'delivery_date')
   final DateTime? deliveryDate;
-  @JsonKey(name: 'employee')
-  final ModelsCreateEmployeeModel? employee;
   @JsonKey(name: 'expertise')
   final bool? expertise;
   @JsonKey(name: 'first_circulation')
@@ -635,15 +636,15 @@ class ModelsCreateVehicleModel {
             (identical(other.commercialName, commercialName) ||
                 const DeepCollectionEquality()
                     .equals(other.commercialName, commercialName)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
             (identical(other.createdById, createdById) ||
                 const DeepCollectionEquality()
                     .equals(other.createdById, createdById)) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.deliveryDate, deliveryDate)) &&
-            (identical(other.employee, employee) ||
-                const DeepCollectionEquality()
-                    .equals(other.employee, employee)) &&
             (identical(other.expertise, expertise) ||
                 const DeepCollectionEquality()
                     .equals(other.expertise, expertise)) &&
@@ -687,9 +688,9 @@ class ModelsCreateVehicleModel {
       const DeepCollectionEquality().hash(chrono) ^
       const DeepCollectionEquality().hash(collectionDate) ^
       const DeepCollectionEquality().hash(commercialName) ^
+      const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deliveryDate) ^
-      const DeepCollectionEquality().hash(employee) ^
       const DeepCollectionEquality().hash(expertise) ^
       const DeepCollectionEquality().hash(firstCirculation) ^
       const DeepCollectionEquality().hash(mileage) ^
@@ -710,9 +711,9 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
       {String? chrono,
       DateTime? collectionDate,
       String? commercialName,
+      ModelsCreateEmployeeModel? createdBy,
       String? createdById,
       DateTime? deliveryDate,
-      ModelsCreateEmployeeModel? employee,
       bool? expertise,
       DateTime? firstCirculation,
       int? mileage,
@@ -729,9 +730,9 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
         chrono: chrono ?? this.chrono,
         collectionDate: collectionDate ?? this.collectionDate,
         commercialName: commercialName ?? this.commercialName,
+        createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
         deliveryDate: deliveryDate ?? this.deliveryDate,
-        employee: employee ?? this.employee,
         expertise: expertise ?? this.expertise,
         firstCirculation: firstCirculation ?? this.firstCirculation,
         mileage: mileage ?? this.mileage,
@@ -750,9 +751,9 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
       {Wrapped<String?>? chrono,
       Wrapped<DateTime?>? collectionDate,
       Wrapped<String?>? commercialName,
+      Wrapped<ModelsCreateEmployeeModel?>? createdBy,
       Wrapped<String?>? createdById,
       Wrapped<DateTime?>? deliveryDate,
-      Wrapped<ModelsCreateEmployeeModel?>? employee,
       Wrapped<bool?>? expertise,
       Wrapped<DateTime?>? firstCirculation,
       Wrapped<int?>? mileage,
@@ -773,11 +774,11 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
         commercialName: (commercialName != null
             ? commercialName.value
             : this.commercialName),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
         createdById:
             (createdById != null ? createdById.value : this.createdById),
         deliveryDate:
             (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
-        employee: (employee != null ? employee.value : this.employee),
         expertise: (expertise != null ? expertise.value : this.expertise),
         firstCirculation: (firstCirculation != null
             ? firstCirculation.value
@@ -2022,8 +2023,8 @@ class ModelsTaskModelResponse {
     this.id,
     this.label,
     this.parentId,
-    this.task,
-    this.taskIds,
+    this.subTasks,
+    this.subTasksIds,
     this.updatedAt,
   });
 
@@ -2041,10 +2042,10 @@ class ModelsTaskModelResponse {
   final String? label;
   @JsonKey(name: 'parent_id')
   final String? parentId;
-  @JsonKey(name: 'task', defaultValue: <ModelsTaskModelResponse>[])
-  final List<ModelsTaskModelResponse>? task;
-  @JsonKey(name: 'task_ids', defaultValue: <String>[])
-  final List<String>? taskIds;
+  @JsonKey(name: 'sub_tasks', defaultValue: <ModelsTaskModelResponse>[])
+  final List<ModelsTaskModelResponse>? subTasks;
+  @JsonKey(name: 'sub_tasks_ids', defaultValue: <String>[])
+  final List<String>? subTasksIds;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
   static const fromJsonFactory = _$ModelsTaskModelResponseFromJson;
@@ -2063,11 +2064,12 @@ class ModelsTaskModelResponse {
             (identical(other.parentId, parentId) ||
                 const DeepCollectionEquality()
                     .equals(other.parentId, parentId)) &&
-            (identical(other.task, task) ||
-                const DeepCollectionEquality().equals(other.task, task)) &&
-            (identical(other.taskIds, taskIds) ||
+            (identical(other.subTasks, subTasks) ||
                 const DeepCollectionEquality()
-                    .equals(other.taskIds, taskIds)) &&
+                    .equals(other.subTasks, subTasks)) &&
+            (identical(other.subTasksIds, subTasksIds) ||
+                const DeepCollectionEquality()
+                    .equals(other.subTasksIds, subTasksIds)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)));
@@ -2082,8 +2084,8 @@ class ModelsTaskModelResponse {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(parentId) ^
-      const DeepCollectionEquality().hash(task) ^
-      const DeepCollectionEquality().hash(taskIds) ^
+      const DeepCollectionEquality().hash(subTasks) ^
+      const DeepCollectionEquality().hash(subTasksIds) ^
       const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
@@ -2094,16 +2096,16 @@ extension $ModelsTaskModelResponseExtension on ModelsTaskModelResponse {
       String? id,
       String? label,
       String? parentId,
-      List<ModelsTaskModelResponse>? task,
-      List<String>? taskIds,
+      List<ModelsTaskModelResponse>? subTasks,
+      List<String>? subTasksIds,
       DateTime? updatedAt}) {
     return ModelsTaskModelResponse(
         createdAt: createdAt ?? this.createdAt,
         id: id ?? this.id,
         label: label ?? this.label,
         parentId: parentId ?? this.parentId,
-        task: task ?? this.task,
-        taskIds: taskIds ?? this.taskIds,
+        subTasks: subTasks ?? this.subTasks,
+        subTasksIds: subTasksIds ?? this.subTasksIds,
         updatedAt: updatedAt ?? this.updatedAt);
   }
 
@@ -2112,16 +2114,17 @@ extension $ModelsTaskModelResponseExtension on ModelsTaskModelResponse {
       Wrapped<String?>? id,
       Wrapped<String?>? label,
       Wrapped<String?>? parentId,
-      Wrapped<List<ModelsTaskModelResponse>?>? task,
-      Wrapped<List<String>?>? taskIds,
+      Wrapped<List<ModelsTaskModelResponse>?>? subTasks,
+      Wrapped<List<String>?>? subTasksIds,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsTaskModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
         parentId: (parentId != null ? parentId.value : this.parentId),
-        task: (task != null ? task.value : this.task),
-        taskIds: (taskIds != null ? taskIds.value : this.taskIds),
+        subTasks: (subTasks != null ? subTasks.value : this.subTasks),
+        subTasksIds:
+            (subTasksIds != null ? subTasksIds.value : this.subTasksIds),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
   }
 }
@@ -2855,9 +2858,9 @@ class ModelsVehicleModelResponse {
     this.collectionDate,
     this.commercialName,
     this.createdAt,
+    this.createdBy,
+    this.createdById,
     this.deliveryDate,
-    this.employee,
-    this.employeeId,
     this.expertise,
     this.firstCirculation,
     this.id,
@@ -2888,12 +2891,12 @@ class ModelsVehicleModelResponse {
   final String? commercialName;
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'created_by')
+  final ModelsEmployeeModelResponse? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final String? createdById;
   @JsonKey(name: 'delivery_date')
   final DateTime? deliveryDate;
-  @JsonKey(name: 'employee')
-  final ModelsEmployeeModelResponse? employee;
-  @JsonKey(name: 'employee_id')
-  final String? employeeId;
   @JsonKey(name: 'expertise')
   final bool? expertise;
   @JsonKey(name: 'first_circulation')
@@ -2940,15 +2943,15 @@ class ModelsVehicleModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.deliveryDate, deliveryDate)) &&
-            (identical(other.employee, employee) ||
-                const DeepCollectionEquality()
-                    .equals(other.employee, employee)) &&
-            (identical(other.employeeId, employeeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.employeeId, employeeId)) &&
             (identical(other.expertise, expertise) ||
                 const DeepCollectionEquality()
                     .equals(other.expertise, expertise)) &&
@@ -2998,9 +3001,9 @@ class ModelsVehicleModelResponse {
       const DeepCollectionEquality().hash(collectionDate) ^
       const DeepCollectionEquality().hash(commercialName) ^
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deliveryDate) ^
-      const DeepCollectionEquality().hash(employee) ^
-      const DeepCollectionEquality().hash(employeeId) ^
       const DeepCollectionEquality().hash(expertise) ^
       const DeepCollectionEquality().hash(firstCirculation) ^
       const DeepCollectionEquality().hash(id) ^
@@ -3024,9 +3027,9 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
       DateTime? collectionDate,
       String? commercialName,
       DateTime? createdAt,
+      ModelsEmployeeModelResponse? createdBy,
+      String? createdById,
       DateTime? deliveryDate,
-      ModelsEmployeeModelResponse? employee,
-      String? employeeId,
       bool? expertise,
       DateTime? firstCirculation,
       String? id,
@@ -3046,9 +3049,9 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
         collectionDate: collectionDate ?? this.collectionDate,
         commercialName: commercialName ?? this.commercialName,
         createdAt: createdAt ?? this.createdAt,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
         deliveryDate: deliveryDate ?? this.deliveryDate,
-        employee: employee ?? this.employee,
-        employeeId: employeeId ?? this.employeeId,
         expertise: expertise ?? this.expertise,
         firstCirculation: firstCirculation ?? this.firstCirculation,
         id: id ?? this.id,
@@ -3070,9 +3073,9 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
       Wrapped<DateTime?>? collectionDate,
       Wrapped<String?>? commercialName,
       Wrapped<DateTime?>? createdAt,
+      Wrapped<ModelsEmployeeModelResponse?>? createdBy,
+      Wrapped<String?>? createdById,
       Wrapped<DateTime?>? deliveryDate,
-      Wrapped<ModelsEmployeeModelResponse?>? employee,
-      Wrapped<String?>? employeeId,
       Wrapped<bool?>? expertise,
       Wrapped<DateTime?>? firstCirculation,
       Wrapped<String?>? id,
@@ -3096,10 +3099,11 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
             ? commercialName.value
             : this.commercialName),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         deliveryDate:
             (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
-        employee: (employee != null ? employee.value : this.employee),
-        employeeId: (employeeId != null ? employeeId.value : this.employeeId),
         expertise: (expertise != null ? expertise.value : this.expertise),
         firstCirculation: (firstCirculation != null
             ? firstCirculation.value

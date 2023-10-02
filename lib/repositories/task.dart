@@ -16,8 +16,10 @@ class TaskRepository {
       perPage: 100,
       sortBy: 'created_at',
       descending: true,
-      task: true,
+      withSubTasks: true,
+      withSubTasksSubTasks: true,
     );
+    print(response?.body);
     return response!.body!;
   }
 }

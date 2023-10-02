@@ -90,15 +90,15 @@ definitions:
       parent_id:
         type: string
         x-nullable: false
+      sub_tasks:
+        items:
+          $ref: '#/definitions/models.CreateTaskModel'
+        type: array
       sub_tasks_ids:
         items:
           type: string
         type: array
         x-nullable: false
-      task:
-        items:
-          $ref: '#/definitions/models.CreateTaskModel'
-        type: array
     type: object
   models.CreateVehicleModel:
     properties:
@@ -112,6 +112,8 @@ definitions:
       commercial_name:
         type: string
         x-nullable: false
+      created_by:
+        $ref: '#/definitions/models.CreateEmployeeModel'
       created_by_id:
         type: string
         x-nullable: false
@@ -119,8 +121,6 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      employee:
-        $ref: '#/definitions/models.CreateEmployeeModel'
       expertise:
         type: boolean
         x-nullable: false
@@ -408,16 +408,17 @@ definitions:
         x-nullable: false
       parent_id:
         type: string
-        x-nullable: true
-      task:
+        x-nullable: false
+      sub_tasks:
         items:
           $ref: '#/definitions/models.TaskModelResponse'
         type: array
         x-nullable: false
-      task_ids:
+      sub_tasks_ids:
         items:
           type: string
         type: array
+        x-nullable: false
       updated_at:
         format: date-time
         type: string
@@ -565,7 +566,6 @@ definitions:
       collection_date:
         format: date-time
         type: string
-        x-date: true
         x-nullable: false
       commercial_name:
         type: string
@@ -574,16 +574,15 @@ definitions:
         format: date-time
         type: string
         x-date: true
-      delivery_date:
-        format: date-time
-        type: string
-        x-date: true
-        x-nullable: false
-      employee:
+      created_by:
         allOf:
         - $ref: '#/definitions/models.EmployeeModelResponse'
         x-nullable: false
-      employee_id:
+      created_by_id:
+        type: string
+        x-nullable: false
+      delivery_date:
+        format: date-time
         type: string
         x-nullable: false
       expertise:
@@ -592,7 +591,6 @@ definitions:
       first_circulation:
         format: date-time
         type: string
-        x-date: true
         x-nullable: false
       id:
         type: string
@@ -621,7 +619,6 @@ definitions:
       sold_at:
         format: date-time
         type: string
-        x-date: true
         x-nullable: false
       updated_at:
         format: date-time
@@ -636,6 +633,7 @@ definitions:
         items:
           type: string
         type: array
+        x-nullable: false
     type: object
   models.VehicleTaskModelResponse:
     properties:
@@ -656,14 +654,12 @@ definitions:
       finished_at:
         format: date-time
         type: string
-        x-date: true
         x-nullable: false
       id:
         type: string
       started_at:
         format: date-time
         type: string
-        x-date: true
         x-nullable: false
       task:
         allOf:
@@ -2038,7 +2034,11 @@ paths:
         type: string
       - description: with task data
         in: query
-        name: task
+        name: with_sub_tasks
+        type: boolean
+      - description: with sub_tasks task data
+        in: query
+        name: with_sub_tasks_sub_tasks
         type: boolean
       produces:
       - application/json
@@ -2169,7 +2169,11 @@ paths:
         type: boolean
       - description: with task data
         in: query
-        name: task
+        name: with_sub_tasks
+        type: boolean
+      - description: with sub_tasks task data
+        in: query
+        name: with_sub_tasks_sub_tasks
         type: boolean
       produces:
       - application/json
@@ -2228,15 +2232,27 @@ paths:
         type: string
       - description: with owner data
         in: query
-        name: owner
+        name: with_owner
         type: boolean
       - description: with vehicle task data
         in: query
-        name: vehicle_task
+        name: with_vehicle_task
+        type: boolean
+      - description: with vehicle_task employee data
+        in: query
+        name: with_vehicle_task_employee
+        type: boolean
+      - description: with vehicle_task task data
+        in: query
+        name: with_vehicle_task_task
+        type: boolean
+      - description: with vehicle_task vehicle data
+        in: query
+        name: with_vehicle_task_vehicle
         type: boolean
       - description: with employee data
         in: query
-        name: employee
+        name: with_created_by
         type: boolean
       produces:
       - application/json
@@ -2367,15 +2383,27 @@ paths:
         type: boolean
       - description: with owner data
         in: query
-        name: owner
+        name: with_owner
         type: boolean
       - description: with vehicle task data
         in: query
-        name: vehicle_task
+        name: with_vehicle_task
+        type: boolean
+      - description: with vehicle_task employee data
+        in: query
+        name: with_vehicle_task_employee
+        type: boolean
+      - description: with vehicle_task task data
+        in: query
+        name: with_vehicle_task_task
+        type: boolean
+      - description: with vehicle_task vehicle data
+        in: query
+        name: with_vehicle_task_vehicle
         type: boolean
       - description: with employee data
         in: query
-        name: employee
+        name: with_created_by
         type: boolean
       produces:
       - application/json
@@ -2434,15 +2462,19 @@ paths:
         type: string
       - description: with employee data
         in: query
-        name: employee
+        name: with_employee
         type: boolean
       - description: with task data
         in: query
-        name: task
+        name: with_task
+        type: boolean
+      - description: with task task data
+        in: query
+        name: with_task_sub_tasks
         type: boolean
       - description: with vehicle data
         in: query
-        name: vehicle
+        name: with_vehicle
         type: boolean
       produces:
       - application/json
@@ -2573,15 +2605,19 @@ paths:
         type: boolean
       - description: with employee data
         in: query
-        name: employee
+        name: with_employee
         type: boolean
       - description: with task data
         in: query
-        name: task
+        name: with_task
+        type: boolean
+      - description: with task task data
+        in: query
+        name: with_task_sub_tasks
         type: boolean
       - description: with vehicle data
         in: query
-        name: vehicle
+        name: with_vehicle
         type: boolean
       produces:
       - application/json

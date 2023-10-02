@@ -32,6 +32,7 @@ class NotificationService {
   Stream get onCreateGarage => _onCreateGarageStream.stream;
 
   void init() {
+    return;
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
 

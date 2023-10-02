@@ -1,8 +1,5 @@
 // ignore_for_file: type=lint
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
-import 'dart:convert';
 
 import 'swagger.models.swagger.dart';
 import 'package:chopper/chopper.dart';
@@ -10,7 +7,6 @@ import 'package:chopper/chopper.dart';
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 export 'swagger.models.swagger.dart';
 
@@ -902,24 +898,31 @@ abstract class Swagger extends ChopperService {
 
   ///Get task by ID
   ///@param id Task ID
-  ///@param task with task data
+  ///@param with_sub_tasks with task data
+  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
   Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdGet({
     required String? id,
-    bool? task,
+    bool? withSubTasks,
+    bool? withSubTasksSubTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
 
-    return _apiTaskIdGet(id: id, task: task);
+    return _apiTaskIdGet(
+        id: id,
+        withSubTasks: withSubTasks,
+        withSubTasksSubTasks: withSubTasksSubTasks);
   }
 
   ///Get task by ID
   ///@param id Task ID
-  ///@param task with task data
+  ///@param with_sub_tasks with task data
+  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
   @Get(path: '/api/task/{id}')
   Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdGet({
     @Path('id') required String? id,
-    @Query('task') bool? task,
+    @Query('with_sub_tasks') bool? withSubTasks,
+    @Query('with_sub_tasks_sub_tasks') bool? withSubTasksSubTasks,
   });
 
   ///Update a task
@@ -979,13 +982,15 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param task with task data
+  ///@param with_sub_tasks with task data
+  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
   Future<chopper.Response<ModelsListTaskModel>> apiTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? task,
+    bool? withSubTasks,
+    bool? withSubTasksSubTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListTaskModel, () => ModelsListTaskModel.fromJsonFactory);
@@ -995,7 +1000,8 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        task: task);
+        withSubTasks: withSubTasks,
+        withSubTasksSubTasks: withSubTasksSubTasks);
   }
 
   ///List task
@@ -1003,14 +1009,16 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param task with task data
+  ///@param with_sub_tasks with task data
+  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
   @Get(path: '/api/task_list')
   Future<chopper.Response<ModelsListTaskModel>> _apiTaskListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
-    @Query('task') bool? task,
+    @Query('with_sub_tasks') bool? withSubTasks,
+    @Query('with_sub_tasks_sub_tasks') bool? withSubTasksSubTasks,
   });
 
   ///Create a new vehicle
@@ -1033,33 +1041,51 @@ abstract class Swagger extends ChopperService {
 
   ///Get vehicle by ID
   ///@param id Vehicle ID
-  ///@param owner with owner data
-  ///@param vehicle_task with vehicle task data
-  ///@param employee with employee data
+  ///@param with_owner with owner data
+  ///@param with_vehicle_task with vehicle task data
+  ///@param with_vehicle_task_employee with vehicle_task employee data
+  ///@param with_vehicle_task_task with vehicle_task task data
+  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
+  ///@param with_created_by with employee data
   Future<chopper.Response<ModelsVehicleModelResponse>> apiVehicleIdGet({
     required String? id,
-    bool? owner,
-    bool? vehicleTask,
-    bool? employee,
+    bool? withOwner,
+    bool? withVehicleTask,
+    bool? withVehicleTaskEmployee,
+    bool? withVehicleTaskTask,
+    bool? withVehicleTaskVehicle,
+    bool? withCreatedBy,
   }) {
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
     return _apiVehicleIdGet(
-        id: id, owner: owner, vehicleTask: vehicleTask, employee: employee);
+        id: id,
+        withOwner: withOwner,
+        withVehicleTask: withVehicleTask,
+        withVehicleTaskEmployee: withVehicleTaskEmployee,
+        withVehicleTaskTask: withVehicleTaskTask,
+        withVehicleTaskVehicle: withVehicleTaskVehicle,
+        withCreatedBy: withCreatedBy);
   }
 
   ///Get vehicle by ID
   ///@param id Vehicle ID
-  ///@param owner with owner data
-  ///@param vehicle_task with vehicle task data
-  ///@param employee with employee data
+  ///@param with_owner with owner data
+  ///@param with_vehicle_task with vehicle task data
+  ///@param with_vehicle_task_employee with vehicle_task employee data
+  ///@param with_vehicle_task_task with vehicle_task task data
+  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
+  ///@param with_created_by with employee data
   @Get(path: '/api/vehicle/{id}')
   Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
     @Path('id') required String? id,
-    @Query('owner') bool? owner,
-    @Query('vehicle_task') bool? vehicleTask,
-    @Query('employee') bool? employee,
+    @Query('with_owner') bool? withOwner,
+    @Query('with_vehicle_task') bool? withVehicleTask,
+    @Query('with_vehicle_task_employee') bool? withVehicleTaskEmployee,
+    @Query('with_vehicle_task_task') bool? withVehicleTaskTask,
+    @Query('with_vehicle_task_vehicle') bool? withVehicleTaskVehicle,
+    @Query('with_created_by') bool? withCreatedBy,
   });
 
   ///Update a vehicle
@@ -1120,17 +1146,23 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param owner with owner data
-  ///@param vehicle_task with vehicle task data
-  ///@param employee with employee data
+  ///@param with_owner with owner data
+  ///@param with_vehicle_task with vehicle task data
+  ///@param with_vehicle_task_employee with vehicle_task employee data
+  ///@param with_vehicle_task_task with vehicle_task task data
+  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
+  ///@param with_created_by with employee data
   Future<chopper.Response<ModelsListVehicleModel>> apiVehicleListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? owner,
-    bool? vehicleTask,
-    bool? employee,
+    bool? withOwner,
+    bool? withVehicleTask,
+    bool? withVehicleTaskEmployee,
+    bool? withVehicleTaskTask,
+    bool? withVehicleTaskVehicle,
+    bool? withCreatedBy,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListVehicleModel, () => ModelsListVehicleModel.fromJsonFactory);
@@ -1140,9 +1172,12 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        owner: owner,
-        vehicleTask: vehicleTask,
-        employee: employee);
+        withOwner: withOwner,
+        withVehicleTask: withVehicleTask,
+        withVehicleTaskEmployee: withVehicleTaskEmployee,
+        withVehicleTaskTask: withVehicleTaskTask,
+        withVehicleTaskVehicle: withVehicleTaskVehicle,
+        withCreatedBy: withCreatedBy);
   }
 
   ///List vehicle
@@ -1150,18 +1185,24 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param owner with owner data
-  ///@param vehicle_task with vehicle task data
-  ///@param employee with employee data
+  ///@param with_owner with owner data
+  ///@param with_vehicle_task with vehicle task data
+  ///@param with_vehicle_task_employee with vehicle_task employee data
+  ///@param with_vehicle_task_task with vehicle_task task data
+  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
+  ///@param with_created_by with employee data
   @Get(path: '/api/vehicle_list')
   Future<chopper.Response<ModelsListVehicleModel>> _apiVehicleListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
-    @Query('owner') bool? owner,
-    @Query('vehicle_task') bool? vehicleTask,
-    @Query('employee') bool? employee,
+    @Query('with_owner') bool? withOwner,
+    @Query('with_vehicle_task') bool? withVehicleTask,
+    @Query('with_vehicle_task_employee') bool? withVehicleTaskEmployee,
+    @Query('with_vehicle_task_task') bool? withVehicleTaskTask,
+    @Query('with_vehicle_task_vehicle') bool? withVehicleTaskVehicle,
+    @Query('with_created_by') bool? withCreatedBy,
   });
 
   ///Create a new vehicle_task
@@ -1184,34 +1225,42 @@ abstract class Swagger extends ChopperService {
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
-  ///@param employee with employee data
-  ///@param task with task data
-  ///@param vehicle with vehicle data
+  ///@param with_employee with employee data
+  ///@param with_task with task data
+  ///@param with_task_sub_tasks with task task data
+  ///@param with_vehicle with vehicle data
   Future<chopper.Response<ModelsVehicleTaskModelResponse>> apiVehicleTaskIdGet({
     required String? id,
-    bool? employee,
-    bool? task,
-    bool? vehicle,
+    bool? withEmployee,
+    bool? withTask,
+    bool? withTaskSubTasks,
+    bool? withVehicle,
   }) {
     generatedMapping.putIfAbsent(ModelsVehicleTaskModelResponse,
         () => ModelsVehicleTaskModelResponse.fromJsonFactory);
 
     return _apiVehicleTaskIdGet(
-        id: id, employee: employee, task: task, vehicle: vehicle);
+        id: id,
+        withEmployee: withEmployee,
+        withTask: withTask,
+        withTaskSubTasks: withTaskSubTasks,
+        withVehicle: withVehicle);
   }
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
-  ///@param employee with employee data
-  ///@param task with task data
-  ///@param vehicle with vehicle data
+  ///@param with_employee with employee data
+  ///@param with_task with task data
+  ///@param with_task_sub_tasks with task task data
+  ///@param with_vehicle with vehicle data
   @Get(path: '/api/vehicle_task/{id}')
   Future<chopper.Response<ModelsVehicleTaskModelResponse>>
       _apiVehicleTaskIdGet({
     @Path('id') required String? id,
-    @Query('employee') bool? employee,
-    @Query('task') bool? task,
-    @Query('vehicle') bool? vehicle,
+    @Query('with_employee') bool? withEmployee,
+    @Query('with_task') bool? withTask,
+    @Query('with_task_sub_tasks') bool? withTaskSubTasks,
+    @Query('with_vehicle') bool? withVehicle,
   });
 
   ///Update a vehicle_task
@@ -1274,17 +1323,19 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param employee with employee data
-  ///@param task with task data
-  ///@param vehicle with vehicle data
+  ///@param with_employee with employee data
+  ///@param with_task with task data
+  ///@param with_task_sub_tasks with task task data
+  ///@param with_vehicle with vehicle data
   Future<chopper.Response<ModelsListVehicleTaskModel>> apiVehicleTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? employee,
-    bool? task,
-    bool? vehicle,
+    bool? withEmployee,
+    bool? withTask,
+    bool? withTaskSubTasks,
+    bool? withVehicle,
   }) {
     generatedMapping.putIfAbsent(ModelsListVehicleTaskModel,
         () => ModelsListVehicleTaskModel.fromJsonFactory);
@@ -1294,9 +1345,10 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        employee: employee,
-        task: task,
-        vehicle: vehicle);
+        withEmployee: withEmployee,
+        withTask: withTask,
+        withTaskSubTasks: withTaskSubTasks,
+        withVehicle: withVehicle);
   }
 
   ///List vehicle_task
@@ -1304,18 +1356,20 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param employee with employee data
-  ///@param task with task data
-  ///@param vehicle with vehicle data
+  ///@param with_employee with employee data
+  ///@param with_task with task data
+  ///@param with_task_sub_tasks with task task data
+  ///@param with_vehicle with vehicle data
   @Get(path: '/api/vehicle_task_list')
   Future<chopper.Response<ModelsListVehicleTaskModel>> _apiVehicleTaskListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
-    @Query('employee') bool? employee,
-    @Query('task') bool? task,
-    @Query('vehicle') bool? vehicle,
+    @Query('with_employee') bool? withEmployee,
+    @Query('with_task') bool? withTask,
+    @Query('with_task_sub_tasks') bool? withTaskSubTasks,
+    @Query('with_vehicle') bool? withVehicle,
   });
 
   ///Seed vehicles

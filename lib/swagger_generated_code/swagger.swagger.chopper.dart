@@ -709,10 +709,14 @@ final class _$Swagger extends Swagger {
   @override
   Future<Response<ModelsTaskModelResponse>> _apiTaskIdGet({
     required String? id,
-    bool? task,
+    bool? withSubTasks,
+    bool? withSubTasksSubTasks,
   }) {
     final Uri $url = Uri.parse('/api/task/${id}');
-    final Map<String, dynamic> $params = <String, dynamic>{'task': task};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'with_sub_tasks': withSubTasks,
+      'with_sub_tasks_sub_tasks': withSubTasksSubTasks,
+    };
     final Request $request = Request(
       'GET',
       $url,
@@ -772,7 +776,8 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? task,
+    bool? withSubTasks,
+    bool? withSubTasksSubTasks,
   }) {
     final Uri $url = Uri.parse('/api/task_list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -780,7 +785,8 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'task': task,
+      'with_sub_tasks': withSubTasks,
+      'with_sub_tasks_sub_tasks': withSubTasksSubTasks,
     };
     final Request $request = Request(
       'GET',
@@ -809,15 +815,21 @@ final class _$Swagger extends Swagger {
   @override
   Future<Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
     required String? id,
-    bool? owner,
-    bool? vehicleTask,
-    bool? employee,
+    bool? withOwner,
+    bool? withVehicleTask,
+    bool? withVehicleTaskEmployee,
+    bool? withVehicleTaskTask,
+    bool? withVehicleTaskVehicle,
+    bool? withCreatedBy,
   }) {
     final Uri $url = Uri.parse('/api/vehicle/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'owner': owner,
-      'vehicle_task': vehicleTask,
-      'employee': employee,
+      'with_owner': withOwner,
+      'with_vehicle_task': withVehicleTask,
+      'with_vehicle_task_employee': withVehicleTaskEmployee,
+      'with_vehicle_task_task': withVehicleTaskTask,
+      'with_vehicle_task_vehicle': withVehicleTaskVehicle,
+      'with_created_by': withCreatedBy,
     };
     final Request $request = Request(
       'GET',
@@ -878,9 +890,12 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? owner,
-    bool? vehicleTask,
-    bool? employee,
+    bool? withOwner,
+    bool? withVehicleTask,
+    bool? withVehicleTaskEmployee,
+    bool? withVehicleTaskTask,
+    bool? withVehicleTaskVehicle,
+    bool? withCreatedBy,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -888,9 +903,12 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'owner': owner,
-      'vehicle_task': vehicleTask,
-      'employee': employee,
+      'with_owner': withOwner,
+      'with_vehicle_task': withVehicleTask,
+      'with_vehicle_task_employee': withVehicleTaskEmployee,
+      'with_vehicle_task_task': withVehicleTaskTask,
+      'with_vehicle_task_vehicle': withVehicleTaskVehicle,
+      'with_created_by': withCreatedBy,
     };
     final Request $request = Request(
       'GET',
@@ -920,15 +938,17 @@ final class _$Swagger extends Swagger {
   @override
   Future<Response<ModelsVehicleTaskModelResponse>> _apiVehicleTaskIdGet({
     required String? id,
-    bool? employee,
-    bool? task,
-    bool? vehicle,
+    bool? withEmployee,
+    bool? withTask,
+    bool? withTaskSubTasks,
+    bool? withVehicle,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'employee': employee,
-      'task': task,
-      'vehicle': vehicle,
+      'with_employee': withEmployee,
+      'with_task': withTask,
+      'with_task_sub_tasks': withTaskSubTasks,
+      'with_vehicle': withVehicle,
     };
     final Request $request = Request(
       'GET',
@@ -990,9 +1010,10 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? employee,
-    bool? task,
-    bool? vehicle,
+    bool? withEmployee,
+    bool? withTask,
+    bool? withTaskSubTasks,
+    bool? withVehicle,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task_list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1000,9 +1021,10 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'employee': employee,
-      'task': task,
-      'vehicle': vehicle,
+      'with_employee': withEmployee,
+      'with_task': withTask,
+      'with_task_sub_tasks': withTaskSubTasks,
+      'with_vehicle': withVehicle,
     };
     final Request $request = Request(
       'GET',

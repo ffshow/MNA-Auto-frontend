@@ -139,7 +139,7 @@ class CreateVechilePage extends StatelessWidget {
                                 (Iterable<ModelsOwnerModelResponse> owners) {
                               return FormBuilderDropdown<String>(
                                 name: 'owner_id',
-                                initialValue: state.vehicle?.owner,
+                                initialValue: state.vehicle?.ownerId,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 decoration:

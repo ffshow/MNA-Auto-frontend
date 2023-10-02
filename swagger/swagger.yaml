@@ -90,11 +90,15 @@ definitions:
       parent_id:
         type: string
         x-nullable: false
-      sub_tasks:
+      sub_tasks_ids:
         items:
           type: string
         type: array
         x-nullable: false
+      task:
+        items:
+          $ref: '#/definitions/models.CreateTaskModel'
+        type: array
     type: object
   models.CreateVehicleModel:
     properties:
@@ -108,13 +112,15 @@ definitions:
       commercial_name:
         type: string
         x-nullable: false
-      created_by:
+      created_by_id:
         type: string
         x-nullable: false
       delivery_date:
         format: date-time
         type: string
         x-nullable: false
+      employee:
+        $ref: '#/definitions/models.CreateEmployeeModel'
       expertise:
         type: boolean
         x-nullable: false
@@ -129,6 +135,8 @@ definitions:
         type: string
         x-nullable: false
       owner:
+        $ref: '#/definitions/models.CreateOwnerModel'
+      owner_id:
         type: string
         x-nullable: false
       procedure_ve:
@@ -146,6 +154,10 @@ definitions:
         x-nullable: false
       vehicle_task:
         items:
+          $ref: '#/definitions/models.CreateVehicleTaskModel'
+        type: array
+      vehicle_task_ids:
+        items:
           type: string
         type: array
         x-nullable: false
@@ -156,6 +168,8 @@ definitions:
         type: boolean
         x-nullable: false
       employee:
+        $ref: '#/definitions/models.CreateEmployeeModel'
+      employee_id:
         type: string
         x-nullable: false
       finished_at:
@@ -167,9 +181,13 @@ definitions:
         type: string
         x-nullable: false
       task:
+        $ref: '#/definitions/models.CreateTaskModel'
+      task_id:
         type: string
         x-nullable: false
       vehicle:
+        $ref: '#/definitions/models.CreateVehicleModel'
+      vehicle_id:
         type: string
         x-nullable: false
     type: object

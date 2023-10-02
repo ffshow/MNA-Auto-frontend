@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mna/cubits/task/task_cubit.dart';
 import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
 import 'package:mna/swagger_generated_code/swagger.models.swagger.dart';
 import 'package:mna/utils/extensions.dart';
@@ -115,7 +116,9 @@ class _VehicleDetailsWidget extends StatelessWidget {
                   title: const Text("••• Tasks"),
                   trailing: IconButton(
                     tooltip: 'Add tasks',
-                    onPressed: () {},
+                    onPressed: () {
+                      addTask(context, response.id!);
+                    },
                     icon: const Icon(Icons.add_task),
                   ),
                 ),
@@ -129,6 +132,48 @@ class _VehicleDetailsWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void addTask(BuildContext context, String vehicleID) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          children: [
+            const ListTile(title: Text('Add tasks')),
+            BlocBuilder<TaskCubit, TaskState>(
+              builder: (context, state) {
+                return state.when(
+                  loaded: (ModelsListTaskModel response) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: response.data?.length,
+                      itemBuilder: (context, index) {
+                        final ModelsTaskModelResponse item =
+                            response.data![index];
+                        return ListTile(
+                          leading: Checkbox.adaptive(
+                            value: false,
+                            onChanged: (value) {},
+                          ),
+                          title: Text(item.label ?? ''),
+                        );
+                      },
+                    );
+                  },
+                  initial: () {
+                    return const LoadingWidget();
+                  },
+                  failed: (error) {
+                    return Text(error);
+                  },
+                );
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

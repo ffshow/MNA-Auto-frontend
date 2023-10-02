@@ -33,7 +33,6 @@ class VehiclePage extends StatelessWidget {
                 expertise: faker.randomGenerator.boolean(),
                 mileage: faker.randomGenerator.integer(1000, min: 20),
                 note: faker.lorem.sentence(),
-                owner: '65005460b40777ab605fa163',
                 procedureVe: faker.randomGenerator.boolean(),
                 registration: faker.vehicle.yearMakeModel(),
                 serialNumber: faker.vehicle.vin(),

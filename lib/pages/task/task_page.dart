@@ -2,9 +2,11 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mna/cubits/task/task_cubit.dart';
 import 'package:mna/pages/task/data_source.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:mna/utils/style.dart';
 import 'package:mna/widget/widget.dart';
 
 class TaskPage extends StatelessWidget {
@@ -13,85 +15,241 @@ class TaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: const CreateTaskWidgt(),
       appBar: AppBar(
-        title: const Text('Task page'),
+        title: const Text('Tasks page'),
         actions: <Widget>[
-          IconButton(
-            tooltip: 'Add task',
-            onPressed: () {
-              _create(context);
-            },
-            icon: const Icon(Icons.create),
-          ),
+          Builder(builder: (context) {
+            return IconButton(
+              tooltip: 'Add task',
+              onPressed: () {
+                Scaffold.maybeOf(context)?.openEndDrawer();
+              },
+              icon: const Icon(Icons.create),
+            );
+          }),
         ],
       ),
-      body: const TaskListWidget(),
+      // body: const TaskListWidget(),
+      body: BlocBuilder<TaskCubit, TaskState>(
+        builder: (BuildContext context, TaskState state) {
+          return state.when(
+            loaded: (ModelsListTaskModel data) {
+              return _TasksWidget(data: data.data!);
+            },
+            initial: () {
+              return const LoadingWidget();
+            },
+            failed: (error) {
+              return AppErrorWidget(error: error);
+            },
+          );
+        },
+      ),
     );
   }
 
   Future<void> _create(BuildContext context) async {
-    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
-    final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-    final Map<String, dynamic>? value = await showDialog<Map<String, dynamic>?>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+    //
+    // final Map<String, dynamic>? value =
+    //     await showModalBottomSheet<Map<String, dynamic>?>(
+    //   context: context,
+    //   useSafeArea: true,
+    //   builder: (BuildContext context) {
+    //     return const CreateTaskWidgt();
+    //   },
+    // );
+    // if (value != null) {
+    //   // create task
+    //   swagger.apiTaskPost(
+    //     task: ModelsCreateTaskModel.fromJson(value),
+    //   );
+    // }
+  }
+}
+
+final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
+class CreateTaskWidgt extends StatelessWidget {
+  const CreateTaskWidgt({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      width: MediaQuery.sizeOf(context).width * .3,
+      child: Scaffold(
+        appBar: AppBar(
           title: const Text('Add task'),
-          content: FormBuilder(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                FormBuilderTextField(
-                  name: 'label',
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Label',
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (String? value) {
-                    if (value == null) {
-                      return null;
-                    }
-                    if (value.trim().isEmpty) {
-                      return "required";
-                    }
-                    if (value.trim().length < 3) {
-                      return "min length is 3 chars";
-                    }
-                    return null;
-                  },
+        ),
+        persistentFooterButtons: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Cancle'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              formKey.currentState!.save();
+              final Map<String, dynamic> value = formKey.currentState!.value;
+              Navigator.pop(context);
+              final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+              final labels = value['sub_tasks'] as List<String>? ?? [];
+              final List<ModelsCreateTaskModel> tasks =
+                  labels.map((e) => ModelsCreateTaskModel(label: e)).toList();
+              swagger.apiTaskPost(
+                task: ModelsCreateTaskModel(
+                  label: value['label'],
+                  task: tasks,
                 ),
-              ],
+              );
+            },
+            child: const Text('Sumbit'),
+          ),
+        ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FormBuilder(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  FormBuilderTextField(
+                    name: 'label',
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Label',
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (String? value) {
+                      if (value == null) {
+                        return null;
+                      }
+                      if (value.trim().isEmpty) {
+                        return "required";
+                      }
+                      if (value.trim().length < 3) {
+                        return "min length is 3 chars";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Add sub task'),
+                    trailing: const Icon(Icons.add),
+                    onTap: () {
+                      final List<String> l = formKey.currentState!
+                              .value['sub_tasks'] as List<String>? ??
+                          [];
+                      l.add('');
+                      formKey.currentState!.fields['sub_tasks']?.didChange(l);
+                      formKey.currentState!.save();
+                    },
+                  ),
+                  FormBuilderField<List<String>?>(
+                    name: 'sub_tasks',
+                    builder: (FormFieldState<Object?> field) {
+                      final List<String> labels =
+                          field.value as List<String>? ?? [];
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: labels.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                labels[index] = value;
+                                field.didChange(labels);
+                              },
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                labelText: 'sub-task label',
+                                suffixIcon: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.close),
+                                ),
+                              ),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? value) {
+                                if (value == null) {
+                                  return null;
+                                }
+                                if (value.trim().isEmpty) {
+                                  return "required";
+                                }
+                                if (value.trim().length < 3) {
+                                  return "min length is 3 chars";
+                                }
+                                return null;
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                final bool valid =
-                    formKey.currentState?.saveAndValidate() ?? false;
-                if (valid) {
-                  final Map<String, dynamic> value =
-                      formKey.currentState!.value;
-                  Navigator.pop(context, value);
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
-    if (value != null) {
-      // create task
-      swagger.apiTaskPost(task: ModelsCreateTaskModel.fromJson(value));
+  }
+}
+
+class _TasksWidget extends StatefulWidget {
+  final List<ModelsTaskModelResponse> data;
+
+  const _TasksWidget({required this.data});
+
+  @override
+  State<_TasksWidget> createState() => _TasksWidgetState();
+}
+
+class _TasksWidgetState extends State<_TasksWidget> {
+  ModelsTaskModelResponse? _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data.isNotEmpty) {
+      _selected = widget.data.first;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Wrap(
+            runSpacing: 8,
+            spacing: 8,
+            children: widget.data.map((ModelsTaskModelResponse e) {
+              return ChoiceChip(
+                selected: _selected == e,
+                label: Text(e.label ?? ''),
+                onSelected: (value) {
+                  _selected = e;
+                  setState(() {});
+                },
+              );
+            }).toList(),
+          ),
+          kH16,
+          if (_selected?.taskIds?.isEmpty ?? false)
+            const Text('This task has no sub-tasks'),
+          ...?_selected?.taskIds?.map((String e) {
+            return Text(e);
+          }).toList(),
+        ],
+      ),
+    );
   }
 }
 

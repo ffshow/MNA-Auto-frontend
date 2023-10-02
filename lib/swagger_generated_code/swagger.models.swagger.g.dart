@@ -133,8 +133,13 @@ ModelsCreateTaskModel _$ModelsCreateTaskModelFromJson(
     ModelsCreateTaskModel(
       label: json['label'] as String?,
       parentId: json['parent_id'] as String?,
-      subTasks: (json['sub_tasks'] as List<dynamic>?)
+      subTasksIds: (json['sub_tasks_ids'] as List<dynamic>?)
               ?.map((e) => e as String)
+              .toList() ??
+          [],
+      task: (json['task'] as List<dynamic>?)
+              ?.map((e) =>
+                  ModelsCreateTaskModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
@@ -144,7 +149,8 @@ Map<String, dynamic> _$ModelsCreateTaskModelToJson(
     <String, dynamic>{
       'label': instance.label,
       'parent_id': instance.parentId,
-      'sub_tasks': instance.subTasks,
+      'sub_tasks_ids': instance.subTasksIds,
+      'task': instance.task?.map((e) => e.toJson()).toList(),
     };
 
 ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
@@ -155,17 +161,25 @@ ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
           ? null
           : DateTime.parse(json['collection_date'] as String),
       commercialName: json['commercial_name'] as String?,
-      createdBy: json['created_by'] as String?,
+      createdById: json['created_by_id'] as String?,
       deliveryDate: json['delivery_date'] == null
           ? null
           : DateTime.parse(json['delivery_date'] as String),
+      employee: json['employee'] == null
+          ? null
+          : ModelsCreateEmployeeModel.fromJson(
+              json['employee'] as Map<String, dynamic>),
       expertise: json['expertise'] as bool?,
       firstCirculation: json['first_circulation'] == null
           ? null
           : DateTime.parse(json['first_circulation'] as String),
       mileage: json['mileage'] as int?,
       note: json['note'] as String?,
-      owner: json['owner'] as String?,
+      owner: json['owner'] == null
+          ? null
+          : ModelsCreateOwnerModel.fromJson(
+              json['owner'] as Map<String, dynamic>),
+      ownerId: json['owner_id'] as String?,
       procedureVe: json['procedure_ve'] as bool?,
       registration: json['registration'] as String?,
       serialNumber: json['serial_number'] as String?,
@@ -173,6 +187,11 @@ ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
           ? null
           : DateTime.parse(json['sold_at'] as String),
       vehicleTask: (json['vehicle_task'] as List<dynamic>?)
+              ?.map((e) => ModelsCreateVehicleTaskModel.fromJson(
+                  e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      vehicleTaskIds: (json['vehicle_task_ids'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [],
@@ -184,44 +203,62 @@ Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
       'commercial_name': instance.commercialName,
-      'created_by': instance.createdBy,
+      'created_by_id': instance.createdById,
       'delivery_date': instance.deliveryDate?.toIso8601String(),
+      'employee': instance.employee?.toJson(),
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
       'mileage': instance.mileage,
       'note': instance.note,
-      'owner': instance.owner,
+      'owner': instance.owner?.toJson(),
+      'owner_id': instance.ownerId,
       'procedure_ve': instance.procedureVe,
       'registration': instance.registration,
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt?.toIso8601String(),
-      'vehicle_task': instance.vehicleTask,
+      'vehicle_task': instance.vehicleTask?.map((e) => e.toJson()).toList(),
+      'vehicle_task_ids': instance.vehicleTaskIds,
     };
 
 ModelsCreateVehicleTaskModel _$ModelsCreateVehicleTaskModelFromJson(
         Map<String, dynamic> json) =>
     ModelsCreateVehicleTaskModel(
       deleted: json['deleted'] as bool?,
-      employee: json['employee'] as String?,
+      employee: json['employee'] == null
+          ? null
+          : ModelsCreateEmployeeModel.fromJson(
+              json['employee'] as Map<String, dynamic>),
+      employeeId: json['employee_id'] as String?,
       finishedAt: json['finished_at'] == null
           ? null
           : DateTime.parse(json['finished_at'] as String),
       startedAt: json['started_at'] == null
           ? null
           : DateTime.parse(json['started_at'] as String),
-      task: json['task'] as String?,
-      vehicle: json['vehicle'] as String?,
+      task: json['task'] == null
+          ? null
+          : ModelsCreateTaskModel.fromJson(
+              json['task'] as Map<String, dynamic>),
+      taskId: json['task_id'] as String?,
+      vehicle: json['vehicle'] == null
+          ? null
+          : ModelsCreateVehicleModel.fromJson(
+              json['vehicle'] as Map<String, dynamic>),
+      vehicleId: json['vehicle_id'] as String?,
     );
 
 Map<String, dynamic> _$ModelsCreateVehicleTaskModelToJson(
         ModelsCreateVehicleTaskModel instance) =>
     <String, dynamic>{
       'deleted': instance.deleted,
-      'employee': instance.employee,
+      'employee': instance.employee?.toJson(),
+      'employee_id': instance.employeeId,
       'finished_at': instance.finishedAt?.toIso8601String(),
       'started_at': instance.startedAt?.toIso8601String(),
-      'task': instance.task,
-      'vehicle': instance.vehicle,
+      'task': instance.task?.toJson(),
+      'task_id': instance.taskId,
+      'vehicle': instance.vehicle?.toJson(),
+      'vehicle_id': instance.vehicleId,
     };
 
 ModelsEmployeeModelResponse _$ModelsEmployeeModelResponseFromJson(

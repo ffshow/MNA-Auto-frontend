@@ -10,7 +10,8 @@ import 'package:mna/utils/extensions.dart';
 class VehicleDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  VehicleDataTableSource(this.service, this.notificationService) {
+  final Function(ModelsVehicleModelResponse item)? onTap;
+  VehicleDataTableSource(this.service, this.notificationService, {this.onTap}) {
     sub = notificationService.onCreateVehicle.listen((_) {
       refreshDatasource();
     });
@@ -23,6 +24,9 @@ class VehicleDataTableSource extends AsyncDataTableSource {
   late final StreamSubscription? sub;
   DataRow2 toRow(ModelsVehicleModelResponse item) {
     return DataRow2(
+      onTap: () {
+        onTap?.call(item);
+      },
       cells: <DataCell>[
         DataCell(Text(item.registration ?? '')),
         DataCell(Text(item.owner?.email ?? '')),

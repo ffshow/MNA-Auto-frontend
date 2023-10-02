@@ -23,87 +23,171 @@ definitions:
     properties:
       email:
         type: string
+        x-nullable: false
       name:
         type: string
+        x-nullable: false
+    type: object
+  models.CreateEmployeeModel:
+    properties:
+      name:
+        type: string
+        x-nullable: false
     type: object
   models.CreateGarageModel:
     properties:
       label:
         type: string
+        x-nullable: false
     type: object
   models.CreateOwnerModel:
     properties:
       address:
         type: string
+        x-nullable: false
       email:
         type: string
+        x-nullable: false
       phone:
         type: string
+        x-nullable: false
       photo:
         type: string
+        x-nullable: false
       postal_code:
         type: string
+        x-nullable: false
     type: object
   models.CreatePermissionModel:
     properties:
       available:
         type: boolean
+        x-nullable: false
       label:
         type: string
+        x-nullable: false
     type: object
   models.CreateSparePartModel:
     properties:
       barcode:
         type: string
+        x-nullable: false
       reference:
         type: string
+        x-nullable: false
     type: object
   models.CreateSupplierModel:
     properties:
       name:
         type: string
+        x-nullable: false
     type: object
   models.CreateTaskModel:
     properties:
       label:
         type: string
+        x-nullable: false
+      parent_id:
+        type: string
+        x-nullable: false
+      sub_tasks:
+        items:
+          type: string
+        type: array
+        x-nullable: false
     type: object
   models.CreateVehicleModel:
     properties:
       chrono:
         type: string
+        x-nullable: false
       collection_date:
+        format: date-time
         type: string
+        x-nullable: false
       commercial_name:
         type: string
-      current_status:
+        x-nullable: false
+      created_by:
         type: string
+        x-nullable: false
       delivery_date:
+        format: date-time
         type: string
+        x-nullable: false
       expertise:
         type: boolean
+        x-nullable: false
       first_circulation:
+        format: date-time
         type: string
-      info:
-        $ref: '#/definitions/models.InfoModel'
+        x-nullable: false
       mileage:
         type: integer
+        x-nullable: false
       note:
         type: string
-      owner_id:
+        x-nullable: false
+      owner:
         type: string
+        x-nullable: false
       procedure_ve:
         type: boolean
+        x-nullable: false
       registration:
         type: string
+        x-nullable: false
       serial_number:
         type: string
+        x-nullable: false
       sold_at:
+        format: date-time
         type: string
-      task_ids:
+        x-nullable: false
+      vehicle_task:
         items:
           type: string
         type: array
+        x-nullable: false
+    type: object
+  models.CreateVehicleTaskModel:
+    properties:
+      deleted:
+        type: boolean
+        x-nullable: false
+      employee:
+        type: string
+        x-nullable: false
+      finished_at:
+        format: date-time
+        type: string
+        x-nullable: false
+      started_at:
+        format: date-time
+        type: string
+        x-nullable: false
+      task:
+        type: string
+        x-nullable: false
+      vehicle:
+        type: string
+        x-nullable: false
+    type: object
+  models.EmployeeModelResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      id:
+        type: string
+      name:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
     type: object
   models.GarageModelResponse:
     properties:
@@ -121,16 +205,20 @@ definitions:
         type: string
         x-date: true
     type: object
-  models.InfoModel:
-    properties:
-      label:
-        type: string
-    type: object
   models.ListAccountModel:
     properties:
       data:
         items:
           $ref: '#/definitions/models.AccountModelResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.ListEmployeeModel:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.EmployeeModelResponse'
         type: array
       total:
         type: integer
@@ -198,57 +286,38 @@ definitions:
       total:
         type: integer
     type: object
-  models.OwnerModel:
+  models.ListVehicleTaskModel:
     properties:
-      address:
-        type: string
-        x-nullable: true
-      created_at:
-        format: date-time
-        type: string
-        x-date: true
-      email:
-        type: string
-        x-nullable: true
-      id:
-        type: string
-      phone:
-        type: string
-        x-nullable: true
-      photo:
-        type: string
-        x-nullable: true
-      postal_code:
-        type: string
-        x-nullable: true
-      updated_at:
-        format: date-time
-        type: string
-        x-date: true
+      data:
+        items:
+          $ref: '#/definitions/models.VehicleTaskModelResponse'
+        type: array
+      total:
+        type: integer
     type: object
   models.OwnerModelResponse:
     properties:
       address:
         type: string
-        x-nullable: true
+        x-nullable: false
       created_at:
         format: date-time
         type: string
         x-date: true
       email:
         type: string
-        x-nullable: true
+        x-nullable: false
       id:
         type: string
       phone:
         type: string
-        x-nullable: true
+        x-nullable: false
       photo:
         type: string
-        x-nullable: true
+        x-nullable: false
       postal_code:
         type: string
-        x-nullable: true
+        x-nullable: false
       updated_at:
         format: date-time
         type: string
@@ -308,22 +377,6 @@ definitions:
         type: string
         x-date: true
     type: object
-  models.TaskModel:
-    properties:
-      created_at:
-        format: date-time
-        type: string
-        x-date: true
-      id:
-        type: string
-      label:
-        type: string
-        x-nullable: false
-      updated_at:
-        format: date-time
-        type: string
-        x-date: true
-    type: object
   models.TaskModelResponse:
     properties:
       created_at:
@@ -335,6 +388,18 @@ definitions:
       label:
         type: string
         x-nullable: false
+      parent_id:
+        type: string
+        x-nullable: true
+      task:
+        items:
+          $ref: '#/definitions/models.TaskModelResponse'
+        type: array
+        x-nullable: false
+      task_ids:
+        items:
+          type: string
+        type: array
       updated_at:
         format: date-time
         type: string
@@ -349,109 +414,136 @@ definitions:
     properties:
       email:
         type: string
+        x-nullable: false
       name:
         type: string
-      updated_at:
+        x-nullable: false
+    type: object
+  models.UpdateEmployeeModel:
+    properties:
+      name:
         type: string
+        x-nullable: false
     type: object
   models.UpdateGarageModel:
     properties:
       label:
         type: string
-      updated_at:
-        type: string
+        x-nullable: false
     type: object
   models.UpdateOwnerModel:
     properties:
       address:
         type: string
+        x-nullable: false
       email:
         type: string
+        x-nullable: false
       phone:
         type: string
+        x-nullable: false
       photo:
         type: string
+        x-nullable: false
       postal_code:
         type: string
-      updated_at:
-        type: string
+        x-nullable: false
     type: object
   models.UpdatePermissionModel:
     properties:
       available:
         type: boolean
+        x-nullable: false
       label:
         type: string
-      updated_at:
-        type: string
+        x-nullable: false
     type: object
   models.UpdateSparePartModel:
     properties:
       barcode:
         type: string
+        x-nullable: false
       reference:
         type: string
-      updated_at:
-        type: string
+        x-nullable: false
     type: object
   models.UpdateSupplierModel:
     properties:
       name:
         type: string
-      updated_at:
-        type: string
+        x-nullable: false
     type: object
   models.UpdateTaskModel:
     properties:
       label:
         type: string
-      updated_at:
+        x-nullable: false
+      parent_id:
         type: string
+        x-nullable: false
     type: object
   models.UpdateVehicleModel:
     properties:
       chrono:
         type: string
+        x-nullable: false
       collection_date:
+        format: date-time
         type: string
+        x-nullable: false
       commercial_name:
         type: string
-      current_status:
-        type: string
+        x-nullable: false
       delivery_date:
+        format: date-time
         type: string
+        x-nullable: false
       expertise:
         type: boolean
+        x-nullable: false
       first_circulation:
+        format: date-time
         type: string
-      info:
-        $ref: '#/definitions/models.InfoModel'
+        x-nullable: false
       mileage:
         type: integer
+        x-nullable: false
       note:
         type: string
-      owner_id:
-        type: string
+        x-nullable: false
       procedure_ve:
         type: boolean
+        x-nullable: false
       registration:
         type: string
+        x-nullable: false
       serial_number:
         type: string
+        x-nullable: false
       sold_at:
+        format: date-time
         type: string
-      task_ids:
-        items:
-          type: string
-        type: array
-      updated_at:
+        x-nullable: false
+    type: object
+  models.UpdateVehicleTaskModel:
+    properties:
+      deleted:
+        type: boolean
+        x-nullable: false
+      finished_at:
+        format: date-time
         type: string
+        x-nullable: false
+      started_at:
+        format: date-time
+        type: string
+        x-nullable: false
     type: object
   models.VehicleModelResponse:
     properties:
       chrono:
         type: string
-        x-nullable: true
+        x-nullable: false
       collection_date:
         format: date-time
         type: string
@@ -464,13 +556,17 @@ definitions:
         format: date-time
         type: string
         x-date: true
-      current_status:
-        type: string
-        x-nullable: true
       delivery_date:
         format: date-time
         type: string
         x-date: true
+        x-nullable: false
+      employee:
+        allOf:
+        - $ref: '#/definitions/models.EmployeeModelResponse'
+        x-nullable: false
+      employee_id:
+        type: string
         x-nullable: false
       expertise:
         type: boolean
@@ -482,10 +578,6 @@ definitions:
         x-nullable: false
       id:
         type: string
-      info:
-        allOf:
-        - $ref: '#/definitions/models.InfoModel'
-        x-nullable: false
       mileage:
         type: integer
         x-nullable: false
@@ -494,7 +586,7 @@ definitions:
         x-nullable: false
       owner:
         allOf:
-        - $ref: '#/definitions/models.OwnerModel'
+        - $ref: '#/definitions/models.OwnerModelResponse'
         x-nullable: false
       owner_id:
         type: string
@@ -513,20 +605,66 @@ definitions:
         type: string
         x-date: true
         x-nullable: false
-      task:
+      updated_at:
+        format: date-time
+        type: string
+        x-date: true
+      vehicle_task:
         items:
-          $ref: '#/definitions/models.TaskModel'
+          $ref: '#/definitions/models.VehicleTaskModelResponse'
         type: array
         x-nullable: false
-      task_ids:
+      vehicle_task_ids:
         items:
           type: string
         type: array
+    type: object
+  models.VehicleTaskModelResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+        x-date: true
+      deleted:
+        type: boolean
+        x-nullable: false
+      employee:
+        allOf:
+        - $ref: '#/definitions/models.EmployeeModelResponse'
+        x-nullable: false
+      employee_id:
+        type: string
+        x-nullable: false
+      finished_at:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      id:
+        type: string
+      started_at:
+        format: date-time
+        type: string
+        x-date: true
+        x-nullable: false
+      task:
+        allOf:
+        - $ref: '#/definitions/models.TaskModelResponse'
+        x-nullable: false
+      task_id:
+        type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
         x-date: true
+      vehicle:
+        allOf:
+        - $ref: '#/definitions/models.VehicleModelResponse'
+        x-nullable: false
+      vehicle_id:
+        type: string
+        x-nullable: false
     type: object
   utils.ResponseError:
     properties:
@@ -588,10 +726,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "500":
           description: Internal Server Error
           schema:
@@ -617,10 +751,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.AccountModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -655,16 +785,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.AccountModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -672,6 +794,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a account
+      tags:
+      - account
+  /api/account/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - account
   /api/account_import:
@@ -699,10 +840,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -741,14 +878,107 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListAccountModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List account
       tags:
       - account
-  /api/account_total:
+  /api/employee:
+    post:
+      consumes:
+      - application/json
+      description: Register employee
+      parameters:
+      - description: Register employee
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateEmployeeModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EmployeeModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new employee
+      tags:
+      - employee
+  /api/employee/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get employee by ID
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EmployeeModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get employee by ID
+      tags:
+      - employee
+    put:
+      consumes:
+      - application/json
+      description: Edit employee
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register employee
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateEmployeeModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EmployeeModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a employee
+      tags:
+      - employee
+  /api/employee/total:
     get:
       consumes:
       - application/json
@@ -760,17 +990,83 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         default:
           description: ""
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Total records
       tags:
-      - account
+      - employee
+  /api/employee_import:
+    post:
+      consumes:
+      - application/json
+      description: Register employee (useful for importing data)
+      parameters:
+      - description: Register employee
+        in: body
+        name: employee
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.CreateEmployeeModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.EmployeeModelResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many employee
+      tags:
+      - employee
+  /api/employee_list:
+    get:
+      consumes:
+      - application/json
+      description: List employee
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListEmployeeModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List employee
+      tags:
+      - employee
   /api/garage:
     post:
       consumes:
@@ -792,10 +1088,6 @@ paths:
             $ref: '#/definitions/models.GarageModelResponse'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -823,10 +1115,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.GarageModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -861,16 +1149,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.GarageModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -878,6 +1158,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a garage
+      tags:
+      - garage
+  /api/garage/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - garage
   /api/garage_import:
@@ -905,10 +1204,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -947,34 +1242,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListGarageModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List garage
-      tags:
-      - garage
-  /api/garage_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - garage
   /api/owner:
@@ -998,10 +1270,6 @@ paths:
             $ref: '#/definitions/models.OwnerModelResponse'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1029,10 +1297,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.OwnerModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1067,16 +1331,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.OwnerModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1084,6 +1340,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a owner
+      tags:
+      - owner
+  /api/owner/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - owner
   /api/owner_import:
@@ -1111,10 +1386,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1153,34 +1424,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListOwnerModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List owner
-      tags:
-      - owner
-  /api/owner_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - owner
   /api/permission:
@@ -1204,10 +1452,6 @@ paths:
             $ref: '#/definitions/models.PermissionModelResponse'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1235,10 +1479,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.PermissionModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1273,16 +1513,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.PermissionModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1290,6 +1522,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a permission
+      tags:
+      - permission
+  /api/permission/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - permission
   /api/permission_import:
@@ -1317,10 +1568,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1359,34 +1606,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListPermissionModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List permission
-      tags:
-      - permission
-  /api/permission_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - permission
   /api/spare_part:
@@ -1410,10 +1634,6 @@ paths:
             $ref: '#/definitions/models.SparePartModelResponse'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1441,10 +1661,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SparePartModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1479,16 +1695,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SparePartModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1496,6 +1704,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a spare_part
+      tags:
+      - spare_part
+  /api/spare_part/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - spare_part
   /api/spare_part_import:
@@ -1523,10 +1750,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1565,34 +1788,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListSparePartModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List spare_part
-      tags:
-      - spare_part
-  /api/spare_part_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - spare_part
   /api/supplier:
@@ -1616,10 +1816,6 @@ paths:
             $ref: '#/definitions/models.SupplierModelResponse'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1647,10 +1843,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SupplierModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1685,16 +1877,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.SupplierModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1702,6 +1886,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a supplier
+      tags:
+      - supplier
+  /api/supplier/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - supplier
   /api/supplier_import:
@@ -1729,10 +1932,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1771,34 +1970,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListSupplierModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List supplier
-      tags:
-      - supplier
-  /api/supplier_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - supplier
   /api/task:
@@ -1824,10 +2000,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "500":
           description: Internal Server Error
           schema:
@@ -1846,6 +2018,10 @@ paths:
         name: id
         required: true
         type: string
+      - description: with task data
+        in: query
+        name: task
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1853,10 +2029,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TaskModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -1891,16 +2063,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TaskModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1908,6 +2072,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a task
+      tags:
+      - task
+  /api/task/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - task
   /api/task_import:
@@ -1935,10 +2118,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -1970,6 +2149,10 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with task data
+        in: query
+        name: task
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1977,34 +2160,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListTaskModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List task
-      tags:
-      - task
-  /api/task_total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-      summary: Total records
       tags:
       - task
   /api/vehicle:
@@ -2030,10 +2190,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "500":
           description: Internal Server Error
           schema:
@@ -2056,9 +2212,13 @@ paths:
         in: query
         name: owner
         type: boolean
-      - description: with task data
+      - description: with vehicle task data
         in: query
-        name: task
+        name: vehicle_task
+        type: boolean
+      - description: with employee data
+        in: query
+        name: employee
         type: boolean
       produces:
       - application/json
@@ -2067,10 +2227,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.VehicleModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
           schema:
@@ -2105,16 +2261,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.VehicleModelResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -2122,6 +2270,25 @@ paths:
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Update a vehicle
+      tags:
+      - vehicle
+  /api/vehicle/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Total records
       tags:
       - vehicle
   /api/vehicle_import:
@@ -2149,10 +2316,6 @@ paths:
             type: array
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
-        "422":
-          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.ResponseError'
         "500":
@@ -2188,9 +2351,13 @@ paths:
         in: query
         name: owner
         type: boolean
-      - description: with task data
+      - description: with vehicle task data
         in: query
-        name: task
+        name: vehicle_task
+        type: boolean
+      - description: with employee data
+        in: query
+        name: employee
         type: boolean
       produces:
       - application/json
@@ -2199,14 +2366,119 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.ListVehicleModel'
-        "500":
-          description: Internal Server Error
+        "503":
+          description: Service Unavailable
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: List vehicle
       tags:
       - vehicle
-  /api/vehicle_total:
+  /api/vehicle_task:
+    post:
+      consumes:
+      - application/json
+      description: Register vehicle_task
+      parameters:
+      - description: Register vehicle_task
+        in: body
+        name: vehicle_task
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateVehicleTaskModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleTaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create a new vehicle_task
+      tags:
+      - vehicle_task
+  /api/vehicle_task/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get vehicle_task by ID
+      parameters:
+      - description: VehicleTask ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: with employee data
+        in: query
+        name: employee
+        type: boolean
+      - description: with task data
+        in: query
+        name: task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: vehicle
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleTaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Get vehicle_task by ID
+      tags:
+      - vehicle_task
+    put:
+      consumes:
+      - application/json
+      description: Edit vehicle_task
+      parameters:
+      - description: VehicleTask ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Register vehicle_task
+        in: body
+        name: vehicle_task
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateVehicleTaskModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VehicleTaskModelResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Update a vehicle_task
+      tags:
+      - vehicle_task
+  /api/vehicle_task/total:
     get:
       consumes:
       - application/json
@@ -2218,17 +2490,95 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.TotalCount'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/utils.ResponseError'
         default:
           description: ""
           schema:
             $ref: '#/definitions/utils.ResponseError'
       summary: Total records
       tags:
-      - vehicle
+      - vehicle_task
+  /api/vehicle_task_import:
+    post:
+      consumes:
+      - application/json
+      description: Register vehicle_task (useful for importing data)
+      parameters:
+      - description: Register vehicle_task
+        in: body
+        name: vehicle_task
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.CreateVehicleTaskModel'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.VehicleTaskModelResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: Create many vehicle_task
+      tags:
+      - vehicle_task
+  /api/vehicle_task_list:
+    get:
+      consumes:
+      - application/json
+      description: List vehicle_task
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      - description: with employee data
+        in: query
+        name: employee
+        type: boolean
+      - description: with task data
+        in: query
+        name: task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: vehicle
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListVehicleTaskModel'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/utils.ResponseError'
+      summary: List vehicle_task
+      tags:
+      - vehicle_task
   /api/vehicles_seed:
     post:
       consumes:

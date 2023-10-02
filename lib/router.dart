@@ -1,6 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/pages/pages.dart';
+import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
+import 'package:mna/swagger_generated_code/client_index.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -21,6 +24,27 @@ final GoRouter router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const VehiclePage();
           },
+          routes: [
+            GoRoute(
+              path: 'details/:id',
+              name: 'vehicle_details',
+              builder: (context, state) {
+                final String? id = state.pathParameters['id'];
+                if (id == null) {
+                  return _errorPageBuilder(context, null);
+                }
+                return BlocProvider(
+                  create: (context) => VehicleDetailsCubit(
+                    RepositoryProvider.of<Swagger>(context),
+                  )..getVehicle(id),
+                  lazy: false,
+                  child: VehicleDetailPage(
+                    id: id,
+                  ),
+                );
+              },
+            )
+          ],
         ),
         GoRoute(
           path: 'owners',

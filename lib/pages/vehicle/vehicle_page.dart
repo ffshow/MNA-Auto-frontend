@@ -2,6 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/widget/widget.dart';
@@ -71,6 +72,11 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
     source ??= VehicleDataTableSource(
       swagger,
       notificationService,
+      onTap: (ModelsVehicleModelResponse item) {
+        context.pushNamed('vehicle_details', pathParameters: {
+          "id": item.id!,
+        });
+      },
     );
     super.didChangeDependencies();
   }

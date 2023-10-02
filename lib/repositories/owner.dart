@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mna/utils/pagination.dart';
 
 import '../swagger_generated_code/swagger.swagger.dart';
@@ -17,7 +16,6 @@ class OwnerRepository {
       return _res!;
     }
     _pagination = p;
-    debugPrint("get owners");
     _res = await _swagger.apiOwnerListGet(
       page: p?.page,
       perPage: p?.perPage,

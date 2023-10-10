@@ -81,8 +81,9 @@ class VehicleDataTableSource extends AsyncDataTableSource {
         perPage: count,
         sortBy: sortBy(sortColumnIndex),
         descending: !sortAscending,
-        withOwner: true, //FIXME:
+        // withOwner: true, //FIXME:
       );
+      print(res);
       if (res.body?.total != null && res.body!.total != 0) {
         totalCount = res.body!.total!;
       }
@@ -90,7 +91,8 @@ class VehicleDataTableSource extends AsyncDataTableSource {
         totalCount,
         res.body?.data?.map((e) => toRow(e)).toList() ?? [],
       );
-    } on Exception catch (_) {
+    } catch (e) {
+      print(e);
       return AsyncRowsResponse(0, []);
     }
   }

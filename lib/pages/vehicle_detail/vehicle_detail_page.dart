@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/cubits/task/task_cubit.dart';
 import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
-import 'package:mna/swagger_generated_code/swagger.models.swagger.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/extensions.dart';
 import 'package:mna/widget/widget.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
@@ -29,7 +29,7 @@ class VehicleDetailPage extends StatelessWidget {
           loaded: (ModelsVehicleModelResponse response) {
             return _VehicleDetailsWidget(response: response);
           },
-          failed: (error) {
+          failed: (String error) {
             return Scaffold(
               appBar: AppBar(
                 title: const Text('Vehicle Details'),
@@ -101,7 +101,7 @@ class _VehicleDetailsWidget extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: PrettyQrView.data(
-                        data: response.id!,
+                        data: response.id!.toString(),
                       ),
                     ),
                   ),
@@ -121,12 +121,17 @@ class _VehicleDetailsWidget extends StatelessWidget {
                     },
                     icon: const Icon(Icons.add_task),
                   ),
+                  onTap: () {
+                    addTask(context, response.id!);
+                  },
                 ),
-                ...?response.vehicleTask
-                    ?.map((e) => ListTile(
-                          title: Text(e.task?.label ?? ''),
-                        ))
-                    .toList(),
+                // for (final ModelsVehicleTaskModelResponse e
+                //     in response.vehicleTask ??
+                //         <ModelsVehicleTaskModelResponse>[])
+                //   ListTile(
+                //     leading: Text(e.createdAt.date),
+                //     title: Text(e.task?.label ?? ''),
+                //   ),
               ],
             ),
           ],
@@ -135,45 +140,160 @@ class _VehicleDetailsWidget extends StatelessWidget {
     );
   }
 
-  void addTask(BuildContext context, String vehicleID) {
-    showModalBottomSheet(
+  Future<void> addTask(BuildContext context, int vehicleID) async {
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+
+    final Set<int>? data = await showModalBottomSheet<Set<int>?>(
       context: context,
-      builder: (context) {
-        return Column(
-          children: [
-            const ListTile(title: Text('Add tasks')),
-            BlocBuilder<TaskCubit, TaskState>(
-              builder: (context, state) {
-                return state.when(
-                  loaded: (ModelsListTaskModel response) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: response.data?.length,
-                      itemBuilder: (context, index) {
-                        final ModelsTaskModelResponse item =
-                            response.data![index];
-                        return ListTile(
-                          leading: Checkbox.adaptive(
-                            value: false,
-                            onChanged: (value) {},
-                          ),
-                          title: Text(item.label ?? ''),
-                        );
-                      },
-                    );
-                  },
-                  initial: () {
-                    return const LoadingWidget();
-                  },
-                  failed: (error) {
-                    return Text(error);
-                  },
-                );
+      builder: (BuildContext context) {
+        return BlocBuilder<TaskCubit, TaskState>(
+          builder: (BuildContext context, TaskState state) {
+            return state.when(
+              loaded: (ModelsListTaskModel response) {
+                return TaskSelectionWidget(
+                    tasks: response.data?.where((ModelsTaskModelResponse e) {
+                          return true;
+                          // print('label:${e.label}, parent_id: ${e.parentId}');
+                          // return e.parentId == null;
+                        }).toList() ??
+                        []);
               },
-            )
-          ],
+              initial: () {
+                return const LoadingWidget();
+              },
+              failed: (String error) {
+                return Text(error);
+              },
+            );
+          },
         );
       },
     );
+
+    if (data == null) {
+      return;
+    }
+    final r = await swagger.apiVehicleTaskImportPost(
+        vehicleTaskModel: data
+            .map(
+              (e) => ModelsCreateVehicleTaskModel(
+                vehiclesId: vehicleID,
+                tasksId: e,
+              ),
+            )
+            .toList());
+
+    print(r);
+  }
+}
+
+class TaskSelectionWidget extends StatefulWidget {
+  final List<ModelsTaskModelResponse> tasks;
+  const TaskSelectionWidget({super.key, required this.tasks});
+
+  @override
+  State<TaskSelectionWidget> createState() => _TaskSelectionWidgetState();
+}
+
+class _TaskSelectionWidgetState extends State<TaskSelectionWidget> {
+  Set<int> selectedTasks = {};
+  Set<int> selectedSubTasks = {};
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      persistentFooterButtons: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Cancel'),
+        ),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.pop(context, selectedTasks);
+          },
+          child: const Text('Submit'),
+        ),
+      ],
+      body: Column(
+        children: <Widget>[
+          const ListTile(title: Text('• Add tasks')),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.tasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              final ModelsTaskModelResponse item = widget.tasks[index];
+              return ExpansionTile(
+                leading: Checkbox.adaptive(
+                  tristate: true,
+                  value: isTaskSelected(item),
+                  onChanged: (bool? value) {
+                    switch (value) {
+                      case true:
+                        selectedTasks.add(item.id!);
+                        // selectedSubTasks.addAll(item.subTasksIds ?? []);
+                        break;
+                      case false:
+                        selectedTasks.remove(item.id);
+                        // selectedSubTasks.removeAll(item.subTasksIds ?? []);
+                        break;
+                      case null:
+                        selectedTasks.remove(item.id);
+                        // selectedSubTasks.removeAll(item.subTasksIds ?? []);
+                        break;
+                    }
+                    setState(() {});
+                  },
+                ),
+                title: Text(item.label ?? ''),
+                expandedAlignment: Alignment.topLeft,
+                children: <Widget>[
+                  ...?item.subTasks?.map((e) {
+                    return CheckboxListTile.adaptive(
+                      tristate: true,
+                      onChanged: (bool? selected) {
+                        switch (selected) {
+                          case true:
+                            selectedSubTasks.add(e.id!);
+                            break;
+                          case false:
+                            selectedSubTasks.remove(e.id);
+                            break;
+                          case null:
+                            selectedSubTasks.remove(e.id);
+                            break;
+                        }
+                        setState(() {});
+                      },
+                      value: selectedSubTasks.contains(e.id),
+                      title: Text(e.label ?? ''),
+                    );
+                  }).toList(),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool? isTaskSelected(ModelsTaskModelResponse item) {
+    // if (selectedSubTasks.containsAll(item.subTasksIds ?? [])) {
+    //   return true;
+    // }
+    if (selectedTasks.contains(item.id)) {
+      return true;
+    }
+    if (item.subTasks == null || (item.subTasks?.isEmpty ?? false)) {
+      return false;
+    }
+    for (final e in item.subTasks!) {
+      if (selectedSubTasks.contains(e.id)) {
+        return null;
+      }
+    }
+    return false;
   }
 }

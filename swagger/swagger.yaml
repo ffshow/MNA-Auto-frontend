@@ -1,23 +1,31 @@
 basePath: /
 definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
   models.AccountModelResponse:
     properties:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       email:
         type: string
         x-nullable: false
       id:
-        type: string
+        type: integer
       name:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
     type: object
   models.CreateAccountModel:
     properties:
@@ -30,6 +38,21 @@ definitions:
     type: object
   models.CreateEmployeeModel:
     properties:
+      created_tasks:
+        items:
+          $ref: '#/definitions/models.CreateVehicleTaskModel'
+        type: array
+        x-nullable: false
+      created_vehicles:
+        items:
+          $ref: '#/definitions/models.CreateVehicleModel'
+        type: array
+        x-nullable: false
+      deleted_vehicles:
+        items:
+          $ref: '#/definitions/models.CreateVehicleModel'
+        type: array
+        x-nullable: false
       name:
         type: string
         x-nullable: false
@@ -56,6 +79,11 @@ definitions:
         x-nullable: false
       postal_code:
         type: string
+        x-nullable: false
+      vehicles:
+        items:
+          $ref: '#/definitions/models.CreateVehicleModel'
+        type: array
         x-nullable: false
     type: object
   models.CreatePermissionModel:
@@ -87,16 +115,17 @@ definitions:
       label:
         type: string
         x-nullable: false
-      parent_id:
-        type: string
+      parent_task_id:
+        type: integer
         x-nullable: false
       sub_tasks:
         items:
           $ref: '#/definitions/models.CreateTaskModel'
         type: array
-      sub_tasks_ids:
+        x-nullable: false
+      vehicle_tasks:
         items:
-          type: string
+          $ref: '#/definitions/models.CreateVehicleTaskModel'
         type: array
         x-nullable: false
     type: object
@@ -112,10 +141,11 @@ definitions:
       commercial_name:
         type: string
         x-nullable: false
-      created_by:
-        $ref: '#/definitions/models.CreateEmployeeModel'
       created_by_id:
-        type: string
+        type: integer
+        x-nullable: false
+      deleted_by_id:
+        type: integer
         x-nullable: false
       delivery_date:
         format: date-time
@@ -134,10 +164,8 @@ definitions:
       note:
         type: string
         x-nullable: false
-      owner:
-        $ref: '#/definitions/models.CreateOwnerModel'
       owner_id:
-        type: string
+        type: integer
         x-nullable: false
       procedure_ve:
         type: boolean
@@ -152,27 +180,21 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      vehicle_task:
+      tasks:
         items:
           $ref: '#/definitions/models.CreateVehicleTaskModel'
-        type: array
-      vehicle_task_ids:
-        items:
-          type: string
         type: array
         x-nullable: false
     type: object
   models.CreateVehicleTaskModel:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted:
         type: boolean
         x-nullable: false
-      employee:
-        $ref: '#/definitions/models.CreateEmployeeModel'
-      employee_id:
-        type: string
-        x-nullable: false
-      finished_at:
+      finishded_at:
         format: date-time
         type: string
         x-nullable: false
@@ -180,48 +202,93 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      task:
-        $ref: '#/definitions/models.CreateTaskModel'
-      task_id:
-        type: string
+      tasks_id:
+        type: integer
         x-nullable: false
-      vehicle:
-        $ref: '#/definitions/models.CreateVehicleModel'
-      vehicle_id:
-        type: string
+      vehicles_id:
+        type: integer
         x-nullable: false
     type: object
-  models.EmployeeModelResponse:
+  models.EmployeeModel:
     properties:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      created_tasks:
+        description: '{vehicle task created tasks created by one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleTaskModel'
+        type: array
+        x-nullable: false
+      created_vehicles:
+        description: '{vehicle created vehicles created by one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleModel'
+        type: array
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      deleted_vehicles:
+        description: '{vehicle deleted vehicles deleted by one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleModel'
+        type: array
+        x-nullable: false
       id:
-        type: string
+        type: integer
       name:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
+    type: object
+  models.EmployeeModelResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      created_tasks:
+        items:
+          $ref: '#/definitions/models.VehicleTaskModelResponse'
+        type: array
+        x-nullable: false
+      created_vehicles:
+        items:
+          $ref: '#/definitions/models.VehicleModelResponse'
+        type: array
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      deleted_vehicles:
+        items:
+          $ref: '#/definitions/models.VehicleModelResponse'
+        type: array
+        x-nullable: false
+      id:
+        type: integer
+      name:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
     type: object
   models.GarageModelResponse:
     properties:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
-        type: string
+        type: integer
       label:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
     type: object
   models.ListAccountModel:
     properties:
@@ -313,7 +380,7 @@ definitions:
       total:
         type: integer
     type: object
-  models.OwnerModelResponse:
+  models.OwnerModel:
     properties:
       address:
         type: string
@@ -321,12 +388,13 @@ definitions:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       email:
         type: string
         x-nullable: false
       id:
-        type: string
+        type: integer
       phone:
         type: string
         x-nullable: false
@@ -339,7 +407,45 @@ definitions:
       updated_at:
         format: date-time
         type: string
-        x-date: true
+      vehicles:
+        description: '{vehicle vehicles owner one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleModel'
+        type: array
+        x-nullable: false
+    type: object
+  models.OwnerModelResponse:
+    properties:
+      address:
+        type: string
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+        x-nullable: false
+      id:
+        type: integer
+      phone:
+        type: string
+        x-nullable: false
+      photo:
+        type: string
+        x-nullable: false
+      postal_code:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+      vehicles:
+        items:
+          $ref: '#/definitions/models.VehicleModelResponse'
+        type: array
+        x-nullable: false
     type: object
   models.PermissionModelResponse:
     properties:
@@ -349,16 +455,16 @@ definitions:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
-        type: string
+        type: integer
       label:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
     type: object
   models.SparePartModelResponse:
     properties:
@@ -368,61 +474,96 @@ definitions:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
-        type: string
+        type: integer
       reference:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
     type: object
   models.SupplierModelResponse:
     properties:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
-        type: string
+        type: integer
       name:
         type: string
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
+    type: object
+  models.TaskModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      label:
+        type: string
+        x-nullable: false
+      parent_task_id:
+        type: integer
+        x-nullable: false
+      sub_tasks:
+        description: '{task sub tasks parent task one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.TaskModel'
+        type: array
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+      vehicle_tasks:
+        description: '{Vehicle Task vehicle tasks tasks one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleTaskModel'
+        type: array
+        x-nullable: false
     type: object
   models.TaskModelResponse:
     properties:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
-        type: string
+        type: integer
       label:
         type: string
         x-nullable: false
-      parent_id:
-        type: string
+      parent_task:
+        allOf:
+        - $ref: '#/definitions/models.TaskModel'
+        x-nullable: false
+      parent_task_id:
+        type: integer
         x-nullable: false
       sub_tasks:
         items:
           $ref: '#/definitions/models.TaskModelResponse'
         type: array
         x-nullable: false
-      sub_tasks_ids:
-        items:
-          type: string
-        type: array
-        x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
+      vehicle_tasks:
+        items:
+          $ref: '#/definitions/models.VehicleTaskModelResponse'
+        type: array
+        x-nullable: false
     type: object
   models.TotalCount:
     properties:
@@ -497,9 +638,6 @@ definitions:
       label:
         type: string
         x-nullable: false
-      parent_id:
-        type: string
-        x-nullable: false
     type: object
   models.UpdateVehicleModel:
     properties:
@@ -549,7 +687,7 @@ definitions:
       deleted:
         type: boolean
         x-nullable: false
-      finished_at:
+      finishded_at:
         format: date-time
         type: string
         x-nullable: false
@@ -557,6 +695,74 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+    type: object
+  models.VehicleModel:
+    properties:
+      chrono:
+        type: string
+        x-nullable: false
+      collection_date:
+        format: date-time
+        type: string
+        x-nullable: false
+      commercial_name:
+        type: string
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      deleted_by_id:
+        type: integer
+        x-nullable: false
+      delivery_date:
+        format: date-time
+        type: string
+        x-nullable: false
+      expertise:
+        type: boolean
+        x-nullable: false
+      first_circulation:
+        format: date-time
+        type: string
+        x-nullable: false
+      id:
+        type: integer
+      mileage:
+        type: integer
+        x-nullable: false
+      note:
+        type: string
+        x-nullable: false
+      owner_id:
+        type: integer
+        x-nullable: false
+      procedure_ve:
+        type: boolean
+        x-nullable: false
+      registration:
+        type: string
+        x-nullable: false
+      serial_number:
+        type: string
+        x-nullable: false
+      sold_at:
+        format: date-time
+        type: string
+        x-nullable: false
+      tasks:
+        description: '{Vehicle Task tasks vehicles one_to_many <nil>}'
+        items:
+          $ref: '#/definitions/models.VehicleTaskModel'
+        type: array
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
     type: object
   models.VehicleModelResponse:
     properties:
@@ -573,13 +779,21 @@ definitions:
       created_at:
         format: date-time
         type: string
-        x-date: true
       created_by:
         allOf:
-        - $ref: '#/definitions/models.EmployeeModelResponse'
+        - $ref: '#/definitions/models.EmployeeModel'
         x-nullable: false
       created_by_id:
-        type: string
+        type: integer
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/models.EmployeeModel'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
         x-nullable: false
       delivery_date:
         format: date-time
@@ -593,7 +807,7 @@ definitions:
         type: string
         x-nullable: false
       id:
-        type: string
+        type: integer
       mileage:
         type: integer
         x-nullable: false
@@ -602,10 +816,10 @@ definitions:
         x-nullable: false
       owner:
         allOf:
-        - $ref: '#/definitions/models.OwnerModelResponse'
+        - $ref: '#/definitions/models.OwnerModel'
         x-nullable: false
       owner_id:
-        type: string
+        type: integer
         x-nullable: false
       procedure_ve:
         type: boolean
@@ -620,19 +834,46 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      updated_at:
-        format: date-time
-        type: string
-        x-date: true
-      vehicle_task:
+      tasks:
         items:
           $ref: '#/definitions/models.VehicleTaskModelResponse'
         type: array
         x-nullable: false
-      vehicle_task_ids:
-        items:
-          type: string
-        type: array
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  models.VehicleTaskModel:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted:
+        type: boolean
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      finishded_at:
+        format: date-time
+        type: string
+        x-nullable: false
+      id:
+        type: integer
+      started_at:
+        format: date-time
+        type: string
+        x-nullable: false
+      tasks_id:
+        type: integer
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+      vehicles_id:
+        type: integer
         x-nullable: false
     type: object
   models.VehicleTaskModelResponse:
@@ -640,44 +881,44 @@ definitions:
       created_at:
         format: date-time
         type: string
-        x-date: true
+      created_by:
+        allOf:
+        - $ref: '#/definitions/models.EmployeeModel'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted:
         type: boolean
         x-nullable: false
-      employee:
-        allOf:
-        - $ref: '#/definitions/models.EmployeeModelResponse'
-        x-nullable: false
-      employee_id:
-        type: string
-        x-nullable: false
-      finished_at:
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      finishded_at:
         format: date-time
         type: string
         x-nullable: false
       id:
-        type: string
+        type: integer
       started_at:
         format: date-time
         type: string
         x-nullable: false
-      task:
+      tasks:
         allOf:
-        - $ref: '#/definitions/models.TaskModelResponse'
+        - $ref: '#/definitions/models.TaskModel'
         x-nullable: false
-      task_id:
-        type: string
+      tasks_id:
+        type: integer
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-        x-date: true
-      vehicle:
+      vehicles:
         allOf:
-        - $ref: '#/definitions/models.VehicleModelResponse'
+        - $ref: '#/definitions/models.VehicleModel'
         x-nullable: false
-      vehicle_id:
-        type: string
+      vehicles_id:
+        type: integer
         x-nullable: false
     type: object
   utils.ResponseError:
@@ -725,7 +966,7 @@ paths:
       parameters:
       - description: Register account
         in: body
-        name: account
+        name: account_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateAccountModel'
@@ -757,7 +998,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -776,19 +1017,19 @@ paths:
       summary: Get account by ID
       tags:
       - account
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit account
       parameters:
-      - description: Account ID
+      - description: AccountModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register account
         in: body
-        name: account
+        name: account_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateAccountModel'
@@ -837,7 +1078,7 @@ paths:
       parameters:
       - description: Register account
         in: body
-        name: account
+        name: account_model
         required: true
         schema:
           items:
@@ -907,7 +1148,7 @@ paths:
       parameters:
       - description: Register employee
         in: body
-        name: employee
+        name: employee_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateEmployeeModel'
@@ -939,7 +1180,19 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
+      - description: with vehicle data
+        in: query
+        name: with_created_vehicles
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_deleted_vehicles
+        type: boolean
+      - description: with vehicle task data
+        in: query
+        name: with_created_tasks
+        type: boolean
       produces:
       - application/json
       responses:
@@ -958,19 +1211,19 @@ paths:
       summary: Get employee by ID
       tags:
       - employee
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit employee
       parameters:
-      - description: Employee ID
+      - description: EmployeeModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register employee
         in: body
-        name: employee
+        name: employee_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateEmployeeModel'
@@ -1019,7 +1272,7 @@ paths:
       parameters:
       - description: Register employee
         in: body
-        name: employee
+        name: employee_model
         required: true
         schema:
           items:
@@ -1067,6 +1320,18 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_created_vehicles
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_deleted_vehicles
+        type: boolean
+      - description: with vehicle task data
+        in: query
+        name: with_created_tasks
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1089,7 +1354,7 @@ paths:
       parameters:
       - description: Register garage
         in: body
-        name: garage
+        name: garage_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateGarageModel'
@@ -1121,7 +1386,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -1140,19 +1405,19 @@ paths:
       summary: Get garage by ID
       tags:
       - garage
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit garage
       parameters:
-      - description: Garage ID
+      - description: GarageModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register garage
         in: body
-        name: garage
+        name: garage_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateGarageModel'
@@ -1201,7 +1466,7 @@ paths:
       parameters:
       - description: Register garage
         in: body
-        name: garage
+        name: garage_model
         required: true
         schema:
           items:
@@ -1271,7 +1536,7 @@ paths:
       parameters:
       - description: Register owner
         in: body
-        name: owner
+        name: owner_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateOwnerModel'
@@ -1303,7 +1568,11 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
+      - description: with vehicle data
+        in: query
+        name: with_vehicles
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1322,19 +1591,19 @@ paths:
       summary: Get owner by ID
       tags:
       - owner
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit owner
       parameters:
-      - description: Owner ID
+      - description: OwnerModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register owner
         in: body
-        name: owner
+        name: owner_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateOwnerModel'
@@ -1383,7 +1652,7 @@ paths:
       parameters:
       - description: Register owner
         in: body
-        name: owner
+        name: owner_model
         required: true
         schema:
           items:
@@ -1431,6 +1700,10 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicles
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1453,7 +1726,7 @@ paths:
       parameters:
       - description: Register permission
         in: body
-        name: permission
+        name: permission_model
         required: true
         schema:
           $ref: '#/definitions/models.CreatePermissionModel'
@@ -1485,7 +1758,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -1504,19 +1777,19 @@ paths:
       summary: Get permission by ID
       tags:
       - permission
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit permission
       parameters:
-      - description: Permission ID
+      - description: PermissionModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register permission
         in: body
-        name: permission
+        name: permission_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdatePermissionModel'
@@ -1565,7 +1838,7 @@ paths:
       parameters:
       - description: Register permission
         in: body
-        name: permission
+        name: permission_model
         required: true
         schema:
           items:
@@ -1635,7 +1908,7 @@ paths:
       parameters:
       - description: Register spare_part
         in: body
-        name: spare_part
+        name: spare_part_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateSparePartModel'
@@ -1667,7 +1940,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -1686,19 +1959,19 @@ paths:
       summary: Get spare_part by ID
       tags:
       - spare_part
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit spare_part
       parameters:
-      - description: SparePart ID
+      - description: SparePartModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register spare_part
         in: body
-        name: spare_part
+        name: spare_part_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateSparePartModel'
@@ -1747,7 +2020,7 @@ paths:
       parameters:
       - description: Register spare_part
         in: body
-        name: spare_part
+        name: spare_part_model
         required: true
         schema:
           items:
@@ -1817,7 +2090,7 @@ paths:
       parameters:
       - description: Register supplier
         in: body
-        name: supplier
+        name: supplier_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateSupplierModel'
@@ -1849,7 +2122,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -1868,19 +2141,19 @@ paths:
       summary: Get supplier by ID
       tags:
       - supplier
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit supplier
       parameters:
-      - description: Supplier ID
+      - description: SupplierModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register supplier
         in: body
-        name: supplier
+        name: supplier_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateSupplierModel'
@@ -1929,7 +2202,7 @@ paths:
       parameters:
       - description: Register supplier
         in: body
-        name: supplier
+        name: supplier_model
         required: true
         schema:
           items:
@@ -1999,7 +2272,7 @@ paths:
       parameters:
       - description: Register task
         in: body
-        name: task
+        name: task_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateTaskModel'
@@ -2031,14 +2304,14 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: with task data
         in: query
         name: with_sub_tasks
         type: boolean
-      - description: with sub_tasks task data
+      - description: with Vehicle Task data
         in: query
-        name: with_sub_tasks_sub_tasks
+        name: with_vehicle_tasks
         type: boolean
       produces:
       - application/json
@@ -2058,19 +2331,19 @@ paths:
       summary: Get task by ID
       tags:
       - task
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit task
       parameters:
-      - description: Task ID
+      - description: TaskModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register task
         in: body
-        name: task
+        name: task_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateTaskModel'
@@ -2119,7 +2392,7 @@ paths:
       parameters:
       - description: Register task
         in: body
-        name: task
+        name: task_model
         required: true
         schema:
           items:
@@ -2171,9 +2444,9 @@ paths:
         in: query
         name: with_sub_tasks
         type: boolean
-      - description: with sub_tasks task data
+      - description: with Vehicle Task data
         in: query
-        name: with_sub_tasks_sub_tasks
+        name: with_vehicle_tasks
         type: boolean
       produces:
       - application/json
@@ -2197,7 +2470,7 @@ paths:
       parameters:
       - description: Register vehicle
         in: body
-        name: vehicle
+        name: vehicle_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateVehicleModel'
@@ -2229,30 +2502,10 @@ paths:
         in: path
         name: id
         required: true
-        type: string
-      - description: with owner data
+        type: integer
+      - description: with Vehicle Task data
         in: query
-        name: with_owner
-        type: boolean
-      - description: with vehicle task data
-        in: query
-        name: with_vehicle_task
-        type: boolean
-      - description: with vehicle_task employee data
-        in: query
-        name: with_vehicle_task_employee
-        type: boolean
-      - description: with vehicle_task task data
-        in: query
-        name: with_vehicle_task_task
-        type: boolean
-      - description: with vehicle_task vehicle data
-        in: query
-        name: with_vehicle_task_vehicle
-        type: boolean
-      - description: with employee data
-        in: query
-        name: with_created_by
+        name: with_tasks
         type: boolean
       produces:
       - application/json
@@ -2272,19 +2525,19 @@ paths:
       summary: Get vehicle by ID
       tags:
       - vehicle
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit vehicle
       parameters:
-      - description: Vehicle ID
+      - description: VehicleModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register vehicle
         in: body
-        name: vehicle
+        name: vehicle_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateVehicleModel'
@@ -2333,7 +2586,7 @@ paths:
       parameters:
       - description: Register vehicle
         in: body
-        name: vehicle
+        name: vehicle_model
         required: true
         schema:
           items:
@@ -2381,29 +2634,9 @@ paths:
         in: query
         name: descending
         type: boolean
-      - description: with owner data
+      - description: with Vehicle Task data
         in: query
-        name: with_owner
-        type: boolean
-      - description: with vehicle task data
-        in: query
-        name: with_vehicle_task
-        type: boolean
-      - description: with vehicle_task employee data
-        in: query
-        name: with_vehicle_task_employee
-        type: boolean
-      - description: with vehicle_task task data
-        in: query
-        name: with_vehicle_task_task
-        type: boolean
-      - description: with vehicle_task vehicle data
-        in: query
-        name: with_vehicle_task_vehicle
-        type: boolean
-      - description: with employee data
-        in: query
-        name: with_created_by
+        name: with_tasks
         type: boolean
       produces:
       - application/json
@@ -2427,7 +2660,7 @@ paths:
       parameters:
       - description: Register vehicle_task
         in: body
-        name: vehicle_task
+        name: vehicle_task_model
         required: true
         schema:
           $ref: '#/definitions/models.CreateVehicleTaskModel'
@@ -2459,23 +2692,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
-      - description: with employee data
-        in: query
-        name: with_employee
-        type: boolean
-      - description: with task data
-        in: query
-        name: with_task
-        type: boolean
-      - description: with task task data
-        in: query
-        name: with_task_sub_tasks
-        type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
-        type: boolean
+        type: integer
       produces:
       - application/json
       responses:
@@ -2494,19 +2711,19 @@ paths:
       summary: Get vehicle_task by ID
       tags:
       - vehicle_task
-    put:
+    patch:
       consumes:
       - application/json
       description: Edit vehicle_task
       parameters:
-      - description: VehicleTask ID
+      - description: VehicleTaskModel ID
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       - description: Register vehicle_task
         in: body
-        name: vehicle_task
+        name: vehicle_task_model
         required: true
         schema:
           $ref: '#/definitions/models.UpdateVehicleTaskModel'
@@ -2555,7 +2772,7 @@ paths:
       parameters:
       - description: Register vehicle_task
         in: body
-        name: vehicle_task
+        name: vehicle_task_model
         required: true
         schema:
           items:
@@ -2602,22 +2819,6 @@ paths:
       - description: order
         in: query
         name: descending
-        type: boolean
-      - description: with employee data
-        in: query
-        name: with_employee
-        type: boolean
-      - description: with task data
-        in: query
-        name: with_task
-        type: boolean
-      - description: with task task data
-        in: query
-        name: with_task_sub_tasks
-        type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
         type: boolean
       produces:
       - application/json

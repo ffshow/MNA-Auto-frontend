@@ -36,7 +36,7 @@ class GaragePage extends StatelessWidget {
               final g = ModelsCreateGarageModel(
                 label: 'garage ${now.microsecond}',
               );
-              swagger.apiGaragePost(garage: g);
+              swagger.apiGaragePost(garageModel: g);
             },
             icon: const Icon(Icons.add),
           ),

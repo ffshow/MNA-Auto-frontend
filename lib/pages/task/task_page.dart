@@ -98,7 +98,7 @@ class CreateTaskWidgt extends StatelessWidget {
               final List<ModelsCreateTaskModel> tasks =
                   labels.map((e) => ModelsCreateTaskModel(label: e)).toList();
               swagger.apiTaskPost(
-                task: ModelsCreateTaskModel(
+                taskModel: ModelsCreateTaskModel(
                   label: value['label'],
                   subTasks: tasks,
                 ),
@@ -228,6 +228,8 @@ class _TasksWidgetState extends State<_TasksWidget> {
       child: Column(
         children: [
           Wrap(
+            alignment: WrapAlignment.center,
+            runAlignment: WrapAlignment.center,
             runSpacing: 8,
             spacing: 8,
             children: widget.data.map((ModelsTaskModelResponse e) {
@@ -242,18 +244,17 @@ class _TasksWidgetState extends State<_TasksWidget> {
             }).toList(),
           ),
           kH16,
-          if (_selected?.subTasksIds?.isEmpty ?? false)
-            const Text('This task has no sub-tasks'),
-          ...?_selected?.subTasksIds?.map((String e) {
-            return ListTile(
-              leading: Text(e),
-            );
-          }).toList(),
-          ...?_selected?.subTasks?.map((ModelsTaskModelResponse e) {
-            return ListTile(
-              leading: Text(e.label ?? ''),
-            );
-          }).toList(),
+          // if (_selected?.subTasksIds?.isEmpty ?? false)
+          // const Text('This task has no sub-tasks'),
+          // if (_selected?.subTasksIds?.isNotEmpty ?? false)
+          //   const ListTile(
+          //     title: Text('Subtasks'),
+          //   ),
+          // ...?_selected?.subTasks?.map((ModelsTaskModelResponse e) {
+          //   return ListTile(
+          //     leading: Text(e.label ?? ''),
+          //   );
+          // }).toList(),
         ],
       ),
     );
@@ -454,9 +455,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     );
     if (value != null) {
       // update task
-      swagger.apiTaskIdPut(
+      swagger.apiTaskIdPatch(
         id: task.id,
-        task: ModelsUpdateTaskModel.fromJson(value),
+        taskModel: ModelsUpdateTaskModel.fromJson(value),
       );
     }
   }

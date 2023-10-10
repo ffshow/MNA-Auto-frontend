@@ -33,10 +33,14 @@ final GoRouter router = GoRouter(
                 if (id == null) {
                   return _errorPageBuilder(context, null);
                 }
+                final int? intID = int.tryParse(id);
+                if (intID == null) {
+                  return _errorPageBuilder(context, null);
+                }
                 return BlocProvider(
                   create: (context) => VehicleDetailsCubit(
                     RepositoryProvider.of<Swagger>(context),
-                  )..getVehicle(id),
+                  )..getVehicle(intID),
                   lazy: false,
                   child: VehicleDetailPage(
                     id: id,

@@ -156,12 +156,12 @@ class _DevPageState extends State<DevPage> {
       expertise: faker.randomGenerator.boolean(),
       mileage: faker.randomGenerator.integer(1000, min: 20),
       note: faker.lorem.sentence(),
-      ownerId: '65005460b40777ab605fa163',
+      ownerId: 0,
       procedureVe: faker.randomGenerator.boolean(),
       registration: faker.vehicle.yearMakeModel(),
       serialNumber: faker.vehicle.vin(),
     );
-    swagger.apiVehiclePost(vehicle: v);
+    swagger.apiVehiclePost(vehicleModel: v);
   }
 
   void _createOwner() {
@@ -172,7 +172,7 @@ class _DevPageState extends State<DevPage> {
       photo: '',
       postalCode: faker.address.zipCode(),
     );
-    swagger.apiOwnerPost(owner: o);
+    swagger.apiOwnerPost(ownerModel: o);
   }
 
   void _seedVehicles() {

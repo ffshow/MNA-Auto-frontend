@@ -16,7 +16,7 @@ class CreateVehicleCubit extends Cubit<CreateVehicleState> {
       ModelsCreateVehicleModel? vehicle =
           ModelsCreateVehicleModel.fromJson(data);
       emit(state.copyWith(status: StateStatus.loading, vehicle: vehicle));
-      swagger.apiVehiclePost(vehicle: vehicle);
+      swagger.apiVehiclePost(vehicleModel: vehicle);
       emit(state.copyWith(status: StateStatus.success));
     } on Exception catch (e) {
       emit(state.copyWith(status: StateStatus.failure, error: e.toString()));

@@ -139,7 +139,7 @@ class CreateVechilePage extends StatelessWidget {
                                 (Iterable<ModelsOwnerModelResponse> owners) {
                               return FormBuilderDropdown<String>(
                                 name: 'owner_id',
-                                initialValue: state.vehicle?.ownerId,
+                                initialValue: state.vehicle?.ownerId.toString(),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 decoration:
@@ -147,7 +147,7 @@ class CreateVechilePage extends StatelessWidget {
                                 items: owners.map<DropdownMenuItem<String>>(
                                     (ModelsOwnerModelResponse e) {
                                   return DropdownMenuItem<String>(
-                                    value: e.id,
+                                    value: e.id.toString(),
                                     child: Text(e.email ?? ''),
                                   );
                                 }).toList(),

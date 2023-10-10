@@ -7,9 +7,62 @@ import 'dart:convert';
 part 'swagger.models.swagger.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class GormDeletedAt {
+  const GormDeletedAt({
+    this.time,
+    this.valid,
+  });
+
+  factory GormDeletedAt.fromJson(Map<String, dynamic> json) =>
+      _$GormDeletedAtFromJson(json);
+
+  static const toJsonFactory = _$GormDeletedAtToJson;
+  Map<String, dynamic> toJson() => _$GormDeletedAtToJson(this);
+
+  @JsonKey(name: 'time')
+  final String? time;
+  @JsonKey(name: 'valid')
+  final bool? valid;
+  static const fromJsonFactory = _$GormDeletedAtFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GormDeletedAt &&
+            (identical(other.time, time) ||
+                const DeepCollectionEquality().equals(other.time, time)) &&
+            (identical(other.valid, valid) ||
+                const DeepCollectionEquality().equals(other.valid, valid)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(time) ^
+      const DeepCollectionEquality().hash(valid) ^
+      runtimeType.hashCode;
+}
+
+extension $GormDeletedAtExtension on GormDeletedAt {
+  GormDeletedAt copyWith({String? time, bool? valid}) {
+    return GormDeletedAt(time: time ?? this.time, valid: valid ?? this.valid);
+  }
+
+  GormDeletedAt copyWithWrapped(
+      {Wrapped<String?>? time, Wrapped<bool?>? valid}) {
+    return GormDeletedAt(
+        time: (time != null ? time.value : this.time),
+        valid: (valid != null ? valid.value : this.valid));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class ModelsAccountModelResponse {
   const ModelsAccountModelResponse({
     this.createdAt,
+    this.deletedAt,
     this.email,
     this.id,
     this.name,
@@ -24,10 +77,12 @@ class ModelsAccountModelResponse {
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'email')
   final String? email;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'updated_at')
@@ -41,6 +96,9 @@ class ModelsAccountModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
             (identical(other.id, id) ||
@@ -58,6 +116,7 @@ class ModelsAccountModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
@@ -68,12 +127,14 @@ class ModelsAccountModelResponse {
 extension $ModelsAccountModelResponseExtension on ModelsAccountModelResponse {
   ModelsAccountModelResponse copyWith(
       {DateTime? createdAt,
+      GormDeletedAt? deletedAt,
       String? email,
-      String? id,
+      int? id,
       String? name,
       DateTime? updatedAt}) {
     return ModelsAccountModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         email: email ?? this.email,
         id: id ?? this.id,
         name: name ?? this.name,
@@ -82,12 +143,14 @@ extension $ModelsAccountModelResponseExtension on ModelsAccountModelResponse {
 
   ModelsAccountModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
+      Wrapped<GormDeletedAt?>? deletedAt,
       Wrapped<String?>? email,
-      Wrapped<String?>? id,
+      Wrapped<int?>? id,
       Wrapped<String?>? name,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsAccountModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         email: (email != null ? email.value : this.email),
         id: (id != null ? id.value : this.id),
         name: (name != null ? name.value : this.name),
@@ -151,6 +214,9 @@ extension $ModelsCreateAccountModelExtension on ModelsCreateAccountModel {
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateEmployeeModel {
   const ModelsCreateEmployeeModel({
+    this.createdTasks,
+    this.createdVehicles,
+    this.deletedVehicles,
     this.name,
   });
 
@@ -160,6 +226,13 @@ class ModelsCreateEmployeeModel {
   static const toJsonFactory = _$ModelsCreateEmployeeModelToJson;
   Map<String, dynamic> toJson() => _$ModelsCreateEmployeeModelToJson(this);
 
+  @JsonKey(
+      name: 'created_tasks', defaultValue: <ModelsCreateVehicleTaskModel>[])
+  final List<ModelsCreateVehicleTaskModel>? createdTasks;
+  @JsonKey(name: 'created_vehicles', defaultValue: <ModelsCreateVehicleModel>[])
+  final List<ModelsCreateVehicleModel>? createdVehicles;
+  @JsonKey(name: 'deleted_vehicles', defaultValue: <ModelsCreateVehicleModel>[])
+  final List<ModelsCreateVehicleModel>? deletedVehicles;
   @JsonKey(name: 'name')
   final String? name;
   static const fromJsonFactory = _$ModelsCreateEmployeeModelFromJson;
@@ -168,6 +241,15 @@ class ModelsCreateEmployeeModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ModelsCreateEmployeeModel &&
+            (identical(other.createdTasks, createdTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdTasks, createdTasks)) &&
+            (identical(other.createdVehicles, createdVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedVehicles, deletedVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicles, deletedVehicles)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -177,16 +259,40 @@ class ModelsCreateEmployeeModel {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(createdTasks) ^
+      const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedVehicles) ^
+      const DeepCollectionEquality().hash(name) ^
+      runtimeType.hashCode;
 }
 
 extension $ModelsCreateEmployeeModelExtension on ModelsCreateEmployeeModel {
-  ModelsCreateEmployeeModel copyWith({String? name}) {
-    return ModelsCreateEmployeeModel(name: name ?? this.name);
+  ModelsCreateEmployeeModel copyWith(
+      {List<ModelsCreateVehicleTaskModel>? createdTasks,
+      List<ModelsCreateVehicleModel>? createdVehicles,
+      List<ModelsCreateVehicleModel>? deletedVehicles,
+      String? name}) {
+    return ModelsCreateEmployeeModel(
+        createdTasks: createdTasks ?? this.createdTasks,
+        createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedVehicles: deletedVehicles ?? this.deletedVehicles,
+        name: name ?? this.name);
   }
 
-  ModelsCreateEmployeeModel copyWithWrapped({Wrapped<String?>? name}) {
+  ModelsCreateEmployeeModel copyWithWrapped(
+      {Wrapped<List<ModelsCreateVehicleTaskModel>?>? createdTasks,
+      Wrapped<List<ModelsCreateVehicleModel>?>? createdVehicles,
+      Wrapped<List<ModelsCreateVehicleModel>?>? deletedVehicles,
+      Wrapped<String?>? name}) {
     return ModelsCreateEmployeeModel(
+        createdTasks:
+            (createdTasks != null ? createdTasks.value : this.createdTasks),
+        createdVehicles: (createdVehicles != null
+            ? createdVehicles.value
+            : this.createdVehicles),
+        deletedVehicles: (deletedVehicles != null
+            ? deletedVehicles.value
+            : this.deletedVehicles),
         name: (name != null ? name.value : this.name));
   }
 }
@@ -242,6 +348,7 @@ class ModelsCreateOwnerModel {
     this.phone,
     this.photo,
     this.postalCode,
+    this.vehicles,
   });
 
   factory ModelsCreateOwnerModel.fromJson(Map<String, dynamic> json) =>
@@ -260,6 +367,8 @@ class ModelsCreateOwnerModel {
   final String? photo;
   @JsonKey(name: 'postal_code')
   final String? postalCode;
+  @JsonKey(name: 'vehicles', defaultValue: <ModelsCreateVehicleModel>[])
+  final List<ModelsCreateVehicleModel>? vehicles;
   static const fromJsonFactory = _$ModelsCreateOwnerModelFromJson;
 
   @override
@@ -277,7 +386,10 @@ class ModelsCreateOwnerModel {
                 const DeepCollectionEquality().equals(other.photo, photo)) &&
             (identical(other.postalCode, postalCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.postalCode, postalCode)));
+                    .equals(other.postalCode, postalCode)) &&
+            (identical(other.vehicles, vehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicles, vehicles)));
   }
 
   @override
@@ -290,6 +402,7 @@ class ModelsCreateOwnerModel {
       const DeepCollectionEquality().hash(phone) ^
       const DeepCollectionEquality().hash(photo) ^
       const DeepCollectionEquality().hash(postalCode) ^
+      const DeepCollectionEquality().hash(vehicles) ^
       runtimeType.hashCode;
 }
 
@@ -299,13 +412,15 @@ extension $ModelsCreateOwnerModelExtension on ModelsCreateOwnerModel {
       String? email,
       String? phone,
       String? photo,
-      String? postalCode}) {
+      String? postalCode,
+      List<ModelsCreateVehicleModel>? vehicles}) {
     return ModelsCreateOwnerModel(
         address: address ?? this.address,
         email: email ?? this.email,
         phone: phone ?? this.phone,
         photo: photo ?? this.photo,
-        postalCode: postalCode ?? this.postalCode);
+        postalCode: postalCode ?? this.postalCode,
+        vehicles: vehicles ?? this.vehicles);
   }
 
   ModelsCreateOwnerModel copyWithWrapped(
@@ -313,13 +428,15 @@ extension $ModelsCreateOwnerModelExtension on ModelsCreateOwnerModel {
       Wrapped<String?>? email,
       Wrapped<String?>? phone,
       Wrapped<String?>? photo,
-      Wrapped<String?>? postalCode}) {
+      Wrapped<String?>? postalCode,
+      Wrapped<List<ModelsCreateVehicleModel>?>? vehicles}) {
     return ModelsCreateOwnerModel(
         address: (address != null ? address.value : this.address),
         email: (email != null ? email.value : this.email),
         phone: (phone != null ? phone.value : this.phone),
         photo: (photo != null ? photo.value : this.photo),
-        postalCode: (postalCode != null ? postalCode.value : this.postalCode));
+        postalCode: (postalCode != null ? postalCode.value : this.postalCode),
+        vehicles: (vehicles != null ? vehicles.value : this.vehicles));
   }
 }
 
@@ -480,9 +597,9 @@ extension $ModelsCreateSupplierModelExtension on ModelsCreateSupplierModel {
 class ModelsCreateTaskModel {
   const ModelsCreateTaskModel({
     this.label,
-    this.parentId,
+    this.parentTaskId,
     this.subTasks,
-    this.subTasksIds,
+    this.vehicleTasks,
   });
 
   factory ModelsCreateTaskModel.fromJson(Map<String, dynamic> json) =>
@@ -493,12 +610,13 @@ class ModelsCreateTaskModel {
 
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'parent_id')
-  final String? parentId;
+  @JsonKey(name: 'parent_task_id')
+  final int? parentTaskId;
   @JsonKey(name: 'sub_tasks', defaultValue: <ModelsCreateTaskModel>[])
   final List<ModelsCreateTaskModel>? subTasks;
-  @JsonKey(name: 'sub_tasks_ids', defaultValue: <String>[])
-  final List<String>? subTasksIds;
+  @JsonKey(
+      name: 'vehicle_tasks', defaultValue: <ModelsCreateVehicleTaskModel>[])
+  final List<ModelsCreateVehicleTaskModel>? vehicleTasks;
   static const fromJsonFactory = _$ModelsCreateTaskModelFromJson;
 
   @override
@@ -507,15 +625,15 @@ class ModelsCreateTaskModel {
         (other is ModelsCreateTaskModel &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.parentId, parentId) ||
+            (identical(other.parentTaskId, parentTaskId) ||
                 const DeepCollectionEquality()
-                    .equals(other.parentId, parentId)) &&
+                    .equals(other.parentTaskId, parentTaskId)) &&
             (identical(other.subTasks, subTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.subTasks, subTasks)) &&
-            (identical(other.subTasksIds, subTasksIds) ||
+            (identical(other.vehicleTasks, vehicleTasks) ||
                 const DeepCollectionEquality()
-                    .equals(other.subTasksIds, subTasksIds)));
+                    .equals(other.vehicleTasks, vehicleTasks)));
   }
 
   @override
@@ -524,36 +642,37 @@ class ModelsCreateTaskModel {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(parentId) ^
+      const DeepCollectionEquality().hash(parentTaskId) ^
       const DeepCollectionEquality().hash(subTasks) ^
-      const DeepCollectionEquality().hash(subTasksIds) ^
+      const DeepCollectionEquality().hash(vehicleTasks) ^
       runtimeType.hashCode;
 }
 
 extension $ModelsCreateTaskModelExtension on ModelsCreateTaskModel {
   ModelsCreateTaskModel copyWith(
       {String? label,
-      String? parentId,
+      int? parentTaskId,
       List<ModelsCreateTaskModel>? subTasks,
-      List<String>? subTasksIds}) {
+      List<ModelsCreateVehicleTaskModel>? vehicleTasks}) {
     return ModelsCreateTaskModel(
         label: label ?? this.label,
-        parentId: parentId ?? this.parentId,
+        parentTaskId: parentTaskId ?? this.parentTaskId,
         subTasks: subTasks ?? this.subTasks,
-        subTasksIds: subTasksIds ?? this.subTasksIds);
+        vehicleTasks: vehicleTasks ?? this.vehicleTasks);
   }
 
   ModelsCreateTaskModel copyWithWrapped(
       {Wrapped<String?>? label,
-      Wrapped<String?>? parentId,
+      Wrapped<int?>? parentTaskId,
       Wrapped<List<ModelsCreateTaskModel>?>? subTasks,
-      Wrapped<List<String>?>? subTasksIds}) {
+      Wrapped<List<ModelsCreateVehicleTaskModel>?>? vehicleTasks}) {
     return ModelsCreateTaskModel(
         label: (label != null ? label.value : this.label),
-        parentId: (parentId != null ? parentId.value : this.parentId),
+        parentTaskId:
+            (parentTaskId != null ? parentTaskId.value : this.parentTaskId),
         subTasks: (subTasks != null ? subTasks.value : this.subTasks),
-        subTasksIds:
-            (subTasksIds != null ? subTasksIds.value : this.subTasksIds));
+        vehicleTasks:
+            (vehicleTasks != null ? vehicleTasks.value : this.vehicleTasks));
   }
 }
 
@@ -563,21 +682,19 @@ class ModelsCreateVehicleModel {
     this.chrono,
     this.collectionDate,
     this.commercialName,
-    this.createdBy,
     this.createdById,
+    this.deletedById,
     this.deliveryDate,
     this.expertise,
     this.firstCirculation,
     this.mileage,
     this.note,
-    this.owner,
     this.ownerId,
     this.procedureVe,
     this.registration,
     this.serialNumber,
     this.soldAt,
-    this.vehicleTask,
-    this.vehicleTaskIds,
+    this.tasks,
   });
 
   factory ModelsCreateVehicleModel.fromJson(Map<String, dynamic> json) =>
@@ -592,10 +709,10 @@ class ModelsCreateVehicleModel {
   final DateTime? collectionDate;
   @JsonKey(name: 'commercial_name')
   final String? commercialName;
-  @JsonKey(name: 'created_by')
-  final ModelsCreateEmployeeModel? createdBy;
   @JsonKey(name: 'created_by_id')
-  final String? createdById;
+  final int? createdById;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'delivery_date')
   final DateTime? deliveryDate;
   @JsonKey(name: 'expertise')
@@ -606,10 +723,8 @@ class ModelsCreateVehicleModel {
   final int? mileage;
   @JsonKey(name: 'note')
   final String? note;
-  @JsonKey(name: 'owner')
-  final ModelsCreateOwnerModel? owner;
   @JsonKey(name: 'owner_id')
-  final String? ownerId;
+  final int? ownerId;
   @JsonKey(name: 'procedure_ve')
   final bool? procedureVe;
   @JsonKey(name: 'registration')
@@ -618,10 +733,8 @@ class ModelsCreateVehicleModel {
   final String? serialNumber;
   @JsonKey(name: 'sold_at')
   final DateTime? soldAt;
-  @JsonKey(name: 'vehicle_task', defaultValue: <ModelsCreateVehicleTaskModel>[])
-  final List<ModelsCreateVehicleTaskModel>? vehicleTask;
-  @JsonKey(name: 'vehicle_task_ids', defaultValue: <String>[])
-  final List<String>? vehicleTaskIds;
+  @JsonKey(name: 'tasks', defaultValue: <ModelsCreateVehicleTaskModel>[])
+  final List<ModelsCreateVehicleTaskModel>? tasks;
   static const fromJsonFactory = _$ModelsCreateVehicleModelFromJson;
 
   @override
@@ -636,12 +749,12 @@ class ModelsCreateVehicleModel {
             (identical(other.commercialName, commercialName) ||
                 const DeepCollectionEquality()
                     .equals(other.commercialName, commercialName)) &&
-            (identical(other.createdBy, createdBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdBy, createdBy)) &&
             (identical(other.createdById, createdById) ||
                 const DeepCollectionEquality()
                     .equals(other.createdById, createdById)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.deliveryDate, deliveryDate)) &&
@@ -656,8 +769,6 @@ class ModelsCreateVehicleModel {
                     .equals(other.mileage, mileage)) &&
             (identical(other.note, note) ||
                 const DeepCollectionEquality().equals(other.note, note)) &&
-            (identical(other.owner, owner) ||
-                const DeepCollectionEquality().equals(other.owner, owner)) &&
             (identical(other.ownerId, ownerId) ||
                 const DeepCollectionEquality()
                     .equals(other.ownerId, ownerId)) &&
@@ -672,12 +783,8 @@ class ModelsCreateVehicleModel {
                     .equals(other.serialNumber, serialNumber)) &&
             (identical(other.soldAt, soldAt) ||
                 const DeepCollectionEquality().equals(other.soldAt, soldAt)) &&
-            (identical(other.vehicleTask, vehicleTask) ||
-                const DeepCollectionEquality()
-                    .equals(other.vehicleTask, vehicleTask)) &&
-            (identical(other.vehicleTaskIds, vehicleTaskIds) ||
-                const DeepCollectionEquality()
-                    .equals(other.vehicleTaskIds, vehicleTaskIds)));
+            (identical(other.tasks, tasks) ||
+                const DeepCollectionEquality().equals(other.tasks, tasks)));
   }
 
   @override
@@ -688,21 +795,19 @@ class ModelsCreateVehicleModel {
       const DeepCollectionEquality().hash(chrono) ^
       const DeepCollectionEquality().hash(collectionDate) ^
       const DeepCollectionEquality().hash(commercialName) ^
-      const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdById) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(deliveryDate) ^
       const DeepCollectionEquality().hash(expertise) ^
       const DeepCollectionEquality().hash(firstCirculation) ^
       const DeepCollectionEquality().hash(mileage) ^
       const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(owner) ^
       const DeepCollectionEquality().hash(ownerId) ^
       const DeepCollectionEquality().hash(procedureVe) ^
       const DeepCollectionEquality().hash(registration) ^
       const DeepCollectionEquality().hash(serialNumber) ^
       const DeepCollectionEquality().hash(soldAt) ^
-      const DeepCollectionEquality().hash(vehicleTask) ^
-      const DeepCollectionEquality().hash(vehicleTaskIds) ^
+      const DeepCollectionEquality().hash(tasks) ^
       runtimeType.hashCode;
 }
 
@@ -711,61 +816,55 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
       {String? chrono,
       DateTime? collectionDate,
       String? commercialName,
-      ModelsCreateEmployeeModel? createdBy,
-      String? createdById,
+      int? createdById,
+      int? deletedById,
       DateTime? deliveryDate,
       bool? expertise,
       DateTime? firstCirculation,
       int? mileage,
       String? note,
-      ModelsCreateOwnerModel? owner,
-      String? ownerId,
+      int? ownerId,
       bool? procedureVe,
       String? registration,
       String? serialNumber,
       DateTime? soldAt,
-      List<ModelsCreateVehicleTaskModel>? vehicleTask,
-      List<String>? vehicleTaskIds}) {
+      List<ModelsCreateVehicleTaskModel>? tasks}) {
     return ModelsCreateVehicleModel(
         chrono: chrono ?? this.chrono,
         collectionDate: collectionDate ?? this.collectionDate,
         commercialName: commercialName ?? this.commercialName,
-        createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
+        deletedById: deletedById ?? this.deletedById,
         deliveryDate: deliveryDate ?? this.deliveryDate,
         expertise: expertise ?? this.expertise,
         firstCirculation: firstCirculation ?? this.firstCirculation,
         mileage: mileage ?? this.mileage,
         note: note ?? this.note,
-        owner: owner ?? this.owner,
         ownerId: ownerId ?? this.ownerId,
         procedureVe: procedureVe ?? this.procedureVe,
         registration: registration ?? this.registration,
         serialNumber: serialNumber ?? this.serialNumber,
         soldAt: soldAt ?? this.soldAt,
-        vehicleTask: vehicleTask ?? this.vehicleTask,
-        vehicleTaskIds: vehicleTaskIds ?? this.vehicleTaskIds);
+        tasks: tasks ?? this.tasks);
   }
 
   ModelsCreateVehicleModel copyWithWrapped(
       {Wrapped<String?>? chrono,
       Wrapped<DateTime?>? collectionDate,
       Wrapped<String?>? commercialName,
-      Wrapped<ModelsCreateEmployeeModel?>? createdBy,
-      Wrapped<String?>? createdById,
+      Wrapped<int?>? createdById,
+      Wrapped<int?>? deletedById,
       Wrapped<DateTime?>? deliveryDate,
       Wrapped<bool?>? expertise,
       Wrapped<DateTime?>? firstCirculation,
       Wrapped<int?>? mileage,
       Wrapped<String?>? note,
-      Wrapped<ModelsCreateOwnerModel?>? owner,
-      Wrapped<String?>? ownerId,
+      Wrapped<int?>? ownerId,
       Wrapped<bool?>? procedureVe,
       Wrapped<String?>? registration,
       Wrapped<String?>? serialNumber,
       Wrapped<DateTime?>? soldAt,
-      Wrapped<List<ModelsCreateVehicleTaskModel>?>? vehicleTask,
-      Wrapped<List<String>?>? vehicleTaskIds}) {
+      Wrapped<List<ModelsCreateVehicleTaskModel>?>? tasks}) {
     return ModelsCreateVehicleModel(
         chrono: (chrono != null ? chrono.value : this.chrono),
         collectionDate: (collectionDate != null
@@ -774,9 +873,10 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
         commercialName: (commercialName != null
             ? commercialName.value
             : this.commercialName),
-        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
         createdById:
             (createdById != null ? createdById.value : this.createdById),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         deliveryDate:
             (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
         expertise: (expertise != null ? expertise.value : this.expertise),
@@ -785,7 +885,6 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
             : this.firstCirculation),
         mileage: (mileage != null ? mileage.value : this.mileage),
         note: (note != null ? note.value : this.note),
-        owner: (owner != null ? owner.value : this.owner),
         ownerId: (ownerId != null ? ownerId.value : this.ownerId),
         procedureVe:
             (procedureVe != null ? procedureVe.value : this.procedureVe),
@@ -794,26 +893,19 @@ extension $ModelsCreateVehicleModelExtension on ModelsCreateVehicleModel {
         serialNumber:
             (serialNumber != null ? serialNumber.value : this.serialNumber),
         soldAt: (soldAt != null ? soldAt.value : this.soldAt),
-        vehicleTask:
-            (vehicleTask != null ? vehicleTask.value : this.vehicleTask),
-        vehicleTaskIds: (vehicleTaskIds != null
-            ? vehicleTaskIds.value
-            : this.vehicleTaskIds));
+        tasks: (tasks != null ? tasks.value : this.tasks));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ModelsCreateVehicleTaskModel {
   const ModelsCreateVehicleTaskModel({
+    this.createdById,
     this.deleted,
-    this.employee,
-    this.employeeId,
-    this.finishedAt,
+    this.finishdedAt,
     this.startedAt,
-    this.task,
-    this.taskId,
-    this.vehicle,
-    this.vehicleId,
+    this.tasksId,
+    this.vehiclesId,
   });
 
   factory ModelsCreateVehicleTaskModel.fromJson(Map<String, dynamic> json) =>
@@ -822,55 +914,42 @@ class ModelsCreateVehicleTaskModel {
   static const toJsonFactory = _$ModelsCreateVehicleTaskModelToJson;
   Map<String, dynamic> toJson() => _$ModelsCreateVehicleTaskModelToJson(this);
 
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
   @JsonKey(name: 'deleted')
   final bool? deleted;
-  @JsonKey(name: 'employee')
-  final ModelsCreateEmployeeModel? employee;
-  @JsonKey(name: 'employee_id')
-  final String? employeeId;
-  @JsonKey(name: 'finished_at')
-  final DateTime? finishedAt;
+  @JsonKey(name: 'finishded_at')
+  final DateTime? finishdedAt;
   @JsonKey(name: 'started_at')
   final DateTime? startedAt;
-  @JsonKey(name: 'task')
-  final ModelsCreateTaskModel? task;
-  @JsonKey(name: 'task_id')
-  final String? taskId;
-  @JsonKey(name: 'vehicle')
-  final ModelsCreateVehicleModel? vehicle;
-  @JsonKey(name: 'vehicle_id')
-  final String? vehicleId;
+  @JsonKey(name: 'tasks_id')
+  final int? tasksId;
+  @JsonKey(name: 'vehicles_id')
+  final int? vehiclesId;
   static const fromJsonFactory = _$ModelsCreateVehicleTaskModelFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ModelsCreateVehicleTaskModel &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
-            (identical(other.employee, employee) ||
+            (identical(other.finishdedAt, finishdedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.employee, employee)) &&
-            (identical(other.employeeId, employeeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.employeeId, employeeId)) &&
-            (identical(other.finishedAt, finishedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.finishedAt, finishedAt)) &&
+                    .equals(other.finishdedAt, finishdedAt)) &&
             (identical(other.startedAt, startedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.startedAt, startedAt)) &&
-            (identical(other.task, task) ||
-                const DeepCollectionEquality().equals(other.task, task)) &&
-            (identical(other.taskId, taskId) ||
-                const DeepCollectionEquality().equals(other.taskId, taskId)) &&
-            (identical(other.vehicle, vehicle) ||
+            (identical(other.tasksId, tasksId) ||
                 const DeepCollectionEquality()
-                    .equals(other.vehicle, vehicle)) &&
-            (identical(other.vehicleId, vehicleId) ||
+                    .equals(other.tasksId, tasksId)) &&
+            (identical(other.vehiclesId, vehiclesId) ||
                 const DeepCollectionEquality()
-                    .equals(other.vehicleId, vehicleId)));
+                    .equals(other.vehiclesId, vehiclesId)));
   }
 
   @override
@@ -878,97 +957,108 @@ class ModelsCreateVehicleTaskModel {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
-      const DeepCollectionEquality().hash(employee) ^
-      const DeepCollectionEquality().hash(employeeId) ^
-      const DeepCollectionEquality().hash(finishedAt) ^
+      const DeepCollectionEquality().hash(finishdedAt) ^
       const DeepCollectionEquality().hash(startedAt) ^
-      const DeepCollectionEquality().hash(task) ^
-      const DeepCollectionEquality().hash(taskId) ^
-      const DeepCollectionEquality().hash(vehicle) ^
-      const DeepCollectionEquality().hash(vehicleId) ^
+      const DeepCollectionEquality().hash(tasksId) ^
+      const DeepCollectionEquality().hash(vehiclesId) ^
       runtimeType.hashCode;
 }
 
 extension $ModelsCreateVehicleTaskModelExtension
     on ModelsCreateVehicleTaskModel {
   ModelsCreateVehicleTaskModel copyWith(
-      {bool? deleted,
-      ModelsCreateEmployeeModel? employee,
-      String? employeeId,
-      DateTime? finishedAt,
+      {int? createdById,
+      bool? deleted,
+      DateTime? finishdedAt,
       DateTime? startedAt,
-      ModelsCreateTaskModel? task,
-      String? taskId,
-      ModelsCreateVehicleModel? vehicle,
-      String? vehicleId}) {
+      int? tasksId,
+      int? vehiclesId}) {
     return ModelsCreateVehicleTaskModel(
+        createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
-        employee: employee ?? this.employee,
-        employeeId: employeeId ?? this.employeeId,
-        finishedAt: finishedAt ?? this.finishedAt,
+        finishdedAt: finishdedAt ?? this.finishdedAt,
         startedAt: startedAt ?? this.startedAt,
-        task: task ?? this.task,
-        taskId: taskId ?? this.taskId,
-        vehicle: vehicle ?? this.vehicle,
-        vehicleId: vehicleId ?? this.vehicleId);
+        tasksId: tasksId ?? this.tasksId,
+        vehiclesId: vehiclesId ?? this.vehiclesId);
   }
 
   ModelsCreateVehicleTaskModel copyWithWrapped(
-      {Wrapped<bool?>? deleted,
-      Wrapped<ModelsCreateEmployeeModel?>? employee,
-      Wrapped<String?>? employeeId,
-      Wrapped<DateTime?>? finishedAt,
+      {Wrapped<int?>? createdById,
+      Wrapped<bool?>? deleted,
+      Wrapped<DateTime?>? finishdedAt,
       Wrapped<DateTime?>? startedAt,
-      Wrapped<ModelsCreateTaskModel?>? task,
-      Wrapped<String?>? taskId,
-      Wrapped<ModelsCreateVehicleModel?>? vehicle,
-      Wrapped<String?>? vehicleId}) {
+      Wrapped<int?>? tasksId,
+      Wrapped<int?>? vehiclesId}) {
     return ModelsCreateVehicleTaskModel(
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
-        employee: (employee != null ? employee.value : this.employee),
-        employeeId: (employeeId != null ? employeeId.value : this.employeeId),
-        finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
+        finishdedAt:
+            (finishdedAt != null ? finishdedAt.value : this.finishdedAt),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt),
-        task: (task != null ? task.value : this.task),
-        taskId: (taskId != null ? taskId.value : this.taskId),
-        vehicle: (vehicle != null ? vehicle.value : this.vehicle),
-        vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId));
+        tasksId: (tasksId != null ? tasksId.value : this.tasksId),
+        vehiclesId: (vehiclesId != null ? vehiclesId.value : this.vehiclesId));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class ModelsEmployeeModelResponse {
-  const ModelsEmployeeModelResponse({
+class ModelsEmployeeModel {
+  const ModelsEmployeeModel({
     this.createdAt,
+    this.createdTasks,
+    this.createdVehicles,
+    this.deletedAt,
+    this.deletedVehicles,
     this.id,
     this.name,
     this.updatedAt,
   });
 
-  factory ModelsEmployeeModelResponse.fromJson(Map<String, dynamic> json) =>
-      _$ModelsEmployeeModelResponseFromJson(json);
+  factory ModelsEmployeeModel.fromJson(Map<String, dynamic> json) =>
+      _$ModelsEmployeeModelFromJson(json);
 
-  static const toJsonFactory = _$ModelsEmployeeModelResponseToJson;
-  Map<String, dynamic> toJson() => _$ModelsEmployeeModelResponseToJson(this);
+  static const toJsonFactory = _$ModelsEmployeeModelToJson;
+  Map<String, dynamic> toJson() => _$ModelsEmployeeModelToJson(this);
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'created_tasks', defaultValue: <ModelsVehicleTaskModel>[])
+  final List<ModelsVehicleTaskModel>? createdTasks;
+  @JsonKey(name: 'created_vehicles', defaultValue: <ModelsVehicleModel>[])
+  final List<ModelsVehicleModel>? createdVehicles;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_vehicles', defaultValue: <ModelsVehicleModel>[])
+  final List<ModelsVehicleModel>? deletedVehicles;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  static const fromJsonFactory = _$ModelsEmployeeModelResponseFromJson;
+  static const fromJsonFactory = _$ModelsEmployeeModelFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ModelsEmployeeModelResponse &&
+        (other is ModelsEmployeeModel &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdTasks, createdTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdTasks, createdTasks)) &&
+            (identical(other.createdVehicles, createdVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedVehicles, deletedVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicles, deletedVehicles)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
@@ -984,6 +1074,141 @@ class ModelsEmployeeModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdTasks) ^
+      const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedVehicles) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
+      runtimeType.hashCode;
+}
+
+extension $ModelsEmployeeModelExtension on ModelsEmployeeModel {
+  ModelsEmployeeModel copyWith(
+      {DateTime? createdAt,
+      List<ModelsVehicleTaskModel>? createdTasks,
+      List<ModelsVehicleModel>? createdVehicles,
+      GormDeletedAt? deletedAt,
+      List<ModelsVehicleModel>? deletedVehicles,
+      int? id,
+      String? name,
+      DateTime? updatedAt}) {
+    return ModelsEmployeeModel(
+        createdAt: createdAt ?? this.createdAt,
+        createdTasks: createdTasks ?? this.createdTasks,
+        createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedAt: deletedAt ?? this.deletedAt,
+        deletedVehicles: deletedVehicles ?? this.deletedVehicles,
+        id: id ?? this.id,
+        name: name ?? this.name,
+        updatedAt: updatedAt ?? this.updatedAt);
+  }
+
+  ModelsEmployeeModel copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<List<ModelsVehicleTaskModel>?>? createdTasks,
+      Wrapped<List<ModelsVehicleModel>?>? createdVehicles,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<List<ModelsVehicleModel>?>? deletedVehicles,
+      Wrapped<int?>? id,
+      Wrapped<String?>? name,
+      Wrapped<DateTime?>? updatedAt}) {
+    return ModelsEmployeeModel(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdTasks:
+            (createdTasks != null ? createdTasks.value : this.createdTasks),
+        createdVehicles: (createdVehicles != null
+            ? createdVehicles.value
+            : this.createdVehicles),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedVehicles: (deletedVehicles != null
+            ? deletedVehicles.value
+            : this.deletedVehicles),
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ModelsEmployeeModelResponse {
+  const ModelsEmployeeModelResponse({
+    this.createdAt,
+    this.createdTasks,
+    this.createdVehicles,
+    this.deletedAt,
+    this.deletedVehicles,
+    this.id,
+    this.name,
+    this.updatedAt,
+  });
+
+  factory ModelsEmployeeModelResponse.fromJson(Map<String, dynamic> json) =>
+      _$ModelsEmployeeModelResponseFromJson(json);
+
+  static const toJsonFactory = _$ModelsEmployeeModelResponseToJson;
+  Map<String, dynamic> toJson() => _$ModelsEmployeeModelResponseToJson(this);
+
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(
+      name: 'created_tasks', defaultValue: <ModelsVehicleTaskModelResponse>[])
+  final List<ModelsVehicleTaskModelResponse>? createdTasks;
+  @JsonKey(
+      name: 'created_vehicles', defaultValue: <ModelsVehicleModelResponse>[])
+  final List<ModelsVehicleModelResponse>? createdVehicles;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(
+      name: 'deleted_vehicles', defaultValue: <ModelsVehicleModelResponse>[])
+  final List<ModelsVehicleModelResponse>? deletedVehicles;
+  @JsonKey(name: 'id')
+  final int? id;
+  @JsonKey(name: 'name')
+  final String? name;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  static const fromJsonFactory = _$ModelsEmployeeModelResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ModelsEmployeeModelResponse &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdTasks, createdTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdTasks, createdTasks)) &&
+            (identical(other.createdVehicles, createdVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedVehicles, deletedVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicles, deletedVehicles)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdTasks) ^
+      const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -992,9 +1217,20 @@ class ModelsEmployeeModelResponse {
 
 extension $ModelsEmployeeModelResponseExtension on ModelsEmployeeModelResponse {
   ModelsEmployeeModelResponse copyWith(
-      {DateTime? createdAt, String? id, String? name, DateTime? updatedAt}) {
+      {DateTime? createdAt,
+      List<ModelsVehicleTaskModelResponse>? createdTasks,
+      List<ModelsVehicleModelResponse>? createdVehicles,
+      GormDeletedAt? deletedAt,
+      List<ModelsVehicleModelResponse>? deletedVehicles,
+      int? id,
+      String? name,
+      DateTime? updatedAt}) {
     return ModelsEmployeeModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        createdTasks: createdTasks ?? this.createdTasks,
+        createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedAt: deletedAt ?? this.deletedAt,
+        deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         id: id ?? this.id,
         name: name ?? this.name,
         updatedAt: updatedAt ?? this.updatedAt);
@@ -1002,11 +1238,24 @@ extension $ModelsEmployeeModelResponseExtension on ModelsEmployeeModelResponse {
 
   ModelsEmployeeModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<List<ModelsVehicleTaskModelResponse>?>? createdTasks,
+      Wrapped<List<ModelsVehicleModelResponse>?>? createdVehicles,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<List<ModelsVehicleModelResponse>?>? deletedVehicles,
+      Wrapped<int?>? id,
       Wrapped<String?>? name,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsEmployeeModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdTasks:
+            (createdTasks != null ? createdTasks.value : this.createdTasks),
+        createdVehicles: (createdVehicles != null
+            ? createdVehicles.value
+            : this.createdVehicles),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedVehicles: (deletedVehicles != null
+            ? deletedVehicles.value
+            : this.deletedVehicles),
         id: (id != null ? id.value : this.id),
         name: (name != null ? name.value : this.name),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
@@ -1017,6 +1266,7 @@ extension $ModelsEmployeeModelResponseExtension on ModelsEmployeeModelResponse {
 class ModelsGarageModelResponse {
   const ModelsGarageModelResponse({
     this.createdAt,
+    this.deletedAt,
     this.id,
     this.label,
     this.updatedAt,
@@ -1030,8 +1280,10 @@ class ModelsGarageModelResponse {
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'label')
   final String? label;
   @JsonKey(name: 'updated_at')
@@ -1045,6 +1297,9 @@ class ModelsGarageModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
@@ -1060,6 +1315,7 @@ class ModelsGarageModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -1068,9 +1324,14 @@ class ModelsGarageModelResponse {
 
 extension $ModelsGarageModelResponseExtension on ModelsGarageModelResponse {
   ModelsGarageModelResponse copyWith(
-      {DateTime? createdAt, String? id, String? label, DateTime? updatedAt}) {
+      {DateTime? createdAt,
+      GormDeletedAt? deletedAt,
+      int? id,
+      String? label,
+      DateTime? updatedAt}) {
     return ModelsGarageModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         id: id ?? this.id,
         label: label ?? this.label,
         updatedAt: updatedAt ?? this.updatedAt);
@@ -1078,11 +1339,13 @@ extension $ModelsGarageModelResponseExtension on ModelsGarageModelResponse {
 
   ModelsGarageModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
       Wrapped<String?>? label,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsGarageModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
@@ -1637,32 +1900,36 @@ extension $ModelsListVehicleTaskModelExtension on ModelsListVehicleTaskModel {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ModelsOwnerModelResponse {
-  const ModelsOwnerModelResponse({
+class ModelsOwnerModel {
+  const ModelsOwnerModel({
     this.address,
     this.createdAt,
+    this.deletedAt,
     this.email,
     this.id,
     this.phone,
     this.photo,
     this.postalCode,
     this.updatedAt,
+    this.vehicles,
   });
 
-  factory ModelsOwnerModelResponse.fromJson(Map<String, dynamic> json) =>
-      _$ModelsOwnerModelResponseFromJson(json);
+  factory ModelsOwnerModel.fromJson(Map<String, dynamic> json) =>
+      _$ModelsOwnerModelFromJson(json);
 
-  static const toJsonFactory = _$ModelsOwnerModelResponseToJson;
-  Map<String, dynamic> toJson() => _$ModelsOwnerModelResponseToJson(this);
+  static const toJsonFactory = _$ModelsOwnerModelToJson;
+  Map<String, dynamic> toJson() => _$ModelsOwnerModelToJson(this);
 
   @JsonKey(name: 'address')
   final String? address;
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'email')
   final String? email;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'phone')
   final String? phone;
   @JsonKey(name: 'photo')
@@ -1671,18 +1938,23 @@ class ModelsOwnerModelResponse {
   final String? postalCode;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  static const fromJsonFactory = _$ModelsOwnerModelResponseFromJson;
+  @JsonKey(name: 'vehicles', defaultValue: <ModelsVehicleModel>[])
+  final List<ModelsVehicleModel>? vehicles;
+  static const fromJsonFactory = _$ModelsOwnerModelFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ModelsOwnerModelResponse &&
+        (other is ModelsOwnerModel &&
             (identical(other.address, address) ||
                 const DeepCollectionEquality()
                     .equals(other.address, address)) &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
             (identical(other.id, id) ||
@@ -1696,7 +1968,10 @@ class ModelsOwnerModelResponse {
                     .equals(other.postalCode, postalCode)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.vehicles, vehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicles, vehicles)));
   }
 
   @override
@@ -1706,12 +1981,157 @@ class ModelsOwnerModelResponse {
   int get hashCode =>
       const DeepCollectionEquality().hash(address) ^
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(phone) ^
       const DeepCollectionEquality().hash(photo) ^
       const DeepCollectionEquality().hash(postalCode) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehicles) ^
+      runtimeType.hashCode;
+}
+
+extension $ModelsOwnerModelExtension on ModelsOwnerModel {
+  ModelsOwnerModel copyWith(
+      {String? address,
+      DateTime? createdAt,
+      GormDeletedAt? deletedAt,
+      String? email,
+      int? id,
+      String? phone,
+      String? photo,
+      String? postalCode,
+      DateTime? updatedAt,
+      List<ModelsVehicleModel>? vehicles}) {
+    return ModelsOwnerModel(
+        address: address ?? this.address,
+        createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
+        email: email ?? this.email,
+        id: id ?? this.id,
+        phone: phone ?? this.phone,
+        photo: photo ?? this.photo,
+        postalCode: postalCode ?? this.postalCode,
+        updatedAt: updatedAt ?? this.updatedAt,
+        vehicles: vehicles ?? this.vehicles);
+  }
+
+  ModelsOwnerModel copyWithWrapped(
+      {Wrapped<String?>? address,
+      Wrapped<DateTime?>? createdAt,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<String?>? email,
+      Wrapped<int?>? id,
+      Wrapped<String?>? phone,
+      Wrapped<String?>? photo,
+      Wrapped<String?>? postalCode,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<ModelsVehicleModel>?>? vehicles}) {
+    return ModelsOwnerModel(
+        address: (address != null ? address.value : this.address),
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        email: (email != null ? email.value : this.email),
+        id: (id != null ? id.value : this.id),
+        phone: (phone != null ? phone.value : this.phone),
+        photo: (photo != null ? photo.value : this.photo),
+        postalCode: (postalCode != null ? postalCode.value : this.postalCode),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        vehicles: (vehicles != null ? vehicles.value : this.vehicles));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ModelsOwnerModelResponse {
+  const ModelsOwnerModelResponse({
+    this.address,
+    this.createdAt,
+    this.deletedAt,
+    this.email,
+    this.id,
+    this.phone,
+    this.photo,
+    this.postalCode,
+    this.updatedAt,
+    this.vehicles,
+  });
+
+  factory ModelsOwnerModelResponse.fromJson(Map<String, dynamic> json) =>
+      _$ModelsOwnerModelResponseFromJson(json);
+
+  static const toJsonFactory = _$ModelsOwnerModelResponseToJson;
+  Map<String, dynamic> toJson() => _$ModelsOwnerModelResponseToJson(this);
+
+  @JsonKey(name: 'address')
+  final String? address;
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'email')
+  final String? email;
+  @JsonKey(name: 'id')
+  final int? id;
+  @JsonKey(name: 'phone')
+  final String? phone;
+  @JsonKey(name: 'photo')
+  final String? photo;
+  @JsonKey(name: 'postal_code')
+  final String? postalCode;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @JsonKey(name: 'vehicles', defaultValue: <ModelsVehicleModelResponse>[])
+  final List<ModelsVehicleModelResponse>? vehicles;
+  static const fromJsonFactory = _$ModelsOwnerModelResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ModelsOwnerModelResponse &&
+            (identical(other.address, address) ||
+                const DeepCollectionEquality()
+                    .equals(other.address, address)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.phone, phone) ||
+                const DeepCollectionEquality().equals(other.phone, phone)) &&
+            (identical(other.photo, photo) ||
+                const DeepCollectionEquality().equals(other.photo, photo)) &&
+            (identical(other.postalCode, postalCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.postalCode, postalCode)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.vehicles, vehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicles, vehicles)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(address) ^
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(phone) ^
+      const DeepCollectionEquality().hash(photo) ^
+      const DeepCollectionEquality().hash(postalCode) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehicles) ^
       runtimeType.hashCode;
 }
 
@@ -1719,41 +2139,49 @@ extension $ModelsOwnerModelResponseExtension on ModelsOwnerModelResponse {
   ModelsOwnerModelResponse copyWith(
       {String? address,
       DateTime? createdAt,
+      GormDeletedAt? deletedAt,
       String? email,
-      String? id,
+      int? id,
       String? phone,
       String? photo,
       String? postalCode,
-      DateTime? updatedAt}) {
+      DateTime? updatedAt,
+      List<ModelsVehicleModelResponse>? vehicles}) {
     return ModelsOwnerModelResponse(
         address: address ?? this.address,
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         email: email ?? this.email,
         id: id ?? this.id,
         phone: phone ?? this.phone,
         photo: photo ?? this.photo,
         postalCode: postalCode ?? this.postalCode,
-        updatedAt: updatedAt ?? this.updatedAt);
+        updatedAt: updatedAt ?? this.updatedAt,
+        vehicles: vehicles ?? this.vehicles);
   }
 
   ModelsOwnerModelResponse copyWithWrapped(
       {Wrapped<String?>? address,
       Wrapped<DateTime?>? createdAt,
+      Wrapped<GormDeletedAt?>? deletedAt,
       Wrapped<String?>? email,
-      Wrapped<String?>? id,
+      Wrapped<int?>? id,
       Wrapped<String?>? phone,
       Wrapped<String?>? photo,
       Wrapped<String?>? postalCode,
-      Wrapped<DateTime?>? updatedAt}) {
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<ModelsVehicleModelResponse>?>? vehicles}) {
     return ModelsOwnerModelResponse(
         address: (address != null ? address.value : this.address),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         email: (email != null ? email.value : this.email),
         id: (id != null ? id.value : this.id),
         phone: (phone != null ? phone.value : this.phone),
         photo: (photo != null ? photo.value : this.photo),
         postalCode: (postalCode != null ? postalCode.value : this.postalCode),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        vehicles: (vehicles != null ? vehicles.value : this.vehicles));
   }
 }
 
@@ -1762,6 +2190,7 @@ class ModelsPermissionModelResponse {
   const ModelsPermissionModelResponse({
     this.available,
     this.createdAt,
+    this.deletedAt,
     this.id,
     this.label,
     this.updatedAt,
@@ -1777,8 +2206,10 @@ class ModelsPermissionModelResponse {
   final bool? available;
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'label')
   final String? label;
   @JsonKey(name: 'updated_at')
@@ -1795,6 +2226,9 @@ class ModelsPermissionModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
@@ -1811,6 +2245,7 @@ class ModelsPermissionModelResponse {
   int get hashCode =>
       const DeepCollectionEquality().hash(available) ^
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -1822,12 +2257,14 @@ extension $ModelsPermissionModelResponseExtension
   ModelsPermissionModelResponse copyWith(
       {bool? available,
       DateTime? createdAt,
-      String? id,
+      GormDeletedAt? deletedAt,
+      int? id,
       String? label,
       DateTime? updatedAt}) {
     return ModelsPermissionModelResponse(
         available: available ?? this.available,
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         id: id ?? this.id,
         label: label ?? this.label,
         updatedAt: updatedAt ?? this.updatedAt);
@@ -1836,12 +2273,14 @@ extension $ModelsPermissionModelResponseExtension
   ModelsPermissionModelResponse copyWithWrapped(
       {Wrapped<bool?>? available,
       Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
       Wrapped<String?>? label,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsPermissionModelResponse(
         available: (available != null ? available.value : this.available),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
@@ -1853,6 +2292,7 @@ class ModelsSparePartModelResponse {
   const ModelsSparePartModelResponse({
     this.barcode,
     this.createdAt,
+    this.deletedAt,
     this.id,
     this.reference,
     this.updatedAt,
@@ -1868,8 +2308,10 @@ class ModelsSparePartModelResponse {
   final String? barcode;
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'reference')
   final String? reference;
   @JsonKey(name: 'updated_at')
@@ -1886,6 +2328,9 @@ class ModelsSparePartModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.reference, reference) ||
@@ -1903,6 +2348,7 @@ class ModelsSparePartModelResponse {
   int get hashCode =>
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(reference) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -1914,12 +2360,14 @@ extension $ModelsSparePartModelResponseExtension
   ModelsSparePartModelResponse copyWith(
       {String? barcode,
       DateTime? createdAt,
-      String? id,
+      GormDeletedAt? deletedAt,
+      int? id,
       String? reference,
       DateTime? updatedAt}) {
     return ModelsSparePartModelResponse(
         barcode: barcode ?? this.barcode,
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         id: id ?? this.id,
         reference: reference ?? this.reference,
         updatedAt: updatedAt ?? this.updatedAt);
@@ -1928,12 +2376,14 @@ extension $ModelsSparePartModelResponseExtension
   ModelsSparePartModelResponse copyWithWrapped(
       {Wrapped<String?>? barcode,
       Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
       Wrapped<String?>? reference,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsSparePartModelResponse(
         barcode: (barcode != null ? barcode.value : this.barcode),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         id: (id != null ? id.value : this.id),
         reference: (reference != null ? reference.value : this.reference),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
@@ -1944,6 +2394,7 @@ extension $ModelsSparePartModelResponseExtension
 class ModelsSupplierModelResponse {
   const ModelsSupplierModelResponse({
     this.createdAt,
+    this.deletedAt,
     this.id,
     this.name,
     this.updatedAt,
@@ -1957,8 +2408,10 @@ class ModelsSupplierModelResponse {
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'updated_at')
@@ -1972,6 +2425,9 @@ class ModelsSupplierModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
@@ -1987,6 +2443,7 @@ class ModelsSupplierModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(updatedAt) ^
@@ -1995,9 +2452,14 @@ class ModelsSupplierModelResponse {
 
 extension $ModelsSupplierModelResponseExtension on ModelsSupplierModelResponse {
   ModelsSupplierModelResponse copyWith(
-      {DateTime? createdAt, String? id, String? name, DateTime? updatedAt}) {
+      {DateTime? createdAt,
+      GormDeletedAt? deletedAt,
+      int? id,
+      String? name,
+      DateTime? updatedAt}) {
     return ModelsSupplierModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         id: id ?? this.id,
         name: name ?? this.name,
         updatedAt: updatedAt ?? this.updatedAt);
@@ -2005,11 +2467,13 @@ extension $ModelsSupplierModelResponseExtension on ModelsSupplierModelResponse {
 
   ModelsSupplierModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
       Wrapped<String?>? name,
       Wrapped<DateTime?>? updatedAt}) {
     return ModelsSupplierModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         id: (id != null ? id.value : this.id),
         name: (name != null ? name.value : this.name),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
@@ -2017,15 +2481,142 @@ extension $ModelsSupplierModelResponseExtension on ModelsSupplierModelResponse {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ModelsTaskModel {
+  const ModelsTaskModel({
+    this.createdAt,
+    this.deletedAt,
+    this.id,
+    this.label,
+    this.parentTaskId,
+    this.subTasks,
+    this.updatedAt,
+    this.vehicleTasks,
+  });
+
+  factory ModelsTaskModel.fromJson(Map<String, dynamic> json) =>
+      _$ModelsTaskModelFromJson(json);
+
+  static const toJsonFactory = _$ModelsTaskModelToJson;
+  Map<String, dynamic> toJson() => _$ModelsTaskModelToJson(this);
+
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'id')
+  final int? id;
+  @JsonKey(name: 'label')
+  final String? label;
+  @JsonKey(name: 'parent_task_id')
+  final int? parentTaskId;
+  @JsonKey(name: 'sub_tasks', defaultValue: <ModelsTaskModel>[])
+  final List<ModelsTaskModel>? subTasks;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @JsonKey(name: 'vehicle_tasks', defaultValue: <ModelsVehicleTaskModel>[])
+  final List<ModelsVehicleTaskModel>? vehicleTasks;
+  static const fromJsonFactory = _$ModelsTaskModelFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ModelsTaskModel &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.label, label) ||
+                const DeepCollectionEquality().equals(other.label, label)) &&
+            (identical(other.parentTaskId, parentTaskId) ||
+                const DeepCollectionEquality()
+                    .equals(other.parentTaskId, parentTaskId)) &&
+            (identical(other.subTasks, subTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.subTasks, subTasks)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.vehicleTasks, vehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicleTasks, vehicleTasks)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(label) ^
+      const DeepCollectionEquality().hash(parentTaskId) ^
+      const DeepCollectionEquality().hash(subTasks) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehicleTasks) ^
+      runtimeType.hashCode;
+}
+
+extension $ModelsTaskModelExtension on ModelsTaskModel {
+  ModelsTaskModel copyWith(
+      {DateTime? createdAt,
+      GormDeletedAt? deletedAt,
+      int? id,
+      String? label,
+      int? parentTaskId,
+      List<ModelsTaskModel>? subTasks,
+      DateTime? updatedAt,
+      List<ModelsVehicleTaskModel>? vehicleTasks}) {
+    return ModelsTaskModel(
+        createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
+        id: id ?? this.id,
+        label: label ?? this.label,
+        parentTaskId: parentTaskId ?? this.parentTaskId,
+        subTasks: subTasks ?? this.subTasks,
+        updatedAt: updatedAt ?? this.updatedAt,
+        vehicleTasks: vehicleTasks ?? this.vehicleTasks);
+  }
+
+  ModelsTaskModel copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
+      Wrapped<String?>? label,
+      Wrapped<int?>? parentTaskId,
+      Wrapped<List<ModelsTaskModel>?>? subTasks,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<ModelsVehicleTaskModel>?>? vehicleTasks}) {
+    return ModelsTaskModel(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        id: (id != null ? id.value : this.id),
+        label: (label != null ? label.value : this.label),
+        parentTaskId:
+            (parentTaskId != null ? parentTaskId.value : this.parentTaskId),
+        subTasks: (subTasks != null ? subTasks.value : this.subTasks),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        vehicleTasks:
+            (vehicleTasks != null ? vehicleTasks.value : this.vehicleTasks));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class ModelsTaskModelResponse {
   const ModelsTaskModelResponse({
     this.createdAt,
+    this.deletedAt,
     this.id,
     this.label,
-    this.parentId,
+    this.parentTask,
+    this.parentTaskId,
     this.subTasks,
-    this.subTasksIds,
     this.updatedAt,
+    this.vehicleTasks,
   });
 
   factory ModelsTaskModelResponse.fromJson(Map<String, dynamic> json) =>
@@ -2036,18 +2627,23 @@ class ModelsTaskModelResponse {
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'parent_id')
-  final String? parentId;
+  @JsonKey(name: 'parent_task')
+  final ModelsTaskModel? parentTask;
+  @JsonKey(name: 'parent_task_id')
+  final int? parentTaskId;
   @JsonKey(name: 'sub_tasks', defaultValue: <ModelsTaskModelResponse>[])
   final List<ModelsTaskModelResponse>? subTasks;
-  @JsonKey(name: 'sub_tasks_ids', defaultValue: <String>[])
-  final List<String>? subTasksIds;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(
+      name: 'vehicle_tasks', defaultValue: <ModelsVehicleTaskModelResponse>[])
+  final List<ModelsVehicleTaskModelResponse>? vehicleTasks;
   static const fromJsonFactory = _$ModelsTaskModelResponseFromJson;
 
   @override
@@ -2057,22 +2653,28 @@ class ModelsTaskModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.parentId, parentId) ||
+            (identical(other.parentTask, parentTask) ||
                 const DeepCollectionEquality()
-                    .equals(other.parentId, parentId)) &&
+                    .equals(other.parentTask, parentTask)) &&
+            (identical(other.parentTaskId, parentTaskId) ||
+                const DeepCollectionEquality()
+                    .equals(other.parentTaskId, parentTaskId)) &&
             (identical(other.subTasks, subTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.subTasks, subTasks)) &&
-            (identical(other.subTasksIds, subTasksIds) ||
-                const DeepCollectionEquality()
-                    .equals(other.subTasksIds, subTasksIds)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.vehicleTasks, vehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicleTasks, vehicleTasks)));
   }
 
   @override
@@ -2081,51 +2683,62 @@ class ModelsTaskModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(parentId) ^
+      const DeepCollectionEquality().hash(parentTask) ^
+      const DeepCollectionEquality().hash(parentTaskId) ^
       const DeepCollectionEquality().hash(subTasks) ^
-      const DeepCollectionEquality().hash(subTasksIds) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehicleTasks) ^
       runtimeType.hashCode;
 }
 
 extension $ModelsTaskModelResponseExtension on ModelsTaskModelResponse {
   ModelsTaskModelResponse copyWith(
       {DateTime? createdAt,
-      String? id,
+      GormDeletedAt? deletedAt,
+      int? id,
       String? label,
-      String? parentId,
+      ModelsTaskModel? parentTask,
+      int? parentTaskId,
       List<ModelsTaskModelResponse>? subTasks,
-      List<String>? subTasksIds,
-      DateTime? updatedAt}) {
+      DateTime? updatedAt,
+      List<ModelsVehicleTaskModelResponse>? vehicleTasks}) {
     return ModelsTaskModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        deletedAt: deletedAt ?? this.deletedAt,
         id: id ?? this.id,
         label: label ?? this.label,
-        parentId: parentId ?? this.parentId,
+        parentTask: parentTask ?? this.parentTask,
+        parentTaskId: parentTaskId ?? this.parentTaskId,
         subTasks: subTasks ?? this.subTasks,
-        subTasksIds: subTasksIds ?? this.subTasksIds,
-        updatedAt: updatedAt ?? this.updatedAt);
+        updatedAt: updatedAt ?? this.updatedAt,
+        vehicleTasks: vehicleTasks ?? this.vehicleTasks);
   }
 
   ModelsTaskModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? id,
       Wrapped<String?>? label,
-      Wrapped<String?>? parentId,
+      Wrapped<ModelsTaskModel?>? parentTask,
+      Wrapped<int?>? parentTaskId,
       Wrapped<List<ModelsTaskModelResponse>?>? subTasks,
-      Wrapped<List<String>?>? subTasksIds,
-      Wrapped<DateTime?>? updatedAt}) {
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<ModelsVehicleTaskModelResponse>?>? vehicleTasks}) {
     return ModelsTaskModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
-        parentId: (parentId != null ? parentId.value : this.parentId),
+        parentTask: (parentTask != null ? parentTask.value : this.parentTask),
+        parentTaskId:
+            (parentTaskId != null ? parentTaskId.value : this.parentTaskId),
         subTasks: (subTasks != null ? subTasks.value : this.subTasks),
-        subTasksIds:
-            (subTasksIds != null ? subTasksIds.value : this.subTasksIds),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        vehicleTasks:
+            (vehicleTasks != null ? vehicleTasks.value : this.vehicleTasks));
   }
 }
 
@@ -2556,7 +3169,6 @@ extension $ModelsUpdateSupplierModelExtension on ModelsUpdateSupplierModel {
 class ModelsUpdateTaskModel {
   const ModelsUpdateTaskModel({
     this.label,
-    this.parentId,
   });
 
   factory ModelsUpdateTaskModel.fromJson(Map<String, dynamic> json) =>
@@ -2567,8 +3179,6 @@ class ModelsUpdateTaskModel {
 
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'parent_id')
-  final String? parentId;
   static const fromJsonFactory = _$ModelsUpdateTaskModelFromJson;
 
   @override
@@ -2576,10 +3186,7 @@ class ModelsUpdateTaskModel {
     return identical(this, other) ||
         (other is ModelsUpdateTaskModel &&
             (identical(other.label, label) ||
-                const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.parentId, parentId) ||
-                const DeepCollectionEquality()
-                    .equals(other.parentId, parentId)));
+                const DeepCollectionEquality().equals(other.label, label)));
   }
 
   @override
@@ -2587,22 +3194,17 @@ class ModelsUpdateTaskModel {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(parentId) ^
-      runtimeType.hashCode;
+      const DeepCollectionEquality().hash(label) ^ runtimeType.hashCode;
 }
 
 extension $ModelsUpdateTaskModelExtension on ModelsUpdateTaskModel {
-  ModelsUpdateTaskModel copyWith({String? label, String? parentId}) {
-    return ModelsUpdateTaskModel(
-        label: label ?? this.label, parentId: parentId ?? this.parentId);
+  ModelsUpdateTaskModel copyWith({String? label}) {
+    return ModelsUpdateTaskModel(label: label ?? this.label);
   }
 
-  ModelsUpdateTaskModel copyWithWrapped(
-      {Wrapped<String?>? label, Wrapped<String?>? parentId}) {
+  ModelsUpdateTaskModel copyWithWrapped({Wrapped<String?>? label}) {
     return ModelsUpdateTaskModel(
-        label: (label != null ? label.value : this.label),
-        parentId: (parentId != null ? parentId.value : this.parentId));
+        label: (label != null ? label.value : this.label));
   }
 }
 
@@ -2786,7 +3388,7 @@ extension $ModelsUpdateVehicleModelExtension on ModelsUpdateVehicleModel {
 class ModelsUpdateVehicleTaskModel {
   const ModelsUpdateVehicleTaskModel({
     this.deleted,
-    this.finishedAt,
+    this.finishdedAt,
     this.startedAt,
   });
 
@@ -2798,8 +3400,8 @@ class ModelsUpdateVehicleTaskModel {
 
   @JsonKey(name: 'deleted')
   final bool? deleted;
-  @JsonKey(name: 'finished_at')
-  final DateTime? finishedAt;
+  @JsonKey(name: 'finishded_at')
+  final DateTime? finishdedAt;
   @JsonKey(name: 'started_at')
   final DateTime? startedAt;
   static const fromJsonFactory = _$ModelsUpdateVehicleTaskModelFromJson;
@@ -2811,9 +3413,9 @@ class ModelsUpdateVehicleTaskModel {
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
-            (identical(other.finishedAt, finishedAt) ||
+            (identical(other.finishdedAt, finishdedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.finishedAt, finishedAt)) &&
+                    .equals(other.finishdedAt, finishdedAt)) &&
             (identical(other.startedAt, startedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.startedAt, startedAt)));
@@ -2825,7 +3427,7 @@ class ModelsUpdateVehicleTaskModel {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(deleted) ^
-      const DeepCollectionEquality().hash(finishedAt) ^
+      const DeepCollectionEquality().hash(finishdedAt) ^
       const DeepCollectionEquality().hash(startedAt) ^
       runtimeType.hashCode;
 }
@@ -2833,21 +3435,286 @@ class ModelsUpdateVehicleTaskModel {
 extension $ModelsUpdateVehicleTaskModelExtension
     on ModelsUpdateVehicleTaskModel {
   ModelsUpdateVehicleTaskModel copyWith(
-      {bool? deleted, DateTime? finishedAt, DateTime? startedAt}) {
+      {bool? deleted, DateTime? finishdedAt, DateTime? startedAt}) {
     return ModelsUpdateVehicleTaskModel(
         deleted: deleted ?? this.deleted,
-        finishedAt: finishedAt ?? this.finishedAt,
+        finishdedAt: finishdedAt ?? this.finishdedAt,
         startedAt: startedAt ?? this.startedAt);
   }
 
   ModelsUpdateVehicleTaskModel copyWithWrapped(
       {Wrapped<bool?>? deleted,
-      Wrapped<DateTime?>? finishedAt,
+      Wrapped<DateTime?>? finishdedAt,
       Wrapped<DateTime?>? startedAt}) {
     return ModelsUpdateVehicleTaskModel(
         deleted: (deleted != null ? deleted.value : this.deleted),
-        finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
+        finishdedAt:
+            (finishdedAt != null ? finishdedAt.value : this.finishdedAt),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ModelsVehicleModel {
+  const ModelsVehicleModel({
+    this.chrono,
+    this.collectionDate,
+    this.commercialName,
+    this.createdAt,
+    this.createdById,
+    this.deletedAt,
+    this.deletedById,
+    this.deliveryDate,
+    this.expertise,
+    this.firstCirculation,
+    this.id,
+    this.mileage,
+    this.note,
+    this.ownerId,
+    this.procedureVe,
+    this.registration,
+    this.serialNumber,
+    this.soldAt,
+    this.tasks,
+    this.updatedAt,
+  });
+
+  factory ModelsVehicleModel.fromJson(Map<String, dynamic> json) =>
+      _$ModelsVehicleModelFromJson(json);
+
+  static const toJsonFactory = _$ModelsVehicleModelToJson;
+  Map<String, dynamic> toJson() => _$ModelsVehicleModelToJson(this);
+
+  @JsonKey(name: 'chrono')
+  final String? chrono;
+  @JsonKey(name: 'collection_date')
+  final DateTime? collectionDate;
+  @JsonKey(name: 'commercial_name')
+  final String? commercialName;
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
+  @JsonKey(name: 'delivery_date')
+  final DateTime? deliveryDate;
+  @JsonKey(name: 'expertise')
+  final bool? expertise;
+  @JsonKey(name: 'first_circulation')
+  final DateTime? firstCirculation;
+  @JsonKey(name: 'id')
+  final int? id;
+  @JsonKey(name: 'mileage')
+  final int? mileage;
+  @JsonKey(name: 'note')
+  final String? note;
+  @JsonKey(name: 'owner_id')
+  final int? ownerId;
+  @JsonKey(name: 'procedure_ve')
+  final bool? procedureVe;
+  @JsonKey(name: 'registration')
+  final String? registration;
+  @JsonKey(name: 'serial_number')
+  final String? serialNumber;
+  @JsonKey(name: 'sold_at')
+  final DateTime? soldAt;
+  @JsonKey(name: 'tasks', defaultValue: <ModelsVehicleTaskModel>[])
+  final List<ModelsVehicleTaskModel>? tasks;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  static const fromJsonFactory = _$ModelsVehicleModelFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ModelsVehicleModel &&
+            (identical(other.chrono, chrono) ||
+                const DeepCollectionEquality().equals(other.chrono, chrono)) &&
+            (identical(other.collectionDate, collectionDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.collectionDate, collectionDate)) &&
+            (identical(other.commercialName, commercialName) ||
+                const DeepCollectionEquality()
+                    .equals(other.commercialName, commercialName)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
+            (identical(other.deliveryDate, deliveryDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.deliveryDate, deliveryDate)) &&
+            (identical(other.expertise, expertise) ||
+                const DeepCollectionEquality()
+                    .equals(other.expertise, expertise)) &&
+            (identical(other.firstCirculation, firstCirculation) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstCirculation, firstCirculation)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.mileage, mileage) ||
+                const DeepCollectionEquality()
+                    .equals(other.mileage, mileage)) &&
+            (identical(other.note, note) ||
+                const DeepCollectionEquality().equals(other.note, note)) &&
+            (identical(other.ownerId, ownerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.ownerId, ownerId)) &&
+            (identical(other.procedureVe, procedureVe) ||
+                const DeepCollectionEquality()
+                    .equals(other.procedureVe, procedureVe)) &&
+            (identical(other.registration, registration) ||
+                const DeepCollectionEquality()
+                    .equals(other.registration, registration)) &&
+            (identical(other.serialNumber, serialNumber) ||
+                const DeepCollectionEquality()
+                    .equals(other.serialNumber, serialNumber)) &&
+            (identical(other.soldAt, soldAt) ||
+                const DeepCollectionEquality().equals(other.soldAt, soldAt)) &&
+            (identical(other.tasks, tasks) ||
+                const DeepCollectionEquality().equals(other.tasks, tasks)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(chrono) ^
+      const DeepCollectionEquality().hash(collectionDate) ^
+      const DeepCollectionEquality().hash(commercialName) ^
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdById) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedById) ^
+      const DeepCollectionEquality().hash(deliveryDate) ^
+      const DeepCollectionEquality().hash(expertise) ^
+      const DeepCollectionEquality().hash(firstCirculation) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(mileage) ^
+      const DeepCollectionEquality().hash(note) ^
+      const DeepCollectionEquality().hash(ownerId) ^
+      const DeepCollectionEquality().hash(procedureVe) ^
+      const DeepCollectionEquality().hash(registration) ^
+      const DeepCollectionEquality().hash(serialNumber) ^
+      const DeepCollectionEquality().hash(soldAt) ^
+      const DeepCollectionEquality().hash(tasks) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
+      runtimeType.hashCode;
+}
+
+extension $ModelsVehicleModelExtension on ModelsVehicleModel {
+  ModelsVehicleModel copyWith(
+      {String? chrono,
+      DateTime? collectionDate,
+      String? commercialName,
+      DateTime? createdAt,
+      int? createdById,
+      GormDeletedAt? deletedAt,
+      int? deletedById,
+      DateTime? deliveryDate,
+      bool? expertise,
+      DateTime? firstCirculation,
+      int? id,
+      int? mileage,
+      String? note,
+      int? ownerId,
+      bool? procedureVe,
+      String? registration,
+      String? serialNumber,
+      DateTime? soldAt,
+      List<ModelsVehicleTaskModel>? tasks,
+      DateTime? updatedAt}) {
+    return ModelsVehicleModel(
+        chrono: chrono ?? this.chrono,
+        collectionDate: collectionDate ?? this.collectionDate,
+        commercialName: commercialName ?? this.commercialName,
+        createdAt: createdAt ?? this.createdAt,
+        createdById: createdById ?? this.createdById,
+        deletedAt: deletedAt ?? this.deletedAt,
+        deletedById: deletedById ?? this.deletedById,
+        deliveryDate: deliveryDate ?? this.deliveryDate,
+        expertise: expertise ?? this.expertise,
+        firstCirculation: firstCirculation ?? this.firstCirculation,
+        id: id ?? this.id,
+        mileage: mileage ?? this.mileage,
+        note: note ?? this.note,
+        ownerId: ownerId ?? this.ownerId,
+        procedureVe: procedureVe ?? this.procedureVe,
+        registration: registration ?? this.registration,
+        serialNumber: serialNumber ?? this.serialNumber,
+        soldAt: soldAt ?? this.soldAt,
+        tasks: tasks ?? this.tasks,
+        updatedAt: updatedAt ?? this.updatedAt);
+  }
+
+  ModelsVehicleModel copyWithWrapped(
+      {Wrapped<String?>? chrono,
+      Wrapped<DateTime?>? collectionDate,
+      Wrapped<String?>? commercialName,
+      Wrapped<DateTime?>? createdAt,
+      Wrapped<int?>? createdById,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<int?>? deletedById,
+      Wrapped<DateTime?>? deliveryDate,
+      Wrapped<bool?>? expertise,
+      Wrapped<DateTime?>? firstCirculation,
+      Wrapped<int?>? id,
+      Wrapped<int?>? mileage,
+      Wrapped<String?>? note,
+      Wrapped<int?>? ownerId,
+      Wrapped<bool?>? procedureVe,
+      Wrapped<String?>? registration,
+      Wrapped<String?>? serialNumber,
+      Wrapped<DateTime?>? soldAt,
+      Wrapped<List<ModelsVehicleTaskModel>?>? tasks,
+      Wrapped<DateTime?>? updatedAt}) {
+    return ModelsVehicleModel(
+        chrono: (chrono != null ? chrono.value : this.chrono),
+        collectionDate: (collectionDate != null
+            ? collectionDate.value
+            : this.collectionDate),
+        commercialName: (commercialName != null
+            ? commercialName.value
+            : this.commercialName),
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
+        deliveryDate:
+            (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
+        expertise: (expertise != null ? expertise.value : this.expertise),
+        firstCirculation: (firstCirculation != null
+            ? firstCirculation.value
+            : this.firstCirculation),
+        id: (id != null ? id.value : this.id),
+        mileage: (mileage != null ? mileage.value : this.mileage),
+        note: (note != null ? note.value : this.note),
+        ownerId: (ownerId != null ? ownerId.value : this.ownerId),
+        procedureVe:
+            (procedureVe != null ? procedureVe.value : this.procedureVe),
+        registration:
+            (registration != null ? registration.value : this.registration),
+        serialNumber:
+            (serialNumber != null ? serialNumber.value : this.serialNumber),
+        soldAt: (soldAt != null ? soldAt.value : this.soldAt),
+        tasks: (tasks != null ? tasks.value : this.tasks),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
   }
 }
 
@@ -2860,6 +3727,9 @@ class ModelsVehicleModelResponse {
     this.createdAt,
     this.createdBy,
     this.createdById,
+    this.deletedAt,
+    this.deletedBy,
+    this.deletedById,
     this.deliveryDate,
     this.expertise,
     this.firstCirculation,
@@ -2872,9 +3742,8 @@ class ModelsVehicleModelResponse {
     this.registration,
     this.serialNumber,
     this.soldAt,
+    this.tasks,
     this.updatedAt,
-    this.vehicleTask,
-    this.vehicleTaskIds,
   });
 
   factory ModelsVehicleModelResponse.fromJson(Map<String, dynamic> json) =>
@@ -2892,9 +3761,15 @@ class ModelsVehicleModelResponse {
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @JsonKey(name: 'created_by')
-  final ModelsEmployeeModelResponse? createdBy;
+  final ModelsEmployeeModel? createdBy;
   @JsonKey(name: 'created_by_id')
-  final String? createdById;
+  final int? createdById;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_by')
+  final ModelsEmployeeModel? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'delivery_date')
   final DateTime? deliveryDate;
   @JsonKey(name: 'expertise')
@@ -2902,15 +3777,15 @@ class ModelsVehicleModelResponse {
   @JsonKey(name: 'first_circulation')
   final DateTime? firstCirculation;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'mileage')
   final int? mileage;
   @JsonKey(name: 'note')
   final String? note;
   @JsonKey(name: 'owner')
-  final ModelsOwnerModelResponse? owner;
+  final ModelsOwnerModel? owner;
   @JsonKey(name: 'owner_id')
-  final String? ownerId;
+  final int? ownerId;
   @JsonKey(name: 'procedure_ve')
   final bool? procedureVe;
   @JsonKey(name: 'registration')
@@ -2919,13 +3794,10 @@ class ModelsVehicleModelResponse {
   final String? serialNumber;
   @JsonKey(name: 'sold_at')
   final DateTime? soldAt;
+  @JsonKey(name: 'tasks', defaultValue: <ModelsVehicleTaskModelResponse>[])
+  final List<ModelsVehicleTaskModelResponse>? tasks;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  @JsonKey(
-      name: 'vehicle_task', defaultValue: <ModelsVehicleTaskModelResponse>[])
-  final List<ModelsVehicleTaskModelResponse>? vehicleTask;
-  @JsonKey(name: 'vehicle_task_ids', defaultValue: <String>[])
-  final List<String>? vehicleTaskIds;
   static const fromJsonFactory = _$ModelsVehicleModelResponseFromJson;
 
   @override
@@ -2949,6 +3821,15 @@ class ModelsVehicleModelResponse {
             (identical(other.createdById, createdById) ||
                 const DeepCollectionEquality()
                     .equals(other.createdById, createdById)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.deliveryDate, deliveryDate)) &&
@@ -2981,15 +3862,11 @@ class ModelsVehicleModelResponse {
                     .equals(other.serialNumber, serialNumber)) &&
             (identical(other.soldAt, soldAt) ||
                 const DeepCollectionEquality().equals(other.soldAt, soldAt)) &&
+            (identical(other.tasks, tasks) ||
+                const DeepCollectionEquality().equals(other.tasks, tasks)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)) &&
-            (identical(other.vehicleTask, vehicleTask) ||
-                const DeepCollectionEquality()
-                    .equals(other.vehicleTask, vehicleTask)) &&
-            (identical(other.vehicleTaskIds, vehicleTaskIds) ||
-                const DeepCollectionEquality()
-                    .equals(other.vehicleTaskIds, vehicleTaskIds)));
+                    .equals(other.updatedAt, updatedAt)));
   }
 
   @override
@@ -3003,6 +3880,9 @@ class ModelsVehicleModelResponse {
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdById) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(deliveryDate) ^
       const DeepCollectionEquality().hash(expertise) ^
       const DeepCollectionEquality().hash(firstCirculation) ^
@@ -3015,9 +3895,8 @@ class ModelsVehicleModelResponse {
       const DeepCollectionEquality().hash(registration) ^
       const DeepCollectionEquality().hash(serialNumber) ^
       const DeepCollectionEquality().hash(soldAt) ^
+      const DeepCollectionEquality().hash(tasks) ^
       const DeepCollectionEquality().hash(updatedAt) ^
-      const DeepCollectionEquality().hash(vehicleTask) ^
-      const DeepCollectionEquality().hash(vehicleTaskIds) ^
       runtimeType.hashCode;
 }
 
@@ -3027,23 +3906,25 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
       DateTime? collectionDate,
       String? commercialName,
       DateTime? createdAt,
-      ModelsEmployeeModelResponse? createdBy,
-      String? createdById,
+      ModelsEmployeeModel? createdBy,
+      int? createdById,
+      GormDeletedAt? deletedAt,
+      ModelsEmployeeModel? deletedBy,
+      int? deletedById,
       DateTime? deliveryDate,
       bool? expertise,
       DateTime? firstCirculation,
-      String? id,
+      int? id,
       int? mileage,
       String? note,
-      ModelsOwnerModelResponse? owner,
-      String? ownerId,
+      ModelsOwnerModel? owner,
+      int? ownerId,
       bool? procedureVe,
       String? registration,
       String? serialNumber,
       DateTime? soldAt,
-      DateTime? updatedAt,
-      List<ModelsVehicleTaskModelResponse>? vehicleTask,
-      List<String>? vehicleTaskIds}) {
+      List<ModelsVehicleTaskModelResponse>? tasks,
+      DateTime? updatedAt}) {
     return ModelsVehicleModelResponse(
         chrono: chrono ?? this.chrono,
         collectionDate: collectionDate ?? this.collectionDate,
@@ -3051,6 +3932,9 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
         createdAt: createdAt ?? this.createdAt,
         createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
+        deletedAt: deletedAt ?? this.deletedAt,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         deliveryDate: deliveryDate ?? this.deliveryDate,
         expertise: expertise ?? this.expertise,
         firstCirculation: firstCirculation ?? this.firstCirculation,
@@ -3063,9 +3947,8 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
         registration: registration ?? this.registration,
         serialNumber: serialNumber ?? this.serialNumber,
         soldAt: soldAt ?? this.soldAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        vehicleTask: vehicleTask ?? this.vehicleTask,
-        vehicleTaskIds: vehicleTaskIds ?? this.vehicleTaskIds);
+        tasks: tasks ?? this.tasks,
+        updatedAt: updatedAt ?? this.updatedAt);
   }
 
   ModelsVehicleModelResponse copyWithWrapped(
@@ -3073,23 +3956,25 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
       Wrapped<DateTime?>? collectionDate,
       Wrapped<String?>? commercialName,
       Wrapped<DateTime?>? createdAt,
-      Wrapped<ModelsEmployeeModelResponse?>? createdBy,
-      Wrapped<String?>? createdById,
+      Wrapped<ModelsEmployeeModel?>? createdBy,
+      Wrapped<int?>? createdById,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<ModelsEmployeeModel?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<DateTime?>? deliveryDate,
       Wrapped<bool?>? expertise,
       Wrapped<DateTime?>? firstCirculation,
-      Wrapped<String?>? id,
+      Wrapped<int?>? id,
       Wrapped<int?>? mileage,
       Wrapped<String?>? note,
-      Wrapped<ModelsOwnerModelResponse?>? owner,
-      Wrapped<String?>? ownerId,
+      Wrapped<ModelsOwnerModel?>? owner,
+      Wrapped<int?>? ownerId,
       Wrapped<bool?>? procedureVe,
       Wrapped<String?>? registration,
       Wrapped<String?>? serialNumber,
       Wrapped<DateTime?>? soldAt,
-      Wrapped<DateTime?>? updatedAt,
-      Wrapped<List<ModelsVehicleTaskModelResponse>?>? vehicleTask,
-      Wrapped<List<String>?>? vehicleTaskIds}) {
+      Wrapped<List<ModelsVehicleTaskModelResponse>?>? tasks,
+      Wrapped<DateTime?>? updatedAt}) {
     return ModelsVehicleModelResponse(
         chrono: (chrono != null ? chrono.value : this.chrono),
         collectionDate: (collectionDate != null
@@ -3102,6 +3987,10 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
         createdBy: (createdBy != null ? createdBy.value : this.createdBy),
         createdById:
             (createdById != null ? createdById.value : this.createdById),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         deliveryDate:
             (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
         expertise: (expertise != null ? expertise.value : this.expertise),
@@ -3120,12 +4009,156 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
         serialNumber:
             (serialNumber != null ? serialNumber.value : this.serialNumber),
         soldAt: (soldAt != null ? soldAt.value : this.soldAt),
+        tasks: (tasks != null ? tasks.value : this.tasks),
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ModelsVehicleTaskModel {
+  const ModelsVehicleTaskModel({
+    this.createdAt,
+    this.createdById,
+    this.deleted,
+    this.deletedAt,
+    this.finishdedAt,
+    this.id,
+    this.startedAt,
+    this.tasksId,
+    this.updatedAt,
+    this.vehiclesId,
+  });
+
+  factory ModelsVehicleTaskModel.fromJson(Map<String, dynamic> json) =>
+      _$ModelsVehicleTaskModelFromJson(json);
+
+  static const toJsonFactory = _$ModelsVehicleTaskModelToJson;
+  Map<String, dynamic> toJson() => _$ModelsVehicleTaskModelToJson(this);
+
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
+  @JsonKey(name: 'deleted')
+  final bool? deleted;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'finishded_at')
+  final DateTime? finishdedAt;
+  @JsonKey(name: 'id')
+  final int? id;
+  @JsonKey(name: 'started_at')
+  final DateTime? startedAt;
+  @JsonKey(name: 'tasks_id')
+  final int? tasksId;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @JsonKey(name: 'vehicles_id')
+  final int? vehiclesId;
+  static const fromJsonFactory = _$ModelsVehicleTaskModelFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ModelsVehicleTaskModel &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
+            (identical(other.deleted, deleted) ||
+                const DeepCollectionEquality()
+                    .equals(other.deleted, deleted)) &&
+            (identical(other.deletedAt, deletedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.finishdedAt, finishdedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.finishdedAt, finishdedAt)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.startedAt, startedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.startedAt, startedAt)) &&
+            (identical(other.tasksId, tasksId) ||
+                const DeepCollectionEquality()
+                    .equals(other.tasksId, tasksId)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.vehiclesId, vehiclesId) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehiclesId, vehiclesId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdById) ^
+      const DeepCollectionEquality().hash(deleted) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(finishdedAt) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(startedAt) ^
+      const DeepCollectionEquality().hash(tasksId) ^
+      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehiclesId) ^
+      runtimeType.hashCode;
+}
+
+extension $ModelsVehicleTaskModelExtension on ModelsVehicleTaskModel {
+  ModelsVehicleTaskModel copyWith(
+      {DateTime? createdAt,
+      int? createdById,
+      bool? deleted,
+      GormDeletedAt? deletedAt,
+      DateTime? finishdedAt,
+      int? id,
+      DateTime? startedAt,
+      int? tasksId,
+      DateTime? updatedAt,
+      int? vehiclesId}) {
+    return ModelsVehicleTaskModel(
+        createdAt: createdAt ?? this.createdAt,
+        createdById: createdById ?? this.createdById,
+        deleted: deleted ?? this.deleted,
+        deletedAt: deletedAt ?? this.deletedAt,
+        finishdedAt: finishdedAt ?? this.finishdedAt,
+        id: id ?? this.id,
+        startedAt: startedAt ?? this.startedAt,
+        tasksId: tasksId ?? this.tasksId,
+        updatedAt: updatedAt ?? this.updatedAt,
+        vehiclesId: vehiclesId ?? this.vehiclesId);
+  }
+
+  ModelsVehicleTaskModel copyWithWrapped(
+      {Wrapped<DateTime?>? createdAt,
+      Wrapped<int?>? createdById,
+      Wrapped<bool?>? deleted,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<DateTime?>? finishdedAt,
+      Wrapped<int?>? id,
+      Wrapped<DateTime?>? startedAt,
+      Wrapped<int?>? tasksId,
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<int?>? vehiclesId}) {
+    return ModelsVehicleTaskModel(
+        createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
+        deleted: (deleted != null ? deleted.value : this.deleted),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        finishdedAt:
+            (finishdedAt != null ? finishdedAt.value : this.finishdedAt),
+        id: (id != null ? id.value : this.id),
+        startedAt: (startedAt != null ? startedAt.value : this.startedAt),
+        tasksId: (tasksId != null ? tasksId.value : this.tasksId),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        vehicleTask:
-            (vehicleTask != null ? vehicleTask.value : this.vehicleTask),
-        vehicleTaskIds: (vehicleTaskIds != null
-            ? vehicleTaskIds.value
-            : this.vehicleTaskIds));
+        vehiclesId: (vehiclesId != null ? vehiclesId.value : this.vehiclesId));
   }
 }
 
@@ -3133,17 +4166,18 @@ extension $ModelsVehicleModelResponseExtension on ModelsVehicleModelResponse {
 class ModelsVehicleTaskModelResponse {
   const ModelsVehicleTaskModelResponse({
     this.createdAt,
+    this.createdBy,
+    this.createdById,
     this.deleted,
-    this.employee,
-    this.employeeId,
-    this.finishedAt,
+    this.deletedAt,
+    this.finishdedAt,
     this.id,
     this.startedAt,
-    this.task,
-    this.taskId,
+    this.tasks,
+    this.tasksId,
     this.updatedAt,
-    this.vehicle,
-    this.vehicleId,
+    this.vehicles,
+    this.vehiclesId,
   });
 
   factory ModelsVehicleTaskModelResponse.fromJson(Map<String, dynamic> json) =>
@@ -3154,28 +4188,30 @@ class ModelsVehicleTaskModelResponse {
 
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'created_by')
+  final ModelsEmployeeModel? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
   @JsonKey(name: 'deleted')
   final bool? deleted;
-  @JsonKey(name: 'employee')
-  final ModelsEmployeeModelResponse? employee;
-  @JsonKey(name: 'employee_id')
-  final String? employeeId;
-  @JsonKey(name: 'finished_at')
-  final DateTime? finishedAt;
+  @JsonKey(name: 'deleted_at')
+  final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'finishded_at')
+  final DateTime? finishdedAt;
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @JsonKey(name: 'started_at')
   final DateTime? startedAt;
-  @JsonKey(name: 'task')
-  final ModelsTaskModelResponse? task;
-  @JsonKey(name: 'task_id')
-  final String? taskId;
+  @JsonKey(name: 'tasks')
+  final ModelsTaskModel? tasks;
+  @JsonKey(name: 'tasks_id')
+  final int? tasksId;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  @JsonKey(name: 'vehicle')
-  final ModelsVehicleModelResponse? vehicle;
-  @JsonKey(name: 'vehicle_id')
-  final String? vehicleId;
+  @JsonKey(name: 'vehicles')
+  final ModelsVehicleModel? vehicles;
+  @JsonKey(name: 'vehicles_id')
+  final int? vehiclesId;
   static const fromJsonFactory = _$ModelsVehicleTaskModelResponseFromJson;
 
   @override
@@ -3185,36 +4221,40 @@ class ModelsVehicleTaskModelResponse {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
-            (identical(other.employee, employee) ||
+            (identical(other.deletedAt, deletedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.employee, employee)) &&
-            (identical(other.employeeId, employeeId) ||
+                    .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.finishdedAt, finishdedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.employeeId, employeeId)) &&
-            (identical(other.finishedAt, finishedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.finishedAt, finishedAt)) &&
+                    .equals(other.finishdedAt, finishdedAt)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.startedAt, startedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.startedAt, startedAt)) &&
-            (identical(other.task, task) ||
-                const DeepCollectionEquality().equals(other.task, task)) &&
-            (identical(other.taskId, taskId) ||
-                const DeepCollectionEquality().equals(other.taskId, taskId)) &&
+            (identical(other.tasks, tasks) ||
+                const DeepCollectionEquality().equals(other.tasks, tasks)) &&
+            (identical(other.tasksId, tasksId) ||
+                const DeepCollectionEquality()
+                    .equals(other.tasksId, tasksId)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)) &&
-            (identical(other.vehicle, vehicle) ||
+            (identical(other.vehicles, vehicles) ||
                 const DeepCollectionEquality()
-                    .equals(other.vehicle, vehicle)) &&
-            (identical(other.vehicleId, vehicleId) ||
+                    .equals(other.vehicles, vehicles)) &&
+            (identical(other.vehiclesId, vehiclesId) ||
                 const DeepCollectionEquality()
-                    .equals(other.vehicleId, vehicleId)));
+                    .equals(other.vehiclesId, vehiclesId)));
   }
 
   @override
@@ -3223,17 +4263,18 @@ class ModelsVehicleTaskModelResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
-      const DeepCollectionEquality().hash(employee) ^
-      const DeepCollectionEquality().hash(employeeId) ^
-      const DeepCollectionEquality().hash(finishedAt) ^
+      const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(finishdedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(startedAt) ^
-      const DeepCollectionEquality().hash(task) ^
-      const DeepCollectionEquality().hash(taskId) ^
+      const DeepCollectionEquality().hash(tasks) ^
+      const DeepCollectionEquality().hash(tasksId) ^
       const DeepCollectionEquality().hash(updatedAt) ^
-      const DeepCollectionEquality().hash(vehicle) ^
-      const DeepCollectionEquality().hash(vehicleId) ^
+      const DeepCollectionEquality().hash(vehicles) ^
+      const DeepCollectionEquality().hash(vehiclesId) ^
       runtimeType.hashCode;
 }
 
@@ -3241,58 +4282,64 @@ extension $ModelsVehicleTaskModelResponseExtension
     on ModelsVehicleTaskModelResponse {
   ModelsVehicleTaskModelResponse copyWith(
       {DateTime? createdAt,
+      ModelsEmployeeModel? createdBy,
+      int? createdById,
       bool? deleted,
-      ModelsEmployeeModelResponse? employee,
-      String? employeeId,
-      DateTime? finishedAt,
-      String? id,
+      GormDeletedAt? deletedAt,
+      DateTime? finishdedAt,
+      int? id,
       DateTime? startedAt,
-      ModelsTaskModelResponse? task,
-      String? taskId,
+      ModelsTaskModel? tasks,
+      int? tasksId,
       DateTime? updatedAt,
-      ModelsVehicleModelResponse? vehicle,
-      String? vehicleId}) {
+      ModelsVehicleModel? vehicles,
+      int? vehiclesId}) {
     return ModelsVehicleTaskModelResponse(
         createdAt: createdAt ?? this.createdAt,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
-        employee: employee ?? this.employee,
-        employeeId: employeeId ?? this.employeeId,
-        finishedAt: finishedAt ?? this.finishedAt,
+        deletedAt: deletedAt ?? this.deletedAt,
+        finishdedAt: finishdedAt ?? this.finishdedAt,
         id: id ?? this.id,
         startedAt: startedAt ?? this.startedAt,
-        task: task ?? this.task,
-        taskId: taskId ?? this.taskId,
+        tasks: tasks ?? this.tasks,
+        tasksId: tasksId ?? this.tasksId,
         updatedAt: updatedAt ?? this.updatedAt,
-        vehicle: vehicle ?? this.vehicle,
-        vehicleId: vehicleId ?? this.vehicleId);
+        vehicles: vehicles ?? this.vehicles,
+        vehiclesId: vehiclesId ?? this.vehiclesId);
   }
 
   ModelsVehicleTaskModelResponse copyWithWrapped(
       {Wrapped<DateTime?>? createdAt,
+      Wrapped<ModelsEmployeeModel?>? createdBy,
+      Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
-      Wrapped<ModelsEmployeeModelResponse?>? employee,
-      Wrapped<String?>? employeeId,
-      Wrapped<DateTime?>? finishedAt,
-      Wrapped<String?>? id,
+      Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<DateTime?>? finishdedAt,
+      Wrapped<int?>? id,
       Wrapped<DateTime?>? startedAt,
-      Wrapped<ModelsTaskModelResponse?>? task,
-      Wrapped<String?>? taskId,
+      Wrapped<ModelsTaskModel?>? tasks,
+      Wrapped<int?>? tasksId,
       Wrapped<DateTime?>? updatedAt,
-      Wrapped<ModelsVehicleModelResponse?>? vehicle,
-      Wrapped<String?>? vehicleId}) {
+      Wrapped<ModelsVehicleModel?>? vehicles,
+      Wrapped<int?>? vehiclesId}) {
     return ModelsVehicleTaskModelResponse(
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
-        employee: (employee != null ? employee.value : this.employee),
-        employeeId: (employeeId != null ? employeeId.value : this.employeeId),
-        finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
+        deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        finishdedAt:
+            (finishdedAt != null ? finishdedAt.value : this.finishdedAt),
         id: (id != null ? id.value : this.id),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt),
-        task: (task != null ? task.value : this.task),
-        taskId: (taskId != null ? taskId.value : this.taskId),
+        tasks: (tasks != null ? tasks.value : this.tasks),
+        tasksId: (tasksId != null ? tasksId.value : this.tasksId),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
-        vehicle: (vehicle != null ? vehicle.value : this.vehicle),
-        vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId));
+        vehicles: (vehicles != null ? vehicles.value : this.vehicles),
+        vehiclesId: (vehiclesId != null ? vehiclesId.value : this.vehiclesId));
   }
 }
 

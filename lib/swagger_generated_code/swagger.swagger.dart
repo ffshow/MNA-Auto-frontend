@@ -1,5 +1,8 @@
 // ignore_for_file: type=lint
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
+import 'dart:convert';
 
 import 'swagger.models.swagger.dart';
 import 'package:chopper/chopper.dart';
@@ -7,6 +10,7 @@ import 'package:chopper/chopper.dart';
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 export 'swagger.models.swagger.dart';
 
@@ -50,27 +54,27 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<Object>> _get();
 
   ///Create a new account
-  ///@param account Register account
+  ///@param account_model Register account
   Future<chopper.Response<ModelsAccountModelResponse>> apiAccountPost(
-      {required Object? account}) {
+      {required Object? accountModel}) {
     generatedMapping.putIfAbsent(ModelsCreateAccountModel,
         () => ModelsCreateAccountModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsAccountModelResponse,
         () => ModelsAccountModelResponse.fromJsonFactory);
 
-    return _apiAccountPost(account: account);
+    return _apiAccountPost(accountModel: accountModel);
   }
 
   ///Create a new account
-  ///@param account Register account
+  ///@param account_model Register account
   @Post(path: '/api/account')
   Future<chopper.Response<ModelsAccountModelResponse>> _apiAccountPost(
-      {@Body() required Object? account});
+      {@Body() required Object? accountModel});
 
   ///Get account by ID
   ///@param id Account ID
   Future<chopper.Response<ModelsAccountModelResponse>> apiAccountIdGet(
-      {required String? id}) {
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsAccountModelResponse,
         () => ModelsAccountModelResponse.fromJsonFactory);
 
@@ -81,30 +85,30 @@ abstract class Swagger extends ChopperService {
   ///@param id Account ID
   @Get(path: '/api/account/{id}')
   Future<chopper.Response<ModelsAccountModelResponse>> _apiAccountIdGet(
-      {@Path('id') required String? id});
+      {@Path('id') required int? id});
 
   ///Update a account
-  ///@param id Account ID
-  ///@param account Register account
-  Future<chopper.Response<ModelsAccountModelResponse>> apiAccountIdPut({
-    required String? id,
-    required Object? account,
+  ///@param id AccountModel ID
+  ///@param account_model Register account
+  Future<chopper.Response<ModelsAccountModelResponse>> apiAccountIdPatch({
+    required int? id,
+    required Object? accountModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateAccountModel,
         () => ModelsUpdateAccountModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsAccountModelResponse,
         () => ModelsAccountModelResponse.fromJsonFactory);
 
-    return _apiAccountIdPut(id: id, account: account);
+    return _apiAccountIdPatch(id: id, accountModel: accountModel);
   }
 
   ///Update a account
-  ///@param id Account ID
-  ///@param account Register account
-  @Put(path: '/api/account/{id}')
-  Future<chopper.Response<ModelsAccountModelResponse>> _apiAccountIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? account,
+  ///@param id AccountModel ID
+  ///@param account_model Register account
+  @Patch(path: '/api/account/{id}')
+  Future<chopper.Response<ModelsAccountModelResponse>> _apiAccountIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? accountModel,
   });
 
   ///Total records
@@ -120,21 +124,22 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiAccountTotalGet();
 
   ///Create many account
-  ///@param account Register account
+  ///@param account_model Register account
   Future<chopper.Response<List<ModelsAccountModelResponse>>>
-      apiAccountImportPost({required List<ModelsCreateAccountModel>? account}) {
+      apiAccountImportPost(
+          {required List<ModelsCreateAccountModel>? accountModel}) {
     generatedMapping.putIfAbsent(ModelsAccountModelResponse,
         () => ModelsAccountModelResponse.fromJsonFactory);
 
-    return _apiAccountImportPost(account: account);
+    return _apiAccountImportPost(accountModel: accountModel);
   }
 
   ///Create many account
-  ///@param account Register account
+  ///@param account_model Register account
   @Post(path: '/api/account_import')
   Future<chopper.Response<List<ModelsAccountModelResponse>>>
       _apiAccountImportPost(
-          {@Body() required List<ModelsCreateAccountModel>? account});
+          {@Body() required List<ModelsCreateAccountModel>? accountModel});
 
   ///List account
   ///@param page page
@@ -168,61 +173,79 @@ abstract class Swagger extends ChopperService {
   });
 
   ///Create a new employee
-  ///@param employee Register employee
+  ///@param employee_model Register employee
   Future<chopper.Response<ModelsEmployeeModelResponse>> apiEmployeePost(
-      {required Object? employee}) {
+      {required Object? employeeModel}) {
     generatedMapping.putIfAbsent(ModelsCreateEmployeeModel,
         () => ModelsCreateEmployeeModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsEmployeeModelResponse,
         () => ModelsEmployeeModelResponse.fromJsonFactory);
 
-    return _apiEmployeePost(employee: employee);
+    return _apiEmployeePost(employeeModel: employeeModel);
   }
 
   ///Create a new employee
-  ///@param employee Register employee
+  ///@param employee_model Register employee
   @Post(path: '/api/employee')
   Future<chopper.Response<ModelsEmployeeModelResponse>> _apiEmployeePost(
-      {@Body() required Object? employee});
+      {@Body() required Object? employeeModel});
 
   ///Get employee by ID
   ///@param id Employee ID
-  Future<chopper.Response<ModelsEmployeeModelResponse>> apiEmployeeIdGet(
-      {required String? id}) {
+  ///@param with_created_vehicles with vehicle data
+  ///@param with_deleted_vehicles with vehicle data
+  ///@param with_created_tasks with vehicle task data
+  Future<chopper.Response<ModelsEmployeeModelResponse>> apiEmployeeIdGet({
+    required int? id,
+    bool? withCreatedVehicles,
+    bool? withDeletedVehicles,
+    bool? withCreatedTasks,
+  }) {
     generatedMapping.putIfAbsent(ModelsEmployeeModelResponse,
         () => ModelsEmployeeModelResponse.fromJsonFactory);
 
-    return _apiEmployeeIdGet(id: id);
+    return _apiEmployeeIdGet(
+        id: id,
+        withCreatedVehicles: withCreatedVehicles,
+        withDeletedVehicles: withDeletedVehicles,
+        withCreatedTasks: withCreatedTasks);
   }
 
   ///Get employee by ID
   ///@param id Employee ID
+  ///@param with_created_vehicles with vehicle data
+  ///@param with_deleted_vehicles with vehicle data
+  ///@param with_created_tasks with vehicle task data
   @Get(path: '/api/employee/{id}')
-  Future<chopper.Response<ModelsEmployeeModelResponse>> _apiEmployeeIdGet(
-      {@Path('id') required String? id});
+  Future<chopper.Response<ModelsEmployeeModelResponse>> _apiEmployeeIdGet({
+    @Path('id') required int? id,
+    @Query('with_created_vehicles') bool? withCreatedVehicles,
+    @Query('with_deleted_vehicles') bool? withDeletedVehicles,
+    @Query('with_created_tasks') bool? withCreatedTasks,
+  });
 
   ///Update a employee
-  ///@param id Employee ID
-  ///@param employee Register employee
-  Future<chopper.Response<ModelsEmployeeModelResponse>> apiEmployeeIdPut({
-    required String? id,
-    required Object? employee,
+  ///@param id EmployeeModel ID
+  ///@param employee_model Register employee
+  Future<chopper.Response<ModelsEmployeeModelResponse>> apiEmployeeIdPatch({
+    required int? id,
+    required Object? employeeModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateEmployeeModel,
         () => ModelsUpdateEmployeeModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsEmployeeModelResponse,
         () => ModelsEmployeeModelResponse.fromJsonFactory);
 
-    return _apiEmployeeIdPut(id: id, employee: employee);
+    return _apiEmployeeIdPatch(id: id, employeeModel: employeeModel);
   }
 
   ///Update a employee
-  ///@param id Employee ID
-  ///@param employee Register employee
-  @Put(path: '/api/employee/{id}')
-  Future<chopper.Response<ModelsEmployeeModelResponse>> _apiEmployeeIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? employee,
+  ///@param id EmployeeModel ID
+  ///@param employee_model Register employee
+  @Patch(path: '/api/employee/{id}')
+  Future<chopper.Response<ModelsEmployeeModelResponse>> _apiEmployeeIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? employeeModel,
   });
 
   ///Total records
@@ -238,39 +261,51 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiEmployeeTotalGet();
 
   ///Create many employee
-  ///@param employee Register employee
+  ///@param employee_model Register employee
   Future<chopper.Response<List<ModelsEmployeeModelResponse>>>
       apiEmployeeImportPost(
-          {required List<ModelsCreateEmployeeModel>? employee}) {
+          {required List<ModelsCreateEmployeeModel>? employeeModel}) {
     generatedMapping.putIfAbsent(ModelsEmployeeModelResponse,
         () => ModelsEmployeeModelResponse.fromJsonFactory);
 
-    return _apiEmployeeImportPost(employee: employee);
+    return _apiEmployeeImportPost(employeeModel: employeeModel);
   }
 
   ///Create many employee
-  ///@param employee Register employee
+  ///@param employee_model Register employee
   @Post(path: '/api/employee_import')
   Future<chopper.Response<List<ModelsEmployeeModelResponse>>>
       _apiEmployeeImportPost(
-          {@Body() required List<ModelsCreateEmployeeModel>? employee});
+          {@Body() required List<ModelsCreateEmployeeModel>? employeeModel});
 
   ///List employee
   ///@param page page
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
+  ///@param with_created_vehicles with vehicle data
+  ///@param with_deleted_vehicles with vehicle data
+  ///@param with_created_tasks with vehicle task data
   Future<chopper.Response<ModelsListEmployeeModel>> apiEmployeeListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
+    bool? withCreatedVehicles,
+    bool? withDeletedVehicles,
+    bool? withCreatedTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListEmployeeModel, () => ModelsListEmployeeModel.fromJsonFactory);
 
     return _apiEmployeeListGet(
-        page: page, perPage: perPage, sortBy: sortBy, descending: descending);
+        page: page,
+        perPage: perPage,
+        sortBy: sortBy,
+        descending: descending,
+        withCreatedVehicles: withCreatedVehicles,
+        withDeletedVehicles: withDeletedVehicles,
+        withCreatedTasks: withCreatedTasks);
   }
 
   ///List employee
@@ -278,36 +313,42 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
+  ///@param with_created_vehicles with vehicle data
+  ///@param with_deleted_vehicles with vehicle data
+  ///@param with_created_tasks with vehicle task data
   @Get(path: '/api/employee_list')
   Future<chopper.Response<ModelsListEmployeeModel>> _apiEmployeeListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
+    @Query('with_created_vehicles') bool? withCreatedVehicles,
+    @Query('with_deleted_vehicles') bool? withDeletedVehicles,
+    @Query('with_created_tasks') bool? withCreatedTasks,
   });
 
   ///Create a new garage
-  ///@param garage Register garage
+  ///@param garage_model Register garage
   Future<chopper.Response<ModelsGarageModelResponse>> apiGaragePost(
-      {required Object? garage}) {
+      {required Object? garageModel}) {
     generatedMapping.putIfAbsent(
         ModelsCreateGarageModel, () => ModelsCreateGarageModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsGarageModelResponse,
         () => ModelsGarageModelResponse.fromJsonFactory);
 
-    return _apiGaragePost(garage: garage);
+    return _apiGaragePost(garageModel: garageModel);
   }
 
   ///Create a new garage
-  ///@param garage Register garage
+  ///@param garage_model Register garage
   @Post(path: '/api/garage')
   Future<chopper.Response<ModelsGarageModelResponse>> _apiGaragePost(
-      {@Body() required Object? garage});
+      {@Body() required Object? garageModel});
 
   ///Get garage by ID
   ///@param id Garage ID
   Future<chopper.Response<ModelsGarageModelResponse>> apiGarageIdGet(
-      {required String? id}) {
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsGarageModelResponse,
         () => ModelsGarageModelResponse.fromJsonFactory);
 
@@ -318,30 +359,30 @@ abstract class Swagger extends ChopperService {
   ///@param id Garage ID
   @Get(path: '/api/garage/{id}')
   Future<chopper.Response<ModelsGarageModelResponse>> _apiGarageIdGet(
-      {@Path('id') required String? id});
+      {@Path('id') required int? id});
 
   ///Update a garage
-  ///@param id Garage ID
-  ///@param garage Register garage
-  Future<chopper.Response<ModelsGarageModelResponse>> apiGarageIdPut({
-    required String? id,
-    required Object? garage,
+  ///@param id GarageModel ID
+  ///@param garage_model Register garage
+  Future<chopper.Response<ModelsGarageModelResponse>> apiGarageIdPatch({
+    required int? id,
+    required Object? garageModel,
   }) {
     generatedMapping.putIfAbsent(
         ModelsUpdateGarageModel, () => ModelsUpdateGarageModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsGarageModelResponse,
         () => ModelsGarageModelResponse.fromJsonFactory);
 
-    return _apiGarageIdPut(id: id, garage: garage);
+    return _apiGarageIdPatch(id: id, garageModel: garageModel);
   }
 
   ///Update a garage
-  ///@param id Garage ID
-  ///@param garage Register garage
-  @Put(path: '/api/garage/{id}')
-  Future<chopper.Response<ModelsGarageModelResponse>> _apiGarageIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? garage,
+  ///@param id GarageModel ID
+  ///@param garage_model Register garage
+  @Patch(path: '/api/garage/{id}')
+  Future<chopper.Response<ModelsGarageModelResponse>> _apiGarageIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? garageModel,
   });
 
   ///Total records
@@ -357,21 +398,21 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiGarageTotalGet();
 
   ///Create many garage
-  ///@param garage Register garage
+  ///@param garage_model Register garage
   Future<chopper.Response<List<ModelsGarageModelResponse>>> apiGarageImportPost(
-      {required List<ModelsCreateGarageModel>? garage}) {
+      {required List<ModelsCreateGarageModel>? garageModel}) {
     generatedMapping.putIfAbsent(ModelsGarageModelResponse,
         () => ModelsGarageModelResponse.fromJsonFactory);
 
-    return _apiGarageImportPost(garage: garage);
+    return _apiGarageImportPost(garageModel: garageModel);
   }
 
   ///Create many garage
-  ///@param garage Register garage
+  ///@param garage_model Register garage
   @Post(path: '/api/garage_import')
   Future<chopper.Response<List<ModelsGarageModelResponse>>>
       _apiGarageImportPost(
-          {@Body() required List<ModelsCreateGarageModel>? garage});
+          {@Body() required List<ModelsCreateGarageModel>? garageModel});
 
   ///List garage
   ///@param page page
@@ -405,61 +446,67 @@ abstract class Swagger extends ChopperService {
   });
 
   ///Create a new owner
-  ///@param owner Register owner
+  ///@param owner_model Register owner
   Future<chopper.Response<ModelsOwnerModelResponse>> apiOwnerPost(
-      {required Object? owner}) {
+      {required Object? ownerModel}) {
     generatedMapping.putIfAbsent(
         ModelsCreateOwnerModel, () => ModelsCreateOwnerModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsOwnerModelResponse,
         () => ModelsOwnerModelResponse.fromJsonFactory);
 
-    return _apiOwnerPost(owner: owner);
+    return _apiOwnerPost(ownerModel: ownerModel);
   }
 
   ///Create a new owner
-  ///@param owner Register owner
+  ///@param owner_model Register owner
   @Post(path: '/api/owner')
   Future<chopper.Response<ModelsOwnerModelResponse>> _apiOwnerPost(
-      {@Body() required Object? owner});
+      {@Body() required Object? ownerModel});
 
   ///Get owner by ID
   ///@param id Owner ID
-  Future<chopper.Response<ModelsOwnerModelResponse>> apiOwnerIdGet(
-      {required String? id}) {
+  ///@param with_vehicles with vehicle data
+  Future<chopper.Response<ModelsOwnerModelResponse>> apiOwnerIdGet({
+    required int? id,
+    bool? withVehicles,
+  }) {
     generatedMapping.putIfAbsent(ModelsOwnerModelResponse,
         () => ModelsOwnerModelResponse.fromJsonFactory);
 
-    return _apiOwnerIdGet(id: id);
+    return _apiOwnerIdGet(id: id, withVehicles: withVehicles);
   }
 
   ///Get owner by ID
   ///@param id Owner ID
+  ///@param with_vehicles with vehicle data
   @Get(path: '/api/owner/{id}')
-  Future<chopper.Response<ModelsOwnerModelResponse>> _apiOwnerIdGet(
-      {@Path('id') required String? id});
+  Future<chopper.Response<ModelsOwnerModelResponse>> _apiOwnerIdGet({
+    @Path('id') required int? id,
+    @Query('with_vehicles') bool? withVehicles,
+  });
 
   ///Update a owner
-  ///@param id Owner ID
-  ///@param owner Register owner
-  Future<chopper.Response<ModelsOwnerModelResponse>> apiOwnerIdPut({
-    required String? id,
-    required Object? owner,
+  ///@param id OwnerModel ID
+  ///@param owner_model Register owner
+  Future<chopper.Response<ModelsOwnerModelResponse>> apiOwnerIdPatch({
+    required int? id,
+    required Object? ownerModel,
   }) {
     generatedMapping.putIfAbsent(
         ModelsUpdateOwnerModel, () => ModelsUpdateOwnerModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsOwnerModelResponse,
         () => ModelsOwnerModelResponse.fromJsonFactory);
 
-    return _apiOwnerIdPut(id: id, owner: owner);
+    return _apiOwnerIdPatch(id: id, ownerModel: ownerModel);
   }
 
   ///Update a owner
-  ///@param id Owner ID
-  ///@param owner Register owner
-  @Put(path: '/api/owner/{id}')
-  Future<chopper.Response<ModelsOwnerModelResponse>> _apiOwnerIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? owner,
+  ///@param id OwnerModel ID
+  ///@param owner_model Register owner
+  @Patch(path: '/api/owner/{id}')
+  Future<chopper.Response<ModelsOwnerModelResponse>> _apiOwnerIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? ownerModel,
   });
 
   ///Total records
@@ -475,37 +522,43 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiOwnerTotalGet();
 
   ///Create many owner
-  ///@param owner Register owner
+  ///@param owner_model Register owner
   Future<chopper.Response<List<ModelsOwnerModelResponse>>> apiOwnerImportPost(
-      {required List<ModelsCreateOwnerModel>? owner}) {
+      {required List<ModelsCreateOwnerModel>? ownerModel}) {
     generatedMapping.putIfAbsent(ModelsOwnerModelResponse,
         () => ModelsOwnerModelResponse.fromJsonFactory);
 
-    return _apiOwnerImportPost(owner: owner);
+    return _apiOwnerImportPost(ownerModel: ownerModel);
   }
 
   ///Create many owner
-  ///@param owner Register owner
+  ///@param owner_model Register owner
   @Post(path: '/api/owner_import')
   Future<chopper.Response<List<ModelsOwnerModelResponse>>> _apiOwnerImportPost(
-      {@Body() required List<ModelsCreateOwnerModel>? owner});
+      {@Body() required List<ModelsCreateOwnerModel>? ownerModel});
 
   ///List owner
   ///@param page page
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
+  ///@param with_vehicles with vehicle data
   Future<chopper.Response<ModelsListOwnerModel>> apiOwnerListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
+    bool? withVehicles,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListOwnerModel, () => ModelsListOwnerModel.fromJsonFactory);
 
     return _apiOwnerListGet(
-        page: page, perPage: perPage, sortBy: sortBy, descending: descending);
+        page: page,
+        perPage: perPage,
+        sortBy: sortBy,
+        descending: descending,
+        withVehicles: withVehicles);
   }
 
   ///List owner
@@ -513,36 +566,38 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
+  ///@param with_vehicles with vehicle data
   @Get(path: '/api/owner_list')
   Future<chopper.Response<ModelsListOwnerModel>> _apiOwnerListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
+    @Query('with_vehicles') bool? withVehicles,
   });
 
   ///Create a new permission
-  ///@param permission Register permission
+  ///@param permission_model Register permission
   Future<chopper.Response<ModelsPermissionModelResponse>> apiPermissionPost(
-      {required Object? permission}) {
+      {required Object? permissionModel}) {
     generatedMapping.putIfAbsent(ModelsCreatePermissionModel,
         () => ModelsCreatePermissionModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsPermissionModelResponse,
         () => ModelsPermissionModelResponse.fromJsonFactory);
 
-    return _apiPermissionPost(permission: permission);
+    return _apiPermissionPost(permissionModel: permissionModel);
   }
 
   ///Create a new permission
-  ///@param permission Register permission
+  ///@param permission_model Register permission
   @Post(path: '/api/permission')
   Future<chopper.Response<ModelsPermissionModelResponse>> _apiPermissionPost(
-      {@Body() required Object? permission});
+      {@Body() required Object? permissionModel});
 
   ///Get permission by ID
   ///@param id Permission ID
   Future<chopper.Response<ModelsPermissionModelResponse>> apiPermissionIdGet(
-      {required String? id}) {
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsPermissionModelResponse,
         () => ModelsPermissionModelResponse.fromJsonFactory);
 
@@ -553,30 +608,31 @@ abstract class Swagger extends ChopperService {
   ///@param id Permission ID
   @Get(path: '/api/permission/{id}')
   Future<chopper.Response<ModelsPermissionModelResponse>> _apiPermissionIdGet(
-      {@Path('id') required String? id});
+      {@Path('id') required int? id});
 
   ///Update a permission
-  ///@param id Permission ID
-  ///@param permission Register permission
-  Future<chopper.Response<ModelsPermissionModelResponse>> apiPermissionIdPut({
-    required String? id,
-    required Object? permission,
+  ///@param id PermissionModel ID
+  ///@param permission_model Register permission
+  Future<chopper.Response<ModelsPermissionModelResponse>> apiPermissionIdPatch({
+    required int? id,
+    required Object? permissionModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdatePermissionModel,
         () => ModelsUpdatePermissionModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsPermissionModelResponse,
         () => ModelsPermissionModelResponse.fromJsonFactory);
 
-    return _apiPermissionIdPut(id: id, permission: permission);
+    return _apiPermissionIdPatch(id: id, permissionModel: permissionModel);
   }
 
   ///Update a permission
-  ///@param id Permission ID
-  ///@param permission Register permission
-  @Put(path: '/api/permission/{id}')
-  Future<chopper.Response<ModelsPermissionModelResponse>> _apiPermissionIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? permission,
+  ///@param id PermissionModel ID
+  ///@param permission_model Register permission
+  @Patch(path: '/api/permission/{id}')
+  Future<chopper.Response<ModelsPermissionModelResponse>>
+      _apiPermissionIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? permissionModel,
   });
 
   ///Total records
@@ -592,22 +648,23 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiPermissionTotalGet();
 
   ///Create many permission
-  ///@param permission Register permission
+  ///@param permission_model Register permission
   Future<chopper.Response<List<ModelsPermissionModelResponse>>>
       apiPermissionImportPost(
-          {required List<ModelsCreatePermissionModel>? permission}) {
+          {required List<ModelsCreatePermissionModel>? permissionModel}) {
     generatedMapping.putIfAbsent(ModelsPermissionModelResponse,
         () => ModelsPermissionModelResponse.fromJsonFactory);
 
-    return _apiPermissionImportPost(permission: permission);
+    return _apiPermissionImportPost(permissionModel: permissionModel);
   }
 
   ///Create many permission
-  ///@param permission Register permission
+  ///@param permission_model Register permission
   @Post(path: '/api/permission_import')
   Future<chopper.Response<List<ModelsPermissionModelResponse>>>
       _apiPermissionImportPost(
-          {@Body() required List<ModelsCreatePermissionModel>? permission});
+          {@Body()
+          required List<ModelsCreatePermissionModel>? permissionModel});
 
   ///List permission
   ///@param page page
@@ -641,27 +698,27 @@ abstract class Swagger extends ChopperService {
   });
 
   ///Create a new spare_part
-  ///@param spare_part Register spare_part
+  ///@param spare_part_model Register spare_part
   Future<chopper.Response<ModelsSparePartModelResponse>> apiSparePartPost(
-      {required Object? sparePart}) {
+      {required Object? sparePartModel}) {
     generatedMapping.putIfAbsent(ModelsCreateSparePartModel,
         () => ModelsCreateSparePartModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsSparePartModelResponse,
         () => ModelsSparePartModelResponse.fromJsonFactory);
 
-    return _apiSparePartPost(sparePart: sparePart);
+    return _apiSparePartPost(sparePartModel: sparePartModel);
   }
 
   ///Create a new spare_part
-  ///@param spare_part Register spare_part
+  ///@param spare_part_model Register spare_part
   @Post(path: '/api/spare_part')
   Future<chopper.Response<ModelsSparePartModelResponse>> _apiSparePartPost(
-      {@Body() required Object? sparePart});
+      {@Body() required Object? sparePartModel});
 
   ///Get spare_part by ID
   ///@param id SparePart ID
   Future<chopper.Response<ModelsSparePartModelResponse>> apiSparePartIdGet(
-      {required String? id}) {
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsSparePartModelResponse,
         () => ModelsSparePartModelResponse.fromJsonFactory);
 
@@ -672,30 +729,30 @@ abstract class Swagger extends ChopperService {
   ///@param id SparePart ID
   @Get(path: '/api/spare_part/{id}')
   Future<chopper.Response<ModelsSparePartModelResponse>> _apiSparePartIdGet(
-      {@Path('id') required String? id});
+      {@Path('id') required int? id});
 
   ///Update a spare_part
-  ///@param id SparePart ID
-  ///@param spare_part Register spare_part
-  Future<chopper.Response<ModelsSparePartModelResponse>> apiSparePartIdPut({
-    required String? id,
-    required Object? sparePart,
+  ///@param id SparePartModel ID
+  ///@param spare_part_model Register spare_part
+  Future<chopper.Response<ModelsSparePartModelResponse>> apiSparePartIdPatch({
+    required int? id,
+    required Object? sparePartModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateSparePartModel,
         () => ModelsUpdateSparePartModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsSparePartModelResponse,
         () => ModelsSparePartModelResponse.fromJsonFactory);
 
-    return _apiSparePartIdPut(id: id, sparePart: sparePart);
+    return _apiSparePartIdPatch(id: id, sparePartModel: sparePartModel);
   }
 
   ///Update a spare_part
-  ///@param id SparePart ID
-  ///@param spare_part Register spare_part
-  @Put(path: '/api/spare_part/{id}')
-  Future<chopper.Response<ModelsSparePartModelResponse>> _apiSparePartIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? sparePart,
+  ///@param id SparePartModel ID
+  ///@param spare_part_model Register spare_part
+  @Patch(path: '/api/spare_part/{id}')
+  Future<chopper.Response<ModelsSparePartModelResponse>> _apiSparePartIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? sparePartModel,
   });
 
   ///Total records
@@ -711,22 +768,22 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiSparePartTotalGet();
 
   ///Create many spare_part
-  ///@param spare_part Register spare_part
+  ///@param spare_part_model Register spare_part
   Future<chopper.Response<List<ModelsSparePartModelResponse>>>
       apiSparePartImportPost(
-          {required List<ModelsCreateSparePartModel>? sparePart}) {
+          {required List<ModelsCreateSparePartModel>? sparePartModel}) {
     generatedMapping.putIfAbsent(ModelsSparePartModelResponse,
         () => ModelsSparePartModelResponse.fromJsonFactory);
 
-    return _apiSparePartImportPost(sparePart: sparePart);
+    return _apiSparePartImportPost(sparePartModel: sparePartModel);
   }
 
   ///Create many spare_part
-  ///@param spare_part Register spare_part
+  ///@param spare_part_model Register spare_part
   @Post(path: '/api/spare_part_import')
   Future<chopper.Response<List<ModelsSparePartModelResponse>>>
       _apiSparePartImportPost(
-          {@Body() required List<ModelsCreateSparePartModel>? sparePart});
+          {@Body() required List<ModelsCreateSparePartModel>? sparePartModel});
 
   ///List spare_part
   ///@param page page
@@ -760,27 +817,27 @@ abstract class Swagger extends ChopperService {
   });
 
   ///Create a new supplier
-  ///@param supplier Register supplier
+  ///@param supplier_model Register supplier
   Future<chopper.Response<ModelsSupplierModelResponse>> apiSupplierPost(
-      {required Object? supplier}) {
+      {required Object? supplierModel}) {
     generatedMapping.putIfAbsent(ModelsCreateSupplierModel,
         () => ModelsCreateSupplierModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsSupplierModelResponse,
         () => ModelsSupplierModelResponse.fromJsonFactory);
 
-    return _apiSupplierPost(supplier: supplier);
+    return _apiSupplierPost(supplierModel: supplierModel);
   }
 
   ///Create a new supplier
-  ///@param supplier Register supplier
+  ///@param supplier_model Register supplier
   @Post(path: '/api/supplier')
   Future<chopper.Response<ModelsSupplierModelResponse>> _apiSupplierPost(
-      {@Body() required Object? supplier});
+      {@Body() required Object? supplierModel});
 
   ///Get supplier by ID
   ///@param id Supplier ID
   Future<chopper.Response<ModelsSupplierModelResponse>> apiSupplierIdGet(
-      {required String? id}) {
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsSupplierModelResponse,
         () => ModelsSupplierModelResponse.fromJsonFactory);
 
@@ -791,30 +848,30 @@ abstract class Swagger extends ChopperService {
   ///@param id Supplier ID
   @Get(path: '/api/supplier/{id}')
   Future<chopper.Response<ModelsSupplierModelResponse>> _apiSupplierIdGet(
-      {@Path('id') required String? id});
+      {@Path('id') required int? id});
 
   ///Update a supplier
-  ///@param id Supplier ID
-  ///@param supplier Register supplier
-  Future<chopper.Response<ModelsSupplierModelResponse>> apiSupplierIdPut({
-    required String? id,
-    required Object? supplier,
+  ///@param id SupplierModel ID
+  ///@param supplier_model Register supplier
+  Future<chopper.Response<ModelsSupplierModelResponse>> apiSupplierIdPatch({
+    required int? id,
+    required Object? supplierModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateSupplierModel,
         () => ModelsUpdateSupplierModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsSupplierModelResponse,
         () => ModelsSupplierModelResponse.fromJsonFactory);
 
-    return _apiSupplierIdPut(id: id, supplier: supplier);
+    return _apiSupplierIdPatch(id: id, supplierModel: supplierModel);
   }
 
   ///Update a supplier
-  ///@param id Supplier ID
-  ///@param supplier Register supplier
-  @Put(path: '/api/supplier/{id}')
-  Future<chopper.Response<ModelsSupplierModelResponse>> _apiSupplierIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? supplier,
+  ///@param id SupplierModel ID
+  ///@param supplier_model Register supplier
+  @Patch(path: '/api/supplier/{id}')
+  Future<chopper.Response<ModelsSupplierModelResponse>> _apiSupplierIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? supplierModel,
   });
 
   ///Total records
@@ -830,22 +887,22 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiSupplierTotalGet();
 
   ///Create many supplier
-  ///@param supplier Register supplier
+  ///@param supplier_model Register supplier
   Future<chopper.Response<List<ModelsSupplierModelResponse>>>
       apiSupplierImportPost(
-          {required List<ModelsCreateSupplierModel>? supplier}) {
+          {required List<ModelsCreateSupplierModel>? supplierModel}) {
     generatedMapping.putIfAbsent(ModelsSupplierModelResponse,
         () => ModelsSupplierModelResponse.fromJsonFactory);
 
-    return _apiSupplierImportPost(supplier: supplier);
+    return _apiSupplierImportPost(supplierModel: supplierModel);
   }
 
   ///Create many supplier
-  ///@param supplier Register supplier
+  ///@param supplier_model Register supplier
   @Post(path: '/api/supplier_import')
   Future<chopper.Response<List<ModelsSupplierModelResponse>>>
       _apiSupplierImportPost(
-          {@Body() required List<ModelsCreateSupplierModel>? supplier});
+          {@Body() required List<ModelsCreateSupplierModel>? supplierModel});
 
   ///List supplier
   ///@param page page
@@ -879,74 +936,72 @@ abstract class Swagger extends ChopperService {
   });
 
   ///Create a new task
-  ///@param task Register task
+  ///@param task_model Register task
   Future<chopper.Response<ModelsTaskModelResponse>> apiTaskPost(
-      {required Object? task}) {
+      {required Object? taskModel}) {
     generatedMapping.putIfAbsent(
         ModelsCreateTaskModel, () => ModelsCreateTaskModel.fromJsonFactory);
     generatedMapping.putIfAbsent(
         ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
 
-    return _apiTaskPost(task: task);
+    return _apiTaskPost(taskModel: taskModel);
   }
 
   ///Create a new task
-  ///@param task Register task
+  ///@param task_model Register task
   @Post(path: '/api/task')
   Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskPost(
-      {@Body() required Object? task});
+      {@Body() required Object? taskModel});
 
   ///Get task by ID
   ///@param id Task ID
   ///@param with_sub_tasks with task data
-  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
+  ///@param with_vehicle_tasks with Vehicle Task data
   Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdGet({
-    required String? id,
+    required int? id,
     bool? withSubTasks,
-    bool? withSubTasksSubTasks,
+    bool? withVehicleTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
 
     return _apiTaskIdGet(
-        id: id,
-        withSubTasks: withSubTasks,
-        withSubTasksSubTasks: withSubTasksSubTasks);
+        id: id, withSubTasks: withSubTasks, withVehicleTasks: withVehicleTasks);
   }
 
   ///Get task by ID
   ///@param id Task ID
   ///@param with_sub_tasks with task data
-  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
+  ///@param with_vehicle_tasks with Vehicle Task data
   @Get(path: '/api/task/{id}')
   Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdGet({
-    @Path('id') required String? id,
+    @Path('id') required int? id,
     @Query('with_sub_tasks') bool? withSubTasks,
-    @Query('with_sub_tasks_sub_tasks') bool? withSubTasksSubTasks,
+    @Query('with_vehicle_tasks') bool? withVehicleTasks,
   });
 
   ///Update a task
-  ///@param id Task ID
-  ///@param task Register task
-  Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdPut({
-    required String? id,
-    required Object? task,
+  ///@param id TaskModel ID
+  ///@param task_model Register task
+  Future<chopper.Response<ModelsTaskModelResponse>> apiTaskIdPatch({
+    required int? id,
+    required Object? taskModel,
   }) {
     generatedMapping.putIfAbsent(
         ModelsUpdateTaskModel, () => ModelsUpdateTaskModel.fromJsonFactory);
     generatedMapping.putIfAbsent(
         ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
 
-    return _apiTaskIdPut(id: id, task: task);
+    return _apiTaskIdPatch(id: id, taskModel: taskModel);
   }
 
   ///Update a task
-  ///@param id Task ID
-  ///@param task Register task
-  @Put(path: '/api/task/{id}')
-  Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? task,
+  ///@param id TaskModel ID
+  ///@param task_model Register task
+  @Patch(path: '/api/task/{id}')
+  Future<chopper.Response<ModelsTaskModelResponse>> _apiTaskIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? taskModel,
   });
 
   ///Total records
@@ -962,20 +1017,20 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiTaskTotalGet();
 
   ///Create many task
-  ///@param task Register task
+  ///@param task_model Register task
   Future<chopper.Response<List<ModelsTaskModelResponse>>> apiTaskImportPost(
-      {required List<ModelsCreateTaskModel>? task}) {
+      {required List<ModelsCreateTaskModel>? taskModel}) {
     generatedMapping.putIfAbsent(
         ModelsTaskModelResponse, () => ModelsTaskModelResponse.fromJsonFactory);
 
-    return _apiTaskImportPost(task: task);
+    return _apiTaskImportPost(taskModel: taskModel);
   }
 
   ///Create many task
-  ///@param task Register task
+  ///@param task_model Register task
   @Post(path: '/api/task_import')
   Future<chopper.Response<List<ModelsTaskModelResponse>>> _apiTaskImportPost(
-      {@Body() required List<ModelsCreateTaskModel>? task});
+      {@Body() required List<ModelsCreateTaskModel>? taskModel});
 
   ///List task
   ///@param page page
@@ -983,14 +1038,14 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_sub_tasks with task data
-  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
+  ///@param with_vehicle_tasks with Vehicle Task data
   Future<chopper.Response<ModelsListTaskModel>> apiTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? withSubTasks,
-    bool? withSubTasksSubTasks,
+    bool? withVehicleTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListTaskModel, () => ModelsListTaskModel.fromJsonFactory);
@@ -1001,7 +1056,7 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withSubTasks: withSubTasks,
-        withSubTasksSubTasks: withSubTasksSubTasks);
+        withVehicleTasks: withVehicleTasks);
   }
 
   ///List task
@@ -1010,7 +1065,7 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_sub_tasks with task data
-  ///@param with_sub_tasks_sub_tasks with sub_tasks task data
+  ///@param with_vehicle_tasks with Vehicle Task data
   @Get(path: '/api/task_list')
   Future<chopper.Response<ModelsListTaskModel>> _apiTaskListGet({
     @Query('page') int? page,
@@ -1018,98 +1073,71 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_sub_tasks') bool? withSubTasks,
-    @Query('with_sub_tasks_sub_tasks') bool? withSubTasksSubTasks,
+    @Query('with_vehicle_tasks') bool? withVehicleTasks,
   });
 
   ///Create a new vehicle
-  ///@param vehicle Register vehicle
+  ///@param vehicle_model Register vehicle
   Future<chopper.Response<ModelsVehicleModelResponse>> apiVehiclePost(
-      {required Object? vehicle}) {
+      {required Object? vehicleModel}) {
     generatedMapping.putIfAbsent(ModelsCreateVehicleModel,
         () => ModelsCreateVehicleModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
-    return _apiVehiclePost(vehicle: vehicle);
+    return _apiVehiclePost(vehicleModel: vehicleModel);
   }
 
   ///Create a new vehicle
-  ///@param vehicle Register vehicle
+  ///@param vehicle_model Register vehicle
   @Post(path: '/api/vehicle')
   Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehiclePost(
-      {@Body() required Object? vehicle});
+      {@Body() required Object? vehicleModel});
 
   ///Get vehicle by ID
   ///@param id Vehicle ID
-  ///@param with_owner with owner data
-  ///@param with_vehicle_task with vehicle task data
-  ///@param with_vehicle_task_employee with vehicle_task employee data
-  ///@param with_vehicle_task_task with vehicle_task task data
-  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
-  ///@param with_created_by with employee data
+  ///@param with_tasks with Vehicle Task data
   Future<chopper.Response<ModelsVehicleModelResponse>> apiVehicleIdGet({
-    required String? id,
-    bool? withOwner,
-    bool? withVehicleTask,
-    bool? withVehicleTaskEmployee,
-    bool? withVehicleTaskTask,
-    bool? withVehicleTaskVehicle,
-    bool? withCreatedBy,
+    required int? id,
+    bool? withTasks,
   }) {
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
-    return _apiVehicleIdGet(
-        id: id,
-        withOwner: withOwner,
-        withVehicleTask: withVehicleTask,
-        withVehicleTaskEmployee: withVehicleTaskEmployee,
-        withVehicleTaskTask: withVehicleTaskTask,
-        withVehicleTaskVehicle: withVehicleTaskVehicle,
-        withCreatedBy: withCreatedBy);
+    return _apiVehicleIdGet(id: id, withTasks: withTasks);
   }
 
   ///Get vehicle by ID
   ///@param id Vehicle ID
-  ///@param with_owner with owner data
-  ///@param with_vehicle_task with vehicle task data
-  ///@param with_vehicle_task_employee with vehicle_task employee data
-  ///@param with_vehicle_task_task with vehicle_task task data
-  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
-  ///@param with_created_by with employee data
+  ///@param with_tasks with Vehicle Task data
   @Get(path: '/api/vehicle/{id}')
   Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehicleIdGet({
-    @Path('id') required String? id,
-    @Query('with_owner') bool? withOwner,
-    @Query('with_vehicle_task') bool? withVehicleTask,
-    @Query('with_vehicle_task_employee') bool? withVehicleTaskEmployee,
-    @Query('with_vehicle_task_task') bool? withVehicleTaskTask,
-    @Query('with_vehicle_task_vehicle') bool? withVehicleTaskVehicle,
-    @Query('with_created_by') bool? withCreatedBy,
+    @Path('id') required int? id,
+    @Query('with_tasks') bool? withTasks,
   });
 
   ///Update a vehicle
-  ///@param id Vehicle ID
-  ///@param vehicle Register vehicle
-  Future<chopper.Response<ModelsVehicleModelResponse>> apiVehicleIdPut({
-    required String? id,
-    required Object? vehicle,
+  ///@param id VehicleModel ID
+  ///@param vehicle_model Register vehicle
+  Future<chopper.Response<ModelsVehicleModelResponse>> apiVehicleIdPatch({
+    required int? id,
+    required Object? vehicleModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateVehicleModel,
         () => ModelsUpdateVehicleModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
-    return _apiVehicleIdPut(id: id, vehicle: vehicle);
+    return _apiVehicleIdPatch(id: id, vehicleModel: vehicleModel);
   }
 
   ///Update a vehicle
-  ///@param id Vehicle ID
-  ///@param vehicle Register vehicle
-  @Put(path: '/api/vehicle/{id}')
-  Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehicleIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? vehicle,
+  ///@param id VehicleModel ID
+  ///@param vehicle_model Register vehicle
+  @Patch(path: '/api/vehicle/{id}')
+  Future<chopper.Response<ModelsVehicleModelResponse>> _apiVehicleIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? vehicleModel,
   });
 
   ///Total records
@@ -1125,44 +1153,35 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiVehicleTotalGet();
 
   ///Create many vehicle
-  ///@param vehicle Register vehicle
+  ///@param vehicle_model Register vehicle
   Future<chopper.Response<List<ModelsVehicleModelResponse>>>
-      apiVehicleImportPost({required List<ModelsCreateVehicleModel>? vehicle}) {
+      apiVehicleImportPost(
+          {required List<ModelsCreateVehicleModel>? vehicleModel}) {
     generatedMapping.putIfAbsent(ModelsVehicleModelResponse,
         () => ModelsVehicleModelResponse.fromJsonFactory);
 
-    return _apiVehicleImportPost(vehicle: vehicle);
+    return _apiVehicleImportPost(vehicleModel: vehicleModel);
   }
 
   ///Create many vehicle
-  ///@param vehicle Register vehicle
+  ///@param vehicle_model Register vehicle
   @Post(path: '/api/vehicle_import')
   Future<chopper.Response<List<ModelsVehicleModelResponse>>>
       _apiVehicleImportPost(
-          {@Body() required List<ModelsCreateVehicleModel>? vehicle});
+          {@Body() required List<ModelsCreateVehicleModel>? vehicleModel});
 
   ///List vehicle
   ///@param page page
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param with_owner with owner data
-  ///@param with_vehicle_task with vehicle task data
-  ///@param with_vehicle_task_employee with vehicle_task employee data
-  ///@param with_vehicle_task_task with vehicle_task task data
-  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
-  ///@param with_created_by with employee data
+  ///@param with_tasks with Vehicle Task data
   Future<chopper.Response<ModelsListVehicleModel>> apiVehicleListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withOwner,
-    bool? withVehicleTask,
-    bool? withVehicleTaskEmployee,
-    bool? withVehicleTaskTask,
-    bool? withVehicleTaskVehicle,
-    bool? withCreatedBy,
+    bool? withTasks,
   }) {
     generatedMapping.putIfAbsent(
         ModelsListVehicleModel, () => ModelsListVehicleModel.fromJsonFactory);
@@ -1172,12 +1191,7 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        withOwner: withOwner,
-        withVehicleTask: withVehicleTask,
-        withVehicleTaskEmployee: withVehicleTaskEmployee,
-        withVehicleTaskTask: withVehicleTaskTask,
-        withVehicleTaskVehicle: withVehicleTaskVehicle,
-        withCreatedBy: withCreatedBy);
+        withTasks: withTasks);
   }
 
   ///List vehicle
@@ -1185,107 +1199,74 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param with_owner with owner data
-  ///@param with_vehicle_task with vehicle task data
-  ///@param with_vehicle_task_employee with vehicle_task employee data
-  ///@param with_vehicle_task_task with vehicle_task task data
-  ///@param with_vehicle_task_vehicle with vehicle_task vehicle data
-  ///@param with_created_by with employee data
+  ///@param with_tasks with Vehicle Task data
   @Get(path: '/api/vehicle_list')
   Future<chopper.Response<ModelsListVehicleModel>> _apiVehicleListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
-    @Query('with_owner') bool? withOwner,
-    @Query('with_vehicle_task') bool? withVehicleTask,
-    @Query('with_vehicle_task_employee') bool? withVehicleTaskEmployee,
-    @Query('with_vehicle_task_task') bool? withVehicleTaskTask,
-    @Query('with_vehicle_task_vehicle') bool? withVehicleTaskVehicle,
-    @Query('with_created_by') bool? withCreatedBy,
+    @Query('with_tasks') bool? withTasks,
   });
 
   ///Create a new vehicle_task
-  ///@param vehicle_task Register vehicle_task
+  ///@param vehicle_task_model Register vehicle_task
   Future<chopper.Response<ModelsVehicleTaskModelResponse>> apiVehicleTaskPost(
-      {required Object? vehicleTask}) {
+      {required Object? vehicleTaskModel}) {
     generatedMapping.putIfAbsent(ModelsCreateVehicleTaskModel,
         () => ModelsCreateVehicleTaskModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsVehicleTaskModelResponse,
         () => ModelsVehicleTaskModelResponse.fromJsonFactory);
 
-    return _apiVehicleTaskPost(vehicleTask: vehicleTask);
+    return _apiVehicleTaskPost(vehicleTaskModel: vehicleTaskModel);
   }
 
   ///Create a new vehicle_task
-  ///@param vehicle_task Register vehicle_task
+  ///@param vehicle_task_model Register vehicle_task
   @Post(path: '/api/vehicle_task')
   Future<chopper.Response<ModelsVehicleTaskModelResponse>> _apiVehicleTaskPost(
-      {@Body() required Object? vehicleTask});
+      {@Body() required Object? vehicleTaskModel});
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
-  ///@param with_employee with employee data
-  ///@param with_task with task data
-  ///@param with_task_sub_tasks with task task data
-  ///@param with_vehicle with vehicle data
-  Future<chopper.Response<ModelsVehicleTaskModelResponse>> apiVehicleTaskIdGet({
-    required String? id,
-    bool? withEmployee,
-    bool? withTask,
-    bool? withTaskSubTasks,
-    bool? withVehicle,
-  }) {
+  Future<chopper.Response<ModelsVehicleTaskModelResponse>> apiVehicleTaskIdGet(
+      {required int? id}) {
     generatedMapping.putIfAbsent(ModelsVehicleTaskModelResponse,
         () => ModelsVehicleTaskModelResponse.fromJsonFactory);
 
-    return _apiVehicleTaskIdGet(
-        id: id,
-        withEmployee: withEmployee,
-        withTask: withTask,
-        withTaskSubTasks: withTaskSubTasks,
-        withVehicle: withVehicle);
+    return _apiVehicleTaskIdGet(id: id);
   }
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
-  ///@param with_employee with employee data
-  ///@param with_task with task data
-  ///@param with_task_sub_tasks with task task data
-  ///@param with_vehicle with vehicle data
   @Get(path: '/api/vehicle_task/{id}')
-  Future<chopper.Response<ModelsVehicleTaskModelResponse>>
-      _apiVehicleTaskIdGet({
-    @Path('id') required String? id,
-    @Query('with_employee') bool? withEmployee,
-    @Query('with_task') bool? withTask,
-    @Query('with_task_sub_tasks') bool? withTaskSubTasks,
-    @Query('with_vehicle') bool? withVehicle,
-  });
+  Future<chopper.Response<ModelsVehicleTaskModelResponse>> _apiVehicleTaskIdGet(
+      {@Path('id') required int? id});
 
   ///Update a vehicle_task
-  ///@param id VehicleTask ID
-  ///@param vehicle_task Register vehicle_task
-  Future<chopper.Response<ModelsVehicleTaskModelResponse>> apiVehicleTaskIdPut({
-    required String? id,
-    required Object? vehicleTask,
+  ///@param id VehicleTaskModel ID
+  ///@param vehicle_task_model Register vehicle_task
+  Future<chopper.Response<ModelsVehicleTaskModelResponse>>
+      apiVehicleTaskIdPatch({
+    required int? id,
+    required Object? vehicleTaskModel,
   }) {
     generatedMapping.putIfAbsent(ModelsUpdateVehicleTaskModel,
         () => ModelsUpdateVehicleTaskModel.fromJsonFactory);
     generatedMapping.putIfAbsent(ModelsVehicleTaskModelResponse,
         () => ModelsVehicleTaskModelResponse.fromJsonFactory);
 
-    return _apiVehicleTaskIdPut(id: id, vehicleTask: vehicleTask);
+    return _apiVehicleTaskIdPatch(id: id, vehicleTaskModel: vehicleTaskModel);
   }
 
   ///Update a vehicle_task
-  ///@param id VehicleTask ID
-  ///@param vehicle_task Register vehicle_task
-  @Put(path: '/api/vehicle_task/{id}')
+  ///@param id VehicleTaskModel ID
+  ///@param vehicle_task_model Register vehicle_task
+  @Patch(path: '/api/vehicle_task/{id}')
   Future<chopper.Response<ModelsVehicleTaskModelResponse>>
-      _apiVehicleTaskIdPut({
-    @Path('id') required String? id,
-    @Body() required Object? vehicleTask,
+      _apiVehicleTaskIdPatch({
+    @Path('id') required int? id,
+    @Body() required Object? vehicleTaskModel,
   });
 
   ///Total records
@@ -1301,54 +1282,40 @@ abstract class Swagger extends ChopperService {
   Future<chopper.Response<ModelsTotalCount>> _apiVehicleTaskTotalGet();
 
   ///Create many vehicle_task
-  ///@param vehicle_task Register vehicle_task
+  ///@param vehicle_task_model Register vehicle_task
   Future<chopper.Response<List<ModelsVehicleTaskModelResponse>>>
       apiVehicleTaskImportPost(
-          {required List<ModelsCreateVehicleTaskModel>? vehicleTask}) {
+          {required List<ModelsCreateVehicleTaskModel>? vehicleTaskModel}) {
     generatedMapping.putIfAbsent(ModelsVehicleTaskModelResponse,
         () => ModelsVehicleTaskModelResponse.fromJsonFactory);
 
-    return _apiVehicleTaskImportPost(vehicleTask: vehicleTask);
+    return _apiVehicleTaskImportPost(vehicleTaskModel: vehicleTaskModel);
   }
 
   ///Create many vehicle_task
-  ///@param vehicle_task Register vehicle_task
+  ///@param vehicle_task_model Register vehicle_task
   @Post(path: '/api/vehicle_task_import')
   Future<chopper.Response<List<ModelsVehicleTaskModelResponse>>>
       _apiVehicleTaskImportPost(
-          {@Body() required List<ModelsCreateVehicleTaskModel>? vehicleTask});
+          {@Body()
+          required List<ModelsCreateVehicleTaskModel>? vehicleTaskModel});
 
   ///List vehicle_task
   ///@param page page
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param with_employee with employee data
-  ///@param with_task with task data
-  ///@param with_task_sub_tasks with task task data
-  ///@param with_vehicle with vehicle data
   Future<chopper.Response<ModelsListVehicleTaskModel>> apiVehicleTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withEmployee,
-    bool? withTask,
-    bool? withTaskSubTasks,
-    bool? withVehicle,
   }) {
     generatedMapping.putIfAbsent(ModelsListVehicleTaskModel,
         () => ModelsListVehicleTaskModel.fromJsonFactory);
 
     return _apiVehicleTaskListGet(
-        page: page,
-        perPage: perPage,
-        sortBy: sortBy,
-        descending: descending,
-        withEmployee: withEmployee,
-        withTask: withTask,
-        withTaskSubTasks: withTaskSubTasks,
-        withVehicle: withVehicle);
+        page: page, perPage: perPage, sortBy: sortBy, descending: descending);
   }
 
   ///List vehicle_task
@@ -1356,20 +1323,12 @@ abstract class Swagger extends ChopperService {
   ///@param per_page page size
   ///@param sort_by sort field
   ///@param descending order
-  ///@param with_employee with employee data
-  ///@param with_task with task data
-  ///@param with_task_sub_tasks with task task data
-  ///@param with_vehicle with vehicle data
   @Get(path: '/api/vehicle_task_list')
   Future<chopper.Response<ModelsListVehicleTaskModel>> _apiVehicleTaskListGet({
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
-    @Query('with_employee') bool? withEmployee,
-    @Query('with_task') bool? withTask,
-    @Query('with_task_sub_tasks') bool? withTaskSubTasks,
-    @Query('with_vehicle') bool? withVehicle,
   });
 
   ///Seed vehicles

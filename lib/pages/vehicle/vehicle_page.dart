@@ -38,7 +38,7 @@ class VehiclePage extends StatelessWidget {
                 serialNumber: faker.vehicle.vin(),
               );
               RepositoryProvider.of<Swagger>(context)
-                  .apiVehiclePost(vehicle: v);
+                  .apiVehiclePost(vehicleModel: v);
             },
             icon: const Icon(Icons.create),
           ),
@@ -70,7 +70,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
       notificationService,
       onTap: (ModelsVehicleModelResponse item) {
         context.pushNamed('vehicle_details', pathParameters: {
-          "id": item.id!,
+          "id": item.id!.toString(),
         });
       },
     );

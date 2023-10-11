@@ -34,7 +34,7 @@ class TaskPage extends StatelessWidget {
       body: BlocBuilder<TaskCubit, TaskState>(
         builder: (BuildContext context, TaskState state) {
           return state.when(
-            loaded: (ModelsListTaskModel data) {
+            loaded: (ListTask data) {
               return _TasksWidget(data: data.data!);
             },
             initial: () {
@@ -62,7 +62,7 @@ class TaskPage extends StatelessWidget {
     // if (value != null) {
     //   // create task
     //   swagger.apiTaskPost(
-    //     task: ModelsCreateTaskModel.fromJson(value),
+    //     task: CreateTask.fromJson(value),
     //   );
     // }
   }
@@ -95,10 +95,10 @@ class CreateTaskWidgt extends StatelessWidget {
               Navigator.pop(context);
               final Swagger swagger = RepositoryProvider.of<Swagger>(context);
               final labels = value['sub_tasks'] as List<String>? ?? [];
-              final List<ModelsCreateTaskModel> tasks =
-                  labels.map((e) => ModelsCreateTaskModel(label: e)).toList();
+              final List<CreateTask> tasks =
+                  labels.map((e) => CreateTask(label: e)).toList();
               swagger.apiTaskPost(
-                taskModel: ModelsCreateTaskModel(
+                taskModel: CreateTask(
                   label: value['label'],
                   subTasks: tasks,
                 ),
@@ -202,7 +202,7 @@ class CreateTaskWidgt extends StatelessWidget {
 }
 
 class _TasksWidget extends StatefulWidget {
-  final List<ModelsTaskModelResponse> data;
+  final List<TaskResponse> data;
 
   const _TasksWidget({required this.data});
 
@@ -211,7 +211,7 @@ class _TasksWidget extends StatefulWidget {
 }
 
 class _TasksWidgetState extends State<_TasksWidget> {
-  ModelsTaskModelResponse? _selected;
+  TaskResponse? _selected;
 
   @override
   void initState() {
@@ -232,7 +232,7 @@ class _TasksWidgetState extends State<_TasksWidget> {
             runAlignment: WrapAlignment.center,
             runSpacing: 8,
             spacing: 8,
-            children: widget.data.map((ModelsTaskModelResponse e) {
+            children: widget.data.map((TaskResponse e) {
               return ChoiceChip(
                 selected: _selected == e,
                 label: Text(e.label ?? ''),
@@ -250,7 +250,7 @@ class _TasksWidgetState extends State<_TasksWidget> {
           //   const ListTile(
           //     title: Text('Subtasks'),
           //   ),
-          // ...?_selected?.subTasks?.map((ModelsTaskModelResponse e) {
+          // ...?_selected?.subTasks?.map((TaskResponse e) {
           //   return ListTile(
           //     leading: Text(e.label ?? ''),
           //   );
@@ -280,7 +280,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     source ??= TaskDataTableSource(
       service: swagger,
       notificationService: notificationService,
-      onEdit: (ModelsTaskModelResponse task) {
+      onEdit: (TaskResponse task) {
         _update(context, task);
       },
     );
@@ -389,8 +389,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     );
   }
 
-  Future<void> _update(
-      BuildContext context, ModelsTaskModelResponse task) async {
+  Future<void> _update(BuildContext context, TaskResponse task) async {
     final Swagger swagger = RepositoryProvider.of<Swagger>(context);
     final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
     final Map<String, dynamic>? value = await showDialog<Map<String, dynamic>?>(
@@ -457,7 +456,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
       // update task
       swagger.apiTaskIdPatch(
         id: task.id,
-        taskModel: ModelsUpdateTaskModel.fromJson(value),
+        taskModel: UpdateTask.fromJson(value),
       );
     }
   }

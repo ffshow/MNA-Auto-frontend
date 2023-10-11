@@ -33,7 +33,7 @@ class GaragePage extends StatelessWidget {
             onPressed: () {
               final Swagger swagger = RepositoryProvider.of<Swagger>(context);
               final DateTime now = DateTime.now();
-              final g = ModelsCreateGarageModel(
+              final g = CreateGarage(
                 label: 'garage ${now.microsecond}',
               );
               swagger.apiGaragePost(garageModel: g);
@@ -145,13 +145,13 @@ class GarageDataTableSource extends AsyncDataTableSource {
     });
   }
   late final StreamSubscription? sub;
-  final List<ModelsGarageModelResponse> items = [];
+  final List<GarageResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
 
-  DataRow2 toRow(ModelsGarageModelResponse item) {
+  DataRow2 toRow(GarageResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.label ?? '')),
@@ -200,7 +200,7 @@ class GarageDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListGarageModel> res = await service.apiGarageListGet(
+    final Response<ListGarage> res = await service.apiGarageListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),

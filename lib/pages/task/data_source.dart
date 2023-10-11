@@ -10,7 +10,7 @@ import 'package:mna/utils/extensions.dart';
 class TaskDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  final void Function(ModelsTaskModelResponse task)? onEdit;
+  final void Function(TaskResponse task)? onEdit;
   TaskDataTableSource({
     required this.service,
     required this.notificationService,
@@ -20,14 +20,14 @@ class TaskDataTableSource extends AsyncDataTableSource {
       refreshDatasource();
     });
   }
-  final List<ModelsTaskModelResponse> items = [];
+  final List<TaskResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
   late final StreamSubscription? sub;
 
-  DataRow2 toRow(ModelsTaskModelResponse item) {
+  DataRow2 toRow(TaskResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.label ?? '')),
@@ -75,7 +75,7 @@ class TaskDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListTaskModel> res = await service.apiTaskListGet(
+    final Response<ListTask> res = await service.apiTaskListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),

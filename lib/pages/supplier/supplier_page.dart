@@ -87,7 +87,7 @@ class SupplierPage extends StatelessWidget {
 
     if (value != null) {
       swagger.apiSupplierPost(
-        supplierModel: ModelsCreateSupplierModel.fromJson(value),
+        supplierModel: CreateSupplier.fromJson(value),
       );
     }
   }

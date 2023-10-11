@@ -80,7 +80,7 @@ class _DevPageState extends State<DevPage> {
                 future: swagger.apiVehicleListGet(),
                 builder: (
                   BuildContext context,
-                  AsyncSnapshot<Response<ModelsListVehicleModel>> snapshot,
+                  AsyncSnapshot<Response<ListVehicle>> snapshot,
                 ) {
                   if (snapshot.hasData) {
                     return Text(
@@ -146,7 +146,7 @@ class _DevPageState extends State<DevPage> {
 
   Future<void> _createVechile() async {
     final date = faker.date.dateTime(minYear: 1999, maxYear: 2022).toUtc();
-    final v = ModelsCreateVehicleModel(
+    final v = CreateVehicle(
       chrono: faker.vehicle.make(),
       collectionDate: date,
       deliveryDate: date,
@@ -165,7 +165,7 @@ class _DevPageState extends State<DevPage> {
   }
 
   void _createOwner() {
-    final ModelsCreateOwnerModel o = ModelsCreateOwnerModel(
+    final CreateOwner o = CreateOwner(
       address: faker.address.neighborhood(),
       email: '${faker.person.firstName()}@${faker.person.lastName()}.com',
       phone: faker.phoneNumber.de(),

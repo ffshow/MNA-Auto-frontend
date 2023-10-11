@@ -19,7 +19,7 @@ class OwnerCubit extends Cubit<OwnerState> {
       await Future.delayed(const Duration(milliseconds: 500));
     }
     try {
-      final Response<ModelsListOwnerModel> res =
+      final Response<ListOwner> res =
           await _ownerRepository.getOwners(p: Pagination(perPage: 100));
       emit(OwnerState.loaded(res.body?.data ?? []));
     } catch (e, s) {

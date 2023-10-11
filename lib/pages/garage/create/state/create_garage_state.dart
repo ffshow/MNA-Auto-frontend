@@ -17,7 +17,7 @@ extension StateStatusX on StateStatus {
 final class CreateGarageState extends Equatable {
   final StateStatus status;
   final String? error;
-  final ModelsCreateGarageModel? model;
+  final CreateGarage? model;
 
   const CreateGarageState({
     required this.status,
@@ -28,7 +28,7 @@ final class CreateGarageState extends Equatable {
   CreateGarageState copyWith({
     StateStatus? status,
     String? error,
-    ModelsCreateGarageModel? model,
+    CreateGarage? model,
   }) {
     return CreateGarageState(
       status: status ?? this.status,

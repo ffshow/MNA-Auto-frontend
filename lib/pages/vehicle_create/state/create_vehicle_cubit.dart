@@ -13,8 +13,7 @@ class CreateVehicleCubit extends Cubit<CreateVehicleState> {
 
   Future<void> create(Map<String, Object?> data) async {
     try {
-      ModelsCreateVehicleModel? vehicle =
-          ModelsCreateVehicleModel.fromJson(data);
+      CreateVehicle? vehicle = CreateVehicle.fromJson(data);
       emit(state.copyWith(status: StateStatus.loading, vehicle: vehicle));
       swagger.apiVehiclePost(vehicleModel: vehicle);
       emit(state.copyWith(status: StateStatus.success));

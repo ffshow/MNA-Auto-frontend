@@ -11,7 +11,7 @@ class CreateGarageCubit extends Cubit<CreateGarageState> {
           status: StateStatus.initial,
         ));
 
-  Future<void> create(ModelsCreateGarageModel model) async {
+  Future<void> create(CreateGarage model) async {
     emit(state.copyWith(status: StateStatus.loading, model: model));
     try {
       await swagger.apiGaragePost(garageModel: model);

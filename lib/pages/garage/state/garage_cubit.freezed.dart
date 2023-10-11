@@ -19,21 +19,21 @@ mixin _$GarageState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsGarageModelResponse> garages) success,
+    required TResult Function(List<GarageResponse> garages) success,
     required TResult Function(String error) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult? Function(List<GarageResponse> garages)? success,
     TResult? Function(String error)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult Function(List<GarageResponse> garages)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) =>
@@ -119,7 +119,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsGarageModelResponse> garages) success,
+    required TResult Function(List<GarageResponse> garages) success,
     required TResult Function(String error) failure,
   }) {
     return initial();
@@ -129,7 +129,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult? Function(List<GarageResponse> garages)? success,
     TResult? Function(String error)? failure,
   }) {
     return initial?.call();
@@ -139,7 +139,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult Function(List<GarageResponse> garages)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -194,7 +194,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ModelsGarageModelResponse> garages});
+  $Res call({List<GarageResponse> garages});
 }
 
 /// @nodoc
@@ -214,7 +214,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
       null == garages
           ? _value._garages
           : garages // ignore: cast_nullable_to_non_nullable
-              as List<ModelsGarageModelResponse>,
+              as List<GarageResponse>,
     ));
   }
 }
@@ -222,12 +222,11 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<ModelsGarageModelResponse> garages)
-      : _garages = garages;
+  const _$SuccessImpl(final List<GarageResponse> garages) : _garages = garages;
 
-  final List<ModelsGarageModelResponse> _garages;
+  final List<GarageResponse> _garages;
   @override
-  List<ModelsGarageModelResponse> get garages {
+  List<GarageResponse> get garages {
     if (_garages is EqualUnmodifiableListView) return _garages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_garages);
@@ -260,7 +259,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsGarageModelResponse> garages) success,
+    required TResult Function(List<GarageResponse> garages) success,
     required TResult Function(String error) failure,
   }) {
     return success(garages);
@@ -270,7 +269,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult? Function(List<GarageResponse> garages)? success,
     TResult? Function(String error)? failure,
   }) {
     return success?.call(garages);
@@ -280,7 +279,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult Function(List<GarageResponse> garages)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -326,10 +325,9 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements GarageState {
-  const factory _Success(final List<ModelsGarageModelResponse> garages) =
-      _$SuccessImpl;
+  const factory _Success(final List<GarageResponse> garages) = _$SuccessImpl;
 
-  List<ModelsGarageModelResponse> get garages;
+  List<GarageResponse> get garages;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -400,7 +398,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsGarageModelResponse> garages) success,
+    required TResult Function(List<GarageResponse> garages) success,
     required TResult Function(String error) failure,
   }) {
     return failure(error);
@@ -410,7 +408,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult? Function(List<GarageResponse> garages)? success,
     TResult? Function(String error)? failure,
   }) {
     return failure?.call(error);
@@ -420,7 +418,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsGarageModelResponse> garages)? success,
+    TResult Function(List<GarageResponse> garages)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {

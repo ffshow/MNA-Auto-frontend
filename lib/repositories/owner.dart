@@ -8,10 +8,10 @@ class OwnerRepository {
 
   OwnerRepository(this._swagger);
 
-  Response<ModelsListOwnerModel>? _res;
+  Response<ListOwner>? _res;
   Pagination? _pagination;
 
-  Future<Response<ModelsListOwnerModel>> getOwners({Pagination? p}) async {
+  Future<Response<ListOwner>> getOwners({Pagination? p}) async {
     if (_res != null && _pagination == p) {
       return _res!;
     }

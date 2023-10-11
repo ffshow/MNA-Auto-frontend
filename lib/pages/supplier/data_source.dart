@@ -16,14 +16,14 @@ class SupplierDataTableSource extends AsyncDataTableSource {
     });
   }
 
-  final List<ModelsSupplierModelResponse> items = [];
+  final List<SupplierResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
   late final StreamSubscription? onCreate;
 
-  DataRow2 toRow(ModelsSupplierModelResponse item) {
+  DataRow2 toRow(SupplierResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.name ?? '')),
@@ -72,8 +72,7 @@ class SupplierDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListSupplierModel> res =
-        await service.apiSupplierListGet(
+    final Response<ListSupplier> res = await service.apiSupplierListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),

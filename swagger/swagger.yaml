@@ -1,14 +1,24 @@
 basePath: /
 definitions:
-  gorm.DeletedAt:
+  AccountAudit:
     properties:
-      time:
+      accountModelID:
+        type: integer
+      action:
+        description: INSERT, UPDATE, DELETE
         type: string
-      valid:
-        description: Valid is true if Time is not NULL
-        type: boolean
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      email:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
     type: object
-  models.AccountModelResponse:
+  AccountResponse:
     properties:
       created_at:
         format: date-time
@@ -18,6 +28,10 @@ definitions:
       email:
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/AccountAudit'
+        type: array
       id:
         type: integer
       name:
@@ -27,7 +41,7 @@ definitions:
         format: date-time
         type: string
     type: object
-  models.CreateAccountModel:
+  CreateAccount:
     properties:
       email:
         type: string
@@ -36,34 +50,57 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.CreateEmployeeModel:
+  CreateEmployee:
     properties:
+      created_garages:
+        items:
+          $ref: '#/definitions/CreateGarage'
+        type: array
+        x-nullable: false
       created_tasks:
         items:
-          $ref: '#/definitions/models.CreateVehicleTaskModel'
+          $ref: '#/definitions/CreateTask'
+        type: array
+        x-nullable: false
+      created_vehicle_tasks:
+        items:
+          $ref: '#/definitions/CreateVehicleTask'
         type: array
         x-nullable: false
       created_vehicles:
         items:
-          $ref: '#/definitions/models.CreateVehicleModel'
+          $ref: '#/definitions/CreateVehicle'
         type: array
         x-nullable: false
       deleted_vehicles:
         items:
-          $ref: '#/definitions/models.CreateVehicleModel'
+          $ref: '#/definitions/CreateVehicle'
         type: array
         x-nullable: false
       name:
         type: string
         x-nullable: false
+      updated_tasts:
+        items:
+          $ref: '#/definitions/CreateTask'
+        type: array
+        x-nullable: false
+      updated_vehicles:
+        items:
+          $ref: '#/definitions/CreateVehicle'
+        type: array
+        x-nullable: false
     type: object
-  models.CreateGarageModel:
+  CreateGarage:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
         x-nullable: false
     type: object
-  models.CreateOwnerModel:
+  CreateOwner:
     properties:
       address:
         type: string
@@ -82,11 +119,11 @@ definitions:
         x-nullable: false
       vehicles:
         items:
-          $ref: '#/definitions/models.CreateVehicleModel'
+          $ref: '#/definitions/CreateVehicle'
         type: array
         x-nullable: false
     type: object
-  models.CreatePermissionModel:
+  CreatePermission:
     properties:
       available:
         type: boolean
@@ -95,7 +132,7 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.CreateSparePartModel:
+  CreateSparePart:
     properties:
       barcode:
         type: string
@@ -104,14 +141,17 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.CreateSupplierModel:
+  CreateSupplier:
     properties:
       name:
         type: string
         x-nullable: false
     type: object
-  models.CreateTaskModel:
+  CreateTask:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
         x-nullable: false
@@ -120,16 +160,19 @@ definitions:
         x-nullable: false
       sub_tasks:
         items:
-          $ref: '#/definitions/models.CreateTaskModel'
+          $ref: '#/definitions/CreateTask'
         type: array
+        x-nullable: false
+      updated_by_id:
+        type: integer
         x-nullable: false
       vehicle_tasks:
         items:
-          $ref: '#/definitions/models.CreateVehicleTaskModel'
+          $ref: '#/definitions/CreateVehicleTask'
         type: array
         x-nullable: false
     type: object
-  models.CreateVehicleModel:
+  CreateVehicle:
     properties:
       chrono:
         type: string
@@ -182,11 +225,14 @@ definitions:
         x-nullable: false
       tasks:
         items:
-          $ref: '#/definitions/models.CreateVehicleTaskModel'
+          $ref: '#/definitions/CreateVehicleTask'
         type: array
         x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.CreateVehicleTaskModel:
+  CreateVehicleTask:
     properties:
       created_by_id:
         type: integer
@@ -209,31 +255,42 @@ definitions:
         type: integer
         x-nullable: false
     type: object
-  models.EmployeeModel:
+  Employee:
     properties:
       created_at:
         format: date-time
         type: string
-      created_tasks:
-        description: '{vehicle task created tasks created by one_to_many <nil>}'
+      created_garages:
         items:
-          $ref: '#/definitions/models.VehicleTaskModel'
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      created_tasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      created_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       created_vehicles:
-        description: '{vehicle created vehicles created by one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.VehicleModel'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
       deleted_vehicles:
-        description: '{vehicle deleted vehicles deleted by one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.VehicleModel'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/EmployeeAudit'
+        type: array
       id:
         type: integer
       name:
@@ -242,29 +299,69 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_tasts:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      updated_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
     type: object
-  models.EmployeeModelResponse:
+  EmployeeAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      employeeModelID:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  EmployeeResponse:
     properties:
       created_at:
         format: date-time
         type: string
+      created_garages:
+        items:
+          $ref: '#/definitions/GarageResponse'
+        type: array
+        x-nullable: false
       created_tasks:
         items:
-          $ref: '#/definitions/models.VehicleTaskModelResponse'
+          $ref: '#/definitions/TaskResponse'
+        type: array
+        x-nullable: false
+      created_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTaskResponse'
         type: array
         x-nullable: false
       created_vehicles:
         items:
-          $ref: '#/definitions/models.VehicleModelResponse'
+          $ref: '#/definitions/VehicleResponse'
         type: array
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
       deleted_vehicles:
         items:
-          $ref: '#/definitions/models.VehicleModelResponse'
+          $ref: '#/definitions/VehicleResponse'
         type: array
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/EmployeeAudit'
+        type: array
       id:
         type: integer
       name:
@@ -273,14 +370,31 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_tasts:
+        items:
+          $ref: '#/definitions/TaskResponse'
+        type: array
+        x-nullable: false
+      updated_vehicles:
+        items:
+          $ref: '#/definitions/VehicleResponse'
+        type: array
+        x-nullable: false
     type: object
-  models.GarageModelResponse:
+  Garage:
     properties:
       created_at:
         format: date-time
         type: string
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/GarageAudit'
+        type: array
       id:
         type: integer
       label:
@@ -290,97 +404,147 @@ definitions:
         format: date-time
         type: string
     type: object
-  models.ListAccountModel:
+  GarageAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      garageModelID:
+        type: integer
+      label:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  GarageResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/GarageAudit'
+        type: array
+      id:
+        type: integer
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  ListAccount:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.AccountModelResponse'
+          $ref: '#/definitions/AccountResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListEmployeeModel:
+  ListEmployee:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.EmployeeModelResponse'
+          $ref: '#/definitions/EmployeeResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListGarageModel:
+  ListGarage:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.GarageModelResponse'
+          $ref: '#/definitions/GarageResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListOwnerModel:
+  ListOwner:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.OwnerModelResponse'
+          $ref: '#/definitions/OwnerResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListPermissionModel:
+  ListPermission:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.PermissionModelResponse'
+          $ref: '#/definitions/PermissionResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListSparePartModel:
+  ListSparePart:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.SparePartModelResponse'
+          $ref: '#/definitions/SparePartResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListSupplierModel:
+  ListSupplier:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.SupplierModelResponse'
+          $ref: '#/definitions/SupplierResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListTaskModel:
+  ListTask:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.TaskModelResponse'
+          $ref: '#/definitions/TaskResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListVehicleModel:
+  ListVehicle:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.VehicleModelResponse'
+          $ref: '#/definitions/VehicleResponse'
         type: array
       total:
         type: integer
     type: object
-  models.ListVehicleTaskModel:
+  ListVehicleTask:
     properties:
       data:
         items:
-          $ref: '#/definitions/models.VehicleTaskModelResponse'
+          $ref: '#/definitions/VehicleTaskResponse'
         type: array
       total:
         type: integer
     type: object
-  models.OwnerModel:
+  Owner:
     properties:
       address:
         type: string
@@ -393,6 +557,10 @@ definitions:
       email:
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/OwnerAudit'
+        type: array
       id:
         type: integer
       phone:
@@ -408,13 +576,36 @@ definitions:
         format: date-time
         type: string
       vehicles:
-        description: '{vehicle vehicles owner one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.VehicleModel'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
     type: object
-  models.OwnerModelResponse:
+  OwnerAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      address:
+        type: string
+      email:
+        type: string
+      ownerModelID:
+        type: integer
+      phone:
+        type: string
+      photo:
+        type: string
+      postalCode:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  OwnerResponse:
     properties:
       address:
         type: string
@@ -427,6 +618,10 @@ definitions:
       email:
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/OwnerAudit'
+        type: array
       id:
         type: integer
       phone:
@@ -443,11 +638,29 @@ definitions:
         type: string
       vehicles:
         items:
-          $ref: '#/definitions/models.VehicleModelResponse'
+          $ref: '#/definitions/VehicleResponse'
         type: array
         x-nullable: false
     type: object
-  models.PermissionModelResponse:
+  PermissionAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      available:
+        type: boolean
+      label:
+        type: string
+      permissionModelID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  PermissionResponse:
     properties:
       available:
         type: boolean
@@ -457,6 +670,10 @@ definitions:
         type: string
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/PermissionAudit'
+        type: array
       id:
         type: integer
       label:
@@ -466,7 +683,32 @@ definitions:
         format: date-time
         type: string
     type: object
-  models.SparePartModelResponse:
+  ResponseError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  SparePartAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      barcode:
+        type: string
+      reference:
+        type: string
+      sparePartModelID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  SparePartResponse:
     properties:
       barcode:
         type: string
@@ -476,6 +718,10 @@ definitions:
         type: string
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/SparePartAudit'
+        type: array
       id:
         type: integer
       reference:
@@ -485,13 +731,33 @@ definitions:
         format: date-time
         type: string
     type: object
-  models.SupplierModelResponse:
+  SupplierAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      name:
+        type: string
+      supplierModelID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  SupplierResponse:
     properties:
       created_at:
         format: date-time
         type: string
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/SupplierAudit'
+        type: array
       id:
         type: integer
       name:
@@ -501,13 +767,20 @@ definitions:
         format: date-time
         type: string
     type: object
-  models.TaskModel:
+  Task:
     properties:
       created_at:
         format: date-time
         type: string
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/TaskAudit'
+        type: array
       id:
         type: integer
       label:
@@ -517,28 +790,77 @@ definitions:
         type: integer
         x-nullable: false
       sub_tasks:
-        description: '{task sub tasks parent task one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.TaskModel'
+          $ref: '#/definitions/Task'
         type: array
         x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by_id:
+        type: integer
+        x-nullable: false
       vehicle_tasks:
-        description: '{Vehicle Task vehicle tasks tasks one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.VehicleTaskModel'
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
     type: object
-  models.TaskModelResponse:
+  TaskAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      label:
+        type: string
+      parent_task:
+        allOf:
+        - $ref: '#/definitions/Task'
+        x-nullable: false
+      parent_task_id:
+        type: integer
+        x-nullable: false
+      taskModelID:
+        type: integer
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
+      updatedAt:
+        type: string
+    type: object
+  TaskResponse:
     properties:
       created_at:
         format: date-time
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/TaskAudit'
+        type: array
       id:
         type: integer
       label:
@@ -546,31 +868,38 @@ definitions:
         x-nullable: false
       parent_task:
         allOf:
-        - $ref: '#/definitions/models.TaskModel'
+        - $ref: '#/definitions/Task'
         x-nullable: false
       parent_task_id:
         type: integer
         x-nullable: false
       sub_tasks:
         items:
-          $ref: '#/definitions/models.TaskModelResponse'
+          $ref: '#/definitions/TaskResponse'
         type: array
         x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
       vehicle_tasks:
         items:
-          $ref: '#/definitions/models.VehicleTaskModelResponse'
+          $ref: '#/definitions/VehicleTaskResponse'
         type: array
         x-nullable: false
     type: object
-  models.TotalCount:
+  TotalCount:
     properties:
       count:
         type: integer
     type: object
-  models.UpdateAccountModel:
+  UpdateAccount:
     properties:
       email:
         type: string
@@ -579,19 +908,22 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.UpdateEmployeeModel:
+  UpdateEmployee:
     properties:
       name:
         type: string
         x-nullable: false
     type: object
-  models.UpdateGarageModel:
+  UpdateGarage:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
         x-nullable: false
     type: object
-  models.UpdateOwnerModel:
+  UpdateOwner:
     properties:
       address:
         type: string
@@ -609,7 +941,7 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.UpdatePermissionModel:
+  UpdatePermission:
     properties:
       available:
         type: boolean
@@ -618,7 +950,7 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.UpdateSparePartModel:
+  UpdateSparePart:
     properties:
       barcode:
         type: string
@@ -627,19 +959,28 @@ definitions:
         type: string
         x-nullable: false
     type: object
-  models.UpdateSupplierModel:
+  UpdateSupplier:
     properties:
       name:
         type: string
         x-nullable: false
     type: object
-  models.UpdateTaskModel:
+  UpdateTask:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
         x-nullable: false
+      parent_task_id:
+        type: integer
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.UpdateVehicleModel:
+  UpdateVehicle:
     properties:
       chrono:
         type: string
@@ -650,6 +991,12 @@ definitions:
         x-nullable: false
       commercial_name:
         type: string
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted_by_id:
+        type: integer
         x-nullable: false
       delivery_date:
         format: date-time
@@ -668,6 +1015,9 @@ definitions:
       note:
         type: string
         x-nullable: false
+      owner_id:
+        type: integer
+        x-nullable: false
       procedure_ve:
         type: boolean
         x-nullable: false
@@ -681,9 +1031,15 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.UpdateVehicleTaskModel:
+  UpdateVehicleTask:
     properties:
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted:
         type: boolean
         x-nullable: false
@@ -695,8 +1051,14 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      tasks_id:
+        type: integer
+        x-nullable: false
+      vehicles_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.VehicleModel:
+  Vehicle:
     properties:
       chrono:
         type: string
@@ -730,6 +1092,10 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/VehicleAudit'
+        type: array
       id:
         type: integer
       mileage:
@@ -755,16 +1121,84 @@ definitions:
         type: string
         x-nullable: false
       tasks:
-        description: '{Vehicle Task tasks vehicles one_to_many <nil>}'
         items:
-          $ref: '#/definitions/models.VehicleTaskModel'
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.VehicleModelResponse:
+  VehicleAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      chrono:
+        type: string
+      collectionDate:
+        type: string
+      commercialName:
+        type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
+      deliveryDate:
+        type: string
+      expertise:
+        type: boolean
+      firstCirculation:
+        type: string
+      mileage:
+        type: integer
+      note:
+        type: string
+      owner:
+        allOf:
+        - $ref: '#/definitions/Owner'
+        x-nullable: false
+      owner_id:
+        type: integer
+        x-nullable: false
+      procedureVe:
+        type: boolean
+      registration:
+        type: string
+      serialNumber:
+        type: string
+      soldAt:
+        type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
+      updatedAt:
+        type: string
+      vehicleModelID:
+        type: integer
+    type: object
+  VehicleResponse:
     properties:
       chrono:
         type: string
@@ -781,7 +1215,7 @@ definitions:
         type: string
       created_by:
         allOf:
-        - $ref: '#/definitions/models.EmployeeModel'
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       created_by_id:
         type: integer
@@ -790,7 +1224,7 @@ definitions:
         $ref: '#/definitions/gorm.DeletedAt'
       deleted_by:
         allOf:
-        - $ref: '#/definitions/models.EmployeeModel'
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       deleted_by_id:
         type: integer
@@ -806,6 +1240,10 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/VehicleAudit'
+        type: array
       id:
         type: integer
       mileage:
@@ -816,7 +1254,7 @@ definitions:
         x-nullable: false
       owner:
         allOf:
-        - $ref: '#/definitions/models.OwnerModel'
+        - $ref: '#/definitions/Owner'
         x-nullable: false
       owner_id:
         type: integer
@@ -836,14 +1274,21 @@ definitions:
         x-nullable: false
       tasks:
         items:
-          $ref: '#/definitions/models.VehicleTaskModelResponse'
+          $ref: '#/definitions/VehicleTaskResponse'
         type: array
         x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
-  models.VehicleTaskModel:
+  VehicleTask:
     properties:
       created_at:
         format: date-time
@@ -860,6 +1305,10 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/VehicleTaskAudit'
+        type: array
       id:
         type: integer
       started_at:
@@ -876,14 +1325,55 @@ definitions:
         type: integer
         x-nullable: false
     type: object
-  models.VehicleTaskModelResponse:
+  VehicleTaskAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted:
+        type: boolean
+      finishdedAt:
+        type: string
+      startedAt:
+        type: string
+      tasks:
+        allOf:
+        - $ref: '#/definitions/Task'
+        x-nullable: false
+      tasks_id:
+        type: integer
+        x-nullable: false
+      updatedAt:
+        type: string
+      vehicleTaskModelID:
+        type: integer
+      vehicles:
+        allOf:
+        - $ref: '#/definitions/Vehicle'
+        x-nullable: false
+      vehicles_id:
+        type: integer
+        x-nullable: false
+    type: object
+  VehicleTaskResponse:
     properties:
       created_at:
         format: date-time
         type: string
       created_by:
         allOf:
-        - $ref: '#/definitions/models.EmployeeModel'
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       created_by_id:
         type: integer
@@ -897,6 +1387,10 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/VehicleTaskAudit'
+        type: array
       id:
         type: integer
       started_at:
@@ -905,7 +1399,7 @@ definitions:
         x-nullable: false
       tasks:
         allOf:
-        - $ref: '#/definitions/models.TaskModel'
+        - $ref: '#/definitions/Task'
         x-nullable: false
       tasks_id:
         type: integer
@@ -915,18 +1409,19 @@ definitions:
         type: string
       vehicles:
         allOf:
-        - $ref: '#/definitions/models.VehicleModel'
+        - $ref: '#/definitions/Vehicle'
         x-nullable: false
       vehicles_id:
         type: integer
         x-nullable: false
     type: object
-  utils.ResponseError:
+  gorm.DeletedAt:
     properties:
-      code:
-        type: integer
-      message:
+      time:
         type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
     type: object
 host: localhost:3000
 info:
@@ -969,22 +1464,22 @@ paths:
         name: account_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateAccountModel'
+          $ref: '#/definitions/CreateAccount'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModelResponse'
+            $ref: '#/definitions/AccountResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new account
       tags:
       - account
@@ -999,21 +1494,25 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModelResponse'
+            $ref: '#/definitions/AccountResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get account by ID
       tags:
       - account
@@ -1032,22 +1531,22 @@ paths:
         name: account_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateAccountModel'
+          $ref: '#/definitions/UpdateAccount'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.AccountModelResponse'
+            $ref: '#/definitions/AccountResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a account
       tags:
       - account
@@ -1062,11 +1561,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - account
@@ -1082,7 +1581,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateAccountModel'
+            $ref: '#/definitions/CreateAccount'
           type: array
       produces:
       - application/json
@@ -1091,16 +1590,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.AccountModelResponse'
+              $ref: '#/definitions/AccountResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many account
       tags:
       - account
@@ -1132,11 +1631,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListAccountModel'
+            $ref: '#/definitions/ListAccount'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List account
       tags:
       - account
@@ -1151,22 +1650,22 @@ paths:
         name: employee_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateEmployeeModel'
+          $ref: '#/definitions/CreateEmployee'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.EmployeeModelResponse'
+            $ref: '#/definitions/EmployeeResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new employee
       tags:
       - employee
@@ -1181,9 +1680,17 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       - description: with vehicle data
         in: query
         name: with_created_vehicles
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_updated_vehicles
         type: boolean
       - description: with vehicle data
         in: query
@@ -1191,7 +1698,19 @@ paths:
         type: boolean
       - description: with vehicle task data
         in: query
+        name: with_created_vehicle_tasks
+        type: boolean
+      - description: with garage data
+        in: query
+        name: with_created_garages
+        type: boolean
+      - description: with task data
+        in: query
         name: with_created_tasks
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_updated_tasts
         type: boolean
       produces:
       - application/json
@@ -1199,15 +1718,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.EmployeeModelResponse'
+            $ref: '#/definitions/EmployeeResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get employee by ID
       tags:
       - employee
@@ -1226,22 +1745,22 @@ paths:
         name: employee_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateEmployeeModel'
+          $ref: '#/definitions/UpdateEmployee'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.EmployeeModelResponse'
+            $ref: '#/definitions/EmployeeResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a employee
       tags:
       - employee
@@ -1256,11 +1775,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - employee
@@ -1276,7 +1795,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateEmployeeModel'
+            $ref: '#/definitions/CreateEmployee'
           type: array
       produces:
       - application/json
@@ -1285,16 +1804,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.EmployeeModelResponse'
+              $ref: '#/definitions/EmployeeResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many employee
       tags:
       - employee
@@ -1326,11 +1845,27 @@ paths:
         type: boolean
       - description: with vehicle data
         in: query
+        name: with_updated_vehicles
+        type: boolean
+      - description: with vehicle data
+        in: query
         name: with_deleted_vehicles
         type: boolean
       - description: with vehicle task data
         in: query
+        name: with_created_vehicle_tasks
+        type: boolean
+      - description: with garage data
+        in: query
+        name: with_created_garages
+        type: boolean
+      - description: with task data
+        in: query
         name: with_created_tasks
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_updated_tasts
         type: boolean
       produces:
       - application/json
@@ -1338,11 +1873,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListEmployeeModel'
+            $ref: '#/definitions/ListEmployee'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List employee
       tags:
       - employee
@@ -1357,22 +1892,22 @@ paths:
         name: garage_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateGarageModel'
+          $ref: '#/definitions/CreateGarage'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModelResponse'
+            $ref: '#/definitions/GarageResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new garage
       tags:
       - garage
@@ -1387,21 +1922,29 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_created_by
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModelResponse'
+            $ref: '#/definitions/GarageResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get garage by ID
       tags:
       - garage
@@ -1420,22 +1963,22 @@ paths:
         name: garage_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateGarageModel'
+          $ref: '#/definitions/UpdateGarage'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.GarageModelResponse'
+            $ref: '#/definitions/GarageResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a garage
       tags:
       - garage
@@ -1450,11 +1993,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - garage
@@ -1470,7 +2013,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateGarageModel'
+            $ref: '#/definitions/CreateGarage'
           type: array
       produces:
       - application/json
@@ -1479,16 +2022,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.GarageModelResponse'
+              $ref: '#/definitions/GarageResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many garage
       tags:
       - garage
@@ -1520,11 +2063,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListGarageModel'
+            $ref: '#/definitions/ListGarage'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List garage
       tags:
       - garage
@@ -1539,22 +2082,22 @@ paths:
         name: owner_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateOwnerModel'
+          $ref: '#/definitions/CreateOwner'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModelResponse'
+            $ref: '#/definitions/OwnerResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new owner
       tags:
       - owner
@@ -1569,6 +2112,10 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       - description: with vehicle data
         in: query
         name: with_vehicles
@@ -1579,15 +2126,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModelResponse'
+            $ref: '#/definitions/OwnerResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get owner by ID
       tags:
       - owner
@@ -1606,22 +2153,22 @@ paths:
         name: owner_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateOwnerModel'
+          $ref: '#/definitions/UpdateOwner'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.OwnerModelResponse'
+            $ref: '#/definitions/OwnerResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a owner
       tags:
       - owner
@@ -1636,11 +2183,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - owner
@@ -1656,7 +2203,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateOwnerModel'
+            $ref: '#/definitions/CreateOwner'
           type: array
       produces:
       - application/json
@@ -1665,16 +2212,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.OwnerModelResponse'
+              $ref: '#/definitions/OwnerResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many owner
       tags:
       - owner
@@ -1710,11 +2257,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListOwnerModel'
+            $ref: '#/definitions/ListOwner'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List owner
       tags:
       - owner
@@ -1729,22 +2276,22 @@ paths:
         name: permission_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreatePermissionModel'
+          $ref: '#/definitions/CreatePermission'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModelResponse'
+            $ref: '#/definitions/PermissionResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new permission
       tags:
       - permission
@@ -1759,21 +2306,25 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModelResponse'
+            $ref: '#/definitions/PermissionResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get permission by ID
       tags:
       - permission
@@ -1792,22 +2343,22 @@ paths:
         name: permission_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdatePermissionModel'
+          $ref: '#/definitions/UpdatePermission'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.PermissionModelResponse'
+            $ref: '#/definitions/PermissionResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a permission
       tags:
       - permission
@@ -1822,11 +2373,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - permission
@@ -1842,7 +2393,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreatePermissionModel'
+            $ref: '#/definitions/CreatePermission'
           type: array
       produces:
       - application/json
@@ -1851,16 +2402,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.PermissionModelResponse'
+              $ref: '#/definitions/PermissionResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many permission
       tags:
       - permission
@@ -1892,11 +2443,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListPermissionModel'
+            $ref: '#/definitions/ListPermission'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List permission
       tags:
       - permission
@@ -1911,22 +2462,22 @@ paths:
         name: spare_part_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateSparePartModel'
+          $ref: '#/definitions/CreateSparePart'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModelResponse'
+            $ref: '#/definitions/SparePartResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new spare_part
       tags:
       - spare_part
@@ -1941,21 +2492,25 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModelResponse'
+            $ref: '#/definitions/SparePartResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get spare_part by ID
       tags:
       - spare_part
@@ -1974,22 +2529,22 @@ paths:
         name: spare_part_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateSparePartModel'
+          $ref: '#/definitions/UpdateSparePart'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SparePartModelResponse'
+            $ref: '#/definitions/SparePartResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a spare_part
       tags:
       - spare_part
@@ -2004,11 +2559,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - spare_part
@@ -2024,7 +2579,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateSparePartModel'
+            $ref: '#/definitions/CreateSparePart'
           type: array
       produces:
       - application/json
@@ -2033,16 +2588,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.SparePartModelResponse'
+              $ref: '#/definitions/SparePartResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many spare_part
       tags:
       - spare_part
@@ -2074,11 +2629,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListSparePartModel'
+            $ref: '#/definitions/ListSparePart'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List spare_part
       tags:
       - spare_part
@@ -2093,22 +2648,22 @@ paths:
         name: supplier_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateSupplierModel'
+          $ref: '#/definitions/CreateSupplier'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModelResponse'
+            $ref: '#/definitions/SupplierResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new supplier
       tags:
       - supplier
@@ -2123,21 +2678,25 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModelResponse'
+            $ref: '#/definitions/SupplierResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get supplier by ID
       tags:
       - supplier
@@ -2156,22 +2715,22 @@ paths:
         name: supplier_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateSupplierModel'
+          $ref: '#/definitions/UpdateSupplier'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.SupplierModelResponse'
+            $ref: '#/definitions/SupplierResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a supplier
       tags:
       - supplier
@@ -2186,11 +2745,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - supplier
@@ -2206,7 +2765,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateSupplierModel'
+            $ref: '#/definitions/CreateSupplier'
           type: array
       produces:
       - application/json
@@ -2215,16 +2774,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.SupplierModelResponse'
+              $ref: '#/definitions/SupplierResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many supplier
       tags:
       - supplier
@@ -2256,11 +2815,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListSupplierModel'
+            $ref: '#/definitions/ListSupplier'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List supplier
       tags:
       - supplier
@@ -2275,22 +2834,22 @@ paths:
         name: task_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateTaskModel'
+          $ref: '#/definitions/CreateTask'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TaskModelResponse'
+            $ref: '#/definitions/TaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new task
       tags:
       - task
@@ -2305,6 +2864,10 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       - description: with task data
         in: query
         name: with_sub_tasks
@@ -2313,21 +2876,33 @@ paths:
         in: query
         name: with_vehicle_tasks
         type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with TaskModel data
+        in: query
+        name: with_parent_task
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TaskModelResponse'
+            $ref: '#/definitions/TaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get task by ID
       tags:
       - task
@@ -2346,22 +2921,22 @@ paths:
         name: task_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateTaskModel'
+          $ref: '#/definitions/UpdateTask'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TaskModelResponse'
+            $ref: '#/definitions/TaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a task
       tags:
       - task
@@ -2376,11 +2951,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - task
@@ -2396,7 +2971,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateTaskModel'
+            $ref: '#/definitions/CreateTask'
           type: array
       produces:
       - application/json
@@ -2405,16 +2980,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.TaskModelResponse'
+              $ref: '#/definitions/TaskResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many task
       tags:
       - task
@@ -2454,11 +3029,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListTaskModel'
+            $ref: '#/definitions/ListTask'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List task
       tags:
       - task
@@ -2473,22 +3048,22 @@ paths:
         name: vehicle_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateVehicleModel'
+          $ref: '#/definitions/CreateVehicle'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModelResponse'
+            $ref: '#/definitions/VehicleResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new vehicle
       tags:
       - vehicle
@@ -2503,9 +3078,29 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
       - description: with Vehicle Task data
         in: query
         name: with_tasks
+        type: boolean
+      - description: with OwnerModel data
+        in: query
+        name: with_owner
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_deleted_by
         type: boolean
       produces:
       - application/json
@@ -2513,15 +3108,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModelResponse'
+            $ref: '#/definitions/VehicleResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get vehicle by ID
       tags:
       - vehicle
@@ -2540,22 +3135,22 @@ paths:
         name: vehicle_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateVehicleModel'
+          $ref: '#/definitions/UpdateVehicle'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleModelResponse'
+            $ref: '#/definitions/VehicleResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a vehicle
       tags:
       - vehicle
@@ -2570,11 +3165,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - vehicle
@@ -2590,7 +3185,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateVehicleModel'
+            $ref: '#/definitions/CreateVehicle'
           type: array
       produces:
       - application/json
@@ -2599,16 +3194,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.VehicleModelResponse'
+              $ref: '#/definitions/VehicleResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many vehicle
       tags:
       - vehicle
@@ -2644,11 +3239,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListVehicleModel'
+            $ref: '#/definitions/ListVehicle'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List vehicle
       tags:
       - vehicle
@@ -2663,22 +3258,22 @@ paths:
         name: vehicle_task_model
         required: true
         schema:
-          $ref: '#/definitions/models.CreateVehicleTaskModel'
+          $ref: '#/definitions/CreateVehicleTask'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleTaskModelResponse'
+            $ref: '#/definitions/VehicleTaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create a new vehicle_task
       tags:
       - vehicle_task
@@ -2693,21 +3288,37 @@ paths:
         name: id
         required: true
         type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with VehicleModel data
+        in: query
+        name: with_vehicles
+        type: boolean
+      - description: with EmployeeModel data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with TaskModel data
+        in: query
+        name: with_tasks
+        type: boolean
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleTaskModelResponse'
+            $ref: '#/definitions/VehicleTaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Get vehicle_task by ID
       tags:
       - vehicle_task
@@ -2726,22 +3337,22 @@ paths:
         name: vehicle_task_model
         required: true
         schema:
-          $ref: '#/definitions/models.UpdateVehicleTaskModel'
+          $ref: '#/definitions/UpdateVehicleTask'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VehicleTaskModelResponse'
+            $ref: '#/definitions/VehicleTaskResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Update a vehicle_task
       tags:
       - vehicle_task
@@ -2756,11 +3367,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TotalCount'
+            $ref: '#/definitions/TotalCount'
         default:
           description: ""
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Total records
       tags:
       - vehicle_task
@@ -2776,7 +3387,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/models.CreateVehicleTaskModel'
+            $ref: '#/definitions/CreateVehicleTask'
           type: array
       produces:
       - application/json
@@ -2785,16 +3396,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.VehicleTaskModelResponse'
+              $ref: '#/definitions/VehicleTaskResponse'
             type: array
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: Create many vehicle_task
       tags:
       - vehicle_task
@@ -2826,11 +3437,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ListVehicleTaskModel'
+            $ref: '#/definitions/ListVehicleTask'
         "503":
           description: Service Unavailable
           schema:
-            $ref: '#/definitions/utils.ResponseError'
+            $ref: '#/definitions/ResponseError'
       summary: List vehicle_task
       tags:
       - vehicle_task

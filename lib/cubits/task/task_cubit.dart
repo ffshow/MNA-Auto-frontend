@@ -12,7 +12,7 @@ class TaskCubit extends Cubit<TaskState> {
 
   Future<void> init() async {
     try {
-      final ModelsListTaskModel data = await _taskRepository.getTasks();
+      final ListTask data = await _taskRepository.getTasks();
       emit(TaskState.loaded(data));
     } on Exception catch (e) {
       emit(TaskState.failed(e.toString()));

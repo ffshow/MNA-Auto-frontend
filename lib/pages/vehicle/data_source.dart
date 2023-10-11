@@ -10,19 +10,19 @@ import 'package:mna/utils/extensions.dart';
 class VehicleDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  final Function(ModelsVehicleModelResponse item)? onTap;
+  final Function(VehicleResponse item)? onTap;
   VehicleDataTableSource(this.service, this.notificationService, {this.onTap}) {
     sub = notificationService.onCreateVehicle.listen((_) {
       refreshDatasource();
     });
   }
-  final List<ModelsVehicleModelResponse> items = [];
+  final List<VehicleResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 1;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
   late final StreamSubscription? sub;
-  DataRow2 toRow(ModelsVehicleModelResponse item) {
+  DataRow2 toRow(VehicleResponse item) {
     return DataRow2(
       onTap: () {
         onTap?.call(item);
@@ -75,15 +75,13 @@ class VehicleDataTableSource extends AsyncDataTableSource {
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
     try {
-      final Response<ModelsListVehicleModel> res =
-          await service.apiVehicleListGet(
+      final Response<ListVehicle> res = await service.apiVehicleListGet(
         page: (startIndex ~/ defaultRowsPerPage) + 1,
         perPage: count,
         sortBy: sortBy(sortColumnIndex),
         descending: !sortAscending,
         // withOwner: true, //FIXME:
       );
-      print(res);
       if (res.body?.total != null && res.body!.total != 0) {
         totalCount = res.body!.total!;
       }

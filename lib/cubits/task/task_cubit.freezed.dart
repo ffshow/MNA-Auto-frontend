@@ -19,21 +19,21 @@ mixin _$TaskState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ModelsListTaskModel data) loaded,
+    required TResult Function(ListTask data) loaded,
     required TResult Function(String error) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ModelsListTaskModel data)? loaded,
+    TResult? Function(ListTask data)? loaded,
     TResult? Function(String error)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ModelsListTaskModel data)? loaded,
+    TResult Function(ListTask data)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) =>
@@ -118,7 +118,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ModelsListTaskModel data) loaded,
+    required TResult Function(ListTask data) loaded,
     required TResult Function(String error) failed,
   }) {
     return initial();
@@ -128,7 +128,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ModelsListTaskModel data)? loaded,
+    TResult? Function(ListTask data)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return initial?.call();
@@ -138,7 +138,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ModelsListTaskModel data)? loaded,
+    TResult Function(ListTask data)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -193,7 +193,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ModelsListTaskModel data});
+  $Res call({ListTask data});
 }
 
 /// @nodoc
@@ -213,7 +213,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
       null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as ModelsListTaskModel,
+              as ListTask,
     ));
   }
 }
@@ -224,7 +224,7 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(this.data);
 
   @override
-  final ModelsListTaskModel data;
+  final ListTask data;
 
   @override
   String toString() {
@@ -252,7 +252,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ModelsListTaskModel data) loaded,
+    required TResult Function(ListTask data) loaded,
     required TResult Function(String error) failed,
   }) {
     return loaded(data);
@@ -262,7 +262,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ModelsListTaskModel data)? loaded,
+    TResult? Function(ListTask data)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return loaded?.call(data);
@@ -272,7 +272,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ModelsListTaskModel data)? loaded,
+    TResult Function(ListTask data)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -318,9 +318,9 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements TaskState {
-  const factory _Loaded(final ModelsListTaskModel data) = _$LoadedImpl;
+  const factory _Loaded(final ListTask data) = _$LoadedImpl;
 
-  ModelsListTaskModel get data;
+  ListTask get data;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -391,7 +391,7 @@ class _$FailedImpl implements _Failed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(ModelsListTaskModel data) loaded,
+    required TResult Function(ListTask data) loaded,
     required TResult Function(String error) failed,
   }) {
     return failed(error);
@@ -401,7 +401,7 @@ class _$FailedImpl implements _Failed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(ModelsListTaskModel data)? loaded,
+    TResult? Function(ListTask data)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return failed?.call(error);
@@ -411,7 +411,7 @@ class _$FailedImpl implements _Failed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(ModelsListTaskModel data)? loaded,
+    TResult Function(ListTask data)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {

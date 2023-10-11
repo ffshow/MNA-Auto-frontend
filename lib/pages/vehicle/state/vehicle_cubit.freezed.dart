@@ -19,22 +19,21 @@ mixin _$VehicleState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<VehicleResponse> vehicles) loaded,
     required TResult Function(String error) failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult? Function(String error)? failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) =>
@@ -120,8 +119,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<VehicleResponse> vehicles) loaded,
     required TResult Function(String error) failed,
   }) {
     return initial();
@@ -131,7 +129,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return initial?.call();
@@ -141,7 +139,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -196,7 +194,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Iterable<ModelsVehicleModelResponse> vehicles});
+  $Res call({Iterable<VehicleResponse> vehicles});
 }
 
 /// @nodoc
@@ -216,7 +214,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
       null == vehicles
           ? _value.vehicles
           : vehicles // ignore: cast_nullable_to_non_nullable
-              as Iterable<ModelsVehicleModelResponse>,
+              as Iterable<VehicleResponse>,
     ));
   }
 }
@@ -227,7 +225,7 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(this.vehicles);
 
   @override
-  final Iterable<ModelsVehicleModelResponse> vehicles;
+  final Iterable<VehicleResponse> vehicles;
 
   @override
   String toString() {
@@ -256,8 +254,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<VehicleResponse> vehicles) loaded,
     required TResult Function(String error) failed,
   }) {
     return loaded(vehicles);
@@ -267,7 +264,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return loaded?.call(vehicles);
@@ -277,7 +274,7 @@ class _$LoadedImpl implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {
@@ -323,10 +320,10 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements VehicleState {
-  const factory _Loaded(final Iterable<ModelsVehicleModelResponse> vehicles) =
+  const factory _Loaded(final Iterable<VehicleResponse> vehicles) =
       _$LoadedImpl;
 
-  Iterable<ModelsVehicleModelResponse> get vehicles;
+  Iterable<VehicleResponse> get vehicles;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -397,8 +394,7 @@ class _$failedImpl implements _failed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)
-        loaded,
+    required TResult Function(Iterable<VehicleResponse> vehicles) loaded,
     required TResult Function(String error) failed,
   }) {
     return failed(error);
@@ -408,7 +404,7 @@ class _$failedImpl implements _failed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult? Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult? Function(String error)? failed,
   }) {
     return failed?.call(error);
@@ -418,7 +414,7 @@ class _$failedImpl implements _failed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(Iterable<ModelsVehicleModelResponse> vehicles)? loaded,
+    TResult Function(Iterable<VehicleResponse> vehicles)? loaded,
     TResult Function(String error)? failed,
     required TResult orElse(),
   }) {

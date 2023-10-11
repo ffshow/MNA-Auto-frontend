@@ -9,13 +9,13 @@ class OwnerDataTableSource extends AsyncDataTableSource {
 
   OwnerDataTableSource(this.service);
 
-  final List<ModelsOwnerModelResponse> items = [];
+  final List<OwnerResponse> items = [];
   bool sortAscending = false;
   int sortColumnIndex = 3;
   int defaultRowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   int totalCount = 0;
 
-  DataRow2 toRow(ModelsOwnerModelResponse item) {
+  DataRow2 toRow(OwnerResponse item) {
     return DataRow2(
       cells: <DataCell>[
         DataCell(Text(item.email ?? '')),
@@ -66,7 +66,7 @@ class OwnerDataTableSource extends AsyncDataTableSource {
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
-    final Response<ModelsListOwnerModel> res = await service.apiOwnerListGet(
+    final Response<ListOwner> res = await service.apiOwnerListGet(
       page: (startIndex ~/ defaultRowsPerPage) + 1,
       perPage: count,
       sortBy: sortBy(sortColumnIndex),

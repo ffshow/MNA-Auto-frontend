@@ -23,7 +23,7 @@ class VehiclePage extends StatelessWidget {
               final faker = Faker();
               final date =
                   faker.date.dateTime(minYear: 1999, maxYear: 2022).toUtc();
-              final v = ModelsCreateVehicleModel(
+              final v = CreateVehicle(
                 chrono: faker.vehicle.make(),
                 collectionDate: date,
                 deliveryDate: date,
@@ -68,7 +68,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget> {
     source ??= VehicleDataTableSource(
       swagger,
       notificationService,
-      onTap: (ModelsVehicleModelResponse item) {
+      onTap: (VehicleResponse item) {
         context.pushNamed('vehicle_details', pathParameters: {
           "id": item.id!.toString(),
         });

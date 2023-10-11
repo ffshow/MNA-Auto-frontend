@@ -168,7 +168,7 @@ class OwnerPage extends StatelessWidget {
           content: Text('Creating a new owner...'),
           duration: Duration(seconds: 1),
         ));
-        swagger.apiOwnerPost(ownerModel: ModelsCreateOwnerModel.fromJson(data));
+        swagger.apiOwnerPost(ownerModel: CreateOwner.fromJson(data));
       } on Exception {
         scaffoldState.showSnackBar(const SnackBar(
           content: Text('Failed'),

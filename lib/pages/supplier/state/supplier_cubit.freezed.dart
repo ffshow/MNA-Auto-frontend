@@ -19,22 +19,21 @@ mixin _$SupplierState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsSupplierModelResponse> suppliers)
-        success,
+    required TResult Function(List<SupplierResponse> suppliers) success,
     required TResult Function(String error) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult? Function(List<SupplierResponse> suppliers)? success,
     TResult? Function(String error)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult Function(List<SupplierResponse> suppliers)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) =>
@@ -120,8 +119,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsSupplierModelResponse> suppliers)
-        success,
+    required TResult Function(List<SupplierResponse> suppliers) success,
     required TResult Function(String error) failure,
   }) {
     return initial();
@@ -131,7 +129,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult? Function(List<SupplierResponse> suppliers)? success,
     TResult? Function(String error)? failure,
   }) {
     return initial?.call();
@@ -141,7 +139,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult Function(List<SupplierResponse> suppliers)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -196,7 +194,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ModelsSupplierModelResponse> suppliers});
+  $Res call({List<SupplierResponse> suppliers});
 }
 
 /// @nodoc
@@ -216,7 +214,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
       null == suppliers
           ? _value._suppliers
           : suppliers // ignore: cast_nullable_to_non_nullable
-              as List<ModelsSupplierModelResponse>,
+              as List<SupplierResponse>,
     ));
   }
 }
@@ -224,12 +222,12 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<ModelsSupplierModelResponse> suppliers)
+  const _$SuccessImpl(final List<SupplierResponse> suppliers)
       : _suppliers = suppliers;
 
-  final List<ModelsSupplierModelResponse> _suppliers;
+  final List<SupplierResponse> _suppliers;
   @override
-  List<ModelsSupplierModelResponse> get suppliers {
+  List<SupplierResponse> get suppliers {
     if (_suppliers is EqualUnmodifiableListView) return _suppliers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_suppliers);
@@ -263,8 +261,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsSupplierModelResponse> suppliers)
-        success,
+    required TResult Function(List<SupplierResponse> suppliers) success,
     required TResult Function(String error) failure,
   }) {
     return success(suppliers);
@@ -274,7 +271,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult? Function(List<SupplierResponse> suppliers)? success,
     TResult? Function(String error)? failure,
   }) {
     return success?.call(suppliers);
@@ -284,7 +281,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult Function(List<SupplierResponse> suppliers)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
@@ -330,10 +327,10 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements SupplierState {
-  const factory _Success(final List<ModelsSupplierModelResponse> suppliers) =
+  const factory _Success(final List<SupplierResponse> suppliers) =
       _$SuccessImpl;
 
-  List<ModelsSupplierModelResponse> get suppliers;
+  List<SupplierResponse> get suppliers;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -404,8 +401,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<ModelsSupplierModelResponse> suppliers)
-        success,
+    required TResult Function(List<SupplierResponse> suppliers) success,
     required TResult Function(String error) failure,
   }) {
     return failure(error);
@@ -415,7 +411,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult? Function(List<SupplierResponse> suppliers)? success,
     TResult? Function(String error)? failure,
   }) {
     return failure?.call(error);
@@ -425,7 +421,7 @@ class _$FailureImpl implements _Failure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<ModelsSupplierModelResponse> suppliers)? success,
+    TResult Function(List<SupplierResponse> suppliers)? success,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {

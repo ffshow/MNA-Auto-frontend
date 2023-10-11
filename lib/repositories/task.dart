@@ -6,8 +6,8 @@ class TaskRepository {
 
   TaskRepository(this._swagger);
 
-  Response<ModelsListTaskModel>? response;
-  Future<ModelsListTaskModel> getTasks() async {
+  Response<ListTask>? response;
+  Future<ListTask> getTasks() async {
     if (response != null) {
       return response!.body!;
     }

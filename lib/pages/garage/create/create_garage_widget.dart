@@ -72,7 +72,7 @@ class CreateGarageWidget extends StatelessWidget {
   void _create(BuildContext context) {
     final bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
     if (isValid) {
-      final ModelsCreateGarageModel model = ModelsCreateGarageModel.fromJson(
+      final CreateGarage model = CreateGarage.fromJson(
         _formKey.currentState!.value,
       );
 

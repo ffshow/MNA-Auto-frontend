@@ -6,21 +6,29 @@ part of 'swagger.models.swagger.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GormDeletedAt _$GormDeletedAtFromJson(Map<String, dynamic> json) =>
-    GormDeletedAt(
-      time: json['time'] as String?,
-      valid: json['valid'] as bool?,
+AccountAudit _$AccountAuditFromJson(Map<String, dynamic> json) => AccountAudit(
+      accountModelID: json['accountModelID'] as int?,
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      email: json['email'] as String?,
+      name: json['name'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
-Map<String, dynamic> _$GormDeletedAtToJson(GormDeletedAt instance) =>
+Map<String, dynamic> _$AccountAuditToJson(AccountAudit instance) =>
     <String, dynamic>{
-      'time': instance.time,
-      'valid': instance.valid,
+      'accountModelID': instance.accountModelID,
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'email': instance.email,
+      'name': instance.name,
+      'updatedAt': instance.updatedAt,
     };
 
-ModelsAccountModelResponse _$ModelsAccountModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsAccountModelResponse(
+AccountResponse _$AccountResponseFromJson(Map<String, dynamic> json) =>
+    AccountResponse(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -28,6 +36,10 @@ ModelsAccountModelResponse _$ModelsAccountModelResponseFromJson(
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
       email: json['email'] as String?,
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => AccountAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       name: json['name'] as String?,
       updatedAt: json['updated_at'] == null
@@ -35,92 +47,104 @@ ModelsAccountModelResponse _$ModelsAccountModelResponseFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ModelsAccountModelResponseToJson(
-        ModelsAccountModelResponse instance) =>
+Map<String, dynamic> _$AccountResponseToJson(AccountResponse instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toJson(),
       'email': instance.email,
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'name': instance.name,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-ModelsCreateAccountModel _$ModelsCreateAccountModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateAccountModel(
+CreateAccount _$CreateAccountFromJson(Map<String, dynamic> json) =>
+    CreateAccount(
       email: json['email'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ModelsCreateAccountModelToJson(
-        ModelsCreateAccountModel instance) =>
+Map<String, dynamic> _$CreateAccountToJson(CreateAccount instance) =>
     <String, dynamic>{
       'email': instance.email,
       'name': instance.name,
     };
 
-ModelsCreateEmployeeModel _$ModelsCreateEmployeeModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateEmployeeModel(
+CreateEmployee _$CreateEmployeeFromJson(Map<String, dynamic> json) =>
+    CreateEmployee(
+      createdGarages: (json['created_garages'] as List<dynamic>?)
+              ?.map((e) => CreateGarage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       createdTasks: (json['created_tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsCreateVehicleTaskModel.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map((e) => CreateTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicleTasks: (json['created_vehicle_tasks'] as List<dynamic>?)
+              ?.map(
+                  (e) => CreateVehicleTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       createdVehicles: (json['created_vehicles'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsCreateVehicleModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => CreateVehicle.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       deletedVehicles: (json['deleted_vehicles'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsCreateVehicleModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => CreateVehicle.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       name: json['name'] as String?,
+      updatedTasts: (json['updated_tasts'] as List<dynamic>?)
+              ?.map((e) => CreateTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedVehicles: (json['updated_vehicles'] as List<dynamic>?)
+              ?.map((e) => CreateVehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
-Map<String, dynamic> _$ModelsCreateEmployeeModelToJson(
-        ModelsCreateEmployeeModel instance) =>
+Map<String, dynamic> _$CreateEmployeeToJson(CreateEmployee instance) =>
     <String, dynamic>{
+      'created_garages':
+          instance.createdGarages?.map((e) => e.toJson()).toList(),
       'created_tasks': instance.createdTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicle_tasks':
+          instance.createdVehicleTasks?.map((e) => e.toJson()).toList(),
       'created_vehicles':
           instance.createdVehicles?.map((e) => e.toJson()).toList(),
       'deleted_vehicles':
           instance.deletedVehicles?.map((e) => e.toJson()).toList(),
       'name': instance.name,
+      'updated_tasts': instance.updatedTasts?.map((e) => e.toJson()).toList(),
+      'updated_vehicles':
+          instance.updatedVehicles?.map((e) => e.toJson()).toList(),
     };
 
-ModelsCreateGarageModel _$ModelsCreateGarageModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateGarageModel(
+CreateGarage _$CreateGarageFromJson(Map<String, dynamic> json) => CreateGarage(
+      createdById: json['created_by_id'] as int?,
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$ModelsCreateGarageModelToJson(
-        ModelsCreateGarageModel instance) =>
+Map<String, dynamic> _$CreateGarageToJson(CreateGarage instance) =>
     <String, dynamic>{
+      'created_by_id': instance.createdById,
       'label': instance.label,
     };
 
-ModelsCreateOwnerModel _$ModelsCreateOwnerModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateOwnerModel(
+CreateOwner _$CreateOwnerFromJson(Map<String, dynamic> json) => CreateOwner(
       address: json['address'] as String?,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       photo: json['photo'] as String?,
       postalCode: json['postal_code'] as String?,
       vehicles: (json['vehicles'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsCreateVehicleModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => CreateVehicle.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$ModelsCreateOwnerModelToJson(
-        ModelsCreateOwnerModel instance) =>
+Map<String, dynamic> _$CreateOwnerToJson(CreateOwner instance) =>
     <String, dynamic>{
       'address': instance.address,
       'email': instance.email,
@@ -130,75 +154,68 @@ Map<String, dynamic> _$ModelsCreateOwnerModelToJson(
       'vehicles': instance.vehicles?.map((e) => e.toJson()).toList(),
     };
 
-ModelsCreatePermissionModel _$ModelsCreatePermissionModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreatePermissionModel(
+CreatePermission _$CreatePermissionFromJson(Map<String, dynamic> json) =>
+    CreatePermission(
       available: json['available'] as bool?,
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$ModelsCreatePermissionModelToJson(
-        ModelsCreatePermissionModel instance) =>
+Map<String, dynamic> _$CreatePermissionToJson(CreatePermission instance) =>
     <String, dynamic>{
       'available': instance.available,
       'label': instance.label,
     };
 
-ModelsCreateSparePartModel _$ModelsCreateSparePartModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateSparePartModel(
+CreateSparePart _$CreateSparePartFromJson(Map<String, dynamic> json) =>
+    CreateSparePart(
       barcode: json['barcode'] as String?,
       reference: json['reference'] as String?,
     );
 
-Map<String, dynamic> _$ModelsCreateSparePartModelToJson(
-        ModelsCreateSparePartModel instance) =>
+Map<String, dynamic> _$CreateSparePartToJson(CreateSparePart instance) =>
     <String, dynamic>{
       'barcode': instance.barcode,
       'reference': instance.reference,
     };
 
-ModelsCreateSupplierModel _$ModelsCreateSupplierModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateSupplierModel(
+CreateSupplier _$CreateSupplierFromJson(Map<String, dynamic> json) =>
+    CreateSupplier(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ModelsCreateSupplierModelToJson(
-        ModelsCreateSupplierModel instance) =>
+Map<String, dynamic> _$CreateSupplierToJson(CreateSupplier instance) =>
     <String, dynamic>{
       'name': instance.name,
     };
 
-ModelsCreateTaskModel _$ModelsCreateTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateTaskModel(
+CreateTask _$CreateTaskFromJson(Map<String, dynamic> json) => CreateTask(
+      createdById: json['created_by_id'] as int?,
       label: json['label'] as String?,
       parentTaskId: json['parent_task_id'] as int?,
       subTasks: (json['sub_tasks'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsCreateTaskModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => CreateTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      updatedById: json['updated_by_id'] as int?,
       vehicleTasks: (json['vehicle_tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsCreateVehicleTaskModel.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map(
+                  (e) => CreateVehicleTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$ModelsCreateTaskModelToJson(
-        ModelsCreateTaskModel instance) =>
+Map<String, dynamic> _$CreateTaskToJson(CreateTask instance) =>
     <String, dynamic>{
+      'created_by_id': instance.createdById,
       'label': instance.label,
       'parent_task_id': instance.parentTaskId,
       'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
+      'updated_by_id': instance.updatedById,
       'vehicle_tasks': instance.vehicleTasks?.map((e) => e.toJson()).toList(),
     };
 
-ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateVehicleModel(
+CreateVehicle _$CreateVehicleFromJson(Map<String, dynamic> json) =>
+    CreateVehicle(
       chrono: json['chrono'] as String?,
       collectionDate: json['collection_date'] == null
           ? null
@@ -223,14 +240,14 @@ ModelsCreateVehicleModel _$ModelsCreateVehicleModelFromJson(
           ? null
           : DateTime.parse(json['sold_at'] as String),
       tasks: (json['tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsCreateVehicleTaskModel.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map(
+                  (e) => CreateVehicleTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      updatedById: json['updated_by_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
-        ModelsCreateVehicleModel instance) =>
+Map<String, dynamic> _$CreateVehicleToJson(CreateVehicle instance) =>
     <String, dynamic>{
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
@@ -248,11 +265,11 @@ Map<String, dynamic> _$ModelsCreateVehicleModelToJson(
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt?.toIso8601String(),
       'tasks': instance.tasks?.map((e) => e.toJson()).toList(),
+      'updated_by_id': instance.updatedById,
     };
 
-ModelsCreateVehicleTaskModel _$ModelsCreateVehicleTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsCreateVehicleTaskModel(
+CreateVehicleTask _$CreateVehicleTaskFromJson(Map<String, dynamic> json) =>
+    CreateVehicleTask(
       createdById: json['created_by_id'] as int?,
       deleted: json['deleted'] as bool?,
       finishdedAt: json['finishded_at'] == null
@@ -265,8 +282,7 @@ ModelsCreateVehicleTaskModel _$ModelsCreateVehicleTaskModelFromJson(
       vehiclesId: json['vehicles_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsCreateVehicleTaskModelToJson(
-        ModelsCreateVehicleTaskModel instance) =>
+Map<String, dynamic> _$CreateVehicleTaskToJson(CreateVehicleTask instance) =>
     <String, dynamic>{
       'created_by_id': instance.createdById,
       'deleted': instance.deleted,
@@ -276,27 +292,124 @@ Map<String, dynamic> _$ModelsCreateVehicleTaskModelToJson(
       'vehicles_id': instance.vehiclesId,
     };
 
-ModelsEmployeeModel _$ModelsEmployeeModelFromJson(Map<String, dynamic> json) =>
-    ModelsEmployeeModel(
+Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      createdGarages: (json['created_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       createdTasks: (json['created_tasks'] as List<dynamic>?)
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicleTasks: (json['created_vehicle_tasks'] as List<dynamic>?)
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicles: (json['created_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      deletedAt: json['deleted_at'] == null
+          ? null
+          : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      deletedVehicles: (json['deleted_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => EmployeeAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      updatedTasts: (json['updated_tasts'] as List<dynamic>?)
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedVehicles: (json['updated_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
+      'created_at': instance.createdAt?.toIso8601String(),
+      'created_garages':
+          instance.createdGarages?.map((e) => e.toJson()).toList(),
+      'created_tasks': instance.createdTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicle_tasks':
+          instance.createdVehicleTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicles':
+          instance.createdVehicles?.map((e) => e.toJson()).toList(),
+      'deleted_at': instance.deletedAt?.toJson(),
+      'deleted_vehicles':
+          instance.deletedVehicles?.map((e) => e.toJson()).toList(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
+      'id': instance.id,
+      'name': instance.name,
+      'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_tasts': instance.updatedTasts?.map((e) => e.toJson()).toList(),
+      'updated_vehicles':
+          instance.updatedVehicles?.map((e) => e.toJson()).toList(),
+    };
+
+EmployeeAudit _$EmployeeAuditFromJson(Map<String, dynamic> json) =>
+    EmployeeAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      employeeModelID: json['employeeModelID'] as int?,
+      name: json['name'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$EmployeeAuditToJson(EmployeeAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'employeeModelID': instance.employeeModelID,
+      'name': instance.name,
+      'updatedAt': instance.updatedAt,
+    };
+
+EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) =>
+    EmployeeResponse(
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      createdGarages: (json['created_garages'] as List<dynamic>?)
+              ?.map((e) => GarageResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdTasks: (json['created_tasks'] as List<dynamic>?)
+              ?.map((e) => TaskResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicleTasks: (json['created_vehicle_tasks'] as List<dynamic>?)
               ?.map((e) =>
-                  ModelsVehicleTaskModel.fromJson(e as Map<String, dynamic>))
+                  VehicleTaskResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       createdVehicles: (json['created_vehicles'] as List<dynamic>?)
-              ?.map(
-                  (e) => ModelsVehicleModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => VehicleResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
       deletedVehicles: (json['deleted_vehicles'] as List<dynamic>?)
-              ?.map(
-                  (e) => ModelsVehicleModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => VehicleResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => EmployeeAudit.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       id: json['id'] as int?,
@@ -304,78 +417,50 @@ ModelsEmployeeModel _$ModelsEmployeeModelFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedTasts: (json['updated_tasts'] as List<dynamic>?)
+              ?.map((e) => TaskResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedVehicles: (json['updated_vehicles'] as List<dynamic>?)
+              ?.map((e) => VehicleResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
-Map<String, dynamic> _$ModelsEmployeeModelToJson(
-        ModelsEmployeeModel instance) =>
+Map<String, dynamic> _$EmployeeResponseToJson(EmployeeResponse instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
+      'created_garages':
+          instance.createdGarages?.map((e) => e.toJson()).toList(),
       'created_tasks': instance.createdTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicle_tasks':
+          instance.createdVehicleTasks?.map((e) => e.toJson()).toList(),
       'created_vehicles':
           instance.createdVehicles?.map((e) => e.toJson()).toList(),
       'deleted_at': instance.deletedAt?.toJson(),
       'deleted_vehicles':
           instance.deletedVehicles?.map((e) => e.toJson()).toList(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'name': instance.name,
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_tasts': instance.updatedTasts?.map((e) => e.toJson()).toList(),
+      'updated_vehicles':
+          instance.updatedVehicles?.map((e) => e.toJson()).toList(),
     };
 
-ModelsEmployeeModelResponse _$ModelsEmployeeModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsEmployeeModelResponse(
+Garage _$GarageFromJson(Map<String, dynamic> json) => Garage(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      createdTasks: (json['created_tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleTaskModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      createdVehicles: (json['created_vehicles'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
+      createdById: json['created_by_id'] as int?,
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
-      deletedVehicles: (json['deleted_vehicles'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleModelResponse.fromJson(
-                  e as Map<String, dynamic>))
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => GarageAudit.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      id: json['id'] as int?,
-      name: json['name'] as String?,
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
-    );
-
-Map<String, dynamic> _$ModelsEmployeeModelResponseToJson(
-        ModelsEmployeeModelResponse instance) =>
-    <String, dynamic>{
-      'created_at': instance.createdAt?.toIso8601String(),
-      'created_tasks': instance.createdTasks?.map((e) => e.toJson()).toList(),
-      'created_vehicles':
-          instance.createdVehicles?.map((e) => e.toJson()).toList(),
-      'deleted_at': instance.deletedAt?.toJson(),
-      'deleted_vehicles':
-          instance.deletedVehicles?.map((e) => e.toJson()).toList(),
-      'id': instance.id,
-      'name': instance.name,
-      'updated_at': instance.updatedAt?.toIso8601String(),
-    };
-
-ModelsGarageModelResponse _$ModelsGarageModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsGarageModelResponse(
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      deletedAt: json['deleted_at'] == null
-          ? null
-          : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
       id: json['id'] as int?,
       label: json['label'] as String?,
       updatedAt: json['updated_at'] == null
@@ -383,236 +468,221 @@ ModelsGarageModelResponse _$ModelsGarageModelResponseFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ModelsGarageModelResponseToJson(
-        ModelsGarageModelResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$GarageToJson(Garage instance) => <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
+      'created_by_id': instance.createdById,
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'label': instance.label,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-ModelsListAccountModel _$ModelsListAccountModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListAccountModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsAccountModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
+GarageAudit _$GarageAuditFromJson(Map<String, dynamic> json) => GarageAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
+      garageModelID: json['garageModelID'] as int?,
+      label: json['label'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
-Map<String, dynamic> _$ModelsListAccountModelToJson(
-        ModelsListAccountModel instance) =>
+Map<String, dynamic> _$GarageAuditToJson(GarageAudit instance) =>
     <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'garageModelID': instance.garageModelID,
+      'label': instance.label,
+      'updatedAt': instance.updatedAt,
     };
 
-ModelsListEmployeeModel _$ModelsListEmployeeModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListEmployeeModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsEmployeeModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListEmployeeModelToJson(
-        ModelsListEmployeeModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListGarageModel _$ModelsListGarageModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListGarageModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsGarageModelResponse.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListGarageModelToJson(
-        ModelsListGarageModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListOwnerModel _$ModelsListOwnerModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListOwnerModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsOwnerModelResponse.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListOwnerModelToJson(
-        ModelsListOwnerModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListPermissionModel _$ModelsListPermissionModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListPermissionModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsPermissionModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListPermissionModelToJson(
-        ModelsListPermissionModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListSparePartModel _$ModelsListSparePartModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListSparePartModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsSparePartModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListSparePartModelToJson(
-        ModelsListSparePartModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListSupplierModel _$ModelsListSupplierModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListSupplierModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsSupplierModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListSupplierModelToJson(
-        ModelsListSupplierModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListTaskModel _$ModelsListTaskModelFromJson(Map<String, dynamic> json) =>
-    ModelsListTaskModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsTaskModelResponse.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListTaskModelToJson(
-        ModelsListTaskModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListVehicleModel _$ModelsListVehicleModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListVehicleModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListVehicleModelToJson(
-        ModelsListVehicleModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsListVehicleTaskModel _$ModelsListVehicleTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsListVehicleTaskModel(
-      data: (json['data'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleTaskModelResponse.fromJson(
-                  e as Map<String, dynamic>))
-              .toList() ??
-          [],
-      total: json['total'] as int?,
-    );
-
-Map<String, dynamic> _$ModelsListVehicleTaskModelToJson(
-        ModelsListVehicleTaskModel instance) =>
-    <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
-      'total': instance.total,
-    };
-
-ModelsOwnerModel _$ModelsOwnerModelFromJson(Map<String, dynamic> json) =>
-    ModelsOwnerModel(
-      address: json['address'] as String?,
+GarageResponse _$GarageResponseFromJson(Map<String, dynamic> json) =>
+    GarageResponse(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
-      email: json['email'] as String?,
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => GarageAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
-      phone: json['phone'] as String?,
-      photo: json['photo'] as String?,
-      postalCode: json['postal_code'] as String?,
+      label: json['label'] as String?,
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      vehicles: (json['vehicles'] as List<dynamic>?)
+    );
+
+Map<String, dynamic> _$GarageResponseToJson(GarageResponse instance) =>
+    <String, dynamic>{
+      'created_at': instance.createdAt?.toIso8601String(),
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
+      'id': instance.id,
+      'label': instance.label,
+      'updated_at': instance.updatedAt?.toIso8601String(),
+    };
+
+ListAccount _$ListAccountFromJson(Map<String, dynamic> json) => ListAccount(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => AccountResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListAccountToJson(ListAccount instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListEmployee _$ListEmployeeFromJson(Map<String, dynamic> json) => ListEmployee(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => EmployeeResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListEmployeeToJson(ListEmployee instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListGarage _$ListGarageFromJson(Map<String, dynamic> json) => ListGarage(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => GarageResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListGarageToJson(ListGarage instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListOwner _$ListOwnerFromJson(Map<String, dynamic> json) => ListOwner(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => OwnerResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListOwnerToJson(ListOwner instance) => <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListPermission _$ListPermissionFromJson(Map<String, dynamic> json) =>
+    ListPermission(
+      data: (json['data'] as List<dynamic>?)
               ?.map(
-                  (e) => ModelsVehicleModel.fromJson(e as Map<String, dynamic>))
+                  (e) => PermissionResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      total: json['total'] as int?,
     );
 
-Map<String, dynamic> _$ModelsOwnerModelToJson(ModelsOwnerModel instance) =>
+Map<String, dynamic> _$ListPermissionToJson(ListPermission instance) =>
     <String, dynamic>{
-      'address': instance.address,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'deleted_at': instance.deletedAt?.toJson(),
-      'email': instance.email,
-      'id': instance.id,
-      'phone': instance.phone,
-      'photo': instance.photo,
-      'postal_code': instance.postalCode,
-      'updated_at': instance.updatedAt?.toIso8601String(),
-      'vehicles': instance.vehicles?.map((e) => e.toJson()).toList(),
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
     };
 
-ModelsOwnerModelResponse _$ModelsOwnerModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsOwnerModelResponse(
+ListSparePart _$ListSparePartFromJson(Map<String, dynamic> json) =>
+    ListSparePart(
+      data: (json['data'] as List<dynamic>?)
+              ?.map(
+                  (e) => SparePartResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListSparePartToJson(ListSparePart instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListSupplier _$ListSupplierFromJson(Map<String, dynamic> json) => ListSupplier(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => SupplierResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListSupplierToJson(ListSupplier instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListTask _$ListTaskFromJson(Map<String, dynamic> json) => ListTask(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => TaskResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListTaskToJson(ListTask instance) => <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListVehicle _$ListVehicleFromJson(Map<String, dynamic> json) => ListVehicle(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => VehicleResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListVehicleToJson(ListVehicle instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+ListVehicleTask _$ListVehicleTaskFromJson(Map<String, dynamic> json) =>
+    ListVehicleTask(
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) =>
+                  VehicleTaskResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      total: json['total'] as int?,
+    );
+
+Map<String, dynamic> _$ListVehicleTaskToJson(ListVehicleTask instance) =>
+    <String, dynamic>{
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'total': instance.total,
+    };
+
+Owner _$OwnerFromJson(Map<String, dynamic> json) => Owner(
       address: json['address'] as String?,
       createdAt: json['created_at'] == null
           ? null
@@ -621,6 +691,10 @@ ModelsOwnerModelResponse _$ModelsOwnerModelResponseFromJson(
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
       email: json['email'] as String?,
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => OwnerAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       phone: json['phone'] as String?,
       photo: json['photo'] as String?,
@@ -629,19 +703,17 @@ ModelsOwnerModelResponse _$ModelsOwnerModelResponseFromJson(
           ? null
           : DateTime.parse(json['updated_at'] as String),
       vehicles: (json['vehicles'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleModelResponse.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$ModelsOwnerModelResponseToJson(
-        ModelsOwnerModelResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OwnerToJson(Owner instance) => <String, dynamic>{
       'address': instance.address,
       'created_at': instance.createdAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toJson(),
       'email': instance.email,
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'phone': instance.phone,
       'photo': instance.photo,
@@ -650,9 +722,99 @@ Map<String, dynamic> _$ModelsOwnerModelResponseToJson(
       'vehicles': instance.vehicles?.map((e) => e.toJson()).toList(),
     };
 
-ModelsPermissionModelResponse _$ModelsPermissionModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsPermissionModelResponse(
+OwnerAudit _$OwnerAuditFromJson(Map<String, dynamic> json) => OwnerAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      address: json['address'] as String?,
+      email: json['email'] as String?,
+      ownerModelID: json['ownerModelID'] as int?,
+      phone: json['phone'] as String?,
+      photo: json['photo'] as String?,
+      postalCode: json['postalCode'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$OwnerAuditToJson(OwnerAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'address': instance.address,
+      'email': instance.email,
+      'ownerModelID': instance.ownerModelID,
+      'phone': instance.phone,
+      'photo': instance.photo,
+      'postalCode': instance.postalCode,
+      'updatedAt': instance.updatedAt,
+    };
+
+OwnerResponse _$OwnerResponseFromJson(Map<String, dynamic> json) =>
+    OwnerResponse(
+      address: json['address'] as String?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      deletedAt: json['deleted_at'] == null
+          ? null
+          : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      email: json['email'] as String?,
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => OwnerAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      id: json['id'] as int?,
+      phone: json['phone'] as String?,
+      photo: json['photo'] as String?,
+      postalCode: json['postal_code'] as String?,
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      vehicles: (json['vehicles'] as List<dynamic>?)
+              ?.map((e) => VehicleResponse.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$OwnerResponseToJson(OwnerResponse instance) =>
+    <String, dynamic>{
+      'address': instance.address,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'deleted_at': instance.deletedAt?.toJson(),
+      'email': instance.email,
+      'history': instance.history?.map((e) => e.toJson()).toList(),
+      'id': instance.id,
+      'phone': instance.phone,
+      'photo': instance.photo,
+      'postal_code': instance.postalCode,
+      'updated_at': instance.updatedAt?.toIso8601String(),
+      'vehicles': instance.vehicles?.map((e) => e.toJson()).toList(),
+    };
+
+PermissionAudit _$PermissionAuditFromJson(Map<String, dynamic> json) =>
+    PermissionAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      available: json['available'] as bool?,
+      label: json['label'] as String?,
+      permissionModelID: json['permissionModelID'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$PermissionAuditToJson(PermissionAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'available': instance.available,
+      'label': instance.label,
+      'permissionModelID': instance.permissionModelID,
+      'updatedAt': instance.updatedAt,
+    };
+
+PermissionResponse _$PermissionResponseFromJson(Map<String, dynamic> json) =>
+    PermissionResponse(
       available: json['available'] as bool?,
       createdAt: json['created_at'] == null
           ? null
@@ -660,6 +822,10 @@ ModelsPermissionModelResponse _$ModelsPermissionModelResponseFromJson(
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => PermissionAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       label: json['label'] as String?,
       updatedAt: json['updated_at'] == null
@@ -667,20 +833,53 @@ ModelsPermissionModelResponse _$ModelsPermissionModelResponseFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ModelsPermissionModelResponseToJson(
-        ModelsPermissionModelResponse instance) =>
+Map<String, dynamic> _$PermissionResponseToJson(PermissionResponse instance) =>
     <String, dynamic>{
       'available': instance.available,
       'created_at': instance.createdAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'label': instance.label,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-ModelsSparePartModelResponse _$ModelsSparePartModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsSparePartModelResponse(
+ResponseError _$ResponseErrorFromJson(Map<String, dynamic> json) =>
+    ResponseError(
+      code: json['code'] as int?,
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$ResponseErrorToJson(ResponseError instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+    };
+
+SparePartAudit _$SparePartAuditFromJson(Map<String, dynamic> json) =>
+    SparePartAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      barcode: json['barcode'] as String?,
+      reference: json['reference'] as String?,
+      sparePartModelID: json['sparePartModelID'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$SparePartAuditToJson(SparePartAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'barcode': instance.barcode,
+      'reference': instance.reference,
+      'sparePartModelID': instance.sparePartModelID,
+      'updatedAt': instance.updatedAt,
+    };
+
+SparePartResponse _$SparePartResponseFromJson(Map<String, dynamic> json) =>
+    SparePartResponse(
       barcode: json['barcode'] as String?,
       createdAt: json['created_at'] == null
           ? null
@@ -688,6 +887,10 @@ ModelsSparePartModelResponse _$ModelsSparePartModelResponseFromJson(
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => SparePartAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       reference: json['reference'] as String?,
       updatedAt: json['updated_at'] == null
@@ -695,26 +898,49 @@ ModelsSparePartModelResponse _$ModelsSparePartModelResponseFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ModelsSparePartModelResponseToJson(
-        ModelsSparePartModelResponse instance) =>
+Map<String, dynamic> _$SparePartResponseToJson(SparePartResponse instance) =>
     <String, dynamic>{
       'barcode': instance.barcode,
       'created_at': instance.createdAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'reference': instance.reference,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-ModelsSupplierModelResponse _$ModelsSupplierModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsSupplierModelResponse(
+SupplierAudit _$SupplierAuditFromJson(Map<String, dynamic> json) =>
+    SupplierAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      name: json['name'] as String?,
+      supplierModelID: json['supplierModelID'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$SupplierAuditToJson(SupplierAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'name': instance.name,
+      'supplierModelID': instance.supplierModelID,
+      'updatedAt': instance.updatedAt,
+    };
+
+SupplierResponse _$SupplierResponseFromJson(Map<String, dynamic> json) =>
+    SupplierResponse(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => SupplierAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       name: json['name'] as String?,
       updatedAt: json['updated_at'] == null
@@ -722,149 +948,195 @@ ModelsSupplierModelResponse _$ModelsSupplierModelResponseFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$ModelsSupplierModelResponseToJson(
-        ModelsSupplierModelResponse instance) =>
+Map<String, dynamic> _$SupplierResponseToJson(SupplierResponse instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'name': instance.name,
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
-ModelsTaskModel _$ModelsTaskModelFromJson(Map<String, dynamic> json) =>
-    ModelsTaskModel(
+Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      createdById: json['created_by_id'] as int?,
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => TaskAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       label: json['label'] as String?,
       parentTaskId: json['parent_task_id'] as int?,
       subTasks: (json['sub_tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsTaskModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedById: json['updated_by_id'] as int?,
       vehicleTasks: (json['vehicle_tasks'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsVehicleTaskModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$ModelsTaskModelToJson(ModelsTaskModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
+      'created_by_id': instance.createdById,
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'label': instance.label,
       'parent_task_id': instance.parentTaskId,
       'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by_id': instance.updatedById,
       'vehicle_tasks': instance.vehicleTasks?.map((e) => e.toJson()).toList(),
     };
 
-ModelsTaskModelResponse _$ModelsTaskModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsTaskModelResponse(
+TaskAudit _$TaskAuditFromJson(Map<String, dynamic> json) => TaskAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
+      label: json['label'] as String?,
+      parentTask: json['parent_task'] == null
+          ? null
+          : Task.fromJson(json['parent_task'] as Map<String, dynamic>),
+      parentTaskId: json['parent_task_id'] as int?,
+      taskModelID: json['taskModelID'] as int?,
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+    );
+
+Map<String, dynamic> _$TaskAuditToJson(TaskAudit instance) => <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'label': instance.label,
+      'parent_task': instance.parentTask?.toJson(),
+      'parent_task_id': instance.parentTaskId,
+      'taskModelID': instance.taskModelID,
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
+      'updatedAt': instance.updatedAt,
+    };
+
+TaskResponse _$TaskResponseFromJson(Map<String, dynamic> json) => TaskResponse(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => TaskAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       label: json['label'] as String?,
       parentTask: json['parent_task'] == null
           ? null
-          : ModelsTaskModel.fromJson(
-              json['parent_task'] as Map<String, dynamic>),
+          : Task.fromJson(json['parent_task'] as Map<String, dynamic>),
       parentTaskId: json['parent_task_id'] as int?,
       subTasks: (json['sub_tasks'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsTaskModelResponse.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => TaskResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
       vehicleTasks: (json['vehicle_tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleTaskModelResponse.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map((e) =>
+                  VehicleTaskResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$ModelsTaskModelResponseToJson(
-        ModelsTaskModelResponse instance) =>
+Map<String, dynamic> _$TaskResponseToJson(TaskResponse instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
       'deleted_at': instance.deletedAt?.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'label': instance.label,
       'parent_task': instance.parentTask?.toJson(),
       'parent_task_id': instance.parentTaskId,
       'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
       'vehicle_tasks': instance.vehicleTasks?.map((e) => e.toJson()).toList(),
     };
 
-ModelsTotalCount _$ModelsTotalCountFromJson(Map<String, dynamic> json) =>
-    ModelsTotalCount(
+TotalCount _$TotalCountFromJson(Map<String, dynamic> json) => TotalCount(
       count: json['count'] as int?,
     );
 
-Map<String, dynamic> _$ModelsTotalCountToJson(ModelsTotalCount instance) =>
+Map<String, dynamic> _$TotalCountToJson(TotalCount instance) =>
     <String, dynamic>{
       'count': instance.count,
     };
 
-ModelsUpdateAccountModel _$ModelsUpdateAccountModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateAccountModel(
+UpdateAccount _$UpdateAccountFromJson(Map<String, dynamic> json) =>
+    UpdateAccount(
       email: json['email'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateAccountModelToJson(
-        ModelsUpdateAccountModel instance) =>
+Map<String, dynamic> _$UpdateAccountToJson(UpdateAccount instance) =>
     <String, dynamic>{
       'email': instance.email,
       'name': instance.name,
     };
 
-ModelsUpdateEmployeeModel _$ModelsUpdateEmployeeModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateEmployeeModel(
+UpdateEmployee _$UpdateEmployeeFromJson(Map<String, dynamic> json) =>
+    UpdateEmployee(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateEmployeeModelToJson(
-        ModelsUpdateEmployeeModel instance) =>
+Map<String, dynamic> _$UpdateEmployeeToJson(UpdateEmployee instance) =>
     <String, dynamic>{
       'name': instance.name,
     };
 
-ModelsUpdateGarageModel _$ModelsUpdateGarageModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateGarageModel(
+UpdateGarage _$UpdateGarageFromJson(Map<String, dynamic> json) => UpdateGarage(
+      createdById: json['created_by_id'] as int?,
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateGarageModelToJson(
-        ModelsUpdateGarageModel instance) =>
+Map<String, dynamic> _$UpdateGarageToJson(UpdateGarage instance) =>
     <String, dynamic>{
+      'created_by_id': instance.createdById,
       'label': instance.label,
     };
 
-ModelsUpdateOwnerModel _$ModelsUpdateOwnerModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateOwnerModel(
+UpdateOwner _$UpdateOwnerFromJson(Map<String, dynamic> json) => UpdateOwner(
       address: json['address'] as String?,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
@@ -872,8 +1144,7 @@ ModelsUpdateOwnerModel _$ModelsUpdateOwnerModelFromJson(
       postalCode: json['postal_code'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateOwnerModelToJson(
-        ModelsUpdateOwnerModel instance) =>
+Map<String, dynamic> _$UpdateOwnerToJson(UpdateOwner instance) =>
     <String, dynamic>{
       'address': instance.address,
       'email': instance.email,
@@ -882,66 +1153,64 @@ Map<String, dynamic> _$ModelsUpdateOwnerModelToJson(
       'postal_code': instance.postalCode,
     };
 
-ModelsUpdatePermissionModel _$ModelsUpdatePermissionModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdatePermissionModel(
+UpdatePermission _$UpdatePermissionFromJson(Map<String, dynamic> json) =>
+    UpdatePermission(
       available: json['available'] as bool?,
       label: json['label'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdatePermissionModelToJson(
-        ModelsUpdatePermissionModel instance) =>
+Map<String, dynamic> _$UpdatePermissionToJson(UpdatePermission instance) =>
     <String, dynamic>{
       'available': instance.available,
       'label': instance.label,
     };
 
-ModelsUpdateSparePartModel _$ModelsUpdateSparePartModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateSparePartModel(
+UpdateSparePart _$UpdateSparePartFromJson(Map<String, dynamic> json) =>
+    UpdateSparePart(
       barcode: json['barcode'] as String?,
       reference: json['reference'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateSparePartModelToJson(
-        ModelsUpdateSparePartModel instance) =>
+Map<String, dynamic> _$UpdateSparePartToJson(UpdateSparePart instance) =>
     <String, dynamic>{
       'barcode': instance.barcode,
       'reference': instance.reference,
     };
 
-ModelsUpdateSupplierModel _$ModelsUpdateSupplierModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateSupplierModel(
+UpdateSupplier _$UpdateSupplierFromJson(Map<String, dynamic> json) =>
+    UpdateSupplier(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ModelsUpdateSupplierModelToJson(
-        ModelsUpdateSupplierModel instance) =>
+Map<String, dynamic> _$UpdateSupplierToJson(UpdateSupplier instance) =>
     <String, dynamic>{
       'name': instance.name,
     };
 
-ModelsUpdateTaskModel _$ModelsUpdateTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateTaskModel(
+UpdateTask _$UpdateTaskFromJson(Map<String, dynamic> json) => UpdateTask(
+      createdById: json['created_by_id'] as int?,
       label: json['label'] as String?,
+      parentTaskId: json['parent_task_id'] as int?,
+      updatedById: json['updated_by_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsUpdateTaskModelToJson(
-        ModelsUpdateTaskModel instance) =>
+Map<String, dynamic> _$UpdateTaskToJson(UpdateTask instance) =>
     <String, dynamic>{
+      'created_by_id': instance.createdById,
       'label': instance.label,
+      'parent_task_id': instance.parentTaskId,
+      'updated_by_id': instance.updatedById,
     };
 
-ModelsUpdateVehicleModel _$ModelsUpdateVehicleModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateVehicleModel(
+UpdateVehicle _$UpdateVehicleFromJson(Map<String, dynamic> json) =>
+    UpdateVehicle(
       chrono: json['chrono'] as String?,
       collectionDate: json['collection_date'] == null
           ? null
           : DateTime.parse(json['collection_date'] as String),
       commercialName: json['commercial_name'] as String?,
+      createdById: json['created_by_id'] as int?,
+      deletedById: json['deleted_by_id'] as int?,
       deliveryDate: json['delivery_date'] == null
           ? null
           : DateTime.parse(json['delivery_date'] as String),
@@ -951,34 +1220,39 @@ ModelsUpdateVehicleModel _$ModelsUpdateVehicleModelFromJson(
           : DateTime.parse(json['first_circulation'] as String),
       mileage: json['mileage'] as int?,
       note: json['note'] as String?,
+      ownerId: json['owner_id'] as int?,
       procedureVe: json['procedure_ve'] as bool?,
       registration: json['registration'] as String?,
       serialNumber: json['serial_number'] as String?,
       soldAt: json['sold_at'] == null
           ? null
           : DateTime.parse(json['sold_at'] as String),
+      updatedById: json['updated_by_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsUpdateVehicleModelToJson(
-        ModelsUpdateVehicleModel instance) =>
+Map<String, dynamic> _$UpdateVehicleToJson(UpdateVehicle instance) =>
     <String, dynamic>{
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
       'commercial_name': instance.commercialName,
+      'created_by_id': instance.createdById,
+      'deleted_by_id': instance.deletedById,
       'delivery_date': instance.deliveryDate?.toIso8601String(),
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
       'mileage': instance.mileage,
       'note': instance.note,
+      'owner_id': instance.ownerId,
       'procedure_ve': instance.procedureVe,
       'registration': instance.registration,
       'serial_number': instance.serialNumber,
       'sold_at': instance.soldAt?.toIso8601String(),
+      'updated_by_id': instance.updatedById,
     };
 
-ModelsUpdateVehicleTaskModel _$ModelsUpdateVehicleTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsUpdateVehicleTaskModel(
+UpdateVehicleTask _$UpdateVehicleTaskFromJson(Map<String, dynamic> json) =>
+    UpdateVehicleTask(
+      createdById: json['created_by_id'] as int?,
       deleted: json['deleted'] as bool?,
       finishdedAt: json['finishded_at'] == null
           ? null
@@ -986,18 +1260,21 @@ ModelsUpdateVehicleTaskModel _$ModelsUpdateVehicleTaskModelFromJson(
       startedAt: json['started_at'] == null
           ? null
           : DateTime.parse(json['started_at'] as String),
+      tasksId: json['tasks_id'] as int?,
+      vehiclesId: json['vehicles_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsUpdateVehicleTaskModelToJson(
-        ModelsUpdateVehicleTaskModel instance) =>
+Map<String, dynamic> _$UpdateVehicleTaskToJson(UpdateVehicleTask instance) =>
     <String, dynamic>{
+      'created_by_id': instance.createdById,
       'deleted': instance.deleted,
       'finishded_at': instance.finishdedAt?.toIso8601String(),
       'started_at': instance.startedAt?.toIso8601String(),
+      'tasks_id': instance.tasksId,
+      'vehicles_id': instance.vehiclesId,
     };
 
-ModelsVehicleModel _$ModelsVehicleModelFromJson(Map<String, dynamic> json) =>
-    ModelsVehicleModel(
+Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
       chrono: json['chrono'] as String?,
       collectionDate: json['collection_date'] == null
           ? null
@@ -1018,6 +1295,10 @@ ModelsVehicleModel _$ModelsVehicleModelFromJson(Map<String, dynamic> json) =>
       firstCirculation: json['first_circulation'] == null
           ? null
           : DateTime.parse(json['first_circulation'] as String),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => VehicleAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       mileage: json['mileage'] as int?,
       note: json['note'] as String?,
@@ -1029,17 +1310,16 @@ ModelsVehicleModel _$ModelsVehicleModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['sold_at'] as String),
       tasks: (json['tasks'] as List<dynamic>?)
-              ?.map((e) =>
-                  ModelsVehicleTaskModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedById: json['updated_by_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsVehicleModelToJson(ModelsVehicleModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
       'commercial_name': instance.commercialName,
@@ -1050,6 +1330,7 @@ Map<String, dynamic> _$ModelsVehicleModelToJson(ModelsVehicleModel instance) =>
       'delivery_date': instance.deliveryDate?.toIso8601String(),
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'mileage': instance.mileage,
       'note': instance.note,
@@ -1060,11 +1341,76 @@ Map<String, dynamic> _$ModelsVehicleModelToJson(ModelsVehicleModel instance) =>
       'sold_at': instance.soldAt?.toIso8601String(),
       'tasks': instance.tasks?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by_id': instance.updatedById,
     };
 
-ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsVehicleModelResponse(
+VehicleAudit _$VehicleAuditFromJson(Map<String, dynamic> json) => VehicleAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      chrono: json['chrono'] as String?,
+      collectionDate: json['collectionDate'] as String?,
+      commercialName: json['commercialName'] as String?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
+      deletedBy: json['deleted_by'] == null
+          ? null
+          : Employee.fromJson(json['deleted_by'] as Map<String, dynamic>),
+      deletedById: json['deleted_by_id'] as int?,
+      deliveryDate: json['deliveryDate'] as String?,
+      expertise: json['expertise'] as bool?,
+      firstCirculation: json['firstCirculation'] as String?,
+      mileage: json['mileage'] as int?,
+      note: json['note'] as String?,
+      owner: json['owner'] == null
+          ? null
+          : Owner.fromJson(json['owner'] as Map<String, dynamic>),
+      ownerId: json['owner_id'] as int?,
+      procedureVe: json['procedureVe'] as bool?,
+      registration: json['registration'] as String?,
+      serialNumber: json['serialNumber'] as String?,
+      soldAt: json['soldAt'] as String?,
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      vehicleModelID: json['vehicleModelID'] as int?,
+    );
+
+Map<String, dynamic> _$VehicleAuditToJson(VehicleAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'chrono': instance.chrono,
+      'collectionDate': instance.collectionDate,
+      'commercialName': instance.commercialName,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'deleted_by': instance.deletedBy?.toJson(),
+      'deleted_by_id': instance.deletedById,
+      'deliveryDate': instance.deliveryDate,
+      'expertise': instance.expertise,
+      'firstCirculation': instance.firstCirculation,
+      'mileage': instance.mileage,
+      'note': instance.note,
+      'owner': instance.owner?.toJson(),
+      'owner_id': instance.ownerId,
+      'procedureVe': instance.procedureVe,
+      'registration': instance.registration,
+      'serialNumber': instance.serialNumber,
+      'soldAt': instance.soldAt,
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
+      'updatedAt': instance.updatedAt,
+      'vehicleModelID': instance.vehicleModelID,
+    };
+
+VehicleResponse _$VehicleResponseFromJson(Map<String, dynamic> json) =>
+    VehicleResponse(
       chrono: json['chrono'] as String?,
       collectionDate: json['collection_date'] == null
           ? null
@@ -1075,16 +1421,14 @@ ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
           : DateTime.parse(json['created_at'] as String),
       createdBy: json['created_by'] == null
           ? null
-          : ModelsEmployeeModel.fromJson(
-              json['created_by'] as Map<String, dynamic>),
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
       createdById: json['created_by_id'] as int?,
       deletedAt: json['deleted_at'] == null
           ? null
           : GormDeletedAt.fromJson(json['deleted_at'] as Map<String, dynamic>),
       deletedBy: json['deleted_by'] == null
           ? null
-          : ModelsEmployeeModel.fromJson(
-              json['deleted_by'] as Map<String, dynamic>),
+          : Employee.fromJson(json['deleted_by'] as Map<String, dynamic>),
       deletedById: json['deleted_by_id'] as int?,
       deliveryDate: json['delivery_date'] == null
           ? null
@@ -1093,12 +1437,16 @@ ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
       firstCirculation: json['first_circulation'] == null
           ? null
           : DateTime.parse(json['first_circulation'] as String),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => VehicleAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       mileage: json['mileage'] as int?,
       note: json['note'] as String?,
       owner: json['owner'] == null
           ? null
-          : ModelsOwnerModel.fromJson(json['owner'] as Map<String, dynamic>),
+          : Owner.fromJson(json['owner'] as Map<String, dynamic>),
       ownerId: json['owner_id'] as int?,
       procedureVe: json['procedure_ve'] as bool?,
       registration: json['registration'] as String?,
@@ -1107,17 +1455,20 @@ ModelsVehicleModelResponse _$ModelsVehicleModelResponseFromJson(
           ? null
           : DateTime.parse(json['sold_at'] as String),
       tasks: (json['tasks'] as List<dynamic>?)
-              ?.map((e) => ModelsVehicleTaskModelResponse.fromJson(
-                  e as Map<String, dynamic>))
+              ?.map((e) =>
+                  VehicleTaskResponse.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsVehicleModelResponseToJson(
-        ModelsVehicleModelResponse instance) =>
+Map<String, dynamic> _$VehicleResponseToJson(VehicleResponse instance) =>
     <String, dynamic>{
       'chrono': instance.chrono,
       'collection_date': instance.collectionDate?.toIso8601String(),
@@ -1131,6 +1482,7 @@ Map<String, dynamic> _$ModelsVehicleModelResponseToJson(
       'delivery_date': instance.deliveryDate?.toIso8601String(),
       'expertise': instance.expertise,
       'first_circulation': instance.firstCirculation?.toIso8601String(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'mileage': instance.mileage,
       'note': instance.note,
@@ -1142,11 +1494,11 @@ Map<String, dynamic> _$ModelsVehicleModelResponseToJson(
       'sold_at': instance.soldAt?.toIso8601String(),
       'tasks': instance.tasks?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
-ModelsVehicleTaskModel _$ModelsVehicleTaskModelFromJson(
-        Map<String, dynamic> json) =>
-    ModelsVehicleTaskModel(
+VehicleTask _$VehicleTaskFromJson(Map<String, dynamic> json) => VehicleTask(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -1158,6 +1510,10 @@ ModelsVehicleTaskModel _$ModelsVehicleTaskModelFromJson(
       finishdedAt: json['finishded_at'] == null
           ? null
           : DateTime.parse(json['finishded_at'] as String),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => VehicleTaskAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       startedAt: json['started_at'] == null
           ? null
@@ -1169,14 +1525,14 @@ ModelsVehicleTaskModel _$ModelsVehicleTaskModelFromJson(
       vehiclesId: json['vehicles_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsVehicleTaskModelToJson(
-        ModelsVehicleTaskModel instance) =>
+Map<String, dynamic> _$VehicleTaskToJson(VehicleTask instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
       'created_by_id': instance.createdById,
       'deleted': instance.deleted,
       'deleted_at': instance.deletedAt?.toJson(),
       'finishded_at': instance.finishdedAt?.toIso8601String(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'started_at': instance.startedAt?.toIso8601String(),
       'tasks_id': instance.tasksId,
@@ -1184,16 +1540,56 @@ Map<String, dynamic> _$ModelsVehicleTaskModelToJson(
       'vehicles_id': instance.vehiclesId,
     };
 
-ModelsVehicleTaskModelResponse _$ModelsVehicleTaskModelResponseFromJson(
-        Map<String, dynamic> json) =>
-    ModelsVehicleTaskModelResponse(
+VehicleTaskAudit _$VehicleTaskAuditFromJson(Map<String, dynamic> json) =>
+    VehicleTaskAudit(
+      action: json['action'] as String?,
+      actionAt: json['actionAt'] as String?,
+      actionID: json['actionID'] as int?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
+      deleted: json['deleted'] as bool?,
+      finishdedAt: json['finishdedAt'] as String?,
+      startedAt: json['startedAt'] as String?,
+      tasks: json['tasks'] == null
+          ? null
+          : Task.fromJson(json['tasks'] as Map<String, dynamic>),
+      tasksId: json['tasks_id'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      vehicleTaskModelID: json['vehicleTaskModelID'] as int?,
+      vehicles: json['vehicles'] == null
+          ? null
+          : Vehicle.fromJson(json['vehicles'] as Map<String, dynamic>),
+      vehiclesId: json['vehicles_id'] as int?,
+    );
+
+Map<String, dynamic> _$VehicleTaskAuditToJson(VehicleTaskAudit instance) =>
+    <String, dynamic>{
+      'action': instance.action,
+      'actionAt': instance.actionAt,
+      'actionID': instance.actionID,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'deleted': instance.deleted,
+      'finishdedAt': instance.finishdedAt,
+      'startedAt': instance.startedAt,
+      'tasks': instance.tasks?.toJson(),
+      'tasks_id': instance.tasksId,
+      'updatedAt': instance.updatedAt,
+      'vehicleTaskModelID': instance.vehicleTaskModelID,
+      'vehicles': instance.vehicles?.toJson(),
+      'vehicles_id': instance.vehiclesId,
+    };
+
+VehicleTaskResponse _$VehicleTaskResponseFromJson(Map<String, dynamic> json) =>
+    VehicleTaskResponse(
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
       createdBy: json['created_by'] == null
           ? null
-          : ModelsEmployeeModel.fromJson(
-              json['created_by'] as Map<String, dynamic>),
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
       createdById: json['created_by_id'] as int?,
       deleted: json['deleted'] as bool?,
       deletedAt: json['deleted_at'] == null
@@ -1202,26 +1598,29 @@ ModelsVehicleTaskModelResponse _$ModelsVehicleTaskModelResponseFromJson(
       finishdedAt: json['finishded_at'] == null
           ? null
           : DateTime.parse(json['finishded_at'] as String),
+      history: (json['history'] as List<dynamic>?)
+              ?.map((e) => VehicleTaskAudit.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int?,
       startedAt: json['started_at'] == null
           ? null
           : DateTime.parse(json['started_at'] as String),
       tasks: json['tasks'] == null
           ? null
-          : ModelsTaskModel.fromJson(json['tasks'] as Map<String, dynamic>),
+          : Task.fromJson(json['tasks'] as Map<String, dynamic>),
       tasksId: json['tasks_id'] as int?,
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
       vehicles: json['vehicles'] == null
           ? null
-          : ModelsVehicleModel.fromJson(
-              json['vehicles'] as Map<String, dynamic>),
+          : Vehicle.fromJson(json['vehicles'] as Map<String, dynamic>),
       vehiclesId: json['vehicles_id'] as int?,
     );
 
-Map<String, dynamic> _$ModelsVehicleTaskModelResponseToJson(
-        ModelsVehicleTaskModelResponse instance) =>
+Map<String, dynamic> _$VehicleTaskResponseToJson(
+        VehicleTaskResponse instance) =>
     <String, dynamic>{
       'created_at': instance.createdAt?.toIso8601String(),
       'created_by': instance.createdBy?.toJson(),
@@ -1229,6 +1628,7 @@ Map<String, dynamic> _$ModelsVehicleTaskModelResponseToJson(
       'deleted': instance.deleted,
       'deleted_at': instance.deletedAt?.toJson(),
       'finishded_at': instance.finishdedAt?.toIso8601String(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'started_at': instance.startedAt?.toIso8601String(),
       'tasks': instance.tasks?.toJson(),
@@ -1238,14 +1638,14 @@ Map<String, dynamic> _$ModelsVehicleTaskModelResponseToJson(
       'vehicles_id': instance.vehiclesId,
     };
 
-UtilsResponseError _$UtilsResponseErrorFromJson(Map<String, dynamic> json) =>
-    UtilsResponseError(
-      code: json['code'] as int?,
-      message: json['message'] as String?,
+GormDeletedAt _$GormDeletedAtFromJson(Map<String, dynamic> json) =>
+    GormDeletedAt(
+      time: json['time'] as String?,
+      valid: json['valid'] as bool?,
     );
 
-Map<String, dynamic> _$UtilsResponseErrorToJson(UtilsResponseError instance) =>
+Map<String, dynamic> _$GormDeletedAtToJson(GormDeletedAt instance) =>
     <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
+      'time': instance.time,
+      'valid': instance.valid,
     };

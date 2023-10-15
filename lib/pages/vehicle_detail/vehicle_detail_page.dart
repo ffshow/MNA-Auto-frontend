@@ -153,7 +153,8 @@ class _VehicleDetailsWidget extends StatelessWidget {
               loaded: (ListTask response) {
                 return TaskSelectionWidget(
                     tasks: response.data
-                            ?.where((TaskResponse e) => e.parentTaskID == null)
+                            ?.where((TaskResponse e) =>
+                                e.parentTaskId == null || e.parentTaskId == 0)
                             .toList() ??
                         []);
               },

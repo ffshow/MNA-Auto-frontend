@@ -1637,8 +1637,8 @@ TaskResponse _$TaskResponseFromJson(Map<String, dynamic> json) => TaskResponse(
           [],
       id: json['id'] as int?,
       label: json['label'] as String?,
-      parentTaskID: json['parentTaskID'] as int?,
-      subTasks: (json['subTasks'] as List<dynamic>?)
+      parentTaskId: json['parent_task_id'] as int?,
+      subTasks: (json['sub_tasks'] as List<dynamic>?)
               ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
@@ -1661,8 +1661,8 @@ Map<String, dynamic> _$TaskResponseToJson(TaskResponse instance) =>
       'history': instance.history?.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'label': instance.label,
-      'parentTaskID': instance.parentTaskID,
-      'subTasks': instance.subTasks?.map((e) => e.toJson()).toList(),
+      'parent_task_id': instance.parentTaskId,
+      'sub_tasks': instance.subTasks?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
       'updated_by': instance.updatedBy?.toJson(),
       'updated_by_id': instance.updatedById,

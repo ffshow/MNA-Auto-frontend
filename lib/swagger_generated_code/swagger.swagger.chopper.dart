@@ -1358,26 +1358,26 @@ final class _$Swagger extends Swagger {
   Future<Response<VehicleTaskResponse>> _apiVehicleTaskIdGet({
     required int? id,
     bool? withHistory,
+    bool? withVehicle,
+    bool? withHistoryVehicle,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withAssignedTo,
     bool? withHistoryAssignedTo,
     bool? withTask,
     bool? withHistoryTask,
-    bool? withVehicle,
-    bool? withHistoryVehicle,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
       'with_history': withHistory,
+      'with_vehicle': withVehicle,
+      'with_history_vehicle': withHistoryVehicle,
       'with_created_by': withCreatedBy,
       'with_history_created_by': withHistoryCreatedBy,
       'with_assigned_to': withAssignedTo,
       'with_history_assigned_to': withHistoryAssignedTo,
       'with_task': withTask,
       'with_history_task': withHistoryTask,
-      'with_vehicle': withVehicle,
-      'with_history_vehicle': withHistoryVehicle,
     };
     final Request $request = Request(
       'GET',
@@ -1426,14 +1426,14 @@ final class _$Swagger extends Swagger {
     String? sortBy,
     bool? descending,
     bool? withHistory,
+    bool? withVehicle,
+    bool? withHistoryVehicle,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withAssignedTo,
     bool? withHistoryAssignedTo,
     bool? withTask,
     bool? withHistoryTask,
-    bool? withVehicle,
-    bool? withHistoryVehicle,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1442,14 +1442,14 @@ final class _$Swagger extends Swagger {
       'sort_by': sortBy,
       'descending': descending,
       'with_history': withHistory,
+      'with_vehicle': withVehicle,
+      'with_history_vehicle': withHistoryVehicle,
       'with_created_by': withCreatedBy,
       'with_history_created_by': withHistoryCreatedBy,
       'with_assigned_to': withAssignedTo,
       'with_history_assigned_to': withHistoryAssignedTo,
       'with_task': withTask,
       'with_history_task': withHistoryTask,
-      'with_vehicle': withVehicle,
-      'with_history_vehicle': withHistoryVehicle,
     };
     final Request $request = Request(
       'GET',

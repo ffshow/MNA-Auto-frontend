@@ -6008,7 +6008,7 @@ class TaskResponse {
     this.history,
     this.id,
     this.label,
-    this.parentTaskID,
+    this.parentTaskId,
     this.subTasks,
     this.updatedAt,
     this.updatedBy,
@@ -6037,9 +6037,9 @@ class TaskResponse {
   final int? id;
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'parentTaskID')
-  final int? parentTaskID;
-  @JsonKey(name: 'subTasks', defaultValue: <Task>[])
+  @JsonKey(name: 'parent_task_id')
+  final int? parentTaskId;
+  @JsonKey(name: 'sub_tasks', defaultValue: <Task>[])
   final List<Task>? subTasks;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
@@ -6075,9 +6075,9 @@ class TaskResponse {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.parentTaskID, parentTaskID) ||
+            (identical(other.parentTaskId, parentTaskId) ||
                 const DeepCollectionEquality()
-                    .equals(other.parentTaskID, parentTaskID)) &&
+                    .equals(other.parentTaskId, parentTaskId)) &&
             (identical(other.subTasks, subTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.subTasks, subTasks)) &&
@@ -6105,7 +6105,7 @@ class TaskResponse {
       const DeepCollectionEquality().hash(history) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(parentTaskID) ^
+      const DeepCollectionEquality().hash(parentTaskId) ^
       const DeepCollectionEquality().hash(subTasks) ^
       const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(updatedBy) ^
@@ -6123,7 +6123,7 @@ extension $TaskResponseExtension on TaskResponse {
       List<TaskAudit>? history,
       int? id,
       String? label,
-      int? parentTaskID,
+      int? parentTaskId,
       List<Task>? subTasks,
       DateTime? updatedAt,
       Employee? updatedBy,
@@ -6137,7 +6137,7 @@ extension $TaskResponseExtension on TaskResponse {
         history: history ?? this.history,
         id: id ?? this.id,
         label: label ?? this.label,
-        parentTaskID: parentTaskID ?? this.parentTaskID,
+        parentTaskId: parentTaskId ?? this.parentTaskId,
         subTasks: subTasks ?? this.subTasks,
         updatedAt: updatedAt ?? this.updatedAt,
         updatedBy: updatedBy ?? this.updatedBy,
@@ -6153,7 +6153,7 @@ extension $TaskResponseExtension on TaskResponse {
       Wrapped<List<TaskAudit>?>? history,
       Wrapped<int?>? id,
       Wrapped<String?>? label,
-      Wrapped<int?>? parentTaskID,
+      Wrapped<int?>? parentTaskId,
       Wrapped<List<Task>?>? subTasks,
       Wrapped<DateTime?>? updatedAt,
       Wrapped<Employee?>? updatedBy,
@@ -6168,8 +6168,8 @@ extension $TaskResponseExtension on TaskResponse {
         history: (history != null ? history.value : this.history),
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
-        parentTaskID:
-            (parentTaskID != null ? parentTaskID.value : this.parentTaskID),
+        parentTaskId:
+            (parentTaskId != null ? parentTaskId.value : this.parentTaskId),
         subTasks: (subTasks != null ? subTasks.value : this.subTasks),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
         updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),

@@ -245,17 +245,15 @@ class _TasksWidgetState extends State<_TasksWidget> {
             }).toList(),
           ),
           kH16,
-          // if (_selected?.subTasksIds?.isEmpty ?? false)
-          // const Text('This task has no sub-tasks'),
-          // if (_selected?.subTasksIds?.isNotEmpty ?? false)
-          //   const ListTile(
-          //     title: Text('Subtasks'),
-          //   ),
-          // ...?_selected?.subTasks?.map((TaskResponse e) {
-          //   return ListTile(
-          //     leading: Text(e.label ?? ''),
-          //   );
-          // }).toList(),
+          if (_selected?.subTasks?.isEmpty ?? false)
+            const Text('This task has no sub-tasks'),
+          if (_selected?.subTasks?.isNotEmpty ?? false)
+            const ListTile(title: Text('Subtasks')),
+          ...?_selected?.subTasks?.map((Task e) {
+            return ListTile(
+              leading: Text(e.label ?? ''),
+            );
+          }).toList(),
         ],
       ),
     );

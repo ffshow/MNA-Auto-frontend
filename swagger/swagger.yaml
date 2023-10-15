@@ -1373,9 +1373,10 @@ definitions:
       label:
         type: string
         x-nullable: false
-      parentTaskID:
+      parent_task_id:
         type: integer
-      subTasks:
+        x-nullable: false
+      sub_tasks:
         items:
           $ref: '#/definitions/Task'
         type: array
@@ -4535,6 +4536,14 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4558,14 +4567,6 @@ paths:
       - description: with task history data
         in: query
         name: with_history_task
-        type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
-        type: boolean
-      - description: with vehicle history data
-        in: query
-        name: with_history_vehicle
         type: boolean
       produces:
       - application/json
@@ -4679,6 +4680,14 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4702,14 +4711,6 @@ paths:
       - description: with task history data
         in: query
         name: with_history_task
-        type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
-        type: boolean
-      - description: with vehicle history data
-        in: query
-        name: with_history_vehicle
         type: boolean
       produces:
       - application/json

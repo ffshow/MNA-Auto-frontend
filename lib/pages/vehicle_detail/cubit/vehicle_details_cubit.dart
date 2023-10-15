@@ -15,14 +15,15 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
     try {
       final Response<VehicleResponse> response = await _swagger.apiVehicleIdGet(
         id: id,
-        withTasks: true,
+        withVehicleTasks: true,
         withCreatedBy: true,
         withDeletedBy: true,
         withHistory: true,
         withOwner: true,
         withUpdatedBy: true,
       );
-      print('response.body?.tasks?.length ${response.body?.tasks?.length}');
+      print(
+          'response.body?.tasks?.length ${response.body?.vehicleTasks?.length}');
       emit(VehicleDetailsState.loaded(response.body!));
     } catch (e) {
       emit(VehicleDetailsState.failed(e.toString()));

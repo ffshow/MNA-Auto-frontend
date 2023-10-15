@@ -17,7 +17,6 @@ class TaskRepository {
       sortBy: 'created_at',
       descending: true,
       withSubTasks: true,
-      withVehicleTasks: true,
     );
     print(response?.body);
     return response!.body!;

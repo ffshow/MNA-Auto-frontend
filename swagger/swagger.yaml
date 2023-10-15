@@ -1,5 +1,31 @@
 basePath: /
 definitions:
+  Account:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/AccountAudit'
+        type: array
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+        x-nullable: false
+      employee_id:
+        type: integer
+        x-nullable: false
+      id:
+        type: integer
+      name:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
   AccountAudit:
     properties:
       accountModelID:
@@ -28,6 +54,9 @@ definitions:
       email:
         type: string
         x-nullable: false
+      employee_id:
+        type: integer
+        x-nullable: false
       history:
         items:
           $ref: '#/definitions/AccountAudit'
@@ -41,63 +70,178 @@ definitions:
         format: date-time
         type: string
     type: object
+  City:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/CityAudit'
+        type: array
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      id:
+        type: integer
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  CityAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      cityModelID:
+        type: integer
+      label:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  CityResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      history:
+        items:
+          $ref: '#/definitions/CityAudit'
+        type: array
+      id:
+        type: integer
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
   CreateAccount:
     properties:
       email:
         type: string
         x-nullable: false
+      employee_id:
+        type: integer
+        x-nullable: false
       name:
+        type: string
+        x-nullable: false
+    type: object
+  CreateCity:
+    properties:
+      garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      label:
         type: string
         x-nullable: false
     type: object
   CreateEmployee:
     properties:
+      account:
+        allOf:
+        - $ref: '#/definitions/Account'
+        x-nullable: false
+      assigned_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       created_garages:
         items:
-          $ref: '#/definitions/CreateGarage'
+          $ref: '#/definitions/Garage'
         type: array
         x-nullable: false
       created_tasks:
         items:
-          $ref: '#/definitions/CreateTask'
+          $ref: '#/definitions/Task'
         type: array
         x-nullable: false
       created_vehicle_tasks:
         items:
-          $ref: '#/definitions/CreateVehicleTask'
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       created_vehicles:
         items:
-          $ref: '#/definitions/CreateVehicle'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
       deleted_vehicles:
         items:
-          $ref: '#/definitions/CreateVehicle'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
       name:
         type: string
         x-nullable: false
-      updated_tasts:
+      permission:
         items:
-          $ref: '#/definitions/CreateTask'
+          $ref: '#/definitions/Permission'
+        type: array
+        x-nullable: false
+      requests:
+        items:
+          $ref: '#/definitions/SparePartRequest'
+        type: array
+        x-nullable: false
+      updated_tasks:
+        items:
+          $ref: '#/definitions/Task'
         type: array
         x-nullable: false
       updated_vehicles:
         items:
-          $ref: '#/definitions/CreateVehicle'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
     type: object
   CreateGarage:
     properties:
+      city:
+        allOf:
+        - $ref: '#/definitions/City'
+        x-nullable: false
+      city_id:
+        type: integer
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       label:
         type: string
+        x-nullable: false
+      owners:
+        items:
+          $ref: '#/definitions/Owner'
+        type: array
         x-nullable: false
     type: object
   CreateOwner:
@@ -107,6 +251,13 @@ definitions:
         x-nullable: false
       email:
         type: string
+        x-nullable: false
+      garage:
+        allOf:
+        - $ref: '#/definitions/Garage'
+        x-nullable: false
+      garage_id:
+        type: integer
         x-nullable: false
       phone:
         type: string
@@ -119,7 +270,7 @@ definitions:
         x-nullable: false
       vehicles:
         items:
-          $ref: '#/definitions/CreateVehicle'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
     type: object
@@ -127,6 +278,13 @@ definitions:
     properties:
       available:
         type: boolean
+        x-nullable: false
+      employees:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      employees_id:
+        type: integer
         x-nullable: false
       label:
         type: string
@@ -140,36 +298,76 @@ definitions:
       reference:
         type: string
         x-nullable: false
+      request:
+        allOf:
+        - $ref: '#/definitions/SparePartRequest'
+        x-nullable: false
+      request_id:
+        type: integer
+        x-nullable: false
+      supplier:
+        allOf:
+        - $ref: '#/definitions/Supplier'
+        x-nullable: false
+      supplier_id:
+        type: integer
+        x-nullable: false
+    type: object
+  CreateSparePartRequest:
+    properties:
+      request_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      request_by_id:
+        type: integer
+        x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
     type: object
   CreateSupplier:
     properties:
       name:
         type: string
         x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
     type: object
   CreateTask:
     properties:
+      attached_to:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       label:
         type: string
         x-nullable: false
-      parent_task_id:
+      parentTaskID:
         type: integer
-        x-nullable: false
-      sub_tasks:
+      subTasks:
         items:
-          $ref: '#/definitions/CreateTask'
+          $ref: '#/definitions/Task'
         type: array
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       updated_by_id:
         type: integer
-        x-nullable: false
-      vehicle_tasks:
-        items:
-          $ref: '#/definitions/CreateVehicleTask'
-        type: array
         x-nullable: false
     type: object
   CreateVehicle:
@@ -184,8 +382,16 @@ definitions:
       commercial_name:
         type: string
         x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
+        x-nullable: false
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       deleted_by_id:
         type: integer
@@ -207,6 +413,10 @@ definitions:
       note:
         type: string
         x-nullable: false
+      owner:
+        allOf:
+        - $ref: '#/definitions/Owner'
+        x-nullable: false
       owner_id:
         type: integer
         x-nullable: false
@@ -223,40 +433,165 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      tasks:
-        items:
-          $ref: '#/definitions/CreateVehicleTask'
-        type: array
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
         x-nullable: false
       updated_by_id:
         type: integer
         x-nullable: false
+      vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
     type: object
   CreateVehicleTask:
     properties:
+      assigned_to:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      assigned_to_id:
+        type: integer
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       deleted:
         type: boolean
         x-nullable: false
-      finishded_at:
+      finished_at:
         format: date-time
+        type: string
+        x-nullable: false
+      note:
         type: string
         x-nullable: false
       started_at:
         format: date-time
         type: string
         x-nullable: false
-      tasks_id:
+      task:
+        allOf:
+        - $ref: '#/definitions/Task'
+        x-nullable: false
+      task_id:
         type: integer
         x-nullable: false
-      vehicles_id:
+      vehicle:
+        allOf:
+        - $ref: '#/definitions/Vehicle'
+        x-nullable: false
+      vehicle_id:
         type: integer
         x-nullable: false
     type: object
   Employee:
     properties:
+      account:
+        allOf:
+        - $ref: '#/definitions/Account'
+        x-nullable: false
+      assigned_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      audit:
+        items:
+          $ref: '#/definitions/EmployeeAudit'
+        type: array
+      created_at:
+        format: date-time
+        type: string
+      created_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      created_tasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      created_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      created_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      deleted_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+      id:
+        type: integer
+      name:
+        type: string
+        x-nullable: false
+      permission:
+        items:
+          $ref: '#/definitions/Permission'
+        type: array
+        x-nullable: false
+      requests:
+        items:
+          $ref: '#/definitions/SparePartRequest'
+        type: array
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+      updated_tasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      updated_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+    type: object
+  EmployeeAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      employeeModelID:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  EmployeeResponse:
+    properties:
+      account:
+        allOf:
+        - $ref: '#/definitions/Account'
+        x-nullable: false
+      assigned_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       created_at:
         format: date-time
         type: string
@@ -296,10 +631,20 @@ definitions:
       name:
         type: string
         x-nullable: false
+      permission:
+        items:
+          $ref: '#/definitions/Permission'
+        type: array
+        x-nullable: false
+      requests:
+        items:
+          $ref: '#/definitions/SparePartRequest'
+        type: array
+        x-nullable: false
       updated_at:
         format: date-time
         type: string
-      updated_tasts:
+      updated_tasks:
         items:
           $ref: '#/definitions/Task'
         type: array
@@ -310,95 +655,40 @@ definitions:
         type: array
         x-nullable: false
     type: object
-  EmployeeAudit:
-    properties:
-      action:
-        description: INSERT, UPDATE, DELETE
-        type: string
-      actionAt:
-        type: string
-      actionID:
-        type: integer
-      employeeModelID:
-        type: integer
-      name:
-        type: string
-      updatedAt:
-        type: string
-    type: object
-  EmployeeResponse:
-    properties:
-      created_at:
-        format: date-time
-        type: string
-      created_garages:
-        items:
-          $ref: '#/definitions/GarageResponse'
-        type: array
-        x-nullable: false
-      created_tasks:
-        items:
-          $ref: '#/definitions/TaskResponse'
-        type: array
-        x-nullable: false
-      created_vehicle_tasks:
-        items:
-          $ref: '#/definitions/VehicleTaskResponse'
-        type: array
-        x-nullable: false
-      created_vehicles:
-        items:
-          $ref: '#/definitions/VehicleResponse'
-        type: array
-        x-nullable: false
-      deleted_at:
-        $ref: '#/definitions/gorm.DeletedAt'
-      deleted_vehicles:
-        items:
-          $ref: '#/definitions/VehicleResponse'
-        type: array
-        x-nullable: false
-      history:
-        items:
-          $ref: '#/definitions/EmployeeAudit'
-        type: array
-      id:
-        type: integer
-      name:
-        type: string
-        x-nullable: false
-      updated_at:
-        format: date-time
-        type: string
-      updated_tasts:
-        items:
-          $ref: '#/definitions/TaskResponse'
-        type: array
-        x-nullable: false
-      updated_vehicles:
-        items:
-          $ref: '#/definitions/VehicleResponse'
-        type: array
-        x-nullable: false
-    type: object
   Garage:
     properties:
+      audit:
+        items:
+          $ref: '#/definitions/GarageAudit'
+        type: array
+      city:
+        allOf:
+        - $ref: '#/definitions/City'
+        x-nullable: false
+      city_id:
+        type: integer
+        x-nullable: false
       created_at:
         format: date-time
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
-      history:
-        items:
-          $ref: '#/definitions/GarageAudit'
-        type: array
       id:
         type: integer
       label:
         type: string
+        x-nullable: false
+      owners:
+        items:
+          $ref: '#/definitions/Owner'
+        type: array
         x-nullable: false
       updated_at:
         format: date-time
@@ -413,13 +703,6 @@ definitions:
         type: string
       actionID:
         type: integer
-      created_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      created_by_id:
-        type: integer
-        x-nullable: false
       garageModelID:
         type: integer
       label:
@@ -429,6 +712,13 @@ definitions:
     type: object
   GarageResponse:
     properties:
+      city:
+        allOf:
+        - $ref: '#/definitions/City'
+        x-nullable: false
+      city_id:
+        type: integer
+        x-nullable: false
       created_at:
         format: date-time
         type: string
@@ -450,6 +740,11 @@ definitions:
       label:
         type: string
         x-nullable: false
+      owners:
+        items:
+          $ref: '#/definitions/Owner'
+        type: array
+        x-nullable: false
       updated_at:
         format: date-time
         type: string
@@ -459,6 +754,15 @@ definitions:
       data:
         items:
           $ref: '#/definitions/AccountResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  ListCity:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/CityResponse'
         type: array
       total:
         type: integer
@@ -508,6 +812,15 @@ definitions:
       total:
         type: integer
     type: object
+  ListSparePartRequest:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/SparePartRequestResponse'
+        type: array
+      total:
+        type: integer
+    type: object
   ListSupplier:
     properties:
       data:
@@ -549,6 +862,10 @@ definitions:
       address:
         type: string
         x-nullable: false
+      audit:
+        items:
+          $ref: '#/definitions/OwnerAudit'
+        type: array
       created_at:
         format: date-time
         type: string
@@ -557,10 +874,13 @@ definitions:
       email:
         type: string
         x-nullable: false
-      history:
-        items:
-          $ref: '#/definitions/OwnerAudit'
-        type: array
+      garage:
+        allOf:
+        - $ref: '#/definitions/Garage'
+        x-nullable: false
+      garage_id:
+        type: integer
+        x-nullable: false
       id:
         type: integer
       phone:
@@ -618,6 +938,13 @@ definitions:
       email:
         type: string
         x-nullable: false
+      garage:
+        allOf:
+        - $ref: '#/definitions/Garage'
+        x-nullable: false
+      garage_id:
+        type: integer
+        x-nullable: false
       history:
         items:
           $ref: '#/definitions/OwnerAudit'
@@ -638,9 +965,39 @@ definitions:
         type: string
       vehicles:
         items:
-          $ref: '#/definitions/VehicleResponse'
+          $ref: '#/definitions/Vehicle'
         type: array
         x-nullable: false
+    type: object
+  Permission:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/PermissionAudit'
+        type: array
+      available:
+        type: boolean
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      employees:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      employees_id:
+        type: integer
+        x-nullable: false
+      id:
+        type: integer
+      label:
+        type: string
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
     type: object
   PermissionAudit:
     properties:
@@ -670,6 +1027,13 @@ definitions:
         type: string
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      employees:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      employees_id:
+        type: integer
+        x-nullable: false
       history:
         items:
           $ref: '#/definitions/PermissionAudit'
@@ -690,6 +1054,43 @@ definitions:
       message:
         type: string
     type: object
+  SparePart:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/SparePartAudit'
+        type: array
+      barcode:
+        type: string
+        x-nullable: false
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      reference:
+        type: string
+        x-nullable: false
+      request:
+        allOf:
+        - $ref: '#/definitions/SparePartRequest'
+        x-nullable: false
+      request_id:
+        type: integer
+        x-nullable: false
+      supplier:
+        allOf:
+        - $ref: '#/definitions/Supplier'
+        x-nullable: false
+      supplier_id:
+        type: integer
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
   SparePartAudit:
     properties:
       action:
@@ -706,6 +1107,78 @@ definitions:
       sparePartModelID:
         type: integer
       updatedAt:
+        type: string
+    type: object
+  SparePartRequest:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/SparePartRequestAudit'
+        type: array
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      request_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      request_by_id:
+        type: integer
+        x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  SparePartRequestAudit:
+    properties:
+      action:
+        description: INSERT, UPDATE, DELETE
+        type: string
+      actionAt:
+        type: string
+      actionID:
+        type: integer
+      sparePartRequestModelID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  SparePartRequestResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      history:
+        items:
+          $ref: '#/definitions/SparePartRequestAudit'
+        type: array
+      id:
+        type: integer
+      request_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      request_by_id:
+        type: integer
+        x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
+      updated_at:
+        format: date-time
         type: string
     type: object
   SparePartResponse:
@@ -726,6 +1199,45 @@ definitions:
         type: integer
       reference:
         type: string
+        x-nullable: false
+      request:
+        allOf:
+        - $ref: '#/definitions/SparePartRequest'
+        x-nullable: false
+      request_id:
+        type: integer
+        x-nullable: false
+      supplier:
+        allOf:
+        - $ref: '#/definitions/Supplier'
+        x-nullable: false
+      supplier_id:
+        type: integer
+        x-nullable: false
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  Supplier:
+    properties:
+      audit:
+        items:
+          $ref: '#/definitions/SupplierAudit'
+        type: array
+      created_at:
+        format: date-time
+        type: string
+      deleted_at:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+        x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
         x-nullable: false
       updated_at:
         format: date-time
@@ -763,47 +1275,58 @@ definitions:
       name:
         type: string
         x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
       updated_at:
         format: date-time
         type: string
     type: object
   Task:
     properties:
+      attached_to:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      audit:
+        items:
+          $ref: '#/definitions/TaskAudit'
+        type: array
       created_at:
         format: date-time
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
-      history:
-        items:
-          $ref: '#/definitions/TaskAudit'
-        type: array
       id:
         type: integer
       label:
         type: string
         x-nullable: false
-      parent_task_id:
+      parentTaskID:
         type: integer
-        x-nullable: false
-      sub_tasks:
+      subTasks:
         items:
           $ref: '#/definitions/Task'
         type: array
-        x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       updated_by_id:
         type: integer
-        x-nullable: false
-      vehicle_tasks:
-        items:
-          $ref: '#/definitions/VehicleTask'
-        type: array
         x-nullable: false
     type: object
   TaskAudit:
@@ -815,36 +1338,20 @@ definitions:
         type: string
       actionID:
         type: integer
-      created_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      created_by_id:
-        type: integer
-        x-nullable: false
       label:
         type: string
-      parent_task:
-        allOf:
-        - $ref: '#/definitions/Task'
-        x-nullable: false
-      parent_task_id:
-        type: integer
-        x-nullable: false
       taskModelID:
         type: integer
-      updated_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      updated_by_id:
-        type: integer
-        x-nullable: false
       updatedAt:
         type: string
     type: object
   TaskResponse:
     properties:
+      attached_to:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       created_at:
         format: date-time
         type: string
@@ -866,18 +1373,12 @@ definitions:
       label:
         type: string
         x-nullable: false
-      parent_task:
-        allOf:
-        - $ref: '#/definitions/Task'
-        x-nullable: false
-      parent_task_id:
+      parentTaskID:
         type: integer
-        x-nullable: false
-      sub_tasks:
+      subTasks:
         items:
-          $ref: '#/definitions/TaskResponse'
+          $ref: '#/definitions/Task'
         type: array
-        x-nullable: false
       updated_at:
         format: date-time
         type: string
@@ -887,11 +1388,6 @@ definitions:
         x-nullable: false
       updated_by_id:
         type: integer
-        x-nullable: false
-      vehicle_tasks:
-        items:
-          $ref: '#/definitions/VehicleTaskResponse'
-        type: array
         x-nullable: false
     type: object
   TotalCount:
@@ -908,6 +1404,12 @@ definitions:
         type: string
         x-nullable: false
     type: object
+  UpdateCity:
+    properties:
+      label:
+        type: string
+        x-nullable: false
+    type: object
   UpdateEmployee:
     properties:
       name:
@@ -916,9 +1418,6 @@ definitions:
     type: object
   UpdateGarage:
     properties:
-      created_by_id:
-        type: integer
-        x-nullable: false
       label:
         type: string
         x-nullable: false
@@ -959,6 +1458,8 @@ definitions:
         type: string
         x-nullable: false
     type: object
+  UpdateSparePartRequest:
+    type: object
   UpdateSupplier:
     properties:
       name:
@@ -967,17 +1468,8 @@ definitions:
     type: object
   UpdateTask:
     properties:
-      created_by_id:
-        type: integer
-        x-nullable: false
       label:
         type: string
-        x-nullable: false
-      parent_task_id:
-        type: integer
-        x-nullable: false
-      updated_by_id:
-        type: integer
         x-nullable: false
     type: object
   UpdateVehicle:
@@ -992,12 +1484,6 @@ definitions:
       commercial_name:
         type: string
         x-nullable: false
-      created_by_id:
-        type: integer
-        x-nullable: false
-      deleted_by_id:
-        type: integer
-        x-nullable: false
       delivery_date:
         format: date-time
         type: string
@@ -1015,9 +1501,6 @@ definitions:
       note:
         type: string
         x-nullable: false
-      owner_id:
-        type: integer
-        x-nullable: false
       procedure_ve:
         type: boolean
         x-nullable: false
@@ -1031,35 +1514,30 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      updated_by_id:
-        type: integer
-        x-nullable: false
     type: object
   UpdateVehicleTask:
     properties:
-      created_by_id:
-        type: integer
-        x-nullable: false
       deleted:
         type: boolean
         x-nullable: false
-      finishded_at:
+      finished_at:
         format: date-time
+        type: string
+        x-nullable: false
+      note:
         type: string
         x-nullable: false
       started_at:
         format: date-time
         type: string
         x-nullable: false
-      tasks_id:
-        type: integer
-        x-nullable: false
-      vehicles_id:
-        type: integer
-        x-nullable: false
     type: object
   Vehicle:
     properties:
+      audit:
+        items:
+          $ref: '#/definitions/VehicleAudit'
+        type: array
       chrono:
         type: string
         x-nullable: false
@@ -1073,11 +1551,19 @@ definitions:
       created_at:
         format: date-time
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       deleted_by_id:
         type: integer
         x-nullable: false
@@ -1092,10 +1578,6 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      history:
-        items:
-          $ref: '#/definitions/VehicleAudit'
-        type: array
       id:
         type: integer
       mileage:
@@ -1103,6 +1585,10 @@ definitions:
         x-nullable: false
       note:
         type: string
+        x-nullable: false
+      owner:
+        allOf:
+        - $ref: '#/definitions/Owner'
         x-nullable: false
       owner_id:
         type: integer
@@ -1120,16 +1606,20 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      tasks:
-        items:
-          $ref: '#/definitions/VehicleTask'
-        type: array
-        x-nullable: false
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       updated_by_id:
         type: integer
+        x-nullable: false
+      vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
         x-nullable: false
     type: object
   VehicleAudit:
@@ -1147,20 +1637,6 @@ definitions:
         type: string
       commercialName:
         type: string
-      created_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      created_by_id:
-        type: integer
-        x-nullable: false
-      deleted_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      deleted_by_id:
-        type: integer
-        x-nullable: false
       deliveryDate:
         type: string
       expertise:
@@ -1171,13 +1647,6 @@ definitions:
         type: integer
       note:
         type: string
-      owner:
-        allOf:
-        - $ref: '#/definitions/Owner'
-        x-nullable: false
-      owner_id:
-        type: integer
-        x-nullable: false
       procedureVe:
         type: boolean
       registration:
@@ -1186,13 +1655,6 @@ definitions:
         type: string
       soldAt:
         type: string
-      updated_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      updated_by_id:
-        type: integer
-        x-nullable: false
       updatedAt:
         type: string
       vehicleModelID:
@@ -1272,11 +1734,6 @@ definitions:
         format: date-time
         type: string
         x-nullable: false
-      tasks:
-        items:
-          $ref: '#/definitions/VehicleTaskResponse'
-        type: array
-        x-nullable: false
       updated_at:
         format: date-time
         type: string
@@ -1287,12 +1744,32 @@ definitions:
       updated_by_id:
         type: integer
         x-nullable: false
+      vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
     type: object
   VehicleTask:
     properties:
+      assigned_to:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      assigned_to_id:
+        type: integer
+        x-nullable: false
+      audit:
+        items:
+          $ref: '#/definitions/VehicleTaskAudit'
+        type: array
       created_at:
         format: date-time
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
       created_by_id:
         type: integer
         x-nullable: false
@@ -1301,27 +1778,34 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
-      finishded_at:
+      finished_at:
         format: date-time
         type: string
         x-nullable: false
-      history:
-        items:
-          $ref: '#/definitions/VehicleTaskAudit'
-        type: array
       id:
         type: integer
+      note:
+        type: string
+        x-nullable: false
       started_at:
         format: date-time
         type: string
         x-nullable: false
-      tasks_id:
+      task:
+        allOf:
+        - $ref: '#/definitions/Task'
+        x-nullable: false
+      task_id:
         type: integer
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-      vehicles_id:
+      vehicle:
+        allOf:
+        - $ref: '#/definitions/Vehicle'
+        x-nullable: false
+      vehicle_id:
         type: integer
         x-nullable: false
     type: object
@@ -1334,40 +1818,28 @@ definitions:
         type: string
       actionID:
         type: integer
-      created_by:
-        allOf:
-        - $ref: '#/definitions/Employee'
-        x-nullable: false
-      created_by_id:
-        type: integer
-        x-nullable: false
       deleted:
         type: boolean
-      finishdedAt:
+      finishedAt:
+        type: string
+      note:
         type: string
       startedAt:
         type: string
-      tasks:
-        allOf:
-        - $ref: '#/definitions/Task'
-        x-nullable: false
-      tasks_id:
-        type: integer
-        x-nullable: false
       updatedAt:
         type: string
       vehicleTaskModelID:
         type: integer
-      vehicles:
-        allOf:
-        - $ref: '#/definitions/Vehicle'
-        x-nullable: false
-      vehicles_id:
-        type: integer
-        x-nullable: false
     type: object
   VehicleTaskResponse:
     properties:
+      assigned_to:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      assigned_to_id:
+        type: integer
+        x-nullable: false
       created_at:
         format: date-time
         type: string
@@ -1383,7 +1855,7 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
-      finishded_at:
+      finished_at:
         format: date-time
         type: string
         x-nullable: false
@@ -1393,25 +1865,28 @@ definitions:
         type: array
       id:
         type: integer
+      note:
+        type: string
+        x-nullable: false
       started_at:
         format: date-time
         type: string
         x-nullable: false
-      tasks:
+      task:
         allOf:
         - $ref: '#/definitions/Task'
         x-nullable: false
-      tasks_id:
+      task_id:
         type: integer
         x-nullable: false
       updated_at:
         format: date-time
         type: string
-      vehicles:
+      vehicle:
         allOf:
         - $ref: '#/definitions/Vehicle'
         x-nullable: false
-      vehicles_id:
+      vehicle_id:
         type: integer
         x-nullable: false
     type: object
@@ -1437,22 +1912,6 @@ info:
   title: MNA-Automobile Swagger API
   version: "1.0"
 paths:
-  /:
-    get:
-      consumes:
-      - '*/*'
-      description: get the status of server.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Show the status of server.
-      tags:
-      - root
   /api/account:
     post:
       consumes:
@@ -1498,6 +1957,14 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with employee data
+        in: query
+        name: with_employee
+        type: boolean
+      - description: with employee history data
+        in: query
+        name: with_history_employee
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1521,7 +1988,7 @@ paths:
       - application/json
       description: Edit account
       parameters:
-      - description: AccountModel ID
+      - description: Account ID
         in: path
         name: id
         required: true
@@ -1550,26 +2017,7 @@ paths:
       summary: Update a account
       tags:
       - account
-  /api/account/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - account
-  /api/account_import:
+  /api/account/import:
     post:
       consumes:
       - application/json
@@ -1603,7 +2051,7 @@ paths:
       summary: Create many account
       tags:
       - account
-  /api/account_list:
+  /api/account/list:
     get:
       consumes:
       - application/json
@@ -1625,6 +2073,18 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with employee data
+        in: query
+        name: with_employee
+        type: boolean
+      - description: with employee history data
+        in: query
+        name: with_history_employee
+        type: boolean
       produces:
       - application/json
       responses:
@@ -1639,6 +2099,231 @@ paths:
       summary: List account
       tags:
       - account
+  /api/account/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
+      tags:
+      - account
+  /api/city:
+    post:
+      consumes:
+      - application/json
+      description: Register city
+      parameters:
+      - description: Register city
+        in: body
+        name: city_model
+        required: true
+        schema:
+          $ref: '#/definitions/CreateCity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CityResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Create a new city
+      tags:
+      - city
+  /api/city/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get city by ID
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with garages data
+        in: query
+        name: with_garages
+        type: boolean
+      - description: with garages owners nested data
+        in: query
+        name: with_garages_owners
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CityResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Get city by ID
+      tags:
+      - city
+    patch:
+      consumes:
+      - application/json
+      description: Edit city
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Register city
+        in: body
+        name: city_model
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateCity'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CityResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Update a city
+      tags:
+      - city
+  /api/city/import:
+    post:
+      consumes:
+      - application/json
+      description: Register city (useful for importing data)
+      parameters:
+      - description: Register city
+        in: body
+        name: city_model
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/CreateCity'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/CityResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Create many city
+      tags:
+      - city
+  /api/city/list:
+    get:
+      consumes:
+      - application/json
+      description: List city
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with garages data
+        in: query
+        name: with_garages
+        type: boolean
+      - description: with garages owners data
+        in: query
+        name: with_garages_owners
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ListCity'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: List city
+      tags:
+      - city
+  /api/city/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
+      tags:
+      - city
   /api/employee:
     post:
       consumes:
@@ -1684,33 +2369,85 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with vehicle data
+      - description: with created_vehicles data
         in: query
         name: with_created_vehicles
         type: boolean
-      - description: with vehicle data
+      - description: with created_vehicles vehicle_tasks nested data
+        in: query
+        name: with_created_vehicles_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicles data
         in: query
         name: with_updated_vehicles
         type: boolean
-      - description: with vehicle data
+      - description: with updated_vehicles vehicle_tasks nested data
+        in: query
+        name: with_updated_vehicles_vehicle_tasks
+        type: boolean
+      - description: with deleted_vehicles data
         in: query
         name: with_deleted_vehicles
         type: boolean
-      - description: with vehicle task data
+      - description: with deleted_vehicles vehicle_tasks nested data
         in: query
-        name: with_created_vehicle_tasks
+        name: with_deleted_vehicles_vehicle_tasks
         type: boolean
-      - description: with garage data
+      - description: with created_garages data
         in: query
         name: with_created_garages
         type: boolean
-      - description: with task data
+      - description: with created_garages owners nested data
+        in: query
+        name: with_created_garages_owners
+        type: boolean
+      - description: with created_tasks data
         in: query
         name: with_created_tasks
         type: boolean
-      - description: with task data
+      - description: with created_tasks sub_tasks nested data
         in: query
-        name: with_updated_tasts
+        name: with_created_tasks_sub_tasks
+        type: boolean
+      - description: with created_tasks attached_to nested data
+        in: query
+        name: with_created_tasks_attached_to
+        type: boolean
+      - description: with updated_tasks data
+        in: query
+        name: with_updated_tasks
+        type: boolean
+      - description: with updated_tasks sub_tasks nested data
+        in: query
+        name: with_updated_tasks_sub_tasks
+        type: boolean
+      - description: with updated_tasks attached_to nested data
+        in: query
+        name: with_updated_tasks_attached_to
+        type: boolean
+      - description: with created_vehicle_tasks data
+        in: query
+        name: with_created_vehicle_tasks
+        type: boolean
+      - description: with assigned_tasks data
+        in: query
+        name: with_assigned_tasks
+        type: boolean
+      - description: with permission data
+        in: query
+        name: with_permission
+        type: boolean
+      - description: with requests data
+        in: query
+        name: with_requests
+        type: boolean
+      - description: with requests spare_parts nested data
+        in: query
+        name: with_requests_spare_parts
+        type: boolean
+      - description: with account data
+        in: query
+        name: with_account
         type: boolean
       produces:
       - application/json
@@ -1735,7 +2472,7 @@ paths:
       - application/json
       description: Edit employee
       parameters:
-      - description: EmployeeModel ID
+      - description: Employee ID
         in: path
         name: id
         required: true
@@ -1764,26 +2501,7 @@ paths:
       summary: Update a employee
       tags:
       - employee
-  /api/employee/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - employee
-  /api/employee_import:
+  /api/employee/import:
     post:
       consumes:
       - application/json
@@ -1817,7 +2535,7 @@ paths:
       summary: Create many employee
       tags:
       - employee
-  /api/employee_list:
+  /api/employee/list:
     get:
       consumes:
       - application/json
@@ -1839,33 +2557,89 @@ paths:
         in: query
         name: descending
         type: boolean
-      - description: with vehicle data
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with created_vehicles data
         in: query
         name: with_created_vehicles
         type: boolean
-      - description: with vehicle data
+      - description: with created_vehicles vehicle_tasks data
+        in: query
+        name: with_created_vehicles_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicles data
         in: query
         name: with_updated_vehicles
         type: boolean
-      - description: with vehicle data
+      - description: with updated_vehicles vehicle_tasks data
+        in: query
+        name: with_updated_vehicles_vehicle_tasks
+        type: boolean
+      - description: with deleted_vehicles data
         in: query
         name: with_deleted_vehicles
         type: boolean
-      - description: with vehicle task data
+      - description: with deleted_vehicles vehicle_tasks data
         in: query
-        name: with_created_vehicle_tasks
+        name: with_deleted_vehicles_vehicle_tasks
         type: boolean
-      - description: with garage data
+      - description: with created_garages data
         in: query
         name: with_created_garages
         type: boolean
-      - description: with task data
+      - description: with created_garages owners data
+        in: query
+        name: with_created_garages_owners
+        type: boolean
+      - description: with created_tasks data
         in: query
         name: with_created_tasks
         type: boolean
-      - description: with task data
+      - description: with created_tasks sub_tasks data
         in: query
-        name: with_updated_tasts
+        name: with_created_tasks_sub_tasks
+        type: boolean
+      - description: with created_tasks attached_to data
+        in: query
+        name: with_created_tasks_attached_to
+        type: boolean
+      - description: with updated_tasks data
+        in: query
+        name: with_updated_tasks
+        type: boolean
+      - description: with updated_tasks sub_tasks data
+        in: query
+        name: with_updated_tasks_sub_tasks
+        type: boolean
+      - description: with updated_tasks attached_to data
+        in: query
+        name: with_updated_tasks_attached_to
+        type: boolean
+      - description: with created_vehicle_tasks data
+        in: query
+        name: with_created_vehicle_tasks
+        type: boolean
+      - description: with assigned_tasks data
+        in: query
+        name: with_assigned_tasks
+        type: boolean
+      - description: with permission data
+        in: query
+        name: with_permission
+        type: boolean
+      - description: with requests data
+        in: query
+        name: with_requests
+        type: boolean
+      - description: with requests spare_parts data
+        in: query
+        name: with_requests_spare_parts
+        type: boolean
+      - description: with account data
+        in: query
+        name: with_account
         type: boolean
       produces:
       - application/json
@@ -1879,6 +2653,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List employee
+      tags:
+      - employee
+  /api/employee/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - employee
   /api/garage:
@@ -1926,9 +2719,29 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with EmployeeModel data
+      - description: with owners data
+        in: query
+        name: with_owners
+        type: boolean
+      - description: with owners vehicles nested data
+        in: query
+        name: with_owners_vehicles
+        type: boolean
+      - description: with created_by data
         in: query
         name: with_created_by
+        type: boolean
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
         type: boolean
       produces:
       - application/json
@@ -1953,7 +2766,7 @@ paths:
       - application/json
       description: Edit garage
       parameters:
-      - description: GarageModel ID
+      - description: Garage ID
         in: path
         name: id
         required: true
@@ -1982,26 +2795,7 @@ paths:
       summary: Update a garage
       tags:
       - garage
-  /api/garage/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - garage
-  /api/garage_import:
+  /api/garage/import:
     post:
       consumes:
       - application/json
@@ -2035,7 +2829,7 @@ paths:
       summary: Create many garage
       tags:
       - garage
-  /api/garage_list:
+  /api/garage/list:
     get:
       consumes:
       - application/json
@@ -2057,6 +2851,34 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with owners data
+        in: query
+        name: with_owners
+        type: boolean
+      - description: with owners vehicles data
+        in: query
+        name: with_owners_vehicles
+        type: boolean
+      - description: with created_by data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2069,6 +2891,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List garage
+      tags:
+      - garage
+  /api/garage/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - garage
   /api/owner:
@@ -2116,9 +2957,21 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with vehicle data
+      - description: with vehicles data
         in: query
         name: with_vehicles
+        type: boolean
+      - description: with vehicles vehicle_tasks nested data
+        in: query
+        name: with_vehicles_vehicle_tasks
+        type: boolean
+      - description: with garage data
+        in: query
+        name: with_garage
+        type: boolean
+      - description: with garage history data
+        in: query
+        name: with_history_garage
         type: boolean
       produces:
       - application/json
@@ -2143,7 +2996,7 @@ paths:
       - application/json
       description: Edit owner
       parameters:
-      - description: OwnerModel ID
+      - description: Owner ID
         in: path
         name: id
         required: true
@@ -2172,26 +3025,7 @@ paths:
       summary: Update a owner
       tags:
       - owner
-  /api/owner/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - owner
-  /api/owner_import:
+  /api/owner/import:
     post:
       consumes:
       - application/json
@@ -2225,7 +3059,7 @@ paths:
       summary: Create many owner
       tags:
       - owner
-  /api/owner_list:
+  /api/owner/list:
     get:
       consumes:
       - application/json
@@ -2247,9 +3081,25 @@ paths:
         in: query
         name: descending
         type: boolean
-      - description: with vehicle data
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with vehicles data
         in: query
         name: with_vehicles
+        type: boolean
+      - description: with vehicles vehicle_tasks data
+        in: query
+        name: with_vehicles_vehicle_tasks
+        type: boolean
+      - description: with garage data
+        in: query
+        name: with_garage
+        type: boolean
+      - description: with garage history data
+        in: query
+        name: with_history_garage
         type: boolean
       produces:
       - application/json
@@ -2263,6 +3113,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List owner
+      tags:
+      - owner
+  /api/owner/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - owner
   /api/permission:
@@ -2310,6 +3179,14 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with employees data
+        in: query
+        name: with_employees
+        type: boolean
+      - description: with employees history data
+        in: query
+        name: with_history_employees
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2333,7 +3210,7 @@ paths:
       - application/json
       description: Edit permission
       parameters:
-      - description: PermissionModel ID
+      - description: Permission ID
         in: path
         name: id
         required: true
@@ -2362,26 +3239,7 @@ paths:
       summary: Update a permission
       tags:
       - permission
-  /api/permission/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - permission
-  /api/permission_import:
+  /api/permission/import:
     post:
       consumes:
       - application/json
@@ -2415,7 +3273,7 @@ paths:
       summary: Create many permission
       tags:
       - permission
-  /api/permission_list:
+  /api/permission/list:
     get:
       consumes:
       - application/json
@@ -2437,6 +3295,18 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with employees data
+        in: query
+        name: with_employees
+        type: boolean
+      - description: with employees history data
+        in: query
+        name: with_history_employees
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2449,6 +3319,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List permission
+      tags:
+      - permission
+  /api/permission/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - permission
   /api/spare_part:
@@ -2496,6 +3385,22 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with request data
+        in: query
+        name: with_request
+        type: boolean
+      - description: with request history data
+        in: query
+        name: with_history_request
+        type: boolean
+      - description: with supplier data
+        in: query
+        name: with_supplier
+        type: boolean
+      - description: with supplier history data
+        in: query
+        name: with_history_supplier
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2519,7 +3424,7 @@ paths:
       - application/json
       description: Edit spare_part
       parameters:
-      - description: SparePartModel ID
+      - description: SparePart ID
         in: path
         name: id
         required: true
@@ -2548,26 +3453,7 @@ paths:
       summary: Update a spare_part
       tags:
       - spare_part
-  /api/spare_part/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - spare_part
-  /api/spare_part_import:
+  /api/spare_part/import:
     post:
       consumes:
       - application/json
@@ -2601,7 +3487,7 @@ paths:
       summary: Create many spare_part
       tags:
       - spare_part
-  /api/spare_part_list:
+  /api/spare_part/list:
     get:
       consumes:
       - application/json
@@ -2623,6 +3509,26 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with request data
+        in: query
+        name: with_request
+        type: boolean
+      - description: with request history data
+        in: query
+        name: with_history_request
+        type: boolean
+      - description: with supplier data
+        in: query
+        name: with_supplier
+        type: boolean
+      - description: with supplier history data
+        in: query
+        name: with_history_supplier
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2637,6 +3543,239 @@ paths:
       summary: List spare_part
       tags:
       - spare_part
+  /api/spare_part/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
+      tags:
+      - spare_part
+  /api/spare_part_request:
+    post:
+      consumes:
+      - application/json
+      description: Register spare_part_request
+      parameters:
+      - description: Register spare_part_request
+        in: body
+        name: spare_part_request_model
+        required: true
+        schema:
+          $ref: '#/definitions/CreateSparePartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SparePartRequestResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Create a new spare_part_request
+      tags:
+      - spare_part_request
+  /api/spare_part_request/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get spare_part_request by ID
+      parameters:
+      - description: SparePartRequest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with spare_parts data
+        in: query
+        name: with_spare_parts
+        type: boolean
+      - description: with request_by data
+        in: query
+        name: with_request_by
+        type: boolean
+      - description: with request_by history data
+        in: query
+        name: with_history_request_by
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SparePartRequestResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Get spare_part_request by ID
+      tags:
+      - spare_part_request
+    patch:
+      consumes:
+      - application/json
+      description: Edit spare_part_request
+      parameters:
+      - description: SparePartRequest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Register spare_part_request
+        in: body
+        name: spare_part_request_model
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateSparePartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SparePartRequestResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Update a spare_part_request
+      tags:
+      - spare_part_request
+  /api/spare_part_request/import:
+    post:
+      consumes:
+      - application/json
+      description: Register spare_part_request (useful for importing data)
+      parameters:
+      - description: Register spare_part_request
+        in: body
+        name: spare_part_request_model
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/CreateSparePartRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/SparePartRequestResponse'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Create many spare_part_request
+      tags:
+      - spare_part_request
+  /api/spare_part_request/list:
+    get:
+      consumes:
+      - application/json
+      description: List spare_part_request
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: per_page
+        type: integer
+      - description: sort field
+        in: query
+        name: sort_by
+        type: string
+      - description: order
+        in: query
+        name: descending
+        type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with spare_parts data
+        in: query
+        name: with_spare_parts
+        type: boolean
+      - description: with request_by data
+        in: query
+        name: with_request_by
+        type: boolean
+      - description: with request_by history data
+        in: query
+        name: with_history_request_by
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ListSparePartRequest'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: List spare_part_request
+      tags:
+      - spare_part_request
+  /api/spare_part_request/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
+      tags:
+      - spare_part_request
   /api/supplier:
     post:
       consumes:
@@ -2682,6 +3821,10 @@ paths:
         in: query
         name: with_history
         type: boolean
+      - description: with spare_parts data
+        in: query
+        name: with_spare_parts
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2705,7 +3848,7 @@ paths:
       - application/json
       description: Edit supplier
       parameters:
-      - description: SupplierModel ID
+      - description: Supplier ID
         in: path
         name: id
         required: true
@@ -2734,26 +3877,7 @@ paths:
       summary: Update a supplier
       tags:
       - supplier
-  /api/supplier/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - supplier
-  /api/supplier_import:
+  /api/supplier/import:
     post:
       consumes:
       - application/json
@@ -2787,7 +3911,7 @@ paths:
       summary: Create many supplier
       tags:
       - supplier
-  /api/supplier_list:
+  /api/supplier/list:
     get:
       consumes:
       - application/json
@@ -2809,6 +3933,14 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with spare_parts data
+        in: query
+        name: with_spare_parts
+        type: boolean
       produces:
       - application/json
       responses:
@@ -2821,6 +3953,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List supplier
+      tags:
+      - supplier
+  /api/supplier/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - supplier
   /api/task:
@@ -2868,25 +4019,37 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with task data
+      - description: with sub_tasks data
         in: query
         name: with_sub_tasks
         type: boolean
-      - description: with Vehicle Task data
+      - description: with sub_tasks sub_tasks nested data
         in: query
-        name: with_vehicle_tasks
+        name: with_sub_tasks_sub_tasks
         type: boolean
-      - description: with EmployeeModel data
+      - description: with sub_tasks attached_to nested data
+        in: query
+        name: with_sub_tasks_attached_to
+        type: boolean
+      - description: with attached_to data
+        in: query
+        name: with_attached_to
+        type: boolean
+      - description: with created_by data
         in: query
         name: with_created_by
         type: boolean
-      - description: with EmployeeModel data
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with updated_by data
         in: query
         name: with_updated_by
         type: boolean
-      - description: with TaskModel data
+      - description: with updated_by history data
         in: query
-        name: with_parent_task
+        name: with_history_updated_by
         type: boolean
       produces:
       - application/json
@@ -2911,7 +4074,7 @@ paths:
       - application/json
       description: Edit task
       parameters:
-      - description: TaskModel ID
+      - description: Task ID
         in: path
         name: id
         required: true
@@ -2940,26 +4103,7 @@ paths:
       summary: Update a task
       tags:
       - task
-  /api/task/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - task
-  /api/task_import:
+  /api/task/import:
     post:
       consumes:
       - application/json
@@ -2993,7 +4137,7 @@ paths:
       summary: Create many task
       tags:
       - task
-  /api/task_list:
+  /api/task/list:
     get:
       consumes:
       - application/json
@@ -3015,13 +4159,41 @@ paths:
         in: query
         name: descending
         type: boolean
-      - description: with task data
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with sub_tasks data
         in: query
         name: with_sub_tasks
         type: boolean
-      - description: with Vehicle Task data
+      - description: with sub_tasks sub_tasks data
         in: query
-        name: with_vehicle_tasks
+        name: with_sub_tasks_sub_tasks
+        type: boolean
+      - description: with sub_tasks attached_to data
+        in: query
+        name: with_sub_tasks_attached_to
+        type: boolean
+      - description: with attached_to data
+        in: query
+        name: with_attached_to
+        type: boolean
+      - description: with created_by data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with updated_by data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with updated_by history data
+        in: query
+        name: with_history_updated_by
         type: boolean
       produces:
       - application/json
@@ -3035,6 +4207,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List task
+      tags:
+      - task
+  /api/task/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - task
   /api/vehicle:
@@ -3082,25 +4273,41 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with Vehicle Task data
+      - description: with vehicle_tasks data
         in: query
-        name: with_tasks
+        name: with_vehicle_tasks
         type: boolean
-      - description: with OwnerModel data
-        in: query
-        name: with_owner
-        type: boolean
-      - description: with EmployeeModel data
+      - description: with created_by data
         in: query
         name: with_created_by
         type: boolean
-      - description: with EmployeeModel data
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with updated_by data
         in: query
         name: with_updated_by
         type: boolean
-      - description: with EmployeeModel data
+      - description: with updated_by history data
+        in: query
+        name: with_history_updated_by
+        type: boolean
+      - description: with deleted_by data
         in: query
         name: with_deleted_by
+        type: boolean
+      - description: with deleted_by history data
+        in: query
+        name: with_history_deleted_by
+        type: boolean
+      - description: with owner data
+        in: query
+        name: with_owner
+        type: boolean
+      - description: with owner history data
+        in: query
+        name: with_history_owner
         type: boolean
       produces:
       - application/json
@@ -3125,7 +4332,7 @@ paths:
       - application/json
       description: Edit vehicle
       parameters:
-      - description: VehicleModel ID
+      - description: Vehicle ID
         in: path
         name: id
         required: true
@@ -3154,26 +4361,7 @@ paths:
       summary: Update a vehicle
       tags:
       - vehicle
-  /api/vehicle/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - vehicle
-  /api/vehicle_import:
+  /api/vehicle/import:
     post:
       consumes:
       - application/json
@@ -3207,7 +4395,7 @@ paths:
       summary: Create many vehicle
       tags:
       - vehicle
-  /api/vehicle_list:
+  /api/vehicle/list:
     get:
       consumes:
       - application/json
@@ -3229,9 +4417,45 @@ paths:
         in: query
         name: descending
         type: boolean
-      - description: with Vehicle Task data
+      - description: with history data
         in: query
-        name: with_tasks
+        name: with_history
+        type: boolean
+      - description: with vehicle_tasks data
+        in: query
+        name: with_vehicle_tasks
+        type: boolean
+      - description: with created_by data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with updated_by data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with updated_by history data
+        in: query
+        name: with_history_updated_by
+        type: boolean
+      - description: with deleted_by data
+        in: query
+        name: with_deleted_by
+        type: boolean
+      - description: with deleted_by history data
+        in: query
+        name: with_history_deleted_by
+        type: boolean
+      - description: with owner data
+        in: query
+        name: with_owner
+        type: boolean
+      - description: with owner history data
+        in: query
+        name: with_history_owner
         type: boolean
       produces:
       - application/json
@@ -3245,6 +4469,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List vehicle
+      tags:
+      - vehicle
+  /api/vehicle/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - vehicle
   /api/vehicle_task:
@@ -3292,17 +4535,37 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with VehicleModel data
-        in: query
-        name: with_vehicles
-        type: boolean
-      - description: with EmployeeModel data
+      - description: with created_by data
         in: query
         name: with_created_by
         type: boolean
-      - description: with TaskModel data
+      - description: with created_by history data
         in: query
-        name: with_tasks
+        name: with_history_created_by
+        type: boolean
+      - description: with assigned_to data
+        in: query
+        name: with_assigned_to
+        type: boolean
+      - description: with assigned_to history data
+        in: query
+        name: with_history_assigned_to
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_task
+        type: boolean
+      - description: with task history data
+        in: query
+        name: with_history_task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
         type: boolean
       produces:
       - application/json
@@ -3327,7 +4590,7 @@ paths:
       - application/json
       description: Edit vehicle_task
       parameters:
-      - description: VehicleTaskModel ID
+      - description: VehicleTask ID
         in: path
         name: id
         required: true
@@ -3356,26 +4619,7 @@ paths:
       summary: Update a vehicle_task
       tags:
       - vehicle_task
-  /api/vehicle_task/total:
-    get:
-      consumes:
-      - application/json
-      description: Total records
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/TotalCount'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/ResponseError'
-      summary: Total records
-      tags:
-      - vehicle_task
-  /api/vehicle_task_import:
+  /api/vehicle_task/import:
     post:
       consumes:
       - application/json
@@ -3409,7 +4653,7 @@ paths:
       summary: Create many vehicle_task
       tags:
       - vehicle_task
-  /api/vehicle_task_list:
+  /api/vehicle_task/list:
     get:
       consumes:
       - application/json
@@ -3431,6 +4675,42 @@ paths:
         in: query
         name: descending
         type: boolean
+      - description: with history data
+        in: query
+        name: with_history
+        type: boolean
+      - description: with created_by data
+        in: query
+        name: with_created_by
+        type: boolean
+      - description: with created_by history data
+        in: query
+        name: with_history_created_by
+        type: boolean
+      - description: with assigned_to data
+        in: query
+        name: with_assigned_to
+        type: boolean
+      - description: with assigned_to history data
+        in: query
+        name: with_history_assigned_to
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_task
+        type: boolean
+      - description: with task history data
+        in: query
+        name: with_history_task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
+        type: boolean
       produces:
       - application/json
       responses:
@@ -3443,6 +4723,25 @@ paths:
           schema:
             $ref: '#/definitions/ResponseError'
       summary: List vehicle_task
+      tags:
+      - vehicle_task
+  /api/vehicle_task/total:
+    get:
+      consumes:
+      - application/json
+      description: Total records
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TotalCount'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/ResponseError'
+      summary: Total records
       tags:
       - vehicle_task
   /api/vehicles_seed:
@@ -3465,6 +4764,19 @@ paths:
             additionalProperties: true
             type: object
       summary: Seed vehicles
+      tags:
+      - vehicle
+  /health:
+    get:
+      description: get the status of server.
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Show the status of server.
       tags:
       - root
 schemes:

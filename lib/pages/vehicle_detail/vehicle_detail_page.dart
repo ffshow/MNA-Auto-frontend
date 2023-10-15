@@ -127,10 +127,10 @@ class _VehicleDetailsWidget extends StatelessWidget {
                     addTask(context, response.id!);
                   },
                 ),
-                for (final VehicleTaskResponse e
-                    in response.tasks ?? <VehicleTaskResponse>[])
+                for (final VehicleTask e
+                    in response.vehicleTasks ?? <VehicleTask>[])
                   ListTile(
-                    title: Text(e.tasks?.label ?? ''),
+                    title: Text(e.task?.label ?? ''),
                     trailing: Text(e.createdAt.date),
                   ),
               ],
@@ -153,7 +153,7 @@ class _VehicleDetailsWidget extends StatelessWidget {
               loaded: (ListTask response) {
                 return TaskSelectionWidget(
                     tasks: response.data
-                            ?.where((TaskResponse e) => e.parentTaskId == null)
+                            ?.where((TaskResponse e) => e.parentTaskID == null)
                             .toList() ??
                         []);
               },
@@ -176,8 +176,8 @@ class _VehicleDetailsWidget extends StatelessWidget {
         vehicleTaskModel: data
             .map(
               (e) => CreateVehicleTask(
-                vehiclesId: vehicleID,
-                tasksId: e,
+                vehicleId: vehicleID,
+                taskId: e,
               ),
             )
             .toList());

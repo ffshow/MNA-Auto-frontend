@@ -86,7 +86,7 @@ class CreateTaskWidgt extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Cancle'),
+            child: const Text('Cancel'),
           ),
           OutlinedButton(
             onPressed: () {
@@ -94,9 +94,10 @@ class CreateTaskWidgt extends StatelessWidget {
               final Map<String, dynamic> value = formKey.currentState!.value;
               Navigator.pop(context);
               final Swagger swagger = RepositoryProvider.of<Swagger>(context);
-              final labels = value['sub_tasks'] as List<String>? ?? [];
-              final List<CreateTask> tasks =
-                  labels.map((e) => CreateTask(label: e)).toList();
+              final List<String> labels =
+                  value['sub_tasks'] as List<String>? ?? [];
+              final List<Task> tasks =
+                  labels.map((String e) => Task(label: e)).toList();
               swagger.apiTaskPost(
                 taskModel: CreateTask(
                   label: value['label'],

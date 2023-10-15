@@ -19,7 +19,7 @@ class GaragePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Garage page'),
-        actions: [
+        actions: <Widget>[
           IconButton(
             tooltip: 'Import data',
             onPressed: () {

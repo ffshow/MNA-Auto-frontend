@@ -75,7 +75,16 @@ class _GarageListWidgetState extends State<GarageListWidget> {
     final NotificationService notificationService =
         RepositoryProvider.of<NotificationService>(context);
 
-    source ??= GarageDataTableSource(swagger, notificationService);
+    source ??= GarageDataTableSource(
+      swagger,
+      notificationService,
+      (GarageResponse item) {
+        swagger.apiGarageIdPatch(
+          id: item.id,
+          garageModel: item.copyWith(label: "${item.label} updated"),
+        );
+      },
+    );
     super.didChangeDependencies();
   }
 
@@ -139,7 +148,8 @@ class _GarageListWidgetState extends State<GarageListWidget> {
 class GarageDataTableSource extends AsyncDataTableSource {
   final Swagger service;
   final NotificationService notificationService;
-  GarageDataTableSource(this.service, this.notificationService) {
+  void Function(GarageResponse item)? onEdit;
+  GarageDataTableSource(this.service, this.notificationService, this.onEdit) {
     sub = notificationService.onCreateGarage.listen((event) {
       refreshDatasource();
     });
@@ -167,16 +177,16 @@ class GarageDataTableSource extends AsyncDataTableSource {
             child: Text(item.updatedAt.date),
           ),
         ),
-        const DataCell(Row(
+        DataCell(Row(
           children: <Widget>[
-            IconButton(
+            const IconButton(
               // onPressed: () => service.delete(item),
               onPressed: null,
               icon: Icon(Icons.delete),
             ),
             IconButton(
-              onPressed: null,
-              icon: Icon(Icons.edit),
+              onPressed: onEdit == null ? null : () => onEdit?.call(item),
+              icon: const Icon(Icons.edit),
             ),
           ],
         )),

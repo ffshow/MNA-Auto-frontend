@@ -22,11 +22,25 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
         withOwner: true,
         withUpdatedBy: true,
       );
-      print(
-          'response.body?.tasks?.length ${response.body?.vehicleTasks?.length}');
       emit(VehicleDetailsState.loaded(response.body!));
     } catch (e) {
       emit(VehicleDetailsState.failed(e.toString()));
+    }
+  }
+
+  Future<void> patchTask(int id, VehicleTask task) async {
+    if (state is _Loaded) {
+      final VehicleResponse res = (state as _Loaded).response;
+      final List<VehicleTask> tasks = List.from(res.vehicleTasks ?? []);
+      final int index = tasks.indexWhere((e) => e.id == id);
+      if (index > -1) {
+        final response = await _swagger.apiVehicleTaskIdPatch(
+            id: id, vehicleTaskModel: task);
+        print(response);
+        tasks.removeAt(index);
+        tasks.insert(index, task);
+        emit(VehicleDetailsState.loaded(res.copyWith(vehicleTasks: tasks)));
+      }
     }
   }
 }

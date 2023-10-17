@@ -1,9 +1,11 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/cubits/task/task_cubit.dart';
 import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/extensions.dart';
+import 'package:mna/utils/style.dart';
 import 'package:mna/widget/widget.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
@@ -113,25 +115,57 @@ class _VehicleDetailsWidget extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 ListTile(
                   title: const Text("••• Tasks"),
                   trailing: IconButton(
                     tooltip: 'Add tasks',
                     onPressed: () {
-                      addTask(context, response.id!);
+                      addTask(
+                        context,
+                        response.id!,
+                        response.vehicleTasks,
+                      );
                     },
                     icon: const Icon(Icons.add_task),
                   ),
                   onTap: () {
-                    addTask(context, response.id!);
+                    addTask(
+                      context,
+                      response.id!,
+                      response.vehicleTasks,
+                    );
                   },
                 ),
+                if (response.vehicleTasks?.isNotEmpty ?? false)
+                  ListTile(
+                    title: const Text("Vehicle Tasks"),
+                    trailing: Text(response.statusText),
+                  ),
+                if (response.vehicleTasks?.isEmpty ?? false)
+                  const ListTile(
+                    title: Text("Vehicle doesn't attached to any tasks"),
+                  ),
                 for (final VehicleTask e
                     in response.vehicleTasks ?? <VehicleTask>[])
-                  ListTile(
-                    title: Text(e.task?.label ?? ''),
-                    trailing: Text(e.createdAt.date),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8,
+                    ),
+                    child: ExpansionTile(
+                      leading: Icon(
+                        Icons.circle,
+                        color: e.color,
+                      ),
+                      title: Text(e.task?.label ?? ''),
+                      subtitle: e.assignedTo != null
+                          ? Text(
+                              'Assigned to: ${e.assignedTo?.name}',
+                            )
+                          : const Text('• Not assigned to an employee'),
+                      children: <Widget>[VehicleTaskHandler(e: e)],
+                    ),
                   ),
               ],
             ),
@@ -141,7 +175,11 @@ class _VehicleDetailsWidget extends StatelessWidget {
     );
   }
 
-  Future<void> addTask(BuildContext context, int vehicleID) async {
+  Future<void> addTask(
+    BuildContext context,
+    int vehicleID,
+    List<VehicleTask>? vehicleTasks,
+  ) async {
     final Swagger swagger = RepositoryProvider.of<Swagger>(context);
 
     final Set<int>? data = await showModalBottomSheet<Set<int>?>(
@@ -152,11 +190,13 @@ class _VehicleDetailsWidget extends StatelessWidget {
             return state.when(
               loaded: (ListTask response) {
                 return TaskSelectionWidget(
-                    tasks: response.data
-                            ?.where((TaskResponse e) =>
-                                e.parentTaskId == null || e.parentTaskId == 0)
-                            .toList() ??
-                        []);
+                  tasks: response.data
+                          ?.where((TaskResponse e) =>
+                              e.parentTaskId == null || e.parentTaskId == 0)
+                          .toList() ??
+                      [],
+                  vehicleTasks: vehicleTasks,
+                );
               },
               initial: () {
                 return const LoadingWidget();
@@ -187,9 +227,83 @@ class _VehicleDetailsWidget extends StatelessWidget {
   }
 }
 
+class VehicleTaskHandler extends StatelessWidget {
+  const VehicleTaskHandler({
+    super.key,
+    required this.e,
+  });
+
+  final VehicleTask e;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        if (e.started && !e.finished && !(e.deleted ?? false))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: ElevatedButton(
+              child: const Text('Finish'),
+              onPressed: () {
+                _patch(context, e.id!, "finish");
+              },
+            ),
+          ),
+        if (!e.started && !(e.deleted ?? false))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: ElevatedButton(
+              child: const Text('Start'),
+              onPressed: () {
+                _patch(context, e.id!, "start");
+              },
+            ),
+          ),
+        if (!e.finished && !(e.deleted ?? false))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: ElevatedButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                _patch(context, e.id!, "cancel");
+              },
+            ),
+          ),
+      ],
+    );
+  }
+
+  void _patch(BuildContext context, int id, String status) {
+    late final VehicleTask d;
+    switch (status) {
+      case 'cancel':
+        d = e.copyWith(
+            deleted: true,
+            deletedAt: GormDeletedAt(
+              time: DateTime.now().toUtc().toIso8601String(),
+              valid: true,
+            ));
+        break;
+      case 'start':
+        d = e.copyWith(startedAt: DateTime.now().toUtc());
+        break;
+      case 'finish':
+        d = e.copyWith(finishedAt: DateTime.now().toUtc());
+        break;
+    }
+    context.read<VehicleDetailsCubit>().patchTask(id, d);
+  }
+}
+
 class TaskSelectionWidget extends StatefulWidget {
   final List<TaskResponse> tasks;
-  const TaskSelectionWidget({super.key, required this.tasks});
+  final List<VehicleTask>? vehicleTasks;
+  const TaskSelectionWidget({
+    super.key,
+    required this.tasks,
+    this.vehicleTasks,
+  });
 
   @override
   State<TaskSelectionWidget> createState() => _TaskSelectionWidgetState();
@@ -198,6 +312,15 @@ class TaskSelectionWidget extends StatefulWidget {
 class _TaskSelectionWidgetState extends State<TaskSelectionWidget> {
   Set<int> selectedTasks = {};
   Set<int> selectedSubTasks = {};
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.vehicleTasks != null && widget.vehicleTasks!.isNotEmpty) {
+      selectedTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
+      selectedSubTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

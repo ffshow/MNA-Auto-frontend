@@ -39,9 +39,10 @@ definitions:
         type: integer
       email:
         type: string
+      employee_id:
+        type: integer
+        x-nullable: false
       name:
-        type: string
-      updatedAt:
         type: string
     type: object
   AccountResponse:
@@ -106,9 +107,12 @@ definitions:
         type: integer
       cityModelID:
         type: integer
+      garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
       label:
-        type: string
-      updatedAt:
         type: string
     type: object
   CityResponse:
@@ -208,6 +212,11 @@ definitions:
           $ref: '#/definitions/SparePartRequest'
         type: array
         x-nullable: false
+      updated_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
       updated_tasks:
         items:
           $ref: '#/definitions/Task'
@@ -242,6 +251,13 @@ definitions:
         items:
           $ref: '#/definitions/Owner'
         type: array
+        x-nullable: false
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
         x-nullable: false
     type: object
   CreateOwner:
@@ -554,6 +570,11 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
       updated_tasks:
         items:
           $ref: '#/definitions/Task'
@@ -567,6 +588,10 @@ definitions:
     type: object
   EmployeeAudit:
     properties:
+      account:
+        allOf:
+        - $ref: '#/definitions/Account'
+        x-nullable: false
       action:
         description: INSERT, UPDATE, DELETE
         type: string
@@ -574,12 +599,65 @@ definitions:
         type: string
       actionID:
         type: integer
+      assigned_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      created_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      created_tasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      created_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      created_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+      deleted_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
       employeeModelID:
         type: integer
       name:
         type: string
-      updatedAt:
-        type: string
+      permission:
+        items:
+          $ref: '#/definitions/Permission'
+        type: array
+        x-nullable: false
+      requests:
+        items:
+          $ref: '#/definitions/SparePartRequest'
+        type: array
+        x-nullable: false
+      updated_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
+      updated_tasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      updated_vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
     type: object
   EmployeeResponse:
     properties:
@@ -644,6 +722,11 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_garages:
+        items:
+          $ref: '#/definitions/Garage'
+        type: array
+        x-nullable: false
       updated_tasks:
         items:
           $ref: '#/definitions/Task'
@@ -693,6 +776,13 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
   GarageAudit:
     properties:
@@ -703,12 +793,36 @@ definitions:
         type: string
       actionID:
         type: integer
+      city:
+        allOf:
+        - $ref: '#/definitions/City'
+        x-nullable: false
+      city_id:
+        type: integer
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
       garageModelID:
         type: integer
       label:
         type: string
-      updatedAt:
-        type: string
+      owners:
+        items:
+          $ref: '#/definitions/Owner'
+        type: array
+        x-nullable: false
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
   GarageResponse:
     properties:
@@ -748,6 +862,13 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
   ListAccount:
     properties:
@@ -914,6 +1035,13 @@ definitions:
         type: string
       email:
         type: string
+      garage:
+        allOf:
+        - $ref: '#/definitions/Garage'
+        x-nullable: false
+      garage_id:
+        type: integer
+        x-nullable: false
       ownerModelID:
         type: integer
       phone:
@@ -922,8 +1050,11 @@ definitions:
         type: string
       postalCode:
         type: string
-      updatedAt:
-        type: string
+      vehicles:
+        items:
+          $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
     type: object
   OwnerResponse:
     properties:
@@ -1010,12 +1141,17 @@ definitions:
         type: integer
       available:
         type: boolean
+      employees:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      employees_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
       permissionModelID:
         type: integer
-      updatedAt:
-        type: string
     type: object
   PermissionResponse:
     properties:
@@ -1104,10 +1240,22 @@ definitions:
         type: string
       reference:
         type: string
+      request:
+        allOf:
+        - $ref: '#/definitions/SparePartRequest'
+        x-nullable: false
+      request_id:
+        type: integer
+        x-nullable: false
       sparePartModelID:
         type: integer
-      updatedAt:
-        type: string
+      supplier:
+        allOf:
+        - $ref: '#/definitions/Supplier'
+        x-nullable: false
+      supplier_id:
+        type: integer
+        x-nullable: false
     type: object
   SparePartRequest:
     properties:
@@ -1147,10 +1295,20 @@ definitions:
         type: string
       actionID:
         type: integer
+      request_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      request_by_id:
+        type: integer
+        x-nullable: false
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
       sparePartRequestModelID:
         type: integer
-      updatedAt:
-        type: string
     type: object
   SparePartRequestResponse:
     properties:
@@ -1254,10 +1412,13 @@ definitions:
         type: integer
       name:
         type: string
+      spare_parts:
+        items:
+          $ref: '#/definitions/SparePart'
+        type: array
+        x-nullable: false
       supplierModelID:
         type: integer
-      updatedAt:
-        type: string
     type: object
   SupplierResponse:
     properties:
@@ -1338,12 +1499,35 @@ definitions:
         type: string
       actionID:
         type: integer
+      attached_to:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
       label:
         type: string
+      parentTaskID:
+        type: integer
+      subTasks:
+        items:
+          $ref: '#/definitions/Task'
+        type: array
       taskModelID:
         type: integer
-      updatedAt:
-        type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
     type: object
   TaskResponse:
     properties:
@@ -1638,6 +1822,20 @@ definitions:
         type: string
       commercialName:
         type: string
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
       deliveryDate:
         type: string
       expertise:
@@ -1648,6 +1846,13 @@ definitions:
         type: integer
       note:
         type: string
+      owner:
+        allOf:
+        - $ref: '#/definitions/Owner'
+        x-nullable: false
+      owner_id:
+        type: integer
+        x-nullable: false
       procedureVe:
         type: boolean
       registration:
@@ -1656,8 +1861,18 @@ definitions:
         type: string
       soldAt:
         type: string
-      updatedAt:
-        type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
+      vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       vehicleModelID:
         type: integer
     type: object
@@ -1819,6 +2034,20 @@ definitions:
         type: string
       actionID:
         type: integer
+      assigned_to:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      assigned_to_id:
+        type: integer
+        x-nullable: false
+      created_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      created_by_id:
+        type: integer
+        x-nullable: false
       deleted:
         type: boolean
       finishedAt:
@@ -1827,8 +2056,20 @@ definitions:
         type: string
       startedAt:
         type: string
-      updatedAt:
-        type: string
+      task:
+        allOf:
+        - $ref: '#/definitions/Task'
+        x-nullable: false
+      task_id:
+        type: integer
+        x-nullable: false
+      vehicle:
+        allOf:
+        - $ref: '#/definitions/Vehicle'
+        x-nullable: false
+      vehicle_id:
+        type: integer
+        x-nullable: false
       vehicleTaskModelID:
         type: integer
     type: object
@@ -2402,6 +2643,14 @@ paths:
         in: query
         name: with_created_garages_owners
         type: boolean
+      - description: with updated_garages data
+        in: query
+        name: with_updated_garages
+        type: boolean
+      - description: with updated_garages owners nested data
+        in: query
+        name: with_updated_garages_owners
+        type: boolean
       - description: with created_tasks data
         in: query
         name: with_created_tasks
@@ -2594,6 +2843,14 @@ paths:
         in: query
         name: with_created_garages_owners
         type: boolean
+      - description: with updated_garages data
+        in: query
+        name: with_updated_garages
+        type: boolean
+      - description: with updated_garages owners data
+        in: query
+        name: with_updated_garages_owners
+        type: boolean
       - description: with created_tasks data
         in: query
         name: with_created_tasks
@@ -2728,6 +2985,14 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -2736,13 +3001,13 @@ paths:
         in: query
         name: with_history_created_by
         type: boolean
-      - description: with city data
+      - description: with updated_by data
         in: query
-        name: with_city
+        name: with_updated_by
         type: boolean
-      - description: with city history data
+      - description: with updated_by history data
         in: query
-        name: with_history_city
+        name: with_history_updated_by
         type: boolean
       produces:
       - application/json
@@ -2864,6 +3129,14 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -2872,13 +3145,13 @@ paths:
         in: query
         name: with_history_created_by
         type: boolean
-      - description: with city data
+      - description: with updated_by data
         in: query
-        name: with_city
+        name: with_updated_by
         type: boolean
-      - description: with city history data
+      - description: with updated_by history data
         in: query
-        name: with_history_city
+        name: with_history_updated_by
         type: boolean
       produces:
       - application/json

@@ -135,8 +135,8 @@ class AccountAudit {
     this.actionAt,
     this.actionID,
     this.email,
+    this.employeeId,
     this.name,
-    this.updatedAt,
   });
 
   factory AccountAudit.fromJson(Map<String, dynamic> json) =>
@@ -155,10 +155,10 @@ class AccountAudit {
   final int? actionID;
   @JsonKey(name: 'email')
   final String? email;
+  @JsonKey(name: 'employee_id')
+  final int? employeeId;
   @JsonKey(name: 'name')
   final String? name;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
   static const fromJsonFactory = _$AccountAuditFromJson;
 
   @override
@@ -178,11 +178,11 @@ class AccountAudit {
                     .equals(other.actionID, actionID)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.employeeId, employeeId) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.employeeId, employeeId)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
   }
 
   @override
@@ -195,8 +195,8 @@ class AccountAudit {
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(employeeId) ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
 
@@ -207,16 +207,16 @@ extension $AccountAuditExtension on AccountAudit {
       String? actionAt,
       int? actionID,
       String? email,
-      String? name,
-      String? updatedAt}) {
+      int? employeeId,
+      String? name}) {
     return AccountAudit(
         accountModelID: accountModelID ?? this.accountModelID,
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         email: email ?? this.email,
-        name: name ?? this.name,
-        updatedAt: updatedAt ?? this.updatedAt);
+        employeeId: employeeId ?? this.employeeId,
+        name: name ?? this.name);
   }
 
   AccountAudit copyWithWrapped(
@@ -225,8 +225,8 @@ extension $AccountAuditExtension on AccountAudit {
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
       Wrapped<String?>? email,
-      Wrapped<String?>? name,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<int?>? employeeId,
+      Wrapped<String?>? name}) {
     return AccountAudit(
         accountModelID: (accountModelID != null
             ? accountModelID.value
@@ -235,8 +235,8 @@ extension $AccountAuditExtension on AccountAudit {
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         email: (email != null ? email.value : this.email),
-        name: (name != null ? name.value : this.name),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        employeeId: (employeeId != null ? employeeId.value : this.employeeId),
+        name: (name != null ? name.value : this.name));
   }
 }
 
@@ -479,8 +479,8 @@ class CityAudit {
     this.actionAt,
     this.actionID,
     this.cityModelID,
+    this.garages,
     this.label,
-    this.updatedAt,
   });
 
   factory CityAudit.fromJson(Map<String, dynamic> json) =>
@@ -497,10 +497,10 @@ class CityAudit {
   final int? actionID;
   @JsonKey(name: 'cityModelID')
   final int? cityModelID;
+  @JsonKey(name: 'garages', defaultValue: <Garage>[])
+  final List<Garage>? garages;
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
   static const fromJsonFactory = _$CityAuditFromJson;
 
   @override
@@ -518,11 +518,11 @@ class CityAudit {
             (identical(other.cityModelID, cityModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.cityModelID, cityModelID)) &&
-            (identical(other.label, label) ||
-                const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.garages, garages) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.garages, garages)) &&
+            (identical(other.label, label) ||
+                const DeepCollectionEquality().equals(other.label, label)));
   }
 
   @override
@@ -534,8 +534,8 @@ class CityAudit {
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(cityModelID) ^
+      const DeepCollectionEquality().hash(garages) ^
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
 
@@ -545,15 +545,15 @@ extension $CityAuditExtension on CityAudit {
       String? actionAt,
       int? actionID,
       int? cityModelID,
-      String? label,
-      String? updatedAt}) {
+      List<Garage>? garages,
+      String? label}) {
     return CityAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         cityModelID: cityModelID ?? this.cityModelID,
-        label: label ?? this.label,
-        updatedAt: updatedAt ?? this.updatedAt);
+        garages: garages ?? this.garages,
+        label: label ?? this.label);
   }
 
   CityAudit copyWithWrapped(
@@ -561,16 +561,16 @@ extension $CityAuditExtension on CityAudit {
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
       Wrapped<int?>? cityModelID,
-      Wrapped<String?>? label,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<List<Garage>?>? garages,
+      Wrapped<String?>? label}) {
     return CityAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         cityModelID:
             (cityModelID != null ? cityModelID.value : this.cityModelID),
-        label: (label != null ? label.value : this.label),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        garages: (garages != null ? garages.value : this.garages),
+        label: (label != null ? label.value : this.label));
   }
 }
 
@@ -818,6 +818,7 @@ class CreateEmployee {
     this.name,
     this.permission,
     this.requests,
+    this.updatedGarages,
     this.updatedTasks,
     this.updatedVehicles,
   });
@@ -848,6 +849,8 @@ class CreateEmployee {
   final List<Permission>? permission;
   @JsonKey(name: 'requests', defaultValue: <SparePartRequest>[])
   final List<SparePartRequest>? requests;
+  @JsonKey(name: 'updated_garages', defaultValue: <Garage>[])
+  final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
@@ -887,6 +890,9 @@ class CreateEmployee {
             (identical(other.requests, requests) ||
                 const DeepCollectionEquality()
                     .equals(other.requests, requests)) &&
+            (identical(other.updatedGarages, updatedGarages) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedGarages, updatedGarages)) &&
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
@@ -910,6 +916,7 @@ class CreateEmployee {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(permission) ^
       const DeepCollectionEquality().hash(requests) ^
+      const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
@@ -927,6 +934,7 @@ extension $CreateEmployeeExtension on CreateEmployee {
       String? name,
       List<Permission>? permission,
       List<SparePartRequest>? requests,
+      List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
       List<Vehicle>? updatedVehicles}) {
     return CreateEmployee(
@@ -940,6 +948,7 @@ extension $CreateEmployeeExtension on CreateEmployee {
         name: name ?? this.name,
         permission: permission ?? this.permission,
         requests: requests ?? this.requests,
+        updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
@@ -955,6 +964,7 @@ extension $CreateEmployeeExtension on CreateEmployee {
       Wrapped<String?>? name,
       Wrapped<List<Permission>?>? permission,
       Wrapped<List<SparePartRequest>?>? requests,
+      Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return CreateEmployee(
@@ -978,6 +988,9 @@ extension $CreateEmployeeExtension on CreateEmployee {
         name: (name != null ? name.value : this.name),
         permission: (permission != null ? permission.value : this.permission),
         requests: (requests != null ? requests.value : this.requests),
+        updatedGarages: (updatedGarages != null
+            ? updatedGarages.value
+            : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
         updatedVehicles: (updatedVehicles != null
@@ -995,6 +1008,8 @@ class CreateGarage {
     this.createdById,
     this.label,
     this.owners,
+    this.updatedBy,
+    this.updatedById,
   });
 
   factory CreateGarage.fromJson(Map<String, dynamic> json) =>
@@ -1015,6 +1030,10 @@ class CreateGarage {
   final String? label;
   @JsonKey(name: 'owners', defaultValue: <Owner>[])
   final List<Owner>? owners;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   static const fromJsonFactory = _$CreateGarageFromJson;
 
   @override
@@ -1034,7 +1053,13 @@ class CreateGarage {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.owners, owners) ||
-                const DeepCollectionEquality().equals(other.owners, owners)));
+                const DeepCollectionEquality().equals(other.owners, owners)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)));
   }
 
   @override
@@ -1048,6 +1073,8 @@ class CreateGarage {
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(owners) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       runtimeType.hashCode;
 }
 
@@ -1058,14 +1085,18 @@ extension $CreateGarageExtension on CreateGarage {
       Employee? createdBy,
       int? createdById,
       String? label,
-      List<Owner>? owners}) {
+      List<Owner>? owners,
+      Employee? updatedBy,
+      int? updatedById}) {
     return CreateGarage(
         city: city ?? this.city,
         cityId: cityId ?? this.cityId,
         createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
         label: label ?? this.label,
-        owners: owners ?? this.owners);
+        owners: owners ?? this.owners,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById);
   }
 
   CreateGarage copyWithWrapped(
@@ -1074,7 +1105,9 @@ extension $CreateGarageExtension on CreateGarage {
       Wrapped<Employee?>? createdBy,
       Wrapped<int?>? createdById,
       Wrapped<String?>? label,
-      Wrapped<List<Owner>?>? owners}) {
+      Wrapped<List<Owner>?>? owners,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById}) {
     return CreateGarage(
         city: (city != null ? city.value : this.city),
         cityId: (cityId != null ? cityId.value : this.cityId),
@@ -1082,7 +1115,10 @@ extension $CreateGarageExtension on CreateGarage {
         createdById:
             (createdById != null ? createdById.value : this.createdById),
         label: (label != null ? label.value : this.label),
-        owners: (owners != null ? owners.value : this.owners));
+        owners: (owners != null ? owners.value : this.owners),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById));
   }
 }
 
@@ -2102,6 +2138,7 @@ class Employee {
     this.permission,
     this.requests,
     this.updatedAt,
+    this.updatedGarages,
     this.updatedTasks,
     this.updatedVehicles,
   });
@@ -2142,6 +2179,8 @@ class Employee {
   final List<SparePartRequest>? requests;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_garages', defaultValue: <Garage>[])
+  final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
@@ -2194,6 +2233,9 @@ class Employee {
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedGarages, updatedGarages) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedGarages, updatedGarages)) &&
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
@@ -2222,6 +2264,7 @@ class Employee {
       const DeepCollectionEquality().hash(permission) ^
       const DeepCollectionEquality().hash(requests) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
@@ -2244,6 +2287,7 @@ extension $EmployeeExtension on Employee {
       List<Permission>? permission,
       List<SparePartRequest>? requests,
       DateTime? updatedAt,
+      List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
       List<Vehicle>? updatedVehicles}) {
     return Employee(
@@ -2262,6 +2306,7 @@ extension $EmployeeExtension on Employee {
         permission: permission ?? this.permission,
         requests: requests ?? this.requests,
         updatedAt: updatedAt ?? this.updatedAt,
+        updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
@@ -2282,6 +2327,7 @@ extension $EmployeeExtension on Employee {
       Wrapped<List<Permission>?>? permission,
       Wrapped<List<SparePartRequest>?>? requests,
       Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return Employee(
@@ -2310,6 +2356,9 @@ extension $EmployeeExtension on Employee {
         permission: (permission != null ? permission.value : this.permission),
         requests: (requests != null ? requests.value : this.requests),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedGarages: (updatedGarages != null
+            ? updatedGarages.value
+            : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
         updatedVehicles: (updatedVehicles != null
@@ -2321,12 +2370,23 @@ extension $EmployeeExtension on Employee {
 @JsonSerializable(explicitToJson: true)
 class EmployeeAudit {
   const EmployeeAudit({
+    this.account,
     this.action,
     this.actionAt,
     this.actionID,
+    this.assignedTasks,
+    this.createdGarages,
+    this.createdTasks,
+    this.createdVehicleTasks,
+    this.createdVehicles,
+    this.deletedVehicles,
     this.employeeModelID,
     this.name,
-    this.updatedAt,
+    this.permission,
+    this.requests,
+    this.updatedGarages,
+    this.updatedTasks,
+    this.updatedVehicles,
   });
 
   factory EmployeeAudit.fromJson(Map<String, dynamic> json) =>
@@ -2335,24 +2395,49 @@ class EmployeeAudit {
   static const toJsonFactory = _$EmployeeAuditToJson;
   Map<String, dynamic> toJson() => _$EmployeeAuditToJson(this);
 
+  @JsonKey(name: 'account')
+  final Account? account;
   @JsonKey(name: 'action')
   final String? action;
   @JsonKey(name: 'actionAt')
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
+  @JsonKey(name: 'assigned_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? assignedTasks;
+  @JsonKey(name: 'created_garages', defaultValue: <Garage>[])
+  final List<Garage>? createdGarages;
+  @JsonKey(name: 'created_tasks', defaultValue: <Task>[])
+  final List<Task>? createdTasks;
+  @JsonKey(name: 'created_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? createdVehicleTasks;
+  @JsonKey(name: 'created_vehicles', defaultValue: <Vehicle>[])
+  final List<Vehicle>? createdVehicles;
+  @JsonKey(name: 'deleted_vehicles', defaultValue: <Vehicle>[])
+  final List<Vehicle>? deletedVehicles;
   @JsonKey(name: 'employeeModelID')
   final int? employeeModelID;
   @JsonKey(name: 'name')
   final String? name;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'permission', defaultValue: <Permission>[])
+  final List<Permission>? permission;
+  @JsonKey(name: 'requests', defaultValue: <SparePartRequest>[])
+  final List<SparePartRequest>? requests;
+  @JsonKey(name: 'updated_garages', defaultValue: <Garage>[])
+  final List<Garage>? updatedGarages;
+  @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
+  final List<Task>? updatedTasks;
+  @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
+  final List<Vehicle>? updatedVehicles;
   static const fromJsonFactory = _$EmployeeAuditFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is EmployeeAudit &&
+            (identical(other.account, account) ||
+                const DeepCollectionEquality()
+                    .equals(other.account, account)) &&
             (identical(other.action, action) ||
                 const DeepCollectionEquality().equals(other.action, action)) &&
             (identical(other.actionAt, actionAt) ||
@@ -2361,14 +2446,44 @@ class EmployeeAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
+            (identical(other.assignedTasks, assignedTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.assignedTasks, assignedTasks)) &&
+            (identical(other.createdGarages, createdGarages) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdGarages, createdGarages)) &&
+            (identical(other.createdTasks, createdTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdTasks, createdTasks)) &&
+            (identical(other.createdVehicleTasks, createdVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdVehicleTasks, createdVehicleTasks)) &&
+            (identical(other.createdVehicles, createdVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedVehicles, deletedVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicles, deletedVehicles)) &&
             (identical(other.employeeModelID, employeeModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.employeeModelID, employeeModelID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.permission, permission) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.permission, permission)) &&
+            (identical(other.requests, requests) ||
+                const DeepCollectionEquality()
+                    .equals(other.requests, requests)) &&
+            (identical(other.updatedGarages, updatedGarages) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedGarages, updatedGarages)) &&
+            (identical(other.updatedTasks, updatedTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedTasks, updatedTasks)) &&
+            (identical(other.updatedVehicles, updatedVehicles) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedVehicles, updatedVehicles)));
   }
 
   @override
@@ -2376,48 +2491,118 @@ class EmployeeAudit {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(account) ^
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
+      const DeepCollectionEquality().hash(assignedTasks) ^
+      const DeepCollectionEquality().hash(createdGarages) ^
+      const DeepCollectionEquality().hash(createdTasks) ^
+      const DeepCollectionEquality().hash(createdVehicleTasks) ^
+      const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(employeeModelID) ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(permission) ^
+      const DeepCollectionEquality().hash(requests) ^
+      const DeepCollectionEquality().hash(updatedGarages) ^
+      const DeepCollectionEquality().hash(updatedTasks) ^
+      const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
 }
 
 extension $EmployeeAuditExtension on EmployeeAudit {
   EmployeeAudit copyWith(
-      {String? action,
+      {Account? account,
+      String? action,
       String? actionAt,
       int? actionID,
+      List<VehicleTask>? assignedTasks,
+      List<Garage>? createdGarages,
+      List<Task>? createdTasks,
+      List<VehicleTask>? createdVehicleTasks,
+      List<Vehicle>? createdVehicles,
+      List<Vehicle>? deletedVehicles,
       int? employeeModelID,
       String? name,
-      String? updatedAt}) {
+      List<Permission>? permission,
+      List<SparePartRequest>? requests,
+      List<Garage>? updatedGarages,
+      List<Task>? updatedTasks,
+      List<Vehicle>? updatedVehicles}) {
     return EmployeeAudit(
+        account: account ?? this.account,
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
+        assignedTasks: assignedTasks ?? this.assignedTasks,
+        createdGarages: createdGarages ?? this.createdGarages,
+        createdTasks: createdTasks ?? this.createdTasks,
+        createdVehicleTasks: createdVehicleTasks ?? this.createdVehicleTasks,
+        createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         employeeModelID: employeeModelID ?? this.employeeModelID,
         name: name ?? this.name,
-        updatedAt: updatedAt ?? this.updatedAt);
+        permission: permission ?? this.permission,
+        requests: requests ?? this.requests,
+        updatedGarages: updatedGarages ?? this.updatedGarages,
+        updatedTasks: updatedTasks ?? this.updatedTasks,
+        updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
 
   EmployeeAudit copyWithWrapped(
-      {Wrapped<String?>? action,
+      {Wrapped<Account?>? account,
+      Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
+      Wrapped<List<VehicleTask>?>? assignedTasks,
+      Wrapped<List<Garage>?>? createdGarages,
+      Wrapped<List<Task>?>? createdTasks,
+      Wrapped<List<VehicleTask>?>? createdVehicleTasks,
+      Wrapped<List<Vehicle>?>? createdVehicles,
+      Wrapped<List<Vehicle>?>? deletedVehicles,
       Wrapped<int?>? employeeModelID,
       Wrapped<String?>? name,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<List<Permission>?>? permission,
+      Wrapped<List<SparePartRequest>?>? requests,
+      Wrapped<List<Garage>?>? updatedGarages,
+      Wrapped<List<Task>?>? updatedTasks,
+      Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return EmployeeAudit(
+        account: (account != null ? account.value : this.account),
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
+        assignedTasks:
+            (assignedTasks != null ? assignedTasks.value : this.assignedTasks),
+        createdGarages: (createdGarages != null
+            ? createdGarages.value
+            : this.createdGarages),
+        createdTasks:
+            (createdTasks != null ? createdTasks.value : this.createdTasks),
+        createdVehicleTasks: (createdVehicleTasks != null
+            ? createdVehicleTasks.value
+            : this.createdVehicleTasks),
+        createdVehicles: (createdVehicles != null
+            ? createdVehicles.value
+            : this.createdVehicles),
+        deletedVehicles: (deletedVehicles != null
+            ? deletedVehicles.value
+            : this.deletedVehicles),
         employeeModelID: (employeeModelID != null
             ? employeeModelID.value
             : this.employeeModelID),
         name: (name != null ? name.value : this.name),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        permission: (permission != null ? permission.value : this.permission),
+        requests: (requests != null ? requests.value : this.requests),
+        updatedGarages: (updatedGarages != null
+            ? updatedGarages.value
+            : this.updatedGarages),
+        updatedTasks:
+            (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
+        updatedVehicles: (updatedVehicles != null
+            ? updatedVehicles.value
+            : this.updatedVehicles));
   }
 }
 
@@ -2439,6 +2624,7 @@ class EmployeeResponse {
     this.permission,
     this.requests,
     this.updatedAt,
+    this.updatedGarages,
     this.updatedTasks,
     this.updatedVehicles,
   });
@@ -2479,6 +2665,8 @@ class EmployeeResponse {
   final List<SparePartRequest>? requests;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_garages', defaultValue: <Garage>[])
+  final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
@@ -2532,6 +2720,9 @@ class EmployeeResponse {
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedGarages, updatedGarages) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedGarages, updatedGarages)) &&
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
@@ -2560,6 +2751,7 @@ class EmployeeResponse {
       const DeepCollectionEquality().hash(permission) ^
       const DeepCollectionEquality().hash(requests) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
@@ -2582,6 +2774,7 @@ extension $EmployeeResponseExtension on EmployeeResponse {
       List<Permission>? permission,
       List<SparePartRequest>? requests,
       DateTime? updatedAt,
+      List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
       List<Vehicle>? updatedVehicles}) {
     return EmployeeResponse(
@@ -2600,6 +2793,7 @@ extension $EmployeeResponseExtension on EmployeeResponse {
         permission: permission ?? this.permission,
         requests: requests ?? this.requests,
         updatedAt: updatedAt ?? this.updatedAt,
+        updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
@@ -2620,6 +2814,7 @@ extension $EmployeeResponseExtension on EmployeeResponse {
       Wrapped<List<Permission>?>? permission,
       Wrapped<List<SparePartRequest>?>? requests,
       Wrapped<DateTime?>? updatedAt,
+      Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return EmployeeResponse(
@@ -2648,6 +2843,9 @@ extension $EmployeeResponseExtension on EmployeeResponse {
         permission: (permission != null ? permission.value : this.permission),
         requests: (requests != null ? requests.value : this.requests),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedGarages: (updatedGarages != null
+            ? updatedGarages.value
+            : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
         updatedVehicles: (updatedVehicles != null
@@ -2670,6 +2868,8 @@ class Garage {
     this.label,
     this.owners,
     this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
   });
 
   factory Garage.fromJson(Map<String, dynamic> json) => _$GarageFromJson(json);
@@ -2699,6 +2899,10 @@ class Garage {
   final List<Owner>? owners;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   static const fromJsonFactory = _$GarageFromJson;
 
   @override
@@ -2731,7 +2935,13 @@ class Garage {
                 const DeepCollectionEquality().equals(other.owners, owners)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)));
   }
 
   @override
@@ -2750,6 +2960,8 @@ class Garage {
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(owners) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       runtimeType.hashCode;
 }
 
@@ -2765,7 +2977,9 @@ extension $GarageExtension on Garage {
       int? id,
       String? label,
       List<Owner>? owners,
-      DateTime? updatedAt}) {
+      DateTime? updatedAt,
+      Employee? updatedBy,
+      int? updatedById}) {
     return Garage(
         audit: audit ?? this.audit,
         city: city ?? this.city,
@@ -2777,7 +2991,9 @@ extension $GarageExtension on Garage {
         id: id ?? this.id,
         label: label ?? this.label,
         owners: owners ?? this.owners,
-        updatedAt: updatedAt ?? this.updatedAt);
+        updatedAt: updatedAt ?? this.updatedAt,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById);
   }
 
   Garage copyWithWrapped(
@@ -2791,7 +3007,9 @@ extension $GarageExtension on Garage {
       Wrapped<int?>? id,
       Wrapped<String?>? label,
       Wrapped<List<Owner>?>? owners,
-      Wrapped<DateTime?>? updatedAt}) {
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById}) {
     return Garage(
         audit: (audit != null ? audit.value : this.audit),
         city: (city != null ? city.value : this.city),
@@ -2804,7 +3022,10 @@ extension $GarageExtension on Garage {
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
         owners: (owners != null ? owners.value : this.owners),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById));
   }
 }
 
@@ -2814,9 +3035,15 @@ class GarageAudit {
     this.action,
     this.actionAt,
     this.actionID,
+    this.city,
+    this.cityId,
+    this.createdBy,
+    this.createdById,
     this.garageModelID,
     this.label,
-    this.updatedAt,
+    this.owners,
+    this.updatedBy,
+    this.updatedById,
   });
 
   factory GarageAudit.fromJson(Map<String, dynamic> json) =>
@@ -2831,12 +3058,24 @@ class GarageAudit {
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
+  @JsonKey(name: 'city')
+  final City? city;
+  @JsonKey(name: 'city_id')
+  final int? cityId;
+  @JsonKey(name: 'created_by')
+  final Employee? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
   @JsonKey(name: 'garageModelID')
   final int? garageModelID;
   @JsonKey(name: 'label')
   final String? label;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'owners', defaultValue: <Owner>[])
+  final List<Owner>? owners;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   static const fromJsonFactory = _$GarageAuditFromJson;
 
   @override
@@ -2851,14 +3090,29 @@ class GarageAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
+            (identical(other.city, city) ||
+                const DeepCollectionEquality().equals(other.city, city)) &&
+            (identical(other.cityId, cityId) ||
+                const DeepCollectionEquality().equals(other.cityId, cityId)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.garageModelID, garageModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.garageModelID, garageModelID)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.owners, owners) ||
+                const DeepCollectionEquality().equals(other.owners, owners)) &&
+            (identical(other.updatedBy, updatedBy) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)));
   }
 
   @override
@@ -2869,9 +3123,15 @@ class GarageAudit {
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
+      const DeepCollectionEquality().hash(city) ^
+      const DeepCollectionEquality().hash(cityId) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(garageModelID) ^
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(owners) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       runtimeType.hashCode;
 }
 
@@ -2880,33 +3140,59 @@ extension $GarageAuditExtension on GarageAudit {
       {String? action,
       String? actionAt,
       int? actionID,
+      City? city,
+      int? cityId,
+      Employee? createdBy,
+      int? createdById,
       int? garageModelID,
       String? label,
-      String? updatedAt}) {
+      List<Owner>? owners,
+      Employee? updatedBy,
+      int? updatedById}) {
     return GarageAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
+        city: city ?? this.city,
+        cityId: cityId ?? this.cityId,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
         garageModelID: garageModelID ?? this.garageModelID,
         label: label ?? this.label,
-        updatedAt: updatedAt ?? this.updatedAt);
+        owners: owners ?? this.owners,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById);
   }
 
   GarageAudit copyWithWrapped(
       {Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
+      Wrapped<City?>? city,
+      Wrapped<int?>? cityId,
+      Wrapped<Employee?>? createdBy,
+      Wrapped<int?>? createdById,
       Wrapped<int?>? garageModelID,
       Wrapped<String?>? label,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<List<Owner>?>? owners,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById}) {
     return GarageAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
+        city: (city != null ? city.value : this.city),
+        cityId: (cityId != null ? cityId.value : this.cityId),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         garageModelID:
             (garageModelID != null ? garageModelID.value : this.garageModelID),
         label: (label != null ? label.value : this.label),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        owners: (owners != null ? owners.value : this.owners),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById));
   }
 }
 
@@ -2924,6 +3210,8 @@ class GarageResponse {
     this.label,
     this.owners,
     this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
   });
 
   factory GarageResponse.fromJson(Map<String, dynamic> json) =>
@@ -2954,6 +3242,10 @@ class GarageResponse {
   final List<Owner>? owners;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   static const fromJsonFactory = _$GarageResponseFromJson;
 
   @override
@@ -2987,7 +3279,13 @@ class GarageResponse {
                 const DeepCollectionEquality().equals(other.owners, owners)) &&
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)));
   }
 
   @override
@@ -3006,6 +3304,8 @@ class GarageResponse {
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(owners) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       runtimeType.hashCode;
 }
 
@@ -3021,7 +3321,9 @@ extension $GarageResponseExtension on GarageResponse {
       int? id,
       String? label,
       List<Owner>? owners,
-      DateTime? updatedAt}) {
+      DateTime? updatedAt,
+      Employee? updatedBy,
+      int? updatedById}) {
     return GarageResponse(
         city: city ?? this.city,
         cityId: cityId ?? this.cityId,
@@ -3033,7 +3335,9 @@ extension $GarageResponseExtension on GarageResponse {
         id: id ?? this.id,
         label: label ?? this.label,
         owners: owners ?? this.owners,
-        updatedAt: updatedAt ?? this.updatedAt);
+        updatedAt: updatedAt ?? this.updatedAt,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById);
   }
 
   GarageResponse copyWithWrapped(
@@ -3047,7 +3351,9 @@ extension $GarageResponseExtension on GarageResponse {
       Wrapped<int?>? id,
       Wrapped<String?>? label,
       Wrapped<List<Owner>?>? owners,
-      Wrapped<DateTime?>? updatedAt}) {
+      Wrapped<DateTime?>? updatedAt,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById}) {
     return GarageResponse(
         city: (city != null ? city.value : this.city),
         cityId: (cityId != null ? cityId.value : this.cityId),
@@ -3060,7 +3366,10 @@ extension $GarageResponseExtension on GarageResponse {
         id: (id != null ? id.value : this.id),
         label: (label != null ? label.value : this.label),
         owners: (owners != null ? owners.value : this.owners),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById));
   }
 }
 
@@ -3871,11 +4180,13 @@ class OwnerAudit {
     this.actionID,
     this.address,
     this.email,
+    this.garage,
+    this.garageId,
     this.ownerModelID,
     this.phone,
     this.photo,
     this.postalCode,
-    this.updatedAt,
+    this.vehicles,
   });
 
   factory OwnerAudit.fromJson(Map<String, dynamic> json) =>
@@ -3894,6 +4205,10 @@ class OwnerAudit {
   final String? address;
   @JsonKey(name: 'email')
   final String? email;
+  @JsonKey(name: 'garage')
+  final Garage? garage;
+  @JsonKey(name: 'garage_id')
+  final int? garageId;
   @JsonKey(name: 'ownerModelID')
   final int? ownerModelID;
   @JsonKey(name: 'phone')
@@ -3902,8 +4217,8 @@ class OwnerAudit {
   final String? photo;
   @JsonKey(name: 'postalCode')
   final String? postalCode;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'vehicles', defaultValue: <Vehicle>[])
+  final List<Vehicle>? vehicles;
   static const fromJsonFactory = _$OwnerAuditFromJson;
 
   @override
@@ -3923,6 +4238,11 @@ class OwnerAudit {
                     .equals(other.address, address)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.garage, garage) ||
+                const DeepCollectionEquality().equals(other.garage, garage)) &&
+            (identical(other.garageId, garageId) ||
+                const DeepCollectionEquality()
+                    .equals(other.garageId, garageId)) &&
             (identical(other.ownerModelID, ownerModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.ownerModelID, ownerModelID)) &&
@@ -3933,9 +4253,9 @@ class OwnerAudit {
             (identical(other.postalCode, postalCode) ||
                 const DeepCollectionEquality()
                     .equals(other.postalCode, postalCode)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.vehicles, vehicles) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.vehicles, vehicles)));
   }
 
   @override
@@ -3948,11 +4268,13 @@ class OwnerAudit {
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(address) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(garage) ^
+      const DeepCollectionEquality().hash(garageId) ^
       const DeepCollectionEquality().hash(ownerModelID) ^
       const DeepCollectionEquality().hash(phone) ^
       const DeepCollectionEquality().hash(photo) ^
       const DeepCollectionEquality().hash(postalCode) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(vehicles) ^
       runtimeType.hashCode;
 }
 
@@ -3963,22 +4285,26 @@ extension $OwnerAuditExtension on OwnerAudit {
       int? actionID,
       String? address,
       String? email,
+      Garage? garage,
+      int? garageId,
       int? ownerModelID,
       String? phone,
       String? photo,
       String? postalCode,
-      String? updatedAt}) {
+      List<Vehicle>? vehicles}) {
     return OwnerAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         address: address ?? this.address,
         email: email ?? this.email,
+        garage: garage ?? this.garage,
+        garageId: garageId ?? this.garageId,
         ownerModelID: ownerModelID ?? this.ownerModelID,
         phone: phone ?? this.phone,
         photo: photo ?? this.photo,
         postalCode: postalCode ?? this.postalCode,
-        updatedAt: updatedAt ?? this.updatedAt);
+        vehicles: vehicles ?? this.vehicles);
   }
 
   OwnerAudit copyWithWrapped(
@@ -3987,23 +4313,27 @@ extension $OwnerAuditExtension on OwnerAudit {
       Wrapped<int?>? actionID,
       Wrapped<String?>? address,
       Wrapped<String?>? email,
+      Wrapped<Garage?>? garage,
+      Wrapped<int?>? garageId,
       Wrapped<int?>? ownerModelID,
       Wrapped<String?>? phone,
       Wrapped<String?>? photo,
       Wrapped<String?>? postalCode,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<List<Vehicle>?>? vehicles}) {
     return OwnerAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         address: (address != null ? address.value : this.address),
         email: (email != null ? email.value : this.email),
+        garage: (garage != null ? garage.value : this.garage),
+        garageId: (garageId != null ? garageId.value : this.garageId),
         ownerModelID:
             (ownerModelID != null ? ownerModelID.value : this.ownerModelID),
         phone: (phone != null ? phone.value : this.phone),
         photo: (photo != null ? photo.value : this.photo),
         postalCode: (postalCode != null ? postalCode.value : this.postalCode),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        vehicles: (vehicles != null ? vehicles.value : this.vehicles));
   }
 }
 
@@ -4323,9 +4653,10 @@ class PermissionAudit {
     this.actionAt,
     this.actionID,
     this.available,
+    this.employees,
+    this.employeesId,
     this.label,
     this.permissionModelID,
-    this.updatedAt,
   });
 
   factory PermissionAudit.fromJson(Map<String, dynamic> json) =>
@@ -4342,12 +4673,14 @@ class PermissionAudit {
   final int? actionID;
   @JsonKey(name: 'available')
   final bool? available;
+  @JsonKey(name: 'employees')
+  final Employee? employees;
+  @JsonKey(name: 'employees_id')
+  final int? employeesId;
   @JsonKey(name: 'label')
   final String? label;
   @JsonKey(name: 'permissionModelID')
   final int? permissionModelID;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
   static const fromJsonFactory = _$PermissionAuditFromJson;
 
   @override
@@ -4365,14 +4698,17 @@ class PermissionAudit {
             (identical(other.available, available) ||
                 const DeepCollectionEquality()
                     .equals(other.available, available)) &&
+            (identical(other.employees, employees) ||
+                const DeepCollectionEquality()
+                    .equals(other.employees, employees)) &&
+            (identical(other.employeesId, employeesId) ||
+                const DeepCollectionEquality()
+                    .equals(other.employeesId, employeesId)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.permissionModelID, permissionModelID) ||
                 const DeepCollectionEquality()
-                    .equals(other.permissionModelID, permissionModelID)) &&
-            (identical(other.updatedAt, updatedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.permissionModelID, permissionModelID)));
   }
 
   @override
@@ -4384,9 +4720,10 @@ class PermissionAudit {
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(available) ^
+      const DeepCollectionEquality().hash(employees) ^
+      const DeepCollectionEquality().hash(employeesId) ^
       const DeepCollectionEquality().hash(label) ^
       const DeepCollectionEquality().hash(permissionModelID) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
 
@@ -4396,17 +4733,19 @@ extension $PermissionAuditExtension on PermissionAudit {
       String? actionAt,
       int? actionID,
       bool? available,
+      Employee? employees,
+      int? employeesId,
       String? label,
-      int? permissionModelID,
-      String? updatedAt}) {
+      int? permissionModelID}) {
     return PermissionAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         available: available ?? this.available,
+        employees: employees ?? this.employees,
+        employeesId: employeesId ?? this.employeesId,
         label: label ?? this.label,
-        permissionModelID: permissionModelID ?? this.permissionModelID,
-        updatedAt: updatedAt ?? this.updatedAt);
+        permissionModelID: permissionModelID ?? this.permissionModelID);
   }
 
   PermissionAudit copyWithWrapped(
@@ -4414,19 +4753,22 @@ extension $PermissionAuditExtension on PermissionAudit {
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
       Wrapped<bool?>? available,
+      Wrapped<Employee?>? employees,
+      Wrapped<int?>? employeesId,
       Wrapped<String?>? label,
-      Wrapped<int?>? permissionModelID,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<int?>? permissionModelID}) {
     return PermissionAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         available: (available != null ? available.value : this.available),
+        employees: (employees != null ? employees.value : this.employees),
+        employeesId:
+            (employeesId != null ? employeesId.value : this.employeesId),
         label: (label != null ? label.value : this.label),
         permissionModelID: (permissionModelID != null
             ? permissionModelID.value
-            : this.permissionModelID),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+            : this.permissionModelID));
   }
 }
 
@@ -4782,8 +5124,11 @@ class SparePartAudit {
     this.actionID,
     this.barcode,
     this.reference,
+    this.request,
+    this.requestId,
     this.sparePartModelID,
-    this.updatedAt,
+    this.supplier,
+    this.supplierId,
   });
 
   factory SparePartAudit.fromJson(Map<String, dynamic> json) =>
@@ -4802,10 +5147,16 @@ class SparePartAudit {
   final String? barcode;
   @JsonKey(name: 'reference')
   final String? reference;
+  @JsonKey(name: 'request')
+  final SparePartRequest? request;
+  @JsonKey(name: 'request_id')
+  final int? requestId;
   @JsonKey(name: 'sparePartModelID')
   final int? sparePartModelID;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'supplier')
+  final Supplier? supplier;
+  @JsonKey(name: 'supplier_id')
+  final int? supplierId;
   static const fromJsonFactory = _$SparePartAuditFromJson;
 
   @override
@@ -4826,12 +5177,21 @@ class SparePartAudit {
             (identical(other.reference, reference) ||
                 const DeepCollectionEquality()
                     .equals(other.reference, reference)) &&
+            (identical(other.request, request) ||
+                const DeepCollectionEquality()
+                    .equals(other.request, request)) &&
+            (identical(other.requestId, requestId) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestId, requestId)) &&
             (identical(other.sparePartModelID, sparePartModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.sparePartModelID, sparePartModelID)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.supplier, supplier) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.supplier, supplier)) &&
+            (identical(other.supplierId, supplierId) ||
+                const DeepCollectionEquality()
+                    .equals(other.supplierId, supplierId)));
   }
 
   @override
@@ -4844,8 +5204,11 @@ class SparePartAudit {
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(reference) ^
+      const DeepCollectionEquality().hash(request) ^
+      const DeepCollectionEquality().hash(requestId) ^
       const DeepCollectionEquality().hash(sparePartModelID) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(supplier) ^
+      const DeepCollectionEquality().hash(supplierId) ^
       runtimeType.hashCode;
 }
 
@@ -4856,16 +5219,22 @@ extension $SparePartAuditExtension on SparePartAudit {
       int? actionID,
       String? barcode,
       String? reference,
+      SparePartRequest? request,
+      int? requestId,
       int? sparePartModelID,
-      String? updatedAt}) {
+      Supplier? supplier,
+      int? supplierId}) {
     return SparePartAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         barcode: barcode ?? this.barcode,
         reference: reference ?? this.reference,
+        request: request ?? this.request,
+        requestId: requestId ?? this.requestId,
         sparePartModelID: sparePartModelID ?? this.sparePartModelID,
-        updatedAt: updatedAt ?? this.updatedAt);
+        supplier: supplier ?? this.supplier,
+        supplierId: supplierId ?? this.supplierId);
   }
 
   SparePartAudit copyWithWrapped(
@@ -4874,18 +5243,24 @@ extension $SparePartAuditExtension on SparePartAudit {
       Wrapped<int?>? actionID,
       Wrapped<String?>? barcode,
       Wrapped<String?>? reference,
+      Wrapped<SparePartRequest?>? request,
+      Wrapped<int?>? requestId,
       Wrapped<int?>? sparePartModelID,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<Supplier?>? supplier,
+      Wrapped<int?>? supplierId}) {
     return SparePartAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         barcode: (barcode != null ? barcode.value : this.barcode),
         reference: (reference != null ? reference.value : this.reference),
+        request: (request != null ? request.value : this.request),
+        requestId: (requestId != null ? requestId.value : this.requestId),
         sparePartModelID: (sparePartModelID != null
             ? sparePartModelID.value
             : this.sparePartModelID),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        supplier: (supplier != null ? supplier.value : this.supplier),
+        supplierId: (supplierId != null ? supplierId.value : this.supplierId));
   }
 }
 
@@ -5019,8 +5394,10 @@ class SparePartRequestAudit {
     this.action,
     this.actionAt,
     this.actionID,
+    this.requestBy,
+    this.requestById,
+    this.spareParts,
     this.sparePartRequestModelID,
-    this.updatedAt,
   });
 
   factory SparePartRequestAudit.fromJson(Map<String, dynamic> json) =>
@@ -5035,10 +5412,14 @@ class SparePartRequestAudit {
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
+  @JsonKey(name: 'request_by')
+  final Employee? requestBy;
+  @JsonKey(name: 'request_by_id')
+  final int? requestById;
+  @JsonKey(name: 'spare_parts', defaultValue: <SparePart>[])
+  final List<SparePart>? spareParts;
   @JsonKey(name: 'sparePartRequestModelID')
   final int? sparePartRequestModelID;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
   static const fromJsonFactory = _$SparePartRequestAuditFromJson;
 
   @override
@@ -5053,13 +5434,19 @@ class SparePartRequestAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
+            (identical(other.requestBy, requestBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestBy, requestBy)) &&
+            (identical(other.requestById, requestById) ||
+                const DeepCollectionEquality()
+                    .equals(other.requestById, requestById)) &&
+            (identical(other.spareParts, spareParts) ||
+                const DeepCollectionEquality()
+                    .equals(other.spareParts, spareParts)) &&
             (identical(
                     other.sparePartRequestModelID, sparePartRequestModelID) ||
                 const DeepCollectionEquality().equals(
-                    other.sparePartRequestModelID, sparePartRequestModelID)) &&
-            (identical(other.updatedAt, updatedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    other.sparePartRequestModelID, sparePartRequestModelID)));
   }
 
   @override
@@ -5070,8 +5457,10 @@ class SparePartRequestAudit {
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
+      const DeepCollectionEquality().hash(requestBy) ^
+      const DeepCollectionEquality().hash(requestById) ^
+      const DeepCollectionEquality().hash(spareParts) ^
       const DeepCollectionEquality().hash(sparePartRequestModelID) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
 
@@ -5080,31 +5469,40 @@ extension $SparePartRequestAuditExtension on SparePartRequestAudit {
       {String? action,
       String? actionAt,
       int? actionID,
-      int? sparePartRequestModelID,
-      String? updatedAt}) {
+      Employee? requestBy,
+      int? requestById,
+      List<SparePart>? spareParts,
+      int? sparePartRequestModelID}) {
     return SparePartRequestAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
+        requestBy: requestBy ?? this.requestBy,
+        requestById: requestById ?? this.requestById,
+        spareParts: spareParts ?? this.spareParts,
         sparePartRequestModelID:
-            sparePartRequestModelID ?? this.sparePartRequestModelID,
-        updatedAt: updatedAt ?? this.updatedAt);
+            sparePartRequestModelID ?? this.sparePartRequestModelID);
   }
 
   SparePartRequestAudit copyWithWrapped(
       {Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
-      Wrapped<int?>? sparePartRequestModelID,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<Employee?>? requestBy,
+      Wrapped<int?>? requestById,
+      Wrapped<List<SparePart>?>? spareParts,
+      Wrapped<int?>? sparePartRequestModelID}) {
     return SparePartRequestAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
+        requestBy: (requestBy != null ? requestBy.value : this.requestBy),
+        requestById:
+            (requestById != null ? requestById.value : this.requestById),
+        spareParts: (spareParts != null ? spareParts.value : this.spareParts),
         sparePartRequestModelID: (sparePartRequestModelID != null
             ? sparePartRequestModelID.value
-            : this.sparePartRequestModelID),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+            : this.sparePartRequestModelID));
   }
 }
 
@@ -5508,8 +5906,8 @@ class SupplierAudit {
     this.actionAt,
     this.actionID,
     this.name,
+    this.spareParts,
     this.supplierModelID,
-    this.updatedAt,
   });
 
   factory SupplierAudit.fromJson(Map<String, dynamic> json) =>
@@ -5526,10 +5924,10 @@ class SupplierAudit {
   final int? actionID;
   @JsonKey(name: 'name')
   final String? name;
+  @JsonKey(name: 'spare_parts', defaultValue: <SparePart>[])
+  final List<SparePart>? spareParts;
   @JsonKey(name: 'supplierModelID')
   final int? supplierModelID;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
   static const fromJsonFactory = _$SupplierAuditFromJson;
 
   @override
@@ -5546,12 +5944,12 @@ class SupplierAudit {
                     .equals(other.actionID, actionID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.spareParts, spareParts) ||
+                const DeepCollectionEquality()
+                    .equals(other.spareParts, spareParts)) &&
             (identical(other.supplierModelID, supplierModelID) ||
                 const DeepCollectionEquality()
-                    .equals(other.supplierModelID, supplierModelID)) &&
-            (identical(other.updatedAt, updatedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.supplierModelID, supplierModelID)));
   }
 
   @override
@@ -5563,8 +5961,8 @@ class SupplierAudit {
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(spareParts) ^
       const DeepCollectionEquality().hash(supplierModelID) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
       runtimeType.hashCode;
 }
 
@@ -5574,15 +5972,15 @@ extension $SupplierAuditExtension on SupplierAudit {
       String? actionAt,
       int? actionID,
       String? name,
-      int? supplierModelID,
-      String? updatedAt}) {
+      List<SparePart>? spareParts,
+      int? supplierModelID}) {
     return SupplierAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
         name: name ?? this.name,
-        supplierModelID: supplierModelID ?? this.supplierModelID,
-        updatedAt: updatedAt ?? this.updatedAt);
+        spareParts: spareParts ?? this.spareParts,
+        supplierModelID: supplierModelID ?? this.supplierModelID);
   }
 
   SupplierAudit copyWithWrapped(
@@ -5590,17 +5988,17 @@ extension $SupplierAuditExtension on SupplierAudit {
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
       Wrapped<String?>? name,
-      Wrapped<int?>? supplierModelID,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<List<SparePart>?>? spareParts,
+      Wrapped<int?>? supplierModelID}) {
     return SupplierAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
         name: (name != null ? name.value : this.name),
+        spareParts: (spareParts != null ? spareParts.value : this.spareParts),
         supplierModelID: (supplierModelID != null
             ? supplierModelID.value
-            : this.supplierModelID),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+            : this.supplierModelID));
   }
 }
 
@@ -5901,9 +6299,15 @@ class TaskAudit {
     this.action,
     this.actionAt,
     this.actionID,
+    this.attachedTo,
+    this.createdBy,
+    this.createdById,
     this.label,
+    this.parentTaskID,
+    this.subTasks,
     this.taskModelID,
-    this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
   });
 
   factory TaskAudit.fromJson(Map<String, dynamic> json) =>
@@ -5918,12 +6322,24 @@ class TaskAudit {
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
+  @JsonKey(name: 'attached_to', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? attachedTo;
+  @JsonKey(name: 'created_by')
+  final Employee? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
   @JsonKey(name: 'label')
   final String? label;
+  @JsonKey(name: 'parentTaskID')
+  final int? parentTaskID;
+  @JsonKey(name: 'subTasks', defaultValue: <Task>[])
+  final List<Task>? subTasks;
   @JsonKey(name: 'taskModelID')
   final int? taskModelID;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   static const fromJsonFactory = _$TaskAuditFromJson;
 
   @override
@@ -5938,14 +6354,32 @@ class TaskAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
+            (identical(other.attachedTo, attachedTo) ||
+                const DeepCollectionEquality()
+                    .equals(other.attachedTo, attachedTo)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
+            (identical(other.parentTaskID, parentTaskID) ||
+                const DeepCollectionEquality()
+                    .equals(other.parentTaskID, parentTaskID)) &&
+            (identical(other.subTasks, subTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.subTasks, subTasks)) &&
             (identical(other.taskModelID, taskModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.taskModelID, taskModelID)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.updatedBy, updatedBy) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)));
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)));
   }
 
   @override
@@ -5956,9 +6390,15 @@ class TaskAudit {
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
+      const DeepCollectionEquality().hash(attachedTo) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(label) ^
+      const DeepCollectionEquality().hash(parentTaskID) ^
+      const DeepCollectionEquality().hash(subTasks) ^
       const DeepCollectionEquality().hash(taskModelID) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       runtimeType.hashCode;
 }
 
@@ -5967,33 +6407,60 @@ extension $TaskAuditExtension on TaskAudit {
       {String? action,
       String? actionAt,
       int? actionID,
+      List<VehicleTask>? attachedTo,
+      Employee? createdBy,
+      int? createdById,
       String? label,
+      int? parentTaskID,
+      List<Task>? subTasks,
       int? taskModelID,
-      String? updatedAt}) {
+      Employee? updatedBy,
+      int? updatedById}) {
     return TaskAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
+        attachedTo: attachedTo ?? this.attachedTo,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
         label: label ?? this.label,
+        parentTaskID: parentTaskID ?? this.parentTaskID,
+        subTasks: subTasks ?? this.subTasks,
         taskModelID: taskModelID ?? this.taskModelID,
-        updatedAt: updatedAt ?? this.updatedAt);
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById);
   }
 
   TaskAudit copyWithWrapped(
       {Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
+      Wrapped<List<VehicleTask>?>? attachedTo,
+      Wrapped<Employee?>? createdBy,
+      Wrapped<int?>? createdById,
       Wrapped<String?>? label,
+      Wrapped<int?>? parentTaskID,
+      Wrapped<List<Task>?>? subTasks,
       Wrapped<int?>? taskModelID,
-      Wrapped<String?>? updatedAt}) {
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById}) {
     return TaskAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
+        attachedTo: (attachedTo != null ? attachedTo.value : this.attachedTo),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         label: (label != null ? label.value : this.label),
+        parentTaskID:
+            (parentTaskID != null ? parentTaskID.value : this.parentTaskID),
+        subTasks: (subTasks != null ? subTasks.value : this.subTasks),
         taskModelID:
             (taskModelID != null ? taskModelID.value : this.taskModelID),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt));
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById));
   }
 }
 
@@ -7293,16 +7760,24 @@ class VehicleAudit {
     this.chrono,
     this.collectionDate,
     this.commercialName,
+    this.createdBy,
+    this.createdById,
+    this.deletedBy,
+    this.deletedById,
     this.deliveryDate,
     this.expertise,
     this.firstCirculation,
     this.mileage,
     this.note,
+    this.owner,
+    this.ownerId,
     this.procedureVe,
     this.registration,
     this.serialNumber,
     this.soldAt,
-    this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
+    this.vehicleTasks,
     this.vehicleModelID,
   });
 
@@ -7324,6 +7799,14 @@ class VehicleAudit {
   final String? collectionDate;
   @JsonKey(name: 'commercialName')
   final String? commercialName;
+  @JsonKey(name: 'created_by')
+  final Employee? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
+  @JsonKey(name: 'deleted_by')
+  final Employee? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'deliveryDate')
   final String? deliveryDate;
   @JsonKey(name: 'expertise')
@@ -7334,6 +7817,10 @@ class VehicleAudit {
   final int? mileage;
   @JsonKey(name: 'note')
   final String? note;
+  @JsonKey(name: 'owner')
+  final Owner? owner;
+  @JsonKey(name: 'owner_id')
+  final int? ownerId;
   @JsonKey(name: 'procedureVe')
   final bool? procedureVe;
   @JsonKey(name: 'registration')
@@ -7342,8 +7829,12 @@ class VehicleAudit {
   final String? serialNumber;
   @JsonKey(name: 'soldAt')
   final String? soldAt;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
+  @JsonKey(name: 'vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? vehicleTasks;
   @JsonKey(name: 'vehicleModelID')
   final int? vehicleModelID;
   static const fromJsonFactory = _$VehicleAuditFromJson;
@@ -7368,6 +7859,18 @@ class VehicleAudit {
             (identical(other.commercialName, commercialName) ||
                 const DeepCollectionEquality()
                     .equals(other.commercialName, commercialName)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.deliveryDate, deliveryDate)) &&
@@ -7382,6 +7885,11 @@ class VehicleAudit {
                     .equals(other.mileage, mileage)) &&
             (identical(other.note, note) ||
                 const DeepCollectionEquality().equals(other.note, note)) &&
+            (identical(other.owner, owner) ||
+                const DeepCollectionEquality().equals(other.owner, owner)) &&
+            (identical(other.ownerId, ownerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.ownerId, ownerId)) &&
             (identical(other.procedureVe, procedureVe) ||
                 const DeepCollectionEquality()
                     .equals(other.procedureVe, procedureVe)) &&
@@ -7393,12 +7901,16 @@ class VehicleAudit {
                     .equals(other.serialNumber, serialNumber)) &&
             (identical(other.soldAt, soldAt) ||
                 const DeepCollectionEquality().equals(other.soldAt, soldAt)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.updatedBy, updatedBy) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)) &&
-            (identical(other.vehicleModelID, vehicleModelID) ||
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
                 const DeepCollectionEquality()
-                    .equals(other.vehicleModelID, vehicleModelID)));
+                    .equals(other.updatedById, updatedById)) &&
+            (identical(other.vehicleTasks, vehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicleTasks, vehicleTasks)) &&
+            (identical(other.vehicleModelID, vehicleModelID) || const DeepCollectionEquality().equals(other.vehicleModelID, vehicleModelID)));
   }
 
   @override
@@ -7412,16 +7924,24 @@ class VehicleAudit {
       const DeepCollectionEquality().hash(chrono) ^
       const DeepCollectionEquality().hash(collectionDate) ^
       const DeepCollectionEquality().hash(commercialName) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(deliveryDate) ^
       const DeepCollectionEquality().hash(expertise) ^
       const DeepCollectionEquality().hash(firstCirculation) ^
       const DeepCollectionEquality().hash(mileage) ^
       const DeepCollectionEquality().hash(note) ^
+      const DeepCollectionEquality().hash(owner) ^
+      const DeepCollectionEquality().hash(ownerId) ^
       const DeepCollectionEquality().hash(procedureVe) ^
       const DeepCollectionEquality().hash(registration) ^
       const DeepCollectionEquality().hash(serialNumber) ^
       const DeepCollectionEquality().hash(soldAt) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
+      const DeepCollectionEquality().hash(vehicleTasks) ^
       const DeepCollectionEquality().hash(vehicleModelID) ^
       runtimeType.hashCode;
 }
@@ -7434,16 +7954,24 @@ extension $VehicleAuditExtension on VehicleAudit {
       String? chrono,
       String? collectionDate,
       String? commercialName,
+      Employee? createdBy,
+      int? createdById,
+      Employee? deletedBy,
+      int? deletedById,
       String? deliveryDate,
       bool? expertise,
       String? firstCirculation,
       int? mileage,
       String? note,
+      Owner? owner,
+      int? ownerId,
       bool? procedureVe,
       String? registration,
       String? serialNumber,
       String? soldAt,
-      String? updatedAt,
+      Employee? updatedBy,
+      int? updatedById,
+      List<VehicleTask>? vehicleTasks,
       int? vehicleModelID}) {
     return VehicleAudit(
         action: action ?? this.action,
@@ -7452,16 +7980,24 @@ extension $VehicleAuditExtension on VehicleAudit {
         chrono: chrono ?? this.chrono,
         collectionDate: collectionDate ?? this.collectionDate,
         commercialName: commercialName ?? this.commercialName,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         deliveryDate: deliveryDate ?? this.deliveryDate,
         expertise: expertise ?? this.expertise,
         firstCirculation: firstCirculation ?? this.firstCirculation,
         mileage: mileage ?? this.mileage,
         note: note ?? this.note,
+        owner: owner ?? this.owner,
+        ownerId: ownerId ?? this.ownerId,
         procedureVe: procedureVe ?? this.procedureVe,
         registration: registration ?? this.registration,
         serialNumber: serialNumber ?? this.serialNumber,
         soldAt: soldAt ?? this.soldAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById,
+        vehicleTasks: vehicleTasks ?? this.vehicleTasks,
         vehicleModelID: vehicleModelID ?? this.vehicleModelID);
   }
 
@@ -7472,16 +8008,24 @@ extension $VehicleAuditExtension on VehicleAudit {
       Wrapped<String?>? chrono,
       Wrapped<String?>? collectionDate,
       Wrapped<String?>? commercialName,
+      Wrapped<Employee?>? createdBy,
+      Wrapped<int?>? createdById,
+      Wrapped<Employee?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<String?>? deliveryDate,
       Wrapped<bool?>? expertise,
       Wrapped<String?>? firstCirculation,
       Wrapped<int?>? mileage,
       Wrapped<String?>? note,
+      Wrapped<Owner?>? owner,
+      Wrapped<int?>? ownerId,
       Wrapped<bool?>? procedureVe,
       Wrapped<String?>? registration,
       Wrapped<String?>? serialNumber,
       Wrapped<String?>? soldAt,
-      Wrapped<String?>? updatedAt,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById,
+      Wrapped<List<VehicleTask>?>? vehicleTasks,
       Wrapped<int?>? vehicleModelID}) {
     return VehicleAudit(
         action: (action != null ? action.value : this.action),
@@ -7494,6 +8038,12 @@ extension $VehicleAuditExtension on VehicleAudit {
         commercialName: (commercialName != null
             ? commercialName.value
             : this.commercialName),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         deliveryDate:
             (deliveryDate != null ? deliveryDate.value : this.deliveryDate),
         expertise: (expertise != null ? expertise.value : this.expertise),
@@ -7502,6 +8052,8 @@ extension $VehicleAuditExtension on VehicleAudit {
             : this.firstCirculation),
         mileage: (mileage != null ? mileage.value : this.mileage),
         note: (note != null ? note.value : this.note),
+        owner: (owner != null ? owner.value : this.owner),
+        ownerId: (ownerId != null ? ownerId.value : this.ownerId),
         procedureVe:
             (procedureVe != null ? procedureVe.value : this.procedureVe),
         registration:
@@ -7509,7 +8061,11 @@ extension $VehicleAuditExtension on VehicleAudit {
         serialNumber:
             (serialNumber != null ? serialNumber.value : this.serialNumber),
         soldAt: (soldAt != null ? soldAt.value : this.soldAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById),
+        vehicleTasks:
+            (vehicleTasks != null ? vehicleTasks.value : this.vehicleTasks),
         vehicleModelID: (vehicleModelID != null
             ? vehicleModelID.value
             : this.vehicleModelID));
@@ -8071,11 +8627,18 @@ class VehicleTaskAudit {
     this.action,
     this.actionAt,
     this.actionID,
+    this.assignedTo,
+    this.assignedToId,
+    this.createdBy,
+    this.createdById,
     this.deleted,
     this.finishedAt,
     this.note,
     this.startedAt,
-    this.updatedAt,
+    this.task,
+    this.taskId,
+    this.vehicle,
+    this.vehicleId,
     this.vehicleTaskModelID,
   });
 
@@ -8091,6 +8654,14 @@ class VehicleTaskAudit {
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
+  @JsonKey(name: 'assigned_to')
+  final Employee? assignedTo;
+  @JsonKey(name: 'assigned_to_id')
+  final int? assignedToId;
+  @JsonKey(name: 'created_by')
+  final Employee? createdBy;
+  @JsonKey(name: 'created_by_id')
+  final int? createdById;
   @JsonKey(name: 'deleted')
   final bool? deleted;
   @JsonKey(name: 'finishedAt')
@@ -8099,8 +8670,14 @@ class VehicleTaskAudit {
   final String? note;
   @JsonKey(name: 'startedAt')
   final String? startedAt;
-  @JsonKey(name: 'updatedAt')
-  final String? updatedAt;
+  @JsonKey(name: 'task')
+  final Task? task;
+  @JsonKey(name: 'task_id')
+  final int? taskId;
+  @JsonKey(name: 'vehicle')
+  final Vehicle? vehicle;
+  @JsonKey(name: 'vehicle_id')
+  final int? vehicleId;
   @JsonKey(name: 'vehicleTaskModelID')
   final int? vehicleTaskModelID;
   static const fromJsonFactory = _$VehicleTaskAuditFromJson;
@@ -8117,6 +8694,18 @@ class VehicleTaskAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
+            (identical(other.assignedTo, assignedTo) ||
+                const DeepCollectionEquality()
+                    .equals(other.assignedTo, assignedTo)) &&
+            (identical(other.assignedToId, assignedToId) ||
+                const DeepCollectionEquality()
+                    .equals(other.assignedToId, assignedToId)) &&
+            (identical(other.createdBy, createdBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdBy, createdBy)) &&
+            (identical(other.createdById, createdById) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdById, createdById)) &&
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
@@ -8128,9 +8717,16 @@ class VehicleTaskAudit {
             (identical(other.startedAt, startedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.startedAt, startedAt)) &&
-            (identical(other.updatedAt, updatedAt) ||
+            (identical(other.task, task) ||
+                const DeepCollectionEquality().equals(other.task, task)) &&
+            (identical(other.taskId, taskId) ||
+                const DeepCollectionEquality().equals(other.taskId, taskId)) &&
+            (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)) &&
+                    .equals(other.vehicle, vehicle)) &&
+            (identical(other.vehicleId, vehicleId) ||
+                const DeepCollectionEquality()
+                    .equals(other.vehicleId, vehicleId)) &&
             (identical(other.vehicleTaskModelID, vehicleTaskModelID) ||
                 const DeepCollectionEquality()
                     .equals(other.vehicleTaskModelID, vehicleTaskModelID)));
@@ -8144,11 +8740,18 @@ class VehicleTaskAudit {
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
+      const DeepCollectionEquality().hash(assignedTo) ^
+      const DeepCollectionEquality().hash(assignedToId) ^
+      const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
       const DeepCollectionEquality().hash(finishedAt) ^
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(startedAt) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(task) ^
+      const DeepCollectionEquality().hash(taskId) ^
+      const DeepCollectionEquality().hash(vehicle) ^
+      const DeepCollectionEquality().hash(vehicleId) ^
       const DeepCollectionEquality().hash(vehicleTaskModelID) ^
       runtimeType.hashCode;
 }
@@ -8158,21 +8761,35 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
       {String? action,
       String? actionAt,
       int? actionID,
+      Employee? assignedTo,
+      int? assignedToId,
+      Employee? createdBy,
+      int? createdById,
       bool? deleted,
       String? finishedAt,
       String? note,
       String? startedAt,
-      String? updatedAt,
+      Task? task,
+      int? taskId,
+      Vehicle? vehicle,
+      int? vehicleId,
       int? vehicleTaskModelID}) {
     return VehicleTaskAudit(
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
+        assignedTo: assignedTo ?? this.assignedTo,
+        assignedToId: assignedToId ?? this.assignedToId,
+        createdBy: createdBy ?? this.createdBy,
+        createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
         finishedAt: finishedAt ?? this.finishedAt,
         note: note ?? this.note,
         startedAt: startedAt ?? this.startedAt,
-        updatedAt: updatedAt ?? this.updatedAt,
+        task: task ?? this.task,
+        taskId: taskId ?? this.taskId,
+        vehicle: vehicle ?? this.vehicle,
+        vehicleId: vehicleId ?? this.vehicleId,
         vehicleTaskModelID: vehicleTaskModelID ?? this.vehicleTaskModelID);
   }
 
@@ -8180,21 +8797,37 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
       {Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
+      Wrapped<Employee?>? assignedTo,
+      Wrapped<int?>? assignedToId,
+      Wrapped<Employee?>? createdBy,
+      Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
       Wrapped<String?>? finishedAt,
       Wrapped<String?>? note,
       Wrapped<String?>? startedAt,
-      Wrapped<String?>? updatedAt,
+      Wrapped<Task?>? task,
+      Wrapped<int?>? taskId,
+      Wrapped<Vehicle?>? vehicle,
+      Wrapped<int?>? vehicleId,
       Wrapped<int?>? vehicleTaskModelID}) {
     return VehicleTaskAudit(
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
+        assignedTo: (assignedTo != null ? assignedTo.value : this.assignedTo),
+        assignedToId:
+            (assignedToId != null ? assignedToId.value : this.assignedToId),
+        createdBy: (createdBy != null ? createdBy.value : this.createdBy),
+        createdById:
+            (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
         finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
         note: (note != null ? note.value : this.note),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt),
-        updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        task: (task != null ? task.value : this.task),
+        taskId: (taskId != null ? taskId.value : this.taskId),
+        vehicle: (vehicle != null ? vehicle.value : this.vehicle),
+        vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId),
         vehicleTaskModelID: (vehicleTaskModelID != null
             ? vehicleTaskModelID.value
             : this.vehicleTaskModelID));

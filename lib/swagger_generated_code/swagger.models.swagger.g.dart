@@ -43,8 +43,8 @@ AccountAudit _$AccountAuditFromJson(Map<String, dynamic> json) => AccountAudit(
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
       email: json['email'] as String?,
+      employeeId: json['employee_id'] as int?,
       name: json['name'] as String?,
-      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$AccountAuditToJson(AccountAudit instance) =>
@@ -54,8 +54,8 @@ Map<String, dynamic> _$AccountAuditToJson(AccountAudit instance) =>
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
       'email': instance.email,
+      'employee_id': instance.employeeId,
       'name': instance.name,
-      'updatedAt': instance.updatedAt,
     };
 
 AccountResponse _$AccountResponseFromJson(Map<String, dynamic> json) =>
@@ -128,8 +128,11 @@ CityAudit _$CityAuditFromJson(Map<String, dynamic> json) => CityAudit(
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
       cityModelID: json['cityModelID'] as int?,
+      garages: (json['garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       label: json['label'] as String?,
-      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$CityAuditToJson(CityAudit instance) => <String, dynamic>{
@@ -137,8 +140,8 @@ Map<String, dynamic> _$CityAuditToJson(CityAudit instance) => <String, dynamic>{
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
       'cityModelID': instance.cityModelID,
+      'garages': instance.garages?.map((e) => e.toJson()).toList(),
       'label': instance.label,
-      'updatedAt': instance.updatedAt,
     };
 
 CityResponse _$CityResponseFromJson(Map<String, dynamic> json) => CityResponse(
@@ -240,6 +243,10 @@ CreateEmployee _$CreateEmployeeFromJson(Map<String, dynamic> json) =>
               ?.map((e) => SparePartRequest.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      updatedGarages: (json['updated_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       updatedTasks: (json['updated_tasks'] as List<dynamic>?)
               ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -266,6 +273,8 @@ Map<String, dynamic> _$CreateEmployeeToJson(CreateEmployee instance) =>
       'name': instance.name,
       'permission': instance.permission?.map((e) => e.toJson()).toList(),
       'requests': instance.requests?.map((e) => e.toJson()).toList(),
+      'updated_garages':
+          instance.updatedGarages?.map((e) => e.toJson()).toList(),
       'updated_tasks': instance.updatedTasks?.map((e) => e.toJson()).toList(),
       'updated_vehicles':
           instance.updatedVehicles?.map((e) => e.toJson()).toList(),
@@ -285,6 +294,10 @@ CreateGarage _$CreateGarageFromJson(Map<String, dynamic> json) => CreateGarage(
               ?.map((e) => Owner.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
 Map<String, dynamic> _$CreateGarageToJson(CreateGarage instance) =>
@@ -295,6 +308,8 @@ Map<String, dynamic> _$CreateGarageToJson(CreateGarage instance) =>
       'created_by_id': instance.createdById,
       'label': instance.label,
       'owners': instance.owners?.map((e) => e.toJson()).toList(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
 CreateOwner _$CreateOwnerFromJson(Map<String, dynamic> json) => CreateOwner(
@@ -600,6 +615,10 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedGarages: (json['updated_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       updatedTasks: (json['updated_tasks'] as List<dynamic>?)
               ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -630,6 +649,8 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'permission': instance.permission?.map((e) => e.toJson()).toList(),
       'requests': instance.requests?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_garages':
+          instance.updatedGarages?.map((e) => e.toJson()).toList(),
       'updated_tasks': instance.updatedTasks?.map((e) => e.toJson()).toList(),
       'updated_vehicles':
           instance.updatedVehicles?.map((e) => e.toJson()).toList(),
@@ -637,22 +658,85 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
 
 EmployeeAudit _$EmployeeAuditFromJson(Map<String, dynamic> json) =>
     EmployeeAudit(
+      account: json['account'] == null
+          ? null
+          : Account.fromJson(json['account'] as Map<String, dynamic>),
       action: json['action'] as String?,
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
+      assignedTasks: (json['assigned_tasks'] as List<dynamic>?)
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdGarages: (json['created_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdTasks: (json['created_tasks'] as List<dynamic>?)
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicleTasks: (json['created_vehicle_tasks'] as List<dynamic>?)
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdVehicles: (json['created_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      deletedVehicles: (json['deleted_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       employeeModelID: json['employeeModelID'] as int?,
       name: json['name'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      permission: (json['permission'] as List<dynamic>?)
+              ?.map((e) => Permission.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      requests: (json['requests'] as List<dynamic>?)
+              ?.map((e) => SparePartRequest.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedGarages: (json['updated_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedTasks: (json['updated_tasks'] as List<dynamic>?)
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedVehicles: (json['updated_vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$EmployeeAuditToJson(EmployeeAudit instance) =>
     <String, dynamic>{
+      'account': instance.account?.toJson(),
       'action': instance.action,
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
+      'assigned_tasks': instance.assignedTasks?.map((e) => e.toJson()).toList(),
+      'created_garages':
+          instance.createdGarages?.map((e) => e.toJson()).toList(),
+      'created_tasks': instance.createdTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicle_tasks':
+          instance.createdVehicleTasks?.map((e) => e.toJson()).toList(),
+      'created_vehicles':
+          instance.createdVehicles?.map((e) => e.toJson()).toList(),
+      'deleted_vehicles':
+          instance.deletedVehicles?.map((e) => e.toJson()).toList(),
       'employeeModelID': instance.employeeModelID,
       'name': instance.name,
-      'updatedAt': instance.updatedAt,
+      'permission': instance.permission?.map((e) => e.toJson()).toList(),
+      'requests': instance.requests?.map((e) => e.toJson()).toList(),
+      'updated_garages':
+          instance.updatedGarages?.map((e) => e.toJson()).toList(),
+      'updated_tasks': instance.updatedTasks?.map((e) => e.toJson()).toList(),
+      'updated_vehicles':
+          instance.updatedVehicles?.map((e) => e.toJson()).toList(),
     };
 
 EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) =>
@@ -707,6 +791,10 @@ EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedGarages: (json['updated_garages'] as List<dynamic>?)
+              ?.map((e) => Garage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       updatedTasks: (json['updated_tasks'] as List<dynamic>?)
               ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -738,6 +826,8 @@ Map<String, dynamic> _$EmployeeResponseToJson(EmployeeResponse instance) =>
       'permission': instance.permission?.map((e) => e.toJson()).toList(),
       'requests': instance.requests?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_garages':
+          instance.updatedGarages?.map((e) => e.toJson()).toList(),
       'updated_tasks': instance.updatedTasks?.map((e) => e.toJson()).toList(),
       'updated_vehicles':
           instance.updatedVehicles?.map((e) => e.toJson()).toList(),
@@ -771,6 +861,10 @@ Garage _$GarageFromJson(Map<String, dynamic> json) => Garage(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
 Map<String, dynamic> _$GarageToJson(Garage instance) => <String, dynamic>{
@@ -785,15 +879,32 @@ Map<String, dynamic> _$GarageToJson(Garage instance) => <String, dynamic>{
       'label': instance.label,
       'owners': instance.owners?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
 GarageAudit _$GarageAuditFromJson(Map<String, dynamic> json) => GarageAudit(
       action: json['action'] as String?,
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
+      city: json['city'] == null
+          ? null
+          : City.fromJson(json['city'] as Map<String, dynamic>),
+      cityId: json['city_id'] as int?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
       garageModelID: json['garageModelID'] as int?,
       label: json['label'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      owners: (json['owners'] as List<dynamic>?)
+              ?.map((e) => Owner.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
 Map<String, dynamic> _$GarageAuditToJson(GarageAudit instance) =>
@@ -801,9 +912,15 @@ Map<String, dynamic> _$GarageAuditToJson(GarageAudit instance) =>
       'action': instance.action,
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
+      'city': instance.city?.toJson(),
+      'city_id': instance.cityId,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
       'garageModelID': instance.garageModelID,
       'label': instance.label,
-      'updatedAt': instance.updatedAt,
+      'owners': instance.owners?.map((e) => e.toJson()).toList(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
 GarageResponse _$GarageResponseFromJson(Map<String, dynamic> json) =>
@@ -835,6 +952,10 @@ GarageResponse _$GarageResponseFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
 Map<String, dynamic> _$GarageResponseToJson(GarageResponse instance) =>
@@ -850,6 +971,8 @@ Map<String, dynamic> _$GarageResponseToJson(GarageResponse instance) =>
       'label': instance.label,
       'owners': instance.owners?.map((e) => e.toJson()).toList(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
 ListAccount _$ListAccountFromJson(Map<String, dynamic> json) => ListAccount(
@@ -1079,11 +1202,18 @@ OwnerAudit _$OwnerAuditFromJson(Map<String, dynamic> json) => OwnerAudit(
       actionID: json['actionID'] as int?,
       address: json['address'] as String?,
       email: json['email'] as String?,
+      garage: json['garage'] == null
+          ? null
+          : Garage.fromJson(json['garage'] as Map<String, dynamic>),
+      garageId: json['garage_id'] as int?,
       ownerModelID: json['ownerModelID'] as int?,
       phone: json['phone'] as String?,
       photo: json['photo'] as String?,
       postalCode: json['postalCode'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      vehicles: (json['vehicles'] as List<dynamic>?)
+              ?.map((e) => Vehicle.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$OwnerAuditToJson(OwnerAudit instance) =>
@@ -1093,11 +1223,13 @@ Map<String, dynamic> _$OwnerAuditToJson(OwnerAudit instance) =>
       'actionID': instance.actionID,
       'address': instance.address,
       'email': instance.email,
+      'garage': instance.garage?.toJson(),
+      'garage_id': instance.garageId,
       'ownerModelID': instance.ownerModelID,
       'phone': instance.phone,
       'photo': instance.photo,
       'postalCode': instance.postalCode,
-      'updatedAt': instance.updatedAt,
+      'vehicles': instance.vehicles?.map((e) => e.toJson()).toList(),
     };
 
 OwnerResponse _$OwnerResponseFromJson(Map<String, dynamic> json) =>
@@ -1190,9 +1322,12 @@ PermissionAudit _$PermissionAuditFromJson(Map<String, dynamic> json) =>
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
       available: json['available'] as bool?,
+      employees: json['employees'] == null
+          ? null
+          : Employee.fromJson(json['employees'] as Map<String, dynamic>),
+      employeesId: json['employees_id'] as int?,
       label: json['label'] as String?,
       permissionModelID: json['permissionModelID'] as int?,
-      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$PermissionAuditToJson(PermissionAudit instance) =>
@@ -1201,9 +1336,10 @@ Map<String, dynamic> _$PermissionAuditToJson(PermissionAudit instance) =>
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
       'available': instance.available,
+      'employees': instance.employees?.toJson(),
+      'employees_id': instance.employeesId,
       'label': instance.label,
       'permissionModelID': instance.permissionModelID,
-      'updatedAt': instance.updatedAt,
     };
 
 PermissionResponse _$PermissionResponseFromJson(Map<String, dynamic> json) =>
@@ -1303,8 +1439,15 @@ SparePartAudit _$SparePartAuditFromJson(Map<String, dynamic> json) =>
       actionID: json['actionID'] as int?,
       barcode: json['barcode'] as String?,
       reference: json['reference'] as String?,
+      request: json['request'] == null
+          ? null
+          : SparePartRequest.fromJson(json['request'] as Map<String, dynamic>),
+      requestId: json['request_id'] as int?,
       sparePartModelID: json['sparePartModelID'] as int?,
-      updatedAt: json['updatedAt'] as String?,
+      supplier: json['supplier'] == null
+          ? null
+          : Supplier.fromJson(json['supplier'] as Map<String, dynamic>),
+      supplierId: json['supplier_id'] as int?,
     );
 
 Map<String, dynamic> _$SparePartAuditToJson(SparePartAudit instance) =>
@@ -1314,8 +1457,11 @@ Map<String, dynamic> _$SparePartAuditToJson(SparePartAudit instance) =>
       'actionID': instance.actionID,
       'barcode': instance.barcode,
       'reference': instance.reference,
+      'request': instance.request?.toJson(),
+      'request_id': instance.requestId,
       'sparePartModelID': instance.sparePartModelID,
-      'updatedAt': instance.updatedAt,
+      'supplier': instance.supplier?.toJson(),
+      'supplier_id': instance.supplierId,
     };
 
 SparePartRequest _$SparePartRequestFromJson(Map<String, dynamic> json) =>
@@ -1363,8 +1509,15 @@ SparePartRequestAudit _$SparePartRequestAuditFromJson(
       action: json['action'] as String?,
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
+      requestBy: json['request_by'] == null
+          ? null
+          : Employee.fromJson(json['request_by'] as Map<String, dynamic>),
+      requestById: json['request_by_id'] as int?,
+      spareParts: (json['spare_parts'] as List<dynamic>?)
+              ?.map((e) => SparePart.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       sparePartRequestModelID: json['sparePartRequestModelID'] as int?,
-      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$SparePartRequestAuditToJson(
@@ -1373,8 +1526,10 @@ Map<String, dynamic> _$SparePartRequestAuditToJson(
       'action': instance.action,
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
+      'request_by': instance.requestBy?.toJson(),
+      'request_by_id': instance.requestById,
+      'spare_parts': instance.spareParts?.map((e) => e.toJson()).toList(),
       'sparePartRequestModelID': instance.sparePartRequestModelID,
-      'updatedAt': instance.updatedAt,
     };
 
 SparePartRequestResponse _$SparePartRequestResponseFromJson(
@@ -1499,8 +1654,11 @@ SupplierAudit _$SupplierAuditFromJson(Map<String, dynamic> json) =>
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
       name: json['name'] as String?,
+      spareParts: (json['spare_parts'] as List<dynamic>?)
+              ?.map((e) => SparePart.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       supplierModelID: json['supplierModelID'] as int?,
-      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$SupplierAuditToJson(SupplierAudit instance) =>
@@ -1509,8 +1667,8 @@ Map<String, dynamic> _$SupplierAuditToJson(SupplierAudit instance) =>
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
       'name': instance.name,
+      'spare_parts': instance.spareParts?.map((e) => e.toJson()).toList(),
       'supplierModelID': instance.supplierModelID,
-      'updatedAt': instance.updatedAt,
     };
 
 SupplierResponse _$SupplierResponseFromJson(Map<String, dynamic> json) =>
@@ -1602,18 +1760,40 @@ TaskAudit _$TaskAuditFromJson(Map<String, dynamic> json) => TaskAudit(
       action: json['action'] as String?,
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
+      attachedTo: (json['attached_to'] as List<dynamic>?)
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
       label: json['label'] as String?,
+      parentTaskID: json['parentTaskID'] as int?,
+      subTasks: (json['subTasks'] as List<dynamic>?)
+              ?.map((e) => Task.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       taskModelID: json['taskModelID'] as int?,
-      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
     );
 
 Map<String, dynamic> _$TaskAuditToJson(TaskAudit instance) => <String, dynamic>{
       'action': instance.action,
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
+      'attached_to': instance.attachedTo?.map((e) => e.toJson()).toList(),
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
       'label': instance.label,
+      'parentTaskID': instance.parentTaskID,
+      'subTasks': instance.subTasks?.map((e) => e.toJson()).toList(),
       'taskModelID': instance.taskModelID,
-      'updatedAt': instance.updatedAt,
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
     };
 
 TaskResponse _$TaskResponseFromJson(Map<String, dynamic> json) => TaskResponse(
@@ -1938,16 +2118,35 @@ VehicleAudit _$VehicleAuditFromJson(Map<String, dynamic> json) => VehicleAudit(
       chrono: json['chrono'] as String?,
       collectionDate: json['collectionDate'] as String?,
       commercialName: json['commercialName'] as String?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
+      deletedBy: json['deleted_by'] == null
+          ? null
+          : Employee.fromJson(json['deleted_by'] as Map<String, dynamic>),
+      deletedById: json['deleted_by_id'] as int?,
       deliveryDate: json['deliveryDate'] as String?,
       expertise: json['expertise'] as bool?,
       firstCirculation: json['firstCirculation'] as String?,
       mileage: json['mileage'] as int?,
       note: json['note'] as String?,
+      owner: json['owner'] == null
+          ? null
+          : Owner.fromJson(json['owner'] as Map<String, dynamic>),
+      ownerId: json['owner_id'] as int?,
       procedureVe: json['procedureVe'] as bool?,
       registration: json['registration'] as String?,
       serialNumber: json['serialNumber'] as String?,
       soldAt: json['soldAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      updatedBy: json['updated_by'] == null
+          ? null
+          : Employee.fromJson(json['updated_by'] as Map<String, dynamic>),
+      updatedById: json['updated_by_id'] as int?,
+      vehicleTasks: (json['vehicle_tasks'] as List<dynamic>?)
+              ?.map((e) => VehicleTask.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       vehicleModelID: json['vehicleModelID'] as int?,
     );
 
@@ -1959,16 +2158,24 @@ Map<String, dynamic> _$VehicleAuditToJson(VehicleAudit instance) =>
       'chrono': instance.chrono,
       'collectionDate': instance.collectionDate,
       'commercialName': instance.commercialName,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
+      'deleted_by': instance.deletedBy?.toJson(),
+      'deleted_by_id': instance.deletedById,
       'deliveryDate': instance.deliveryDate,
       'expertise': instance.expertise,
       'firstCirculation': instance.firstCirculation,
       'mileage': instance.mileage,
       'note': instance.note,
+      'owner': instance.owner?.toJson(),
+      'owner_id': instance.ownerId,
       'procedureVe': instance.procedureVe,
       'registration': instance.registration,
       'serialNumber': instance.serialNumber,
       'soldAt': instance.soldAt,
-      'updatedAt': instance.updatedAt,
+      'updated_by': instance.updatedBy?.toJson(),
+      'updated_by_id': instance.updatedById,
+      'vehicle_tasks': instance.vehicleTasks?.map((e) => e.toJson()).toList(),
       'vehicleModelID': instance.vehicleModelID,
     };
 
@@ -2127,11 +2334,26 @@ VehicleTaskAudit _$VehicleTaskAuditFromJson(Map<String, dynamic> json) =>
       action: json['action'] as String?,
       actionAt: json['actionAt'] as String?,
       actionID: json['actionID'] as int?,
+      assignedTo: json['assigned_to'] == null
+          ? null
+          : Employee.fromJson(json['assigned_to'] as Map<String, dynamic>),
+      assignedToId: json['assigned_to_id'] as int?,
+      createdBy: json['created_by'] == null
+          ? null
+          : Employee.fromJson(json['created_by'] as Map<String, dynamic>),
+      createdById: json['created_by_id'] as int?,
       deleted: json['deleted'] as bool?,
       finishedAt: json['finishedAt'] as String?,
       note: json['note'] as String?,
       startedAt: json['startedAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      task: json['task'] == null
+          ? null
+          : Task.fromJson(json['task'] as Map<String, dynamic>),
+      taskId: json['task_id'] as int?,
+      vehicle: json['vehicle'] == null
+          ? null
+          : Vehicle.fromJson(json['vehicle'] as Map<String, dynamic>),
+      vehicleId: json['vehicle_id'] as int?,
       vehicleTaskModelID: json['vehicleTaskModelID'] as int?,
     );
 
@@ -2140,11 +2362,18 @@ Map<String, dynamic> _$VehicleTaskAuditToJson(VehicleTaskAudit instance) =>
       'action': instance.action,
       'actionAt': instance.actionAt,
       'actionID': instance.actionID,
+      'assigned_to': instance.assignedTo?.toJson(),
+      'assigned_to_id': instance.assignedToId,
+      'created_by': instance.createdBy?.toJson(),
+      'created_by_id': instance.createdById,
       'deleted': instance.deleted,
       'finishedAt': instance.finishedAt,
       'note': instance.note,
       'startedAt': instance.startedAt,
-      'updatedAt': instance.updatedAt,
+      'task': instance.task?.toJson(),
+      'task_id': instance.taskId,
+      'vehicle': instance.vehicle?.toJson(),
+      'vehicle_id': instance.vehicleId,
       'vehicleTaskModelID': instance.vehicleTaskModelID,
     };
 

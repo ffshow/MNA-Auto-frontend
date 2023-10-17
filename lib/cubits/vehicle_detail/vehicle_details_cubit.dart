@@ -60,40 +60,4 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
       emit(VehicleDetailsState.failed(e.toString()));
     }
   }
-
-  Future<void> patchTask(int id, VehicleTask task) async {
-    if (state is _Loaded) {
-      final VehicleResponse res = (state as _Loaded).response;
-      final List<VehicleTask> tasks = List.from(res.vehicleTasks ?? []);
-      final int index = tasks.indexWhere((e) => e.id == id);
-      if (index > -1) {
-        try {
-          final Response<VehicleTaskResponse> response =
-              await _swagger.apiVehicleTaskIdPatch(
-            id: id,
-            vehicleTaskModel: task,
-          );
-          if (response.isSuccessful) {
-            tasks.removeAt(index);
-            tasks.insert(index, task);
-            emit(VehicleDetailsState.loaded(res.copyWith(vehicleTasks: tasks)));
-          } else {
-            //TODO: handle this case
-          }
-        } on Exception catch (e) {
-          //TODO: handle this case
-        }
-      }
-    }
-  }
-
-  Future<void> attachToTasks(int id, List<CreateVehicleTask> tasks) async {
-    try {
-      final Response<List<VehicleTaskResponse>> res =
-          await _swagger.apiVehicleTaskImportPost(vehicleTaskModel: tasks);
-      if (res.isSuccessful) {
-        // getVehicle(id);
-      }
-    } catch (e) {}
-  }
 }

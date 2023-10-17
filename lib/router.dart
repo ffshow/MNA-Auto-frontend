@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:mna/cubits/cubits.dart';
 import 'package:mna/pages/pages.dart';
-import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
 import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/client_index.dart';
 

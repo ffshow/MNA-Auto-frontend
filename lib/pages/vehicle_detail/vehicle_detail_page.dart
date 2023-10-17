@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mna/cubits/task/task_cubit.dart';
-import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
+import 'package:mna/cubits/cubits.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:mna/utils/extensions.dart';
 import 'package:mna/utils/style.dart';
@@ -28,7 +27,12 @@ class VehicleDetailPage extends StatelessWidget {
             );
           },
           loaded: (VehicleResponse response) {
-            return _VehicleDetailsWidget(response: response);
+            return BlocProvider<VehicleTaskCubit>(
+              create: (BuildContext context) => VehicleTaskCubit(
+                RepositoryProvider.of<Swagger>(context),
+              ),
+              child: _VehicleDetailsWidget(response: response),
+            );
           },
           failed: (String error) {
             return Scaffold(
@@ -59,136 +63,150 @@ class _VehicleDetailsWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text(response.registration ?? ''),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: const Text('Owner'),
-                        title: Text(response.owner?.email ?? ''),
-                      ),
-                      ListTile(
-                        leading: const Text('Mileage'),
-                        title: Text(response.mileage?.toString() ?? ''),
-                      ),
-                      ListTile(
-                        leading: const Text('Commercial name'),
-                        title: Text(response.commercialName ?? ''),
-                      ),
-                      ListTile(
-                        leading: const Text('Created by'),
-                        title: Text(response.createdBy?.name ?? ''),
-                        trailing: Text(response.createdAt.dateTime),
-                      ),
-                      ListTile(
-                        leading: const Text('Updated by'),
-                        title: Text(response.updatedBy?.name ?? ''),
-                        trailing: Text(response.updatedAt.dateTime),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+      body: BlocListener<VehicleTaskCubit, VehicleTaskState>(
+        listener: (BuildContext context, VehicleTaskState state) {
+          state.when(
+            failed: (String error) {
+              final SnackBar snackBar = SnackBar(
+                content: Text("Failed: $error"),
+              );
+              ScaffoldMessenger.maybeOf(context)?.showSnackBar(snackBar);
+            },
+            initial: () => null,
+            success: () => null,
+          );
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          leading: const Text('Owner'),
+                          title: Text(response.owner?.email ?? ''),
+                        ),
+                        ListTile(
+                          leading: const Text('Mileage'),
+                          title: Text(response.mileage?.toString() ?? ''),
+                        ),
+                        ListTile(
+                          leading: const Text('Commercial name'),
+                          title: Text(response.commercialName ?? ''),
+                        ),
+                        ListTile(
+                          leading: const Text('Created by'),
+                          title: Text(response.createdBy?.name ?? ''),
+                          trailing: Text(response.createdAt.dateTime),
+                        ),
+                        ListTile(
+                          leading: const Text('Updated by'),
+                          title: Text(response.updatedBy?.name ?? ''),
+                          trailing: Text(response.updatedAt.dateTime),
+                        ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PrettyQrView.data(
-                        data: response.id!.toString(),
+                  ),
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PrettyQrView.data(
+                          data: response.id!.toString(),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ListTile(
-                  title: const Text("••• Tasks"),
-                  trailing: IconButton(
-                    tooltip: 'Add tasks',
-                    onPressed: () {
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListTile(
+                    title: const Text("••• Tasks"),
+                    trailing: IconButton(
+                      tooltip: 'Add tasks',
+                      onPressed: () {
+                        addTask(
+                          context,
+                          response.id!,
+                          response.vehicleTasks,
+                        );
+                      },
+                      icon: const Icon(Icons.add_task),
+                    ),
+                    onTap: () {
                       addTask(
                         context,
                         response.id!,
                         response.vehicleTasks,
                       );
                     },
-                    icon: const Icon(Icons.add_task),
                   ),
-                  onTap: () {
-                    addTask(
-                      context,
-                      response.id!,
-                      response.vehicleTasks,
-                    );
-                  },
-                ),
-                if (response.vehicleTasks?.isNotEmpty ?? false)
-                  ListTile(
-                    title: const Text("Vehicle Tasks"),
-                    trailing: Text(response.statusText),
-                  ),
-                if (response.vehicleTasks?.isEmpty ?? false)
-                  const ListTile(
-                    title: Text("Vehicle doesn't attached to any tasks"),
-                  ),
-                for (final VehicleTask e
-                    in response.vehicleTasks ?? <VehicleTask>[])
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8,
+                  if (response.vehicleTasks?.isNotEmpty ?? false)
+                    ListTile(
+                      title: const Text("Vehicle Tasks"),
+                      trailing: Text(response.statusText),
                     ),
-                    child: ExpansionTile(
-                      leading: Icon(
-                        Icons.circle,
-                        color: e.color,
+                  if (response.vehicleTasks?.isEmpty ?? false)
+                    const ListTile(
+                      title: Text("Vehicle doesn't attached to any tasks"),
+                    ),
+                  for (final VehicleTask e
+                      in response.vehicleTasks ?? <VehicleTask>[])
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8,
                       ),
-                      title: Text(e.task?.label ?? ''),
-                      subtitle: e.assignedTo != null
-                          ? Text(
-                              'Assigned to: ${e.assignedTo?.name}',
-                            )
-                          : const Text('• Not assigned to an employee'),
-                      children: <Widget>[
-                        ListTile(
-                          title: Text(
-                            '• Added by: ${e.createdBy?.name}, at ${e.createdAt.dateTime}',
-                          ),
+                      child: ExpansionTile(
+                        leading: Icon(
+                          Icons.circle,
+                          color: e.color,
                         ),
-                        if (e.started)
+                        title: Text(e.task?.label ?? ''),
+                        subtitle: e.assignedTo != null
+                            ? Text(
+                                'Assigned to: ${e.assignedTo?.name}',
+                              )
+                            : const Text('• Not assigned to an employee'),
+                        children: <Widget>[
                           ListTile(
                             title: Text(
-                              '• Started by: ${e.createdBy?.name}, at ${e.startedAt.dateTime}',
+                              '• Added by: ${e.createdBy?.name}, at ${e.createdAt.dateTime}',
                             ),
                           ),
-                        if (e.finished)
-                          ListTile(
-                            title: Text(
-                              '• Finished by: ${e.createdBy?.name}, at ${e.finishedAt.dateTime}',
+                          if (e.started)
+                            ListTile(
+                              title: Text(
+                                '• Started by: ${e.createdBy?.name}, at ${e.startedAt.dateTime}',
+                              ),
                             ),
-                          ),
-                        VehicleTaskHandler(e: e),
-                        kH8,
-                      ],
+                          if (e.finished)
+                            ListTile(
+                              title: Text(
+                                '• Finished by: ${e.createdBy?.name}, at ${e.finishedAt.dateTime}',
+                              ),
+                            ),
+                          VehicleTaskHandler(e: e),
+                          kH8,
+                        ],
+                      ),
                     ),
-                  ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -199,7 +217,7 @@ class _VehicleDetailsWidget extends StatelessWidget {
     int vehicleID,
     List<VehicleTask>? vehicleTasks,
   ) async {
-    final VehicleDetailsCubit cubit = context.read<VehicleDetailsCubit>();
+    final VehicleTaskCubit cubit = context.read<VehicleTaskCubit>();
 
     final Set<int>? data = await showModalBottomSheet<Set<int>?>(
       context: context,
@@ -246,12 +264,9 @@ class _VehicleDetailsWidget extends StatelessWidget {
 }
 
 class VehicleTaskHandler extends StatelessWidget {
-  const VehicleTaskHandler({
-    super.key,
-    required this.e,
-  });
-
   final VehicleTask e;
+
+  const VehicleTaskHandler({super.key, required this.e});
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +325,7 @@ class VehicleTaskHandler extends StatelessWidget {
         d = e.copyWith(finishedAt: DateTime.now().toUtc());
         break;
     }
-    context.read<VehicleDetailsCubit>().patchTask(id, d);
+    context.read<VehicleTaskCubit>().patchTask(id, d);
   }
 }
 

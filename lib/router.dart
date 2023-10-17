@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:mna/pages/pages.dart';
 import 'package:mna/pages/vehicle_detail/cubit/vehicle_details_cubit.dart';
+import 'package:mna/services/notification_service.dart';
 import 'package:mna/swagger_generated_code/client_index.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -37,9 +38,12 @@ final GoRouter router = GoRouter(
                 if (intID == null) {
                   return _errorPageBuilder(context, null);
                 }
+                final NotificationService svc =
+                    context.read<NotificationService>();
                 return BlocProvider(
                   create: (context) => VehicleDetailsCubit(
                     RepositoryProvider.of<Swagger>(context),
+                    svc,
                   )..getVehicle(intID),
                   lazy: false,
                   child: VehicleDetailPage(

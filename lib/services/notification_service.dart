@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mna/cubits/notification/notification_cubit.dart';
+import 'package:mna/swagger_generated_code/swagger.swagger.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NotificationService {
@@ -31,6 +32,15 @@ class NotificationService {
       StreamController.broadcast();
   Stream get onCreateGarage => _onCreateGarageStream.stream;
 
+  late final StreamController<List<VehicleTask>> _onCreateVehicleTasksStream =
+      StreamController.broadcast();
+  Stream<List<VehicleTask>> get onCreateVehicleTasks =>
+      _onCreateVehicleTasksStream.stream;
+
+  late final StreamController<int> _onUpdateVehicleTaskStream =
+      StreamController.broadcast();
+  Stream get onUpdateVehicleTask => _onUpdateVehicleTaskStream.stream;
+
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
@@ -43,15 +53,31 @@ class NotificationService {
         topic = json['topic'] as String? ?? '';
         title = '$topic Notification';
         description = '';
-        switch (topic.split('.').first) {
-          case "Supplier":
+        switch (topic) {
+          case "Supplier.Create":
             _onCreateSupplierStream.sink.add(1);
-          case "Vehicle":
+          case "Supplier.CreateMany":
+            _onCreateSupplierStream.sink.add(1);
+          case "Vehicle.Create":
             _onCreateVehicleStream.sink.add(1);
-          case "Task":
+          case "Vehicle.CreateMany":
+            _onCreateVehicleStream.sink.add(1);
+          case "Task.Create":
             _onCreateTaskStream.sink.add(1);
-          case "Garage":
+          case "Task.CreateMany":
+            _onCreateTaskStream.sink.add(1);
+          case "Garage.Create":
             _onCreateGarageStream.sink.add(1);
+          case "Garage.CreateMany":
+            _onCreateGarageStream.sink.add(1);
+          case "VehicleTask.Create":
+          case "VehicleTask.CreateMany":
+            final List<VehicleTask> tasks = (json['data'] as List)
+                .map((e) => VehicleTask.fromJson(e))
+                .toList();
+            _onCreateVehicleTasksStream.sink.add(tasks);
+          case "VehicleTask.Update":
+            _onUpdateVehicleTaskStream.sink.add(1);
           default:
         }
         _notify();

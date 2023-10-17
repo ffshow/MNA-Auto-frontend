@@ -383,7 +383,9 @@ abstract class Swagger extends ChopperService {
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks nested data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
-  ///@param with_assigned_tasks with assigned_tasks data
+  ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
+  ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
+  ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_permission with permission data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts nested data
@@ -408,7 +410,9 @@ abstract class Swagger extends ChopperService {
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
     bool? withCreatedVehicleTasks,
-    bool? withAssignedTasks,
+    bool? withAssignedVehicleTasks,
+    bool? withDeletedVehicleTasks,
+    bool? withUpdatedVehicleTasks,
     bool? withPermission,
     bool? withRequests,
     bool? withRequestsSpareParts,
@@ -437,7 +441,9 @@ abstract class Swagger extends ChopperService {
         withUpdatedTasksSubTasks: withUpdatedTasksSubTasks,
         withUpdatedTasksAttachedTo: withUpdatedTasksAttachedTo,
         withCreatedVehicleTasks: withCreatedVehicleTasks,
-        withAssignedTasks: withAssignedTasks,
+        withAssignedVehicleTasks: withAssignedVehicleTasks,
+        withDeletedVehicleTasks: withDeletedVehicleTasks,
+        withUpdatedVehicleTasks: withUpdatedVehicleTasks,
         withPermission: withPermission,
         withRequests: withRequests,
         withRequestsSpareParts: withRequestsSpareParts,
@@ -464,7 +470,9 @@ abstract class Swagger extends ChopperService {
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks nested data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
-  ///@param with_assigned_tasks with assigned_tasks data
+  ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
+  ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
+  ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_permission with permission data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts nested data
@@ -493,7 +501,9 @@ abstract class Swagger extends ChopperService {
     @Query('with_updated_tasks_sub_tasks') bool? withUpdatedTasksSubTasks,
     @Query('with_updated_tasks_attached_to') bool? withUpdatedTasksAttachedTo,
     @Query('with_created_vehicle_tasks') bool? withCreatedVehicleTasks,
-    @Query('with_assigned_tasks') bool? withAssignedTasks,
+    @Query('with_assigned_vehicle_tasks') bool? withAssignedVehicleTasks,
+    @Query('with_deleted_vehicle_tasks') bool? withDeletedVehicleTasks,
+    @Query('with_updated_vehicle_tasks') bool? withUpdatedVehicleTasks,
     @Query('with_permission') bool? withPermission,
     @Query('with_requests') bool? withRequests,
     @Query('with_requests_spare_parts') bool? withRequestsSpareParts,
@@ -563,7 +573,9 @@ abstract class Swagger extends ChopperService {
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
-  ///@param with_assigned_tasks with assigned_tasks data
+  ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
+  ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
+  ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_permission with permission data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts data
@@ -591,7 +603,9 @@ abstract class Swagger extends ChopperService {
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
     bool? withCreatedVehicleTasks,
-    bool? withAssignedTasks,
+    bool? withAssignedVehicleTasks,
+    bool? withDeletedVehicleTasks,
+    bool? withUpdatedVehicleTasks,
     bool? withPermission,
     bool? withRequests,
     bool? withRequestsSpareParts,
@@ -623,7 +637,9 @@ abstract class Swagger extends ChopperService {
         withUpdatedTasksSubTasks: withUpdatedTasksSubTasks,
         withUpdatedTasksAttachedTo: withUpdatedTasksAttachedTo,
         withCreatedVehicleTasks: withCreatedVehicleTasks,
-        withAssignedTasks: withAssignedTasks,
+        withAssignedVehicleTasks: withAssignedVehicleTasks,
+        withDeletedVehicleTasks: withDeletedVehicleTasks,
+        withUpdatedVehicleTasks: withUpdatedVehicleTasks,
         withPermission: withPermission,
         withRequests: withRequests,
         withRequestsSpareParts: withRequestsSpareParts,
@@ -653,7 +669,9 @@ abstract class Swagger extends ChopperService {
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
-  ///@param with_assigned_tasks with assigned_tasks data
+  ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
+  ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
+  ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_permission with permission data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts data
@@ -685,7 +703,9 @@ abstract class Swagger extends ChopperService {
     @Query('with_updated_tasks_sub_tasks') bool? withUpdatedTasksSubTasks,
     @Query('with_updated_tasks_attached_to') bool? withUpdatedTasksAttachedTo,
     @Query('with_created_vehicle_tasks') bool? withCreatedVehicleTasks,
-    @Query('with_assigned_tasks') bool? withAssignedTasks,
+    @Query('with_assigned_vehicle_tasks') bool? withAssignedVehicleTasks,
+    @Query('with_deleted_vehicle_tasks') bool? withDeletedVehicleTasks,
+    @Query('with_updated_vehicle_tasks') bool? withUpdatedVehicleTasks,
     @Query('with_permission') bool? withPermission,
     @Query('with_requests') bool? withRequests,
     @Query('with_requests_spare_parts') bool? withRequestsSpareParts,
@@ -726,23 +746,23 @@ abstract class Swagger extends ChopperService {
   ///@param with_history with history data
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles nested data
-  ///@param with_city with city data
-  ///@param with_history_city with city history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_updated_by with updated_by data
   ///@param with_history_updated_by with updated_by history data
+  ///@param with_city with city data
+  ///@param with_history_city with city history data
   Future<chopper.Response<GarageResponse>> apiGarageIdGet({
     required int? id,
     bool? withHistory,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCity,
-    bool? withHistoryCity,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
     bool? withHistoryUpdatedBy,
+    bool? withCity,
+    bool? withHistoryCity,
   }) {
     generatedMapping.putIfAbsent(
         GarageResponse, () => GarageResponse.fromJsonFactory);
@@ -752,12 +772,12 @@ abstract class Swagger extends ChopperService {
         withHistory: withHistory,
         withOwners: withOwners,
         withOwnersVehicles: withOwnersVehicles,
-        withCity: withCity,
-        withHistoryCity: withHistoryCity,
         withCreatedBy: withCreatedBy,
         withHistoryCreatedBy: withHistoryCreatedBy,
         withUpdatedBy: withUpdatedBy,
-        withHistoryUpdatedBy: withHistoryUpdatedBy);
+        withHistoryUpdatedBy: withHistoryUpdatedBy,
+        withCity: withCity,
+        withHistoryCity: withHistoryCity);
   }
 
   ///Get garage by ID
@@ -765,24 +785,24 @@ abstract class Swagger extends ChopperService {
   ///@param with_history with history data
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles nested data
-  ///@param with_city with city data
-  ///@param with_history_city with city history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_updated_by with updated_by data
   ///@param with_history_updated_by with updated_by history data
+  ///@param with_city with city data
+  ///@param with_history_city with city history data
   @Get(path: '/api/garage/{id}')
   Future<chopper.Response<GarageResponse>> _apiGarageIdGet({
     @Path('id') required int? id,
     @Query('with_history') bool? withHistory,
     @Query('with_owners') bool? withOwners,
     @Query('with_owners_vehicles') bool? withOwnersVehicles,
-    @Query('with_city') bool? withCity,
-    @Query('with_history_city') bool? withHistoryCity,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_history_created_by') bool? withHistoryCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_history_updated_by') bool? withHistoryUpdatedBy,
+    @Query('with_city') bool? withCity,
+    @Query('with_history_city') bool? withHistoryCity,
   });
 
   ///Update a garage
@@ -833,12 +853,12 @@ abstract class Swagger extends ChopperService {
   ///@param with_history with history data
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles data
-  ///@param with_city with city data
-  ///@param with_history_city with city history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_updated_by with updated_by data
   ///@param with_history_updated_by with updated_by history data
+  ///@param with_city with city data
+  ///@param with_history_city with city history data
   Future<chopper.Response<ListGarage>> apiGarageListGet({
     int? page,
     int? perPage,
@@ -847,12 +867,12 @@ abstract class Swagger extends ChopperService {
     bool? withHistory,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCity,
-    bool? withHistoryCity,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
     bool? withHistoryUpdatedBy,
+    bool? withCity,
+    bool? withHistoryCity,
   }) {
     generatedMapping.putIfAbsent(ListGarage, () => ListGarage.fromJsonFactory);
 
@@ -864,12 +884,12 @@ abstract class Swagger extends ChopperService {
         withHistory: withHistory,
         withOwners: withOwners,
         withOwnersVehicles: withOwnersVehicles,
-        withCity: withCity,
-        withHistoryCity: withHistoryCity,
         withCreatedBy: withCreatedBy,
         withHistoryCreatedBy: withHistoryCreatedBy,
         withUpdatedBy: withUpdatedBy,
-        withHistoryUpdatedBy: withHistoryUpdatedBy);
+        withHistoryUpdatedBy: withHistoryUpdatedBy,
+        withCity: withCity,
+        withHistoryCity: withHistoryCity);
   }
 
   ///List garage
@@ -880,12 +900,12 @@ abstract class Swagger extends ChopperService {
   ///@param with_history with history data
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles data
-  ///@param with_city with city data
-  ///@param with_history_city with city history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_updated_by with updated_by data
   ///@param with_history_updated_by with updated_by history data
+  ///@param with_city with city data
+  ///@param with_history_city with city history data
   @Get(path: '/api/garage/list')
   Future<chopper.Response<ListGarage>> _apiGarageListGet({
     @Query('page') int? page,
@@ -895,12 +915,12 @@ abstract class Swagger extends ChopperService {
     @Query('with_history') bool? withHistory,
     @Query('with_owners') bool? withOwners,
     @Query('with_owners_vehicles') bool? withOwnersVehicles,
-    @Query('with_city') bool? withCity,
-    @Query('with_history_city') bool? withHistoryCity,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_history_created_by') bool? withHistoryCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_history_updated_by') bool? withHistoryUpdatedBy,
+    @Query('with_city') bool? withCity,
+    @Query('with_history_city') bool? withHistoryCity,
   });
 
   ///Total records
@@ -1258,17 +1278,17 @@ abstract class Swagger extends ChopperService {
   ///Get spare_part by ID
   ///@param id SparePart ID
   ///@param with_history with history data
-  ///@param with_request with request data
-  ///@param with_history_request with request history data
   ///@param with_supplier with supplier data
   ///@param with_history_supplier with supplier history data
+  ///@param with_request with request data
+  ///@param with_history_request with request history data
   Future<chopper.Response<SparePartResponse>> apiSparePartIdGet({
     required int? id,
     bool? withHistory,
-    bool? withRequest,
-    bool? withHistoryRequest,
     bool? withSupplier,
     bool? withHistorySupplier,
+    bool? withRequest,
+    bool? withHistoryRequest,
   }) {
     generatedMapping.putIfAbsent(
         SparePartResponse, () => SparePartResponse.fromJsonFactory);
@@ -1276,27 +1296,27 @@ abstract class Swagger extends ChopperService {
     return _apiSparePartIdGet(
         id: id,
         withHistory: withHistory,
-        withRequest: withRequest,
-        withHistoryRequest: withHistoryRequest,
         withSupplier: withSupplier,
-        withHistorySupplier: withHistorySupplier);
+        withHistorySupplier: withHistorySupplier,
+        withRequest: withRequest,
+        withHistoryRequest: withHistoryRequest);
   }
 
   ///Get spare_part by ID
   ///@param id SparePart ID
   ///@param with_history with history data
-  ///@param with_request with request data
-  ///@param with_history_request with request history data
   ///@param with_supplier with supplier data
   ///@param with_history_supplier with supplier history data
+  ///@param with_request with request data
+  ///@param with_history_request with request history data
   @Get(path: '/api/spare_part/{id}')
   Future<chopper.Response<SparePartResponse>> _apiSparePartIdGet({
     @Path('id') required int? id,
     @Query('with_history') bool? withHistory,
-    @Query('with_request') bool? withRequest,
-    @Query('with_history_request') bool? withHistoryRequest,
     @Query('with_supplier') bool? withSupplier,
     @Query('with_history_supplier') bool? withHistorySupplier,
+    @Query('with_request') bool? withRequest,
+    @Query('with_history_request') bool? withHistoryRequest,
   });
 
   ///Update a spare_part
@@ -1345,20 +1365,20 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_history with history data
-  ///@param with_request with request data
-  ///@param with_history_request with request history data
   ///@param with_supplier with supplier data
   ///@param with_history_supplier with supplier history data
+  ///@param with_request with request data
+  ///@param with_history_request with request history data
   Future<chopper.Response<ListSparePart>> apiSparePartListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? withHistory,
-    bool? withRequest,
-    bool? withHistoryRequest,
     bool? withSupplier,
     bool? withHistorySupplier,
+    bool? withRequest,
+    bool? withHistoryRequest,
   }) {
     generatedMapping.putIfAbsent(
         ListSparePart, () => ListSparePart.fromJsonFactory);
@@ -1369,10 +1389,10 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withHistory: withHistory,
-        withRequest: withRequest,
-        withHistoryRequest: withHistoryRequest,
         withSupplier: withSupplier,
-        withHistorySupplier: withHistorySupplier);
+        withHistorySupplier: withHistorySupplier,
+        withRequest: withRequest,
+        withHistoryRequest: withHistoryRequest);
   }
 
   ///List spare_part
@@ -1381,10 +1401,10 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_history with history data
-  ///@param with_request with request data
-  ///@param with_history_request with request history data
   ///@param with_supplier with supplier data
   ///@param with_history_supplier with supplier history data
+  ///@param with_request with request data
+  ///@param with_history_request with request history data
   @Get(path: '/api/spare_part/list')
   Future<chopper.Response<ListSparePart>> _apiSparePartListGet({
     @Query('page') int? page,
@@ -1392,10 +1412,10 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_history') bool? withHistory,
-    @Query('with_request') bool? withRequest,
-    @Query('with_history_request') bool? withHistoryRequest,
     @Query('with_supplier') bool? withSupplier,
     @Query('with_history_supplier') bool? withHistorySupplier,
+    @Query('with_request') bool? withRequest,
+    @Query('with_history_request') bool? withHistoryRequest,
   });
 
   ///Total records
@@ -1928,6 +1948,18 @@ abstract class Swagger extends ChopperService {
   @Get(path: '/api/task/total')
   Future<chopper.Response<TotalCount>> _apiTaskTotalGet();
 
+  ///Seed tasks
+  Future<chopper.Response<Object>> apiTasksSeedPost() {
+    return _apiTasksSeedPost();
+  }
+
+  ///Seed tasks
+  @Post(
+    path: '/api/tasks_seed',
+    optionalBody: true,
+  )
+  Future<chopper.Response<Object>> _apiTasksSeedPost();
+
   ///Create a new vehicle
   ///@param vehicle_model Register vehicle
   Future<chopper.Response<VehicleResponse>> apiVehiclePost(
@@ -2171,25 +2203,33 @@ abstract class Swagger extends ChopperService {
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
   ///@param with_history with history data
-  ///@param with_vehicle with vehicle data
-  ///@param with_history_vehicle with vehicle history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_assigned_to with assigned_to data
   ///@param with_history_assigned_to with assigned_to history data
+  ///@param with_deleted_by with deleted_by data
+  ///@param with_history_deleted_by with deleted_by history data
+  ///@param with_updated_by with updated_by data
+  ///@param with_history_updated_by with updated_by history data
   ///@param with_task with task data
   ///@param with_history_task with task history data
+  ///@param with_vehicle with vehicle data
+  ///@param with_history_vehicle with vehicle history data
   Future<chopper.Response<VehicleTaskResponse>> apiVehicleTaskIdGet({
     required int? id,
     bool? withHistory,
-    bool? withVehicle,
-    bool? withHistoryVehicle,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withAssignedTo,
     bool? withHistoryAssignedTo,
+    bool? withDeletedBy,
+    bool? withHistoryDeletedBy,
+    bool? withUpdatedBy,
+    bool? withHistoryUpdatedBy,
     bool? withTask,
     bool? withHistoryTask,
+    bool? withVehicle,
+    bool? withHistoryVehicle,
   }) {
     generatedMapping.putIfAbsent(
         VehicleTaskResponse, () => VehicleTaskResponse.fromJsonFactory);
@@ -2197,39 +2237,51 @@ abstract class Swagger extends ChopperService {
     return _apiVehicleTaskIdGet(
         id: id,
         withHistory: withHistory,
-        withVehicle: withVehicle,
-        withHistoryVehicle: withHistoryVehicle,
         withCreatedBy: withCreatedBy,
         withHistoryCreatedBy: withHistoryCreatedBy,
         withAssignedTo: withAssignedTo,
         withHistoryAssignedTo: withHistoryAssignedTo,
+        withDeletedBy: withDeletedBy,
+        withHistoryDeletedBy: withHistoryDeletedBy,
+        withUpdatedBy: withUpdatedBy,
+        withHistoryUpdatedBy: withHistoryUpdatedBy,
         withTask: withTask,
-        withHistoryTask: withHistoryTask);
+        withHistoryTask: withHistoryTask,
+        withVehicle: withVehicle,
+        withHistoryVehicle: withHistoryVehicle);
   }
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
   ///@param with_history with history data
-  ///@param with_vehicle with vehicle data
-  ///@param with_history_vehicle with vehicle history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_assigned_to with assigned_to data
   ///@param with_history_assigned_to with assigned_to history data
+  ///@param with_deleted_by with deleted_by data
+  ///@param with_history_deleted_by with deleted_by history data
+  ///@param with_updated_by with updated_by data
+  ///@param with_history_updated_by with updated_by history data
   ///@param with_task with task data
   ///@param with_history_task with task history data
+  ///@param with_vehicle with vehicle data
+  ///@param with_history_vehicle with vehicle history data
   @Get(path: '/api/vehicle_task/{id}')
   Future<chopper.Response<VehicleTaskResponse>> _apiVehicleTaskIdGet({
     @Path('id') required int? id,
     @Query('with_history') bool? withHistory,
-    @Query('with_vehicle') bool? withVehicle,
-    @Query('with_history_vehicle') bool? withHistoryVehicle,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_history_created_by') bool? withHistoryCreatedBy,
     @Query('with_assigned_to') bool? withAssignedTo,
     @Query('with_history_assigned_to') bool? withHistoryAssignedTo,
+    @Query('with_deleted_by') bool? withDeletedBy,
+    @Query('with_history_deleted_by') bool? withHistoryDeletedBy,
+    @Query('with_updated_by') bool? withUpdatedBy,
+    @Query('with_history_updated_by') bool? withHistoryUpdatedBy,
     @Query('with_task') bool? withTask,
     @Query('with_history_task') bool? withHistoryTask,
+    @Query('with_vehicle') bool? withVehicle,
+    @Query('with_history_vehicle') bool? withHistoryVehicle,
   });
 
   ///Update a vehicle_task
@@ -2278,28 +2330,36 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_history with history data
-  ///@param with_vehicle with vehicle data
-  ///@param with_history_vehicle with vehicle history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_assigned_to with assigned_to data
   ///@param with_history_assigned_to with assigned_to history data
+  ///@param with_deleted_by with deleted_by data
+  ///@param with_history_deleted_by with deleted_by history data
+  ///@param with_updated_by with updated_by data
+  ///@param with_history_updated_by with updated_by history data
   ///@param with_task with task data
   ///@param with_history_task with task history data
+  ///@param with_vehicle with vehicle data
+  ///@param with_history_vehicle with vehicle history data
   Future<chopper.Response<ListVehicleTask>> apiVehicleTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? withHistory,
-    bool? withVehicle,
-    bool? withHistoryVehicle,
     bool? withCreatedBy,
     bool? withHistoryCreatedBy,
     bool? withAssignedTo,
     bool? withHistoryAssignedTo,
+    bool? withDeletedBy,
+    bool? withHistoryDeletedBy,
+    bool? withUpdatedBy,
+    bool? withHistoryUpdatedBy,
     bool? withTask,
     bool? withHistoryTask,
+    bool? withVehicle,
+    bool? withHistoryVehicle,
   }) {
     generatedMapping.putIfAbsent(
         ListVehicleTask, () => ListVehicleTask.fromJsonFactory);
@@ -2310,14 +2370,18 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withHistory: withHistory,
-        withVehicle: withVehicle,
-        withHistoryVehicle: withHistoryVehicle,
         withCreatedBy: withCreatedBy,
         withHistoryCreatedBy: withHistoryCreatedBy,
         withAssignedTo: withAssignedTo,
         withHistoryAssignedTo: withHistoryAssignedTo,
+        withDeletedBy: withDeletedBy,
+        withHistoryDeletedBy: withHistoryDeletedBy,
+        withUpdatedBy: withUpdatedBy,
+        withHistoryUpdatedBy: withHistoryUpdatedBy,
         withTask: withTask,
-        withHistoryTask: withHistoryTask);
+        withHistoryTask: withHistoryTask,
+        withVehicle: withVehicle,
+        withHistoryVehicle: withHistoryVehicle);
   }
 
   ///List vehicle_task
@@ -2326,14 +2390,18 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_history with history data
-  ///@param with_vehicle with vehicle data
-  ///@param with_history_vehicle with vehicle history data
   ///@param with_created_by with created_by data
   ///@param with_history_created_by with created_by history data
   ///@param with_assigned_to with assigned_to data
   ///@param with_history_assigned_to with assigned_to history data
+  ///@param with_deleted_by with deleted_by data
+  ///@param with_history_deleted_by with deleted_by history data
+  ///@param with_updated_by with updated_by data
+  ///@param with_history_updated_by with updated_by history data
   ///@param with_task with task data
   ///@param with_history_task with task history data
+  ///@param with_vehicle with vehicle data
+  ///@param with_history_vehicle with vehicle history data
   @Get(path: '/api/vehicle_task/list')
   Future<chopper.Response<ListVehicleTask>> _apiVehicleTaskListGet({
     @Query('page') int? page,
@@ -2341,14 +2409,18 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_history') bool? withHistory,
-    @Query('with_vehicle') bool? withVehicle,
-    @Query('with_history_vehicle') bool? withHistoryVehicle,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_history_created_by') bool? withHistoryCreatedBy,
     @Query('with_assigned_to') bool? withAssignedTo,
     @Query('with_history_assigned_to') bool? withHistoryAssignedTo,
+    @Query('with_deleted_by') bool? withDeletedBy,
+    @Query('with_history_deleted_by') bool? withHistoryDeletedBy,
+    @Query('with_updated_by') bool? withUpdatedBy,
+    @Query('with_history_updated_by') bool? withHistoryUpdatedBy,
     @Query('with_task') bool? withTask,
     @Query('with_history_task') bool? withHistoryTask,
+    @Query('with_vehicle') bool? withVehicle,
+    @Query('with_history_vehicle') bool? withHistoryVehicle,
   });
 
   ///Total records

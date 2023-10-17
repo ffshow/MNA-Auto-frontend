@@ -809,17 +809,19 @@ extension $CreateCityExtension on CreateCity {
 class CreateEmployee {
   const CreateEmployee({
     this.account,
-    this.assignedTasks,
+    this.assignedVehicleTasks,
     this.createdGarages,
     this.createdTasks,
     this.createdVehicleTasks,
     this.createdVehicles,
+    this.deletedVehicleTasks,
     this.deletedVehicles,
     this.name,
     this.permission,
     this.requests,
     this.updatedGarages,
     this.updatedTasks,
+    this.updatedVehicleTasks,
     this.updatedVehicles,
   });
 
@@ -831,8 +833,8 @@ class CreateEmployee {
 
   @JsonKey(name: 'account')
   final Account? account;
-  @JsonKey(name: 'assigned_tasks', defaultValue: <VehicleTask>[])
-  final List<VehicleTask>? assignedTasks;
+  @JsonKey(name: 'assigned_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? assignedVehicleTasks;
   @JsonKey(name: 'created_garages', defaultValue: <Garage>[])
   final List<Garage>? createdGarages;
   @JsonKey(name: 'created_tasks', defaultValue: <Task>[])
@@ -841,6 +843,8 @@ class CreateEmployee {
   final List<VehicleTask>? createdVehicleTasks;
   @JsonKey(name: 'created_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? createdVehicles;
+  @JsonKey(name: 'deleted_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? deletedVehicleTasks;
   @JsonKey(name: 'deleted_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? deletedVehicles;
   @JsonKey(name: 'name')
@@ -853,6 +857,8 @@ class CreateEmployee {
   final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
+  @JsonKey(name: 'updated_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? updatedVehicleTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? updatedVehicles;
   static const fromJsonFactory = _$CreateEmployeeFromJson;
@@ -864,9 +870,9 @@ class CreateEmployee {
             (identical(other.account, account) ||
                 const DeepCollectionEquality()
                     .equals(other.account, account)) &&
-            (identical(other.assignedTasks, assignedTasks) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignedTasks, assignedTasks)) &&
+            (identical(other.assignedVehicleTasks, assignedVehicleTasks) ||
+                const DeepCollectionEquality().equals(
+                    other.assignedVehicleTasks, assignedVehicleTasks)) &&
             (identical(other.createdGarages, createdGarages) ||
                 const DeepCollectionEquality()
                     .equals(other.createdGarages, createdGarages)) &&
@@ -879,6 +885,9 @@ class CreateEmployee {
             (identical(other.createdVehicles, createdVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedVehicleTasks, deletedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicleTasks, deletedVehicleTasks)) &&
             (identical(other.deletedVehicles, deletedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedVehicles, deletedVehicles)) &&
@@ -896,6 +905,9 @@ class CreateEmployee {
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
+            (identical(other.updatedVehicleTasks, updatedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedVehicleTasks, updatedVehicleTasks)) &&
             (identical(other.updatedVehicles, updatedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedVehicles, updatedVehicles)));
@@ -907,17 +919,19 @@ class CreateEmployee {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(account) ^
-      const DeepCollectionEquality().hash(assignedTasks) ^
+      const DeepCollectionEquality().hash(assignedVehicleTasks) ^
       const DeepCollectionEquality().hash(createdGarages) ^
       const DeepCollectionEquality().hash(createdTasks) ^
       const DeepCollectionEquality().hash(createdVehicleTasks) ^
       const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedVehicleTasks) ^
       const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(permission) ^
       const DeepCollectionEquality().hash(requests) ^
       const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
+      const DeepCollectionEquality().hash(updatedVehicleTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
 }
@@ -925,52 +939,59 @@ class CreateEmployee {
 extension $CreateEmployeeExtension on CreateEmployee {
   CreateEmployee copyWith(
       {Account? account,
-      List<VehicleTask>? assignedTasks,
+      List<VehicleTask>? assignedVehicleTasks,
       List<Garage>? createdGarages,
       List<Task>? createdTasks,
       List<VehicleTask>? createdVehicleTasks,
       List<Vehicle>? createdVehicles,
+      List<VehicleTask>? deletedVehicleTasks,
       List<Vehicle>? deletedVehicles,
       String? name,
       List<Permission>? permission,
       List<SparePartRequest>? requests,
       List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
+      List<VehicleTask>? updatedVehicleTasks,
       List<Vehicle>? updatedVehicles}) {
     return CreateEmployee(
         account: account ?? this.account,
-        assignedTasks: assignedTasks ?? this.assignedTasks,
+        assignedVehicleTasks: assignedVehicleTasks ?? this.assignedVehicleTasks,
         createdGarages: createdGarages ?? this.createdGarages,
         createdTasks: createdTasks ?? this.createdTasks,
         createdVehicleTasks: createdVehicleTasks ?? this.createdVehicleTasks,
         createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedVehicleTasks: deletedVehicleTasks ?? this.deletedVehicleTasks,
         deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         name: name ?? this.name,
         permission: permission ?? this.permission,
         requests: requests ?? this.requests,
         updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
+        updatedVehicleTasks: updatedVehicleTasks ?? this.updatedVehicleTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
 
   CreateEmployee copyWithWrapped(
       {Wrapped<Account?>? account,
-      Wrapped<List<VehicleTask>?>? assignedTasks,
+      Wrapped<List<VehicleTask>?>? assignedVehicleTasks,
       Wrapped<List<Garage>?>? createdGarages,
       Wrapped<List<Task>?>? createdTasks,
       Wrapped<List<VehicleTask>?>? createdVehicleTasks,
       Wrapped<List<Vehicle>?>? createdVehicles,
+      Wrapped<List<VehicleTask>?>? deletedVehicleTasks,
       Wrapped<List<Vehicle>?>? deletedVehicles,
       Wrapped<String?>? name,
       Wrapped<List<Permission>?>? permission,
       Wrapped<List<SparePartRequest>?>? requests,
       Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
+      Wrapped<List<VehicleTask>?>? updatedVehicleTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return CreateEmployee(
         account: (account != null ? account.value : this.account),
-        assignedTasks:
-            (assignedTasks != null ? assignedTasks.value : this.assignedTasks),
+        assignedVehicleTasks: (assignedVehicleTasks != null
+            ? assignedVehicleTasks.value
+            : this.assignedVehicleTasks),
         createdGarages: (createdGarages != null
             ? createdGarages.value
             : this.createdGarages),
@@ -982,6 +1003,9 @@ extension $CreateEmployeeExtension on CreateEmployee {
         createdVehicles: (createdVehicles != null
             ? createdVehicles.value
             : this.createdVehicles),
+        deletedVehicleTasks: (deletedVehicleTasks != null
+            ? deletedVehicleTasks.value
+            : this.deletedVehicleTasks),
         deletedVehicles: (deletedVehicles != null
             ? deletedVehicles.value
             : this.deletedVehicles),
@@ -993,6 +1017,9 @@ extension $CreateEmployeeExtension on CreateEmployee {
             : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
+        updatedVehicleTasks: (updatedVehicleTasks != null
+            ? updatedVehicleTasks.value
+            : this.updatedVehicleTasks),
         updatedVehicles: (updatedVehicles != null
             ? updatedVehicles.value
             : this.updatedVehicles));
@@ -1960,11 +1987,15 @@ class CreateVehicleTask {
     this.createdBy,
     this.createdById,
     this.deleted,
+    this.deletedBy,
+    this.deletedById,
     this.finishedAt,
     this.note,
     this.startedAt,
     this.task,
     this.taskId,
+    this.updatedBy,
+    this.updatedById,
     this.vehicle,
     this.vehicleId,
   });
@@ -1985,6 +2016,10 @@ class CreateVehicleTask {
   final int? createdById;
   @JsonKey(name: 'deleted')
   final bool? deleted;
+  @JsonKey(name: 'deleted_by')
+  final Employee? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'finished_at')
   final DateTime? finishedAt;
   @JsonKey(name: 'note')
@@ -1995,6 +2030,10 @@ class CreateVehicleTask {
   final Task? task;
   @JsonKey(name: 'task_id')
   final int? taskId;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   @JsonKey(name: 'vehicle')
   final Vehicle? vehicle;
   @JsonKey(name: 'vehicle_id')
@@ -2020,6 +2059,12 @@ class CreateVehicleTask {
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.finishedAt, finishedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.finishedAt, finishedAt)) &&
@@ -2032,6 +2077,12 @@ class CreateVehicleTask {
                 const DeepCollectionEquality().equals(other.task, task)) &&
             (identical(other.taskId, taskId) ||
                 const DeepCollectionEquality().equals(other.taskId, taskId)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality()
                     .equals(other.vehicle, vehicle)) &&
@@ -2050,11 +2101,15 @@ class CreateVehicleTask {
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(finishedAt) ^
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(startedAt) ^
       const DeepCollectionEquality().hash(task) ^
       const DeepCollectionEquality().hash(taskId) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       const DeepCollectionEquality().hash(vehicle) ^
       const DeepCollectionEquality().hash(vehicleId) ^
       runtimeType.hashCode;
@@ -2067,11 +2122,15 @@ extension $CreateVehicleTaskExtension on CreateVehicleTask {
       Employee? createdBy,
       int? createdById,
       bool? deleted,
+      Employee? deletedBy,
+      int? deletedById,
       DateTime? finishedAt,
       String? note,
       DateTime? startedAt,
       Task? task,
       int? taskId,
+      Employee? updatedBy,
+      int? updatedById,
       Vehicle? vehicle,
       int? vehicleId}) {
     return CreateVehicleTask(
@@ -2080,11 +2139,15 @@ extension $CreateVehicleTaskExtension on CreateVehicleTask {
         createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         finishedAt: finishedAt ?? this.finishedAt,
         note: note ?? this.note,
         startedAt: startedAt ?? this.startedAt,
         task: task ?? this.task,
         taskId: taskId ?? this.taskId,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById,
         vehicle: vehicle ?? this.vehicle,
         vehicleId: vehicleId ?? this.vehicleId);
   }
@@ -2095,11 +2158,15 @@ extension $CreateVehicleTaskExtension on CreateVehicleTask {
       Wrapped<Employee?>? createdBy,
       Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
+      Wrapped<Employee?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<DateTime?>? finishedAt,
       Wrapped<String?>? note,
       Wrapped<DateTime?>? startedAt,
       Wrapped<Task?>? task,
       Wrapped<int?>? taskId,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById,
       Wrapped<Vehicle?>? vehicle,
       Wrapped<int?>? vehicleId}) {
     return CreateVehicleTask(
@@ -2110,11 +2177,17 @@ extension $CreateVehicleTaskExtension on CreateVehicleTask {
         createdById:
             (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
         note: (note != null ? note.value : this.note),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt),
         task: (task != null ? task.value : this.task),
         taskId: (taskId != null ? taskId.value : this.taskId),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById),
         vehicle: (vehicle != null ? vehicle.value : this.vehicle),
         vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId));
   }
@@ -2124,7 +2197,7 @@ extension $CreateVehicleTaskExtension on CreateVehicleTask {
 class Employee {
   const Employee({
     this.account,
-    this.assignedTasks,
+    this.assignedVehicleTasks,
     this.audit,
     this.createdAt,
     this.createdGarages,
@@ -2132,6 +2205,7 @@ class Employee {
     this.createdVehicleTasks,
     this.createdVehicles,
     this.deletedAt,
+    this.deletedVehicleTasks,
     this.deletedVehicles,
     this.id,
     this.name,
@@ -2140,6 +2214,7 @@ class Employee {
     this.updatedAt,
     this.updatedGarages,
     this.updatedTasks,
+    this.updatedVehicleTasks,
     this.updatedVehicles,
   });
 
@@ -2151,8 +2226,8 @@ class Employee {
 
   @JsonKey(name: 'account')
   final Account? account;
-  @JsonKey(name: 'assigned_tasks', defaultValue: <VehicleTask>[])
-  final List<VehicleTask>? assignedTasks;
+  @JsonKey(name: 'assigned_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? assignedVehicleTasks;
   @JsonKey(name: 'audit', defaultValue: <EmployeeAudit>[])
   final List<EmployeeAudit>? audit;
   @JsonKey(name: 'created_at')
@@ -2167,6 +2242,8 @@ class Employee {
   final List<Vehicle>? createdVehicles;
   @JsonKey(name: 'deleted_at')
   final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? deletedVehicleTasks;
   @JsonKey(name: 'deleted_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? deletedVehicles;
   @JsonKey(name: 'id')
@@ -2183,6 +2260,8 @@ class Employee {
   final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
+  @JsonKey(name: 'updated_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? updatedVehicleTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? updatedVehicles;
   static const fromJsonFactory = _$EmployeeFromJson;
@@ -2194,9 +2273,9 @@ class Employee {
             (identical(other.account, account) ||
                 const DeepCollectionEquality()
                     .equals(other.account, account)) &&
-            (identical(other.assignedTasks, assignedTasks) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignedTasks, assignedTasks)) &&
+            (identical(other.assignedVehicleTasks, assignedVehicleTasks) ||
+                const DeepCollectionEquality().equals(
+                    other.assignedVehicleTasks, assignedVehicleTasks)) &&
             (identical(other.audit, audit) ||
                 const DeepCollectionEquality().equals(other.audit, audit)) &&
             (identical(other.createdAt, createdAt) ||
@@ -2217,6 +2296,9 @@ class Employee {
             (identical(other.deletedAt, deletedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedVehicleTasks, deletedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicleTasks, deletedVehicleTasks)) &&
             (identical(other.deletedVehicles, deletedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedVehicles, deletedVehicles)) &&
@@ -2239,6 +2321,9 @@ class Employee {
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
+            (identical(other.updatedVehicleTasks, updatedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedVehicleTasks, updatedVehicleTasks)) &&
             (identical(other.updatedVehicles, updatedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedVehicles, updatedVehicles)));
@@ -2250,7 +2335,7 @@ class Employee {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(account) ^
-      const DeepCollectionEquality().hash(assignedTasks) ^
+      const DeepCollectionEquality().hash(assignedVehicleTasks) ^
       const DeepCollectionEquality().hash(audit) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(createdGarages) ^
@@ -2258,6 +2343,7 @@ class Employee {
       const DeepCollectionEquality().hash(createdVehicleTasks) ^
       const DeepCollectionEquality().hash(createdVehicles) ^
       const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedVehicleTasks) ^
       const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
@@ -2266,6 +2352,7 @@ class Employee {
       const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
+      const DeepCollectionEquality().hash(updatedVehicleTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
 }
@@ -2273,7 +2360,7 @@ class Employee {
 extension $EmployeeExtension on Employee {
   Employee copyWith(
       {Account? account,
-      List<VehicleTask>? assignedTasks,
+      List<VehicleTask>? assignedVehicleTasks,
       List<EmployeeAudit>? audit,
       DateTime? createdAt,
       List<Garage>? createdGarages,
@@ -2281,6 +2368,7 @@ extension $EmployeeExtension on Employee {
       List<VehicleTask>? createdVehicleTasks,
       List<Vehicle>? createdVehicles,
       GormDeletedAt? deletedAt,
+      List<VehicleTask>? deletedVehicleTasks,
       List<Vehicle>? deletedVehicles,
       int? id,
       String? name,
@@ -2289,10 +2377,11 @@ extension $EmployeeExtension on Employee {
       DateTime? updatedAt,
       List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
+      List<VehicleTask>? updatedVehicleTasks,
       List<Vehicle>? updatedVehicles}) {
     return Employee(
         account: account ?? this.account,
-        assignedTasks: assignedTasks ?? this.assignedTasks,
+        assignedVehicleTasks: assignedVehicleTasks ?? this.assignedVehicleTasks,
         audit: audit ?? this.audit,
         createdAt: createdAt ?? this.createdAt,
         createdGarages: createdGarages ?? this.createdGarages,
@@ -2300,6 +2389,7 @@ extension $EmployeeExtension on Employee {
         createdVehicleTasks: createdVehicleTasks ?? this.createdVehicleTasks,
         createdVehicles: createdVehicles ?? this.createdVehicles,
         deletedAt: deletedAt ?? this.deletedAt,
+        deletedVehicleTasks: deletedVehicleTasks ?? this.deletedVehicleTasks,
         deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         id: id ?? this.id,
         name: name ?? this.name,
@@ -2308,12 +2398,13 @@ extension $EmployeeExtension on Employee {
         updatedAt: updatedAt ?? this.updatedAt,
         updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
+        updatedVehicleTasks: updatedVehicleTasks ?? this.updatedVehicleTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
 
   Employee copyWithWrapped(
       {Wrapped<Account?>? account,
-      Wrapped<List<VehicleTask>?>? assignedTasks,
+      Wrapped<List<VehicleTask>?>? assignedVehicleTasks,
       Wrapped<List<EmployeeAudit>?>? audit,
       Wrapped<DateTime?>? createdAt,
       Wrapped<List<Garage>?>? createdGarages,
@@ -2321,6 +2412,7 @@ extension $EmployeeExtension on Employee {
       Wrapped<List<VehicleTask>?>? createdVehicleTasks,
       Wrapped<List<Vehicle>?>? createdVehicles,
       Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<List<VehicleTask>?>? deletedVehicleTasks,
       Wrapped<List<Vehicle>?>? deletedVehicles,
       Wrapped<int?>? id,
       Wrapped<String?>? name,
@@ -2329,11 +2421,13 @@ extension $EmployeeExtension on Employee {
       Wrapped<DateTime?>? updatedAt,
       Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
+      Wrapped<List<VehicleTask>?>? updatedVehicleTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return Employee(
         account: (account != null ? account.value : this.account),
-        assignedTasks:
-            (assignedTasks != null ? assignedTasks.value : this.assignedTasks),
+        assignedVehicleTasks: (assignedVehicleTasks != null
+            ? assignedVehicleTasks.value
+            : this.assignedVehicleTasks),
         audit: (audit != null ? audit.value : this.audit),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         createdGarages: (createdGarages != null
@@ -2348,6 +2442,9 @@ extension $EmployeeExtension on Employee {
             ? createdVehicles.value
             : this.createdVehicles),
         deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedVehicleTasks: (deletedVehicleTasks != null
+            ? deletedVehicleTasks.value
+            : this.deletedVehicleTasks),
         deletedVehicles: (deletedVehicles != null
             ? deletedVehicles.value
             : this.deletedVehicles),
@@ -2361,6 +2458,9 @@ extension $EmployeeExtension on Employee {
             : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
+        updatedVehicleTasks: (updatedVehicleTasks != null
+            ? updatedVehicleTasks.value
+            : this.updatedVehicleTasks),
         updatedVehicles: (updatedVehicles != null
             ? updatedVehicles.value
             : this.updatedVehicles));
@@ -2374,11 +2474,12 @@ class EmployeeAudit {
     this.action,
     this.actionAt,
     this.actionID,
-    this.assignedTasks,
+    this.assignedVehicleTasks,
     this.createdGarages,
     this.createdTasks,
     this.createdVehicleTasks,
     this.createdVehicles,
+    this.deletedVehicleTasks,
     this.deletedVehicles,
     this.employeeModelID,
     this.name,
@@ -2386,6 +2487,7 @@ class EmployeeAudit {
     this.requests,
     this.updatedGarages,
     this.updatedTasks,
+    this.updatedVehicleTasks,
     this.updatedVehicles,
   });
 
@@ -2403,8 +2505,8 @@ class EmployeeAudit {
   final String? actionAt;
   @JsonKey(name: 'actionID')
   final int? actionID;
-  @JsonKey(name: 'assigned_tasks', defaultValue: <VehicleTask>[])
-  final List<VehicleTask>? assignedTasks;
+  @JsonKey(name: 'assigned_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? assignedVehicleTasks;
   @JsonKey(name: 'created_garages', defaultValue: <Garage>[])
   final List<Garage>? createdGarages;
   @JsonKey(name: 'created_tasks', defaultValue: <Task>[])
@@ -2413,6 +2515,8 @@ class EmployeeAudit {
   final List<VehicleTask>? createdVehicleTasks;
   @JsonKey(name: 'created_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? createdVehicles;
+  @JsonKey(name: 'deleted_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? deletedVehicleTasks;
   @JsonKey(name: 'deleted_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? deletedVehicles;
   @JsonKey(name: 'employeeModelID')
@@ -2427,6 +2531,8 @@ class EmployeeAudit {
   final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
+  @JsonKey(name: 'updated_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? updatedVehicleTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? updatedVehicles;
   static const fromJsonFactory = _$EmployeeAuditFromJson;
@@ -2446,9 +2552,9 @@ class EmployeeAudit {
             (identical(other.actionID, actionID) ||
                 const DeepCollectionEquality()
                     .equals(other.actionID, actionID)) &&
-            (identical(other.assignedTasks, assignedTasks) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignedTasks, assignedTasks)) &&
+            (identical(other.assignedVehicleTasks, assignedVehicleTasks) ||
+                const DeepCollectionEquality().equals(
+                    other.assignedVehicleTasks, assignedVehicleTasks)) &&
             (identical(other.createdGarages, createdGarages) ||
                 const DeepCollectionEquality()
                     .equals(other.createdGarages, createdGarages)) &&
@@ -2461,6 +2567,9 @@ class EmployeeAudit {
             (identical(other.createdVehicles, createdVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.createdVehicles, createdVehicles)) &&
+            (identical(other.deletedVehicleTasks, deletedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicleTasks, deletedVehicleTasks)) &&
             (identical(other.deletedVehicles, deletedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedVehicles, deletedVehicles)) &&
@@ -2481,6 +2590,9 @@ class EmployeeAudit {
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
+            (identical(other.updatedVehicleTasks, updatedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedVehicleTasks, updatedVehicleTasks)) &&
             (identical(other.updatedVehicles, updatedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedVehicles, updatedVehicles)));
@@ -2495,11 +2607,12 @@ class EmployeeAudit {
       const DeepCollectionEquality().hash(action) ^
       const DeepCollectionEquality().hash(actionAt) ^
       const DeepCollectionEquality().hash(actionID) ^
-      const DeepCollectionEquality().hash(assignedTasks) ^
+      const DeepCollectionEquality().hash(assignedVehicleTasks) ^
       const DeepCollectionEquality().hash(createdGarages) ^
       const DeepCollectionEquality().hash(createdTasks) ^
       const DeepCollectionEquality().hash(createdVehicleTasks) ^
       const DeepCollectionEquality().hash(createdVehicles) ^
+      const DeepCollectionEquality().hash(deletedVehicleTasks) ^
       const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(employeeModelID) ^
       const DeepCollectionEquality().hash(name) ^
@@ -2507,6 +2620,7 @@ class EmployeeAudit {
       const DeepCollectionEquality().hash(requests) ^
       const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
+      const DeepCollectionEquality().hash(updatedVehicleTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
 }
@@ -2517,11 +2631,12 @@ extension $EmployeeAuditExtension on EmployeeAudit {
       String? action,
       String? actionAt,
       int? actionID,
-      List<VehicleTask>? assignedTasks,
+      List<VehicleTask>? assignedVehicleTasks,
       List<Garage>? createdGarages,
       List<Task>? createdTasks,
       List<VehicleTask>? createdVehicleTasks,
       List<Vehicle>? createdVehicles,
+      List<VehicleTask>? deletedVehicleTasks,
       List<Vehicle>? deletedVehicles,
       int? employeeModelID,
       String? name,
@@ -2529,17 +2644,19 @@ extension $EmployeeAuditExtension on EmployeeAudit {
       List<SparePartRequest>? requests,
       List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
+      List<VehicleTask>? updatedVehicleTasks,
       List<Vehicle>? updatedVehicles}) {
     return EmployeeAudit(
         account: account ?? this.account,
         action: action ?? this.action,
         actionAt: actionAt ?? this.actionAt,
         actionID: actionID ?? this.actionID,
-        assignedTasks: assignedTasks ?? this.assignedTasks,
+        assignedVehicleTasks: assignedVehicleTasks ?? this.assignedVehicleTasks,
         createdGarages: createdGarages ?? this.createdGarages,
         createdTasks: createdTasks ?? this.createdTasks,
         createdVehicleTasks: createdVehicleTasks ?? this.createdVehicleTasks,
         createdVehicles: createdVehicles ?? this.createdVehicles,
+        deletedVehicleTasks: deletedVehicleTasks ?? this.deletedVehicleTasks,
         deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         employeeModelID: employeeModelID ?? this.employeeModelID,
         name: name ?? this.name,
@@ -2547,6 +2664,7 @@ extension $EmployeeAuditExtension on EmployeeAudit {
         requests: requests ?? this.requests,
         updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
+        updatedVehicleTasks: updatedVehicleTasks ?? this.updatedVehicleTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
 
@@ -2555,11 +2673,12 @@ extension $EmployeeAuditExtension on EmployeeAudit {
       Wrapped<String?>? action,
       Wrapped<String?>? actionAt,
       Wrapped<int?>? actionID,
-      Wrapped<List<VehicleTask>?>? assignedTasks,
+      Wrapped<List<VehicleTask>?>? assignedVehicleTasks,
       Wrapped<List<Garage>?>? createdGarages,
       Wrapped<List<Task>?>? createdTasks,
       Wrapped<List<VehicleTask>?>? createdVehicleTasks,
       Wrapped<List<Vehicle>?>? createdVehicles,
+      Wrapped<List<VehicleTask>?>? deletedVehicleTasks,
       Wrapped<List<Vehicle>?>? deletedVehicles,
       Wrapped<int?>? employeeModelID,
       Wrapped<String?>? name,
@@ -2567,14 +2686,16 @@ extension $EmployeeAuditExtension on EmployeeAudit {
       Wrapped<List<SparePartRequest>?>? requests,
       Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
+      Wrapped<List<VehicleTask>?>? updatedVehicleTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return EmployeeAudit(
         account: (account != null ? account.value : this.account),
         action: (action != null ? action.value : this.action),
         actionAt: (actionAt != null ? actionAt.value : this.actionAt),
         actionID: (actionID != null ? actionID.value : this.actionID),
-        assignedTasks:
-            (assignedTasks != null ? assignedTasks.value : this.assignedTasks),
+        assignedVehicleTasks: (assignedVehicleTasks != null
+            ? assignedVehicleTasks.value
+            : this.assignedVehicleTasks),
         createdGarages: (createdGarages != null
             ? createdGarages.value
             : this.createdGarages),
@@ -2586,6 +2707,9 @@ extension $EmployeeAuditExtension on EmployeeAudit {
         createdVehicles: (createdVehicles != null
             ? createdVehicles.value
             : this.createdVehicles),
+        deletedVehicleTasks: (deletedVehicleTasks != null
+            ? deletedVehicleTasks.value
+            : this.deletedVehicleTasks),
         deletedVehicles: (deletedVehicles != null
             ? deletedVehicles.value
             : this.deletedVehicles),
@@ -2600,6 +2724,9 @@ extension $EmployeeAuditExtension on EmployeeAudit {
             : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
+        updatedVehicleTasks: (updatedVehicleTasks != null
+            ? updatedVehicleTasks.value
+            : this.updatedVehicleTasks),
         updatedVehicles: (updatedVehicles != null
             ? updatedVehicles.value
             : this.updatedVehicles));
@@ -2610,13 +2737,14 @@ extension $EmployeeAuditExtension on EmployeeAudit {
 class EmployeeResponse {
   const EmployeeResponse({
     this.account,
-    this.assignedTasks,
+    this.assignedVehicleTasks,
     this.createdAt,
     this.createdGarages,
     this.createdTasks,
     this.createdVehicleTasks,
     this.createdVehicles,
     this.deletedAt,
+    this.deletedVehicleTasks,
     this.deletedVehicles,
     this.history,
     this.id,
@@ -2626,6 +2754,7 @@ class EmployeeResponse {
     this.updatedAt,
     this.updatedGarages,
     this.updatedTasks,
+    this.updatedVehicleTasks,
     this.updatedVehicles,
   });
 
@@ -2637,8 +2766,8 @@ class EmployeeResponse {
 
   @JsonKey(name: 'account')
   final Account? account;
-  @JsonKey(name: 'assigned_tasks', defaultValue: <VehicleTask>[])
-  final List<VehicleTask>? assignedTasks;
+  @JsonKey(name: 'assigned_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? assignedVehicleTasks;
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @JsonKey(name: 'created_garages', defaultValue: <Garage>[])
@@ -2651,6 +2780,8 @@ class EmployeeResponse {
   final List<Vehicle>? createdVehicles;
   @JsonKey(name: 'deleted_at')
   final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? deletedVehicleTasks;
   @JsonKey(name: 'deleted_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? deletedVehicles;
   @JsonKey(name: 'history', defaultValue: <EmployeeAudit>[])
@@ -2669,6 +2800,8 @@ class EmployeeResponse {
   final List<Garage>? updatedGarages;
   @JsonKey(name: 'updated_tasks', defaultValue: <Task>[])
   final List<Task>? updatedTasks;
+  @JsonKey(name: 'updated_vehicle_tasks', defaultValue: <VehicleTask>[])
+  final List<VehicleTask>? updatedVehicleTasks;
   @JsonKey(name: 'updated_vehicles', defaultValue: <Vehicle>[])
   final List<Vehicle>? updatedVehicles;
   static const fromJsonFactory = _$EmployeeResponseFromJson;
@@ -2680,9 +2813,9 @@ class EmployeeResponse {
             (identical(other.account, account) ||
                 const DeepCollectionEquality()
                     .equals(other.account, account)) &&
-            (identical(other.assignedTasks, assignedTasks) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignedTasks, assignedTasks)) &&
+            (identical(other.assignedVehicleTasks, assignedVehicleTasks) ||
+                const DeepCollectionEquality().equals(
+                    other.assignedVehicleTasks, assignedVehicleTasks)) &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
@@ -2701,6 +2834,9 @@ class EmployeeResponse {
             (identical(other.deletedAt, deletedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedVehicleTasks, deletedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedVehicleTasks, deletedVehicleTasks)) &&
             (identical(other.deletedVehicles, deletedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedVehicles, deletedVehicles)) &&
@@ -2726,6 +2862,9 @@ class EmployeeResponse {
             (identical(other.updatedTasks, updatedTasks) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedTasks, updatedTasks)) &&
+            (identical(other.updatedVehicleTasks, updatedVehicleTasks) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedVehicleTasks, updatedVehicleTasks)) &&
             (identical(other.updatedVehicles, updatedVehicles) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedVehicles, updatedVehicles)));
@@ -2737,13 +2876,14 @@ class EmployeeResponse {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(account) ^
-      const DeepCollectionEquality().hash(assignedTasks) ^
+      const DeepCollectionEquality().hash(assignedVehicleTasks) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(createdGarages) ^
       const DeepCollectionEquality().hash(createdTasks) ^
       const DeepCollectionEquality().hash(createdVehicleTasks) ^
       const DeepCollectionEquality().hash(createdVehicles) ^
       const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedVehicleTasks) ^
       const DeepCollectionEquality().hash(deletedVehicles) ^
       const DeepCollectionEquality().hash(history) ^
       const DeepCollectionEquality().hash(id) ^
@@ -2753,6 +2893,7 @@ class EmployeeResponse {
       const DeepCollectionEquality().hash(updatedAt) ^
       const DeepCollectionEquality().hash(updatedGarages) ^
       const DeepCollectionEquality().hash(updatedTasks) ^
+      const DeepCollectionEquality().hash(updatedVehicleTasks) ^
       const DeepCollectionEquality().hash(updatedVehicles) ^
       runtimeType.hashCode;
 }
@@ -2760,13 +2901,14 @@ class EmployeeResponse {
 extension $EmployeeResponseExtension on EmployeeResponse {
   EmployeeResponse copyWith(
       {Account? account,
-      List<VehicleTask>? assignedTasks,
+      List<VehicleTask>? assignedVehicleTasks,
       DateTime? createdAt,
       List<Garage>? createdGarages,
       List<Task>? createdTasks,
       List<VehicleTask>? createdVehicleTasks,
       List<Vehicle>? createdVehicles,
       GormDeletedAt? deletedAt,
+      List<VehicleTask>? deletedVehicleTasks,
       List<Vehicle>? deletedVehicles,
       List<EmployeeAudit>? history,
       int? id,
@@ -2776,16 +2918,18 @@ extension $EmployeeResponseExtension on EmployeeResponse {
       DateTime? updatedAt,
       List<Garage>? updatedGarages,
       List<Task>? updatedTasks,
+      List<VehicleTask>? updatedVehicleTasks,
       List<Vehicle>? updatedVehicles}) {
     return EmployeeResponse(
         account: account ?? this.account,
-        assignedTasks: assignedTasks ?? this.assignedTasks,
+        assignedVehicleTasks: assignedVehicleTasks ?? this.assignedVehicleTasks,
         createdAt: createdAt ?? this.createdAt,
         createdGarages: createdGarages ?? this.createdGarages,
         createdTasks: createdTasks ?? this.createdTasks,
         createdVehicleTasks: createdVehicleTasks ?? this.createdVehicleTasks,
         createdVehicles: createdVehicles ?? this.createdVehicles,
         deletedAt: deletedAt ?? this.deletedAt,
+        deletedVehicleTasks: deletedVehicleTasks ?? this.deletedVehicleTasks,
         deletedVehicles: deletedVehicles ?? this.deletedVehicles,
         history: history ?? this.history,
         id: id ?? this.id,
@@ -2795,18 +2939,20 @@ extension $EmployeeResponseExtension on EmployeeResponse {
         updatedAt: updatedAt ?? this.updatedAt,
         updatedGarages: updatedGarages ?? this.updatedGarages,
         updatedTasks: updatedTasks ?? this.updatedTasks,
+        updatedVehicleTasks: updatedVehicleTasks ?? this.updatedVehicleTasks,
         updatedVehicles: updatedVehicles ?? this.updatedVehicles);
   }
 
   EmployeeResponse copyWithWrapped(
       {Wrapped<Account?>? account,
-      Wrapped<List<VehicleTask>?>? assignedTasks,
+      Wrapped<List<VehicleTask>?>? assignedVehicleTasks,
       Wrapped<DateTime?>? createdAt,
       Wrapped<List<Garage>?>? createdGarages,
       Wrapped<List<Task>?>? createdTasks,
       Wrapped<List<VehicleTask>?>? createdVehicleTasks,
       Wrapped<List<Vehicle>?>? createdVehicles,
       Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<List<VehicleTask>?>? deletedVehicleTasks,
       Wrapped<List<Vehicle>?>? deletedVehicles,
       Wrapped<List<EmployeeAudit>?>? history,
       Wrapped<int?>? id,
@@ -2816,11 +2962,13 @@ extension $EmployeeResponseExtension on EmployeeResponse {
       Wrapped<DateTime?>? updatedAt,
       Wrapped<List<Garage>?>? updatedGarages,
       Wrapped<List<Task>?>? updatedTasks,
+      Wrapped<List<VehicleTask>?>? updatedVehicleTasks,
       Wrapped<List<Vehicle>?>? updatedVehicles}) {
     return EmployeeResponse(
         account: (account != null ? account.value : this.account),
-        assignedTasks:
-            (assignedTasks != null ? assignedTasks.value : this.assignedTasks),
+        assignedVehicleTasks: (assignedVehicleTasks != null
+            ? assignedVehicleTasks.value
+            : this.assignedVehicleTasks),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         createdGarages: (createdGarages != null
             ? createdGarages.value
@@ -2834,6 +2982,9 @@ extension $EmployeeResponseExtension on EmployeeResponse {
             ? createdVehicles.value
             : this.createdVehicles),
         deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedVehicleTasks: (deletedVehicleTasks != null
+            ? deletedVehicleTasks.value
+            : this.deletedVehicleTasks),
         deletedVehicles: (deletedVehicles != null
             ? deletedVehicles.value
             : this.deletedVehicles),
@@ -2848,6 +2999,9 @@ extension $EmployeeResponseExtension on EmployeeResponse {
             : this.updatedGarages),
         updatedTasks:
             (updatedTasks != null ? updatedTasks.value : this.updatedTasks),
+        updatedVehicleTasks: (updatedVehicleTasks != null
+            ? updatedVehicleTasks.value
+            : this.updatedVehicleTasks),
         updatedVehicles: (updatedVehicles != null
             ? updatedVehicles.value
             : this.updatedVehicles));
@@ -8411,6 +8565,8 @@ class VehicleTask {
     this.createdById,
     this.deleted,
     this.deletedAt,
+    this.deletedBy,
+    this.deletedById,
     this.finishedAt,
     this.id,
     this.note,
@@ -8418,6 +8574,8 @@ class VehicleTask {
     this.task,
     this.taskId,
     this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
     this.vehicle,
     this.vehicleId,
   });
@@ -8444,6 +8602,10 @@ class VehicleTask {
   final bool? deleted;
   @JsonKey(name: 'deleted_at')
   final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_by')
+  final Employee? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'finished_at')
   final DateTime? finishedAt;
   @JsonKey(name: 'id')
@@ -8458,6 +8620,10 @@ class VehicleTask {
   final int? taskId;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   @JsonKey(name: 'vehicle')
   final Vehicle? vehicle;
   @JsonKey(name: 'vehicle_id')
@@ -8491,6 +8657,12 @@ class VehicleTask {
             (identical(other.deletedAt, deletedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.finishedAt, finishedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.finishedAt, finishedAt)) &&
@@ -8508,6 +8680,12 @@ class VehicleTask {
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality()
                     .equals(other.vehicle, vehicle)) &&
@@ -8529,6 +8707,8 @@ class VehicleTask {
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
       const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(finishedAt) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(note) ^
@@ -8536,6 +8716,8 @@ class VehicleTask {
       const DeepCollectionEquality().hash(task) ^
       const DeepCollectionEquality().hash(taskId) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       const DeepCollectionEquality().hash(vehicle) ^
       const DeepCollectionEquality().hash(vehicleId) ^
       runtimeType.hashCode;
@@ -8551,6 +8733,8 @@ extension $VehicleTaskExtension on VehicleTask {
       int? createdById,
       bool? deleted,
       GormDeletedAt? deletedAt,
+      Employee? deletedBy,
+      int? deletedById,
       DateTime? finishedAt,
       int? id,
       String? note,
@@ -8558,6 +8742,8 @@ extension $VehicleTaskExtension on VehicleTask {
       Task? task,
       int? taskId,
       DateTime? updatedAt,
+      Employee? updatedBy,
+      int? updatedById,
       Vehicle? vehicle,
       int? vehicleId}) {
     return VehicleTask(
@@ -8569,6 +8755,8 @@ extension $VehicleTaskExtension on VehicleTask {
         createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
         deletedAt: deletedAt ?? this.deletedAt,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         finishedAt: finishedAt ?? this.finishedAt,
         id: id ?? this.id,
         note: note ?? this.note,
@@ -8576,6 +8764,8 @@ extension $VehicleTaskExtension on VehicleTask {
         task: task ?? this.task,
         taskId: taskId ?? this.taskId,
         updatedAt: updatedAt ?? this.updatedAt,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById,
         vehicle: vehicle ?? this.vehicle,
         vehicleId: vehicleId ?? this.vehicleId);
   }
@@ -8589,6 +8779,8 @@ extension $VehicleTaskExtension on VehicleTask {
       Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
       Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<Employee?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<DateTime?>? finishedAt,
       Wrapped<int?>? id,
       Wrapped<String?>? note,
@@ -8596,6 +8788,8 @@ extension $VehicleTaskExtension on VehicleTask {
       Wrapped<Task?>? task,
       Wrapped<int?>? taskId,
       Wrapped<DateTime?>? updatedAt,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById,
       Wrapped<Vehicle?>? vehicle,
       Wrapped<int?>? vehicleId}) {
     return VehicleTask(
@@ -8609,6 +8803,9 @@ extension $VehicleTaskExtension on VehicleTask {
             (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
         deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
         id: (id != null ? id.value : this.id),
         note: (note != null ? note.value : this.note),
@@ -8616,6 +8813,9 @@ extension $VehicleTaskExtension on VehicleTask {
         task: (task != null ? task.value : this.task),
         taskId: (taskId != null ? taskId.value : this.taskId),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById),
         vehicle: (vehicle != null ? vehicle.value : this.vehicle),
         vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId));
   }
@@ -8632,11 +8832,15 @@ class VehicleTaskAudit {
     this.createdBy,
     this.createdById,
     this.deleted,
+    this.deletedBy,
+    this.deletedById,
     this.finishedAt,
     this.note,
     this.startedAt,
     this.task,
     this.taskId,
+    this.updatedBy,
+    this.updatedById,
     this.vehicle,
     this.vehicleId,
     this.vehicleTaskModelID,
@@ -8664,6 +8868,10 @@ class VehicleTaskAudit {
   final int? createdById;
   @JsonKey(name: 'deleted')
   final bool? deleted;
+  @JsonKey(name: 'deleted_by')
+  final Employee? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'finishedAt')
   final String? finishedAt;
   @JsonKey(name: 'note')
@@ -8674,6 +8882,10 @@ class VehicleTaskAudit {
   final Task? task;
   @JsonKey(name: 'task_id')
   final int? taskId;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   @JsonKey(name: 'vehicle')
   final Vehicle? vehicle;
   @JsonKey(name: 'vehicle_id')
@@ -8709,6 +8921,12 @@ class VehicleTaskAudit {
             (identical(other.deleted, deleted) ||
                 const DeepCollectionEquality()
                     .equals(other.deleted, deleted)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.finishedAt, finishedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.finishedAt, finishedAt)) &&
@@ -8721,6 +8939,12 @@ class VehicleTaskAudit {
                 const DeepCollectionEquality().equals(other.task, task)) &&
             (identical(other.taskId, taskId) ||
                 const DeepCollectionEquality().equals(other.taskId, taskId)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality()
                     .equals(other.vehicle, vehicle)) &&
@@ -8745,11 +8969,15 @@ class VehicleTaskAudit {
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(finishedAt) ^
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(startedAt) ^
       const DeepCollectionEquality().hash(task) ^
       const DeepCollectionEquality().hash(taskId) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       const DeepCollectionEquality().hash(vehicle) ^
       const DeepCollectionEquality().hash(vehicleId) ^
       const DeepCollectionEquality().hash(vehicleTaskModelID) ^
@@ -8766,11 +8994,15 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
       Employee? createdBy,
       int? createdById,
       bool? deleted,
+      Employee? deletedBy,
+      int? deletedById,
       String? finishedAt,
       String? note,
       String? startedAt,
       Task? task,
       int? taskId,
+      Employee? updatedBy,
+      int? updatedById,
       Vehicle? vehicle,
       int? vehicleId,
       int? vehicleTaskModelID}) {
@@ -8783,11 +9015,15 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
         createdBy: createdBy ?? this.createdBy,
         createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         finishedAt: finishedAt ?? this.finishedAt,
         note: note ?? this.note,
         startedAt: startedAt ?? this.startedAt,
         task: task ?? this.task,
         taskId: taskId ?? this.taskId,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById,
         vehicle: vehicle ?? this.vehicle,
         vehicleId: vehicleId ?? this.vehicleId,
         vehicleTaskModelID: vehicleTaskModelID ?? this.vehicleTaskModelID);
@@ -8802,11 +9038,15 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
       Wrapped<Employee?>? createdBy,
       Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
+      Wrapped<Employee?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<String?>? finishedAt,
       Wrapped<String?>? note,
       Wrapped<String?>? startedAt,
       Wrapped<Task?>? task,
       Wrapped<int?>? taskId,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById,
       Wrapped<Vehicle?>? vehicle,
       Wrapped<int?>? vehicleId,
       Wrapped<int?>? vehicleTaskModelID}) {
@@ -8821,11 +9061,17 @@ extension $VehicleTaskAuditExtension on VehicleTaskAudit {
         createdById:
             (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
         note: (note != null ? note.value : this.note),
         startedAt: (startedAt != null ? startedAt.value : this.startedAt),
         task: (task != null ? task.value : this.task),
         taskId: (taskId != null ? taskId.value : this.taskId),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById),
         vehicle: (vehicle != null ? vehicle.value : this.vehicle),
         vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId),
         vehicleTaskModelID: (vehicleTaskModelID != null
@@ -8844,6 +9090,8 @@ class VehicleTaskResponse {
     this.createdById,
     this.deleted,
     this.deletedAt,
+    this.deletedBy,
+    this.deletedById,
     this.finishedAt,
     this.history,
     this.id,
@@ -8852,6 +9100,8 @@ class VehicleTaskResponse {
     this.task,
     this.taskId,
     this.updatedAt,
+    this.updatedBy,
+    this.updatedById,
     this.vehicle,
     this.vehicleId,
   });
@@ -8876,6 +9126,10 @@ class VehicleTaskResponse {
   final bool? deleted;
   @JsonKey(name: 'deleted_at')
   final GormDeletedAt? deletedAt;
+  @JsonKey(name: 'deleted_by')
+  final Employee? deletedBy;
+  @JsonKey(name: 'deleted_by_id')
+  final int? deletedById;
   @JsonKey(name: 'finished_at')
   final DateTime? finishedAt;
   @JsonKey(name: 'history', defaultValue: <VehicleTaskAudit>[])
@@ -8892,6 +9146,10 @@ class VehicleTaskResponse {
   final int? taskId;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'updated_by')
+  final Employee? updatedBy;
+  @JsonKey(name: 'updated_by_id')
+  final int? updatedById;
   @JsonKey(name: 'vehicle')
   final Vehicle? vehicle;
   @JsonKey(name: 'vehicle_id')
@@ -8923,6 +9181,12 @@ class VehicleTaskResponse {
             (identical(other.deletedAt, deletedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.deletedAt, deletedAt)) &&
+            (identical(other.deletedBy, deletedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedBy, deletedBy)) &&
+            (identical(other.deletedById, deletedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.deletedById, deletedById)) &&
             (identical(other.finishedAt, finishedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.finishedAt, finishedAt)) &&
@@ -8943,6 +9207,12 @@ class VehicleTaskResponse {
             (identical(other.updatedAt, updatedAt) ||
                 const DeepCollectionEquality()
                     .equals(other.updatedAt, updatedAt)) &&
+            (identical(other.updatedBy, updatedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedBy, updatedBy)) &&
+            (identical(other.updatedById, updatedById) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedById, updatedById)) &&
             (identical(other.vehicle, vehicle) ||
                 const DeepCollectionEquality()
                     .equals(other.vehicle, vehicle)) &&
@@ -8963,6 +9233,8 @@ class VehicleTaskResponse {
       const DeepCollectionEquality().hash(createdById) ^
       const DeepCollectionEquality().hash(deleted) ^
       const DeepCollectionEquality().hash(deletedAt) ^
+      const DeepCollectionEquality().hash(deletedBy) ^
+      const DeepCollectionEquality().hash(deletedById) ^
       const DeepCollectionEquality().hash(finishedAt) ^
       const DeepCollectionEquality().hash(history) ^
       const DeepCollectionEquality().hash(id) ^
@@ -8971,6 +9243,8 @@ class VehicleTaskResponse {
       const DeepCollectionEquality().hash(task) ^
       const DeepCollectionEquality().hash(taskId) ^
       const DeepCollectionEquality().hash(updatedAt) ^
+      const DeepCollectionEquality().hash(updatedBy) ^
+      const DeepCollectionEquality().hash(updatedById) ^
       const DeepCollectionEquality().hash(vehicle) ^
       const DeepCollectionEquality().hash(vehicleId) ^
       runtimeType.hashCode;
@@ -8985,6 +9259,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
       int? createdById,
       bool? deleted,
       GormDeletedAt? deletedAt,
+      Employee? deletedBy,
+      int? deletedById,
       DateTime? finishedAt,
       List<VehicleTaskAudit>? history,
       int? id,
@@ -8993,6 +9269,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
       Task? task,
       int? taskId,
       DateTime? updatedAt,
+      Employee? updatedBy,
+      int? updatedById,
       Vehicle? vehicle,
       int? vehicleId}) {
     return VehicleTaskResponse(
@@ -9003,6 +9281,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
         createdById: createdById ?? this.createdById,
         deleted: deleted ?? this.deleted,
         deletedAt: deletedAt ?? this.deletedAt,
+        deletedBy: deletedBy ?? this.deletedBy,
+        deletedById: deletedById ?? this.deletedById,
         finishedAt: finishedAt ?? this.finishedAt,
         history: history ?? this.history,
         id: id ?? this.id,
@@ -9011,6 +9291,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
         task: task ?? this.task,
         taskId: taskId ?? this.taskId,
         updatedAt: updatedAt ?? this.updatedAt,
+        updatedBy: updatedBy ?? this.updatedBy,
+        updatedById: updatedById ?? this.updatedById,
         vehicle: vehicle ?? this.vehicle,
         vehicleId: vehicleId ?? this.vehicleId);
   }
@@ -9023,6 +9305,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
       Wrapped<int?>? createdById,
       Wrapped<bool?>? deleted,
       Wrapped<GormDeletedAt?>? deletedAt,
+      Wrapped<Employee?>? deletedBy,
+      Wrapped<int?>? deletedById,
       Wrapped<DateTime?>? finishedAt,
       Wrapped<List<VehicleTaskAudit>?>? history,
       Wrapped<int?>? id,
@@ -9031,6 +9315,8 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
       Wrapped<Task?>? task,
       Wrapped<int?>? taskId,
       Wrapped<DateTime?>? updatedAt,
+      Wrapped<Employee?>? updatedBy,
+      Wrapped<int?>? updatedById,
       Wrapped<Vehicle?>? vehicle,
       Wrapped<int?>? vehicleId}) {
     return VehicleTaskResponse(
@@ -9043,6 +9329,9 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
             (createdById != null ? createdById.value : this.createdById),
         deleted: (deleted != null ? deleted.value : this.deleted),
         deletedAt: (deletedAt != null ? deletedAt.value : this.deletedAt),
+        deletedBy: (deletedBy != null ? deletedBy.value : this.deletedBy),
+        deletedById:
+            (deletedById != null ? deletedById.value : this.deletedById),
         finishedAt: (finishedAt != null ? finishedAt.value : this.finishedAt),
         history: (history != null ? history.value : this.history),
         id: (id != null ? id.value : this.id),
@@ -9051,6 +9340,9 @@ extension $VehicleTaskResponseExtension on VehicleTaskResponse {
         task: (task != null ? task.value : this.task),
         taskId: (taskId != null ? taskId.value : this.taskId),
         updatedAt: (updatedAt != null ? updatedAt.value : this.updatedAt),
+        updatedBy: (updatedBy != null ? updatedBy.value : this.updatedBy),
+        updatedById:
+            (updatedById != null ? updatedById.value : this.updatedById),
         vehicle: (vehicle != null ? vehicle.value : this.vehicle),
         vehicleId: (vehicleId != null ? vehicleId.value : this.vehicleId));
   }

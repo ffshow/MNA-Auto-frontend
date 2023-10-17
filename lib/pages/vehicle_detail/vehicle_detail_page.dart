@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/cubits/task/task_cubit.dart';
@@ -164,7 +163,27 @@ class _VehicleDetailsWidget extends StatelessWidget {
                               'Assigned to: ${e.assignedTo?.name}',
                             )
                           : const Text('• Not assigned to an employee'),
-                      children: <Widget>[VehicleTaskHandler(e: e)],
+                      children: <Widget>[
+                        ListTile(
+                          title: Text(
+                            '• Added by: ${e.createdBy?.name}, at ${e.createdAt.dateTime}',
+                          ),
+                        ),
+                        if (e.started)
+                          ListTile(
+                            title: Text(
+                              '• Started by: ${e.createdBy?.name}, at ${e.startedAt.dateTime}',
+                            ),
+                          ),
+                        if (e.finished)
+                          ListTile(
+                            title: Text(
+                              '• Finished by: ${e.createdBy?.name}, at ${e.finishedAt.dateTime}',
+                            ),
+                          ),
+                        VehicleTaskHandler(e: e),
+                        kH8,
+                      ],
                     ),
                   ),
               ],
@@ -180,7 +199,7 @@ class _VehicleDetailsWidget extends StatelessWidget {
     int vehicleID,
     List<VehicleTask>? vehicleTasks,
   ) async {
-    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    final VehicleDetailsCubit cubit = context.read<VehicleDetailsCubit>();
 
     final Set<int>? data = await showModalBottomSheet<Set<int>?>(
       context: context,
@@ -213,8 +232,9 @@ class _VehicleDetailsWidget extends StatelessWidget {
     if (data == null) {
       return;
     }
-    final r = await swagger.apiVehicleTaskImportPost(
-        vehicleTaskModel: data
+    cubit.attachToTasks(
+        vehicleID,
+        data
             .map(
               (e) => CreateVehicleTask(
                 vehicleId: vehicleID,
@@ -222,8 +242,6 @@ class _VehicleDetailsWidget extends StatelessWidget {
               ),
             )
             .toList());
-
-    print(r);
   }
 }
 
@@ -317,8 +335,8 @@ class _TaskSelectionWidgetState extends State<TaskSelectionWidget> {
   void initState() {
     super.initState();
     if (widget.vehicleTasks != null && widget.vehicleTasks!.isNotEmpty) {
-      selectedTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
-      selectedSubTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
+      // selectedTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
+      // selectedSubTasks = widget.vehicleTasks!.map((e) => e.taskId!).toSet();
     }
   }
 
@@ -334,80 +352,113 @@ class _TaskSelectionWidgetState extends State<TaskSelectionWidget> {
         ),
         OutlinedButton(
           onPressed: () {
-            Navigator.pop(context, selectedTasks);
+            Navigator.pop(context, selectedTasks..addAll(selectedSubTasks));
           },
           child: const Text('Submit'),
         ),
       ],
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            const ListTile(title: Text('• Add tasks')),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.tasks.length,
-              itemBuilder: (BuildContext context, int index) {
-                final TaskResponse item = widget.tasks[index];
-                return ExpansionTile(
-                  leading: Checkbox.adaptive(
-                    tristate: true,
-                    value: isTaskSelected(item),
-                    onChanged: (bool? value) {
-                      switch (value) {
-                        case true:
-                          selectedTasks.add(item.id!);
-                          // selectedSubTasks.addAll(item.subTasksIds ?? []);
-                          break;
-                        case false:
-                          selectedTasks.remove(item.id);
-                          // selectedSubTasks.removeAll(item.subTasksIds ?? []);
-                          break;
-                        case null:
-                          selectedTasks.remove(item.id);
-                          // selectedSubTasks.removeAll(item.subTasksIds ?? []);
-                          break;
-                      }
-                      setState(() {});
-                    },
-                  ),
-                  title: Text(item.label ?? ''),
-                  expandedAlignment: Alignment.topLeft,
-                  children: <Widget>[
-                    ...?item.subTasks?.map((e) {
-                      return CheckboxListTile.adaptive(
-                        tristate: true,
-                        onChanged: (bool? selected) {
-                          switch (selected) {
-                            case true:
-                              selectedSubTasks.add(e.id!);
-                              break;
-                            case false:
-                              selectedSubTasks.remove(e.id);
-                              break;
-                            case null:
-                              selectedSubTasks.remove(e.id);
-                              break;
-                          }
-                          setState(() {});
-                        },
-                        value: selectedSubTasks.contains(e.id),
-                        title: Text(e.label ?? ''),
-                      );
-                    }).toList(),
-                  ],
-                );
+      appBar: AppBar(
+        title: const Text('• Add tasks'),
+      ),
+      body: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.tasks.length,
+        itemBuilder: (BuildContext context, int index) {
+          final TaskResponse item = widget.tasks[index];
+          if (item.subTasks?.isEmpty ?? true) {
+            return ListTile(
+              leading: Checkbox.adaptive(
+                tristate: true,
+                value: isTaskSelected(item),
+                onChanged: (bool? value) {
+                  switch (value) {
+                    case true:
+                      selectedTasks.add(item.id!);
+                      break;
+                    case false:
+                      selectedTasks.remove(item.id);
+                      break;
+                    case null:
+                      selectedTasks.remove(item.id);
+                      break;
+                  }
+                  setState(() {});
+                },
+              ),
+              onTap: () {
+                switch (isTaskSelected(item)) {
+                  case true:
+                    selectedTasks.remove(item.id);
+                    break;
+                  case false:
+                    selectedTasks.add(item.id!);
+                    break;
+                  case null:
+                    selectedTasks.add(item.id!);
+                    break;
+                }
+                setState(() {});
+              },
+              title: Text(item.label ?? ''),
+            );
+          }
+
+          return ExpansionTile(
+            leading: Checkbox.adaptive(
+              tristate: true,
+              value: isTaskSelected(item),
+              onChanged: (bool? value) {
+                switch (value) {
+                  case true:
+                    selectedTasks.add(item.id!);
+                    break;
+                  case false:
+                    selectedTasks.remove(item.id);
+                    break;
+                  case null:
+                    selectedTasks.remove(item.id);
+                    break;
+                }
+                setState(() {});
               },
             ),
-          ],
-        ),
+            title: Text(item.label ?? ''),
+            expandedAlignment: Alignment.topLeft,
+            children: <Widget>[
+              ...?item.subTasks?.map((e) {
+                return CheckboxListTile.adaptive(
+                  tristate: true,
+                  onChanged: (bool? selected) {
+                    switch (selected) {
+                      case true:
+                        selectedSubTasks.add(e.id!);
+                        break;
+                      case false:
+                        selectedSubTasks.remove(e.id);
+                        break;
+                      case null:
+                        selectedSubTasks.remove(e.id);
+                        break;
+                    }
+                    setState(() {});
+                  },
+                  value: selectedSubTasks.contains(e.id),
+                  title: Text(e.label ?? ''),
+                );
+              }).toList(),
+            ],
+          );
+        },
       ),
     );
   }
 
   bool? isTaskSelected(TaskResponse item) {
-    // if (selectedSubTasks.containsAll(item.subTasksIds ?? [])) {
-    //   return true;
-    // }
+    if (item.subTasks != null &&
+        item.subTasks!.isNotEmpty &&
+        selectedSubTasks.containsAll(item.subTasks!.map((e) => e.id!))) {
+      return true;
+    }
     if (selectedTasks.contains(item.id)) {
       return true;
     }

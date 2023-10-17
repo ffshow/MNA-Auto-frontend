@@ -226,35 +226,45 @@ class _TasksWidgetState extends State<_TasksWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Wrap(
-            alignment: WrapAlignment.center,
-            runAlignment: WrapAlignment.center,
-            runSpacing: 8,
-            spacing: 8,
-            children: widget.data.map((TaskResponse e) {
-              return ChoiceChip(
-                selected: _selected == e,
-                label: Text(e.label ?? ''),
-                onSelected: (value) {
-                  _selected = e;
-                  setState(() {});
-                },
-              );
-            }).toList(),
-          ),
-          kH16,
-          if (_selected?.subTasks?.isEmpty ?? false)
-            const Text('This task has no sub-tasks'),
-          if (_selected?.subTasks?.isNotEmpty ?? false)
-            const ListTile(title: Text('Subtasks')),
-          ...?_selected?.subTasks?.map((Task e) {
-            return ListTile(
-              leading: Text(e.label ?? ''),
-            );
-          }).toList(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Wrap(
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.center,
+              runSpacing: 8,
+              spacing: 8,
+              children: widget.data
+                  .where((e) => e.parentTaskId == null)
+                  .map((TaskResponse e) {
+                return ChoiceChip(
+                  selected: _selected == e,
+                  label: Text(e.label ?? ''),
+                  onSelected: (value) {
+                    _selected = e;
+                    setState(() {});
+                  },
+                );
+              }).toList(),
+            ),
+            kH16,
+            if (_selected?.subTasks?.isEmpty ?? false)
+              const Text('This task has no sub-tasks'),
+            if (_selected?.subTasks?.isNotEmpty ?? false)
+              const ListTile(title: Text('Subtasks')),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ...?_selected?.subTasks?.map((Task e) {
+                  return Chip(
+                    label: Text(e.label ?? ''),
+                  );
+                }).toList()
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

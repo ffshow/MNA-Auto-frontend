@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mna/swagger_generated_code/swagger.swagger.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 final DateFormat dateLongFormat = DateFormat.yMMMMEEEEd();
 final DateFormat dateFormat = DateFormat.yMd();

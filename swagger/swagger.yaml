@@ -169,7 +169,7 @@ definitions:
         allOf:
         - $ref: '#/definitions/Account'
         x-nullable: false
-      assigned_tasks:
+      assigned_vehicle_tasks:
         items:
           $ref: '#/definitions/VehicleTask'
         type: array
@@ -192,6 +192,11 @@ definitions:
       created_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+      deleted_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       deleted_vehicles:
@@ -220,6 +225,11 @@ definitions:
       updated_tasks:
         items:
           $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      updated_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       updated_vehicles:
@@ -481,6 +491,13 @@ definitions:
       deleted:
         type: boolean
         x-nullable: false
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
       finished_at:
         format: date-time
         type: string
@@ -499,6 +516,13 @@ definitions:
       task_id:
         type: integer
         x-nullable: false
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
       vehicle:
         allOf:
         - $ref: '#/definitions/Vehicle'
@@ -513,7 +537,7 @@ definitions:
         allOf:
         - $ref: '#/definitions/Account'
         x-nullable: false
-      assigned_tasks:
+      assigned_vehicle_tasks:
         items:
           $ref: '#/definitions/VehicleTask'
         type: array
@@ -547,6 +571,11 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      deleted_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       deleted_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
@@ -580,6 +609,11 @@ definitions:
           $ref: '#/definitions/Task'
         type: array
         x-nullable: false
+      updated_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       updated_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
@@ -599,7 +633,7 @@ definitions:
         type: string
       actionID:
         type: integer
-      assigned_tasks:
+      assigned_vehicle_tasks:
         items:
           $ref: '#/definitions/VehicleTask'
         type: array
@@ -622,6 +656,11 @@ definitions:
       created_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
+        type: array
+        x-nullable: false
+      deleted_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       deleted_vehicles:
@@ -653,6 +692,11 @@ definitions:
           $ref: '#/definitions/Task'
         type: array
         x-nullable: false
+      updated_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       updated_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
@@ -665,7 +709,7 @@ definitions:
         allOf:
         - $ref: '#/definitions/Account'
         x-nullable: false
-      assigned_tasks:
+      assigned_vehicle_tasks:
         items:
           $ref: '#/definitions/VehicleTask'
         type: array
@@ -695,6 +739,11 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      deleted_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
+        type: array
+        x-nullable: false
       deleted_vehicles:
         items:
           $ref: '#/definitions/Vehicle'
@@ -730,6 +779,11 @@ definitions:
       updated_tasks:
         items:
           $ref: '#/definitions/Task'
+        type: array
+        x-nullable: false
+      updated_vehicle_tasks:
+        items:
+          $ref: '#/definitions/VehicleTask'
         type: array
         x-nullable: false
       updated_vehicles:
@@ -1994,6 +2048,13 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
       finished_at:
         format: date-time
         type: string
@@ -2017,6 +2078,13 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
       vehicle:
         allOf:
         - $ref: '#/definitions/Vehicle'
@@ -2050,6 +2118,13 @@ definitions:
         x-nullable: false
       deleted:
         type: boolean
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
       finishedAt:
         type: string
       note:
@@ -2061,6 +2136,13 @@ definitions:
         - $ref: '#/definitions/Task'
         x-nullable: false
       task_id:
+        type: integer
+        x-nullable: false
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
         type: integer
         x-nullable: false
       vehicle:
@@ -2097,6 +2179,13 @@ definitions:
         x-nullable: false
       deleted_at:
         $ref: '#/definitions/gorm.DeletedAt'
+      deleted_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      deleted_by_id:
+        type: integer
+        x-nullable: false
       finished_at:
         format: date-time
         type: string
@@ -2124,6 +2213,13 @@ definitions:
       updated_at:
         format: date-time
         type: string
+      updated_by:
+        allOf:
+        - $ref: '#/definitions/Employee'
+        x-nullable: false
+      updated_by_id:
+        type: integer
+        x-nullable: false
       vehicle:
         allOf:
         - $ref: '#/definitions/Vehicle'
@@ -2679,9 +2775,17 @@ paths:
         in: query
         name: with_created_vehicle_tasks
         type: boolean
-      - description: with assigned_tasks data
+      - description: with assigned_vehicle_tasks data
         in: query
-        name: with_assigned_tasks
+        name: with_assigned_vehicle_tasks
+        type: boolean
+      - description: with deleted_vehicle_tasks data
+        in: query
+        name: with_deleted_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicle_tasks data
+        in: query
+        name: with_updated_vehicle_tasks
         type: boolean
       - description: with permission data
         in: query
@@ -2879,9 +2983,17 @@ paths:
         in: query
         name: with_created_vehicle_tasks
         type: boolean
-      - description: with assigned_tasks data
+      - description: with assigned_vehicle_tasks data
         in: query
-        name: with_assigned_tasks
+        name: with_assigned_vehicle_tasks
+        type: boolean
+      - description: with deleted_vehicle_tasks data
+        in: query
+        name: with_deleted_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicle_tasks data
+        in: query
+        name: with_updated_vehicle_tasks
         type: boolean
       - description: with permission data
         in: query
@@ -2985,14 +3097,6 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
-      - description: with city data
-        in: query
-        name: with_city
-        type: boolean
-      - description: with city history data
-        in: query
-        name: with_history_city
-        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -3008,6 +3112,14 @@ paths:
       - description: with updated_by history data
         in: query
         name: with_history_updated_by
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
         type: boolean
       produces:
       - application/json
@@ -3129,14 +3241,6 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
-      - description: with city data
-        in: query
-        name: with_city
-        type: boolean
-      - description: with city history data
-        in: query
-        name: with_history_city
-        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -3152,6 +3256,14 @@ paths:
       - description: with updated_by history data
         in: query
         name: with_history_updated_by
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
+      - description: with city history data
+        in: query
+        name: with_history_city
         type: boolean
       produces:
       - application/json
@@ -3659,14 +3771,6 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with request data
-        in: query
-        name: with_request
-        type: boolean
-      - description: with request history data
-        in: query
-        name: with_history_request
-        type: boolean
       - description: with supplier data
         in: query
         name: with_supplier
@@ -3674,6 +3778,14 @@ paths:
       - description: with supplier history data
         in: query
         name: with_history_supplier
+        type: boolean
+      - description: with request data
+        in: query
+        name: with_request
+        type: boolean
+      - description: with request history data
+        in: query
+        name: with_history_request
         type: boolean
       produces:
       - application/json
@@ -3787,14 +3899,6 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with request data
-        in: query
-        name: with_request
-        type: boolean
-      - description: with request history data
-        in: query
-        name: with_history_request
-        type: boolean
       - description: with supplier data
         in: query
         name: with_supplier
@@ -3802,6 +3906,14 @@ paths:
       - description: with supplier history data
         in: query
         name: with_history_supplier
+        type: boolean
+      - description: with request data
+        in: query
+        name: with_request
+        type: boolean
+      - description: with request history data
+        in: query
+        name: with_history_request
         type: boolean
       produces:
       - application/json
@@ -4502,6 +4614,20 @@ paths:
       summary: Total records
       tags:
       - task
+  /api/tasks_seed:
+    post:
+      description: Seed tasks.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Seed tasks
+      tags:
+      - task
   /api/vehicle:
     post:
       consumes:
@@ -4809,14 +4935,6 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
-        type: boolean
-      - description: with vehicle history data
-        in: query
-        name: with_history_vehicle
-        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4833,6 +4951,22 @@ paths:
         in: query
         name: with_history_assigned_to
         type: boolean
+      - description: with deleted_by data
+        in: query
+        name: with_deleted_by
+        type: boolean
+      - description: with deleted_by history data
+        in: query
+        name: with_history_deleted_by
+        type: boolean
+      - description: with updated_by data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with updated_by history data
+        in: query
+        name: with_history_updated_by
+        type: boolean
       - description: with task data
         in: query
         name: with_task
@@ -4840,6 +4974,14 @@ paths:
       - description: with task history data
         in: query
         name: with_history_task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
         type: boolean
       produces:
       - application/json
@@ -4953,14 +5095,6 @@ paths:
         in: query
         name: with_history
         type: boolean
-      - description: with vehicle data
-        in: query
-        name: with_vehicle
-        type: boolean
-      - description: with vehicle history data
-        in: query
-        name: with_history_vehicle
-        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4977,6 +5111,22 @@ paths:
         in: query
         name: with_history_assigned_to
         type: boolean
+      - description: with deleted_by data
+        in: query
+        name: with_deleted_by
+        type: boolean
+      - description: with deleted_by history data
+        in: query
+        name: with_history_deleted_by
+        type: boolean
+      - description: with updated_by data
+        in: query
+        name: with_updated_by
+        type: boolean
+      - description: with updated_by history data
+        in: query
+        name: with_history_updated_by
+        type: boolean
       - description: with task data
         in: query
         name: with_task
@@ -4984,6 +5134,14 @@ paths:
       - description: with task history data
         in: query
         name: with_history_task
+        type: boolean
+      - description: with vehicle data
+        in: query
+        name: with_vehicle
+        type: boolean
+      - description: with vehicle history data
+        in: query
+        name: with_history_vehicle
         type: boolean
       produces:
       - application/json

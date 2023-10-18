@@ -136,7 +136,14 @@ class _DevPageState extends State<DevPage> {
                     },
                   );
                 },
-              )
+              ),
+              ElevatedButton(
+                child: const Text('Seed activities'),
+                onPressed: () {
+                  final s = RepositoryProvider.of<Swagger>(context);
+                  s.apiActivitiesSeedPost();
+                },
+              ),
             ],
           ),
         ),

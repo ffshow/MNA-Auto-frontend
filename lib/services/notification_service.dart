@@ -51,6 +51,10 @@ class NotificationService {
   Stream<ActivityResponse> get onUpdateActivity =>
       _onUpdateActivityStream.stream;
 
+  late final StreamController<int> _onDeleteActivityStream =
+      StreamController.broadcast();
+  Stream<int> get onDeleteActivity => _onDeleteActivityStream.stream;
+
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
@@ -96,6 +100,11 @@ class NotificationService {
             final data =
                 ActivityResponse.fromJson(json['data'] as Map<String, dynamic>);
             _onUpdateActivityStream.sink.add(data);
+          case "Activity.Delete":
+            final id = json['data'] as int?;
+            if (id != null) {
+              _onDeleteActivityStream.sink.add(id);
+            }
           default:
         }
         _notify();

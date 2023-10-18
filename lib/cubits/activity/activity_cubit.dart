@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chopper/chopper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mna/services/notification_service.dart';
@@ -31,10 +30,16 @@ class ActivityCubit extends Cubit<ActivityState> {
         emit(ActivityState.success(res));
       }
     });
+
+    onDelete = _notificationService.onDeleteActivity.listen((id) {
+      res = List.from(res)..removeWhere((e) => e.id == id);
+      emit(ActivityState.success(res));
+    });
   }
 
   late final StreamSubscription<ActivityResponse>? onCreate;
   late final StreamSubscription<ActivityResponse>? onUpdate;
+  late final StreamSubscription<int>? onDelete;
   List<ActivityResponse> res = [];
 
   @override

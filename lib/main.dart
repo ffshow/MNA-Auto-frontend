@@ -17,6 +17,8 @@ void main() {
   final TaskRepository taskRepository = TaskRepository(swagger);
 
   final TaskCubit taskCubit = TaskCubit(taskRepository);
+  final ActivityCubit activityCubit = ActivityCubit(swagger);
+
   runApp(MultiRepositoryProvider(
     providers: [
       RepositoryProvider<Swagger>(create: (BuildContext context) => swagger),
@@ -43,6 +45,9 @@ void main() {
         ),
         BlocProvider<TaskCubit>(
           create: (BuildContext context) => taskCubit..init(),
+        ),
+        BlocProvider<ActivityCubit>(
+          create: (context) => activityCubit..getActivities(),
         ),
       ],
       child: const MainApp(),

@@ -109,6 +109,13 @@ class RootPage extends StatelessWidget {
                 },
                 child: const Text('tasks'),
               ),
+              kH8,
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/activities');
+                },
+                child: const Text('activities'),
+              ),
             ],
           ),
         );

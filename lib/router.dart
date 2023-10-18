@@ -96,6 +96,12 @@ final GoRouter router = GoRouter(
             return const TaskPage();
           },
         ),
+        GoRoute(
+          path: 'activities',
+          builder: (BuildContext context, GoRouterState state) {
+            return const ActivityPage();
+          },
+        ),
       ],
     ),
   ],

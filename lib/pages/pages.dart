@@ -8,3 +8,4 @@ export 'notification/notification_page.dart';
 export 'dev.dart';
 export 'task/task_page.dart';
 export 'vehicle_detail/vehicle_detail_page.dart';
+export 'activity/activity_page.dart';

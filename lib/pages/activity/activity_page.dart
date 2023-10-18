@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/cubits/cubits.dart';
 import 'package:mna/swagger_generated_code/client_index.dart';
 import 'package:mna/swagger_generated_code/swagger.models.swagger.dart';
+import 'package:mna/utils/extensions.dart';
 import 'package:mna/utils/ok_dialog.dart';
 import 'package:mna/widget/widget.dart';
 
@@ -39,6 +40,9 @@ class ActivityPage extends StatelessWidget {
                             label: InkWell(
                               onTap: () {
                                 _editActivity(context, e);
+                              },
+                              onDoubleTap: () {
+                                _showActivityAudit(context, e.id!);
                               },
                               child: Text(e.label ?? ''),
                             ),
@@ -174,5 +178,57 @@ class ActivityPage extends StatelessWidget {
         }
       }
     });
+  }
+
+  void _showActivityAudit(BuildContext context, int id) {
+    final swagger = RepositoryProvider.of<Swagger>(context);
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Activity audit'),
+          ),
+          body: FutureBuilder(
+            future: swagger.apiActivityIdAuditGet(id: id),
+            builder: (BuildContext context, snapshot) {
+              if (snapshot.hasData) {
+                final List<ActivityAudit> data = snapshot.data?.body ?? [];
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final ActivityAudit item = data[index];
+                    String subTitle = "Created by";
+                    switch (item.action) {
+                      case "Create":
+                        subTitle = "Created by ${item.createdBy?.name}";
+                        break;
+                      case "Update":
+                        subTitle = "Updated by ${item.updatedBy?.name}";
+                        break;
+                      case "Delete":
+                        subTitle = "Deleted by ${item.deletedBy?.name}";
+                        break;
+                      default:
+                    }
+                    return ListTile(
+                      leading: Text(item.action ?? '-'),
+                      title: Text(item.label ?? ''),
+                      subtitle: Text(subTitle),
+                      trailing: Text(item.actionAt.dateTime),
+                    );
+                  },
+                );
+              }
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+              return const LoadingWidget();
+            },
+          ),
+        );
+      },
+    );
   }
 }

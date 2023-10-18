@@ -76,6 +76,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<AccountAudit>>> _apiAccountIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/account/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<AccountAudit>, AccountAudit>($request);
+  }
+
+  @override
   Future<Response<List<AccountResponse>>> _apiAccountImportPost(
       {required List<CreateAccount>? accountModel}) {
     final Uri $url = Uri.parse('/api/account/import');
@@ -165,10 +177,16 @@ final class _$Swagger extends Swagger {
   Future<Response<ActivityResponse>> _apiActivityIdGet({
     required int? id,
     bool? withVehicleTasks,
+    bool? withCreatedBy,
+    bool? withUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/activity/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_vehicle_tasks': withVehicleTasks
+      'with_vehicle_tasks': withVehicleTasks,
+      'with_created_by': withCreatedBy,
+      'with_updated_by': withUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -196,6 +214,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<ActivityAudit>>> _apiActivityIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/activity/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<ActivityAudit>, ActivityAudit>($request);
+  }
+
+  @override
   Future<Response<List<ActivityResponse>>> _apiActivityImportPost(
       {required List<CreateActivity>? activityModel}) {
     final Uri $url = Uri.parse('/api/activity/import');
@@ -216,6 +246,9 @@ final class _$Swagger extends Swagger {
     String? sortBy,
     bool? descending,
     bool? withVehicleTasks,
+    bool? withCreatedBy,
+    bool? withUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/activity/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -224,6 +257,9 @@ final class _$Swagger extends Swagger {
       'sort_by': sortBy,
       'descending': descending,
       'with_vehicle_tasks': withVehicleTasks,
+      'with_created_by': withCreatedBy,
+      'with_updated_by': withUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -303,6 +339,17 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<CityResponse, CityResponse>($request);
+  }
+
+  @override
+  Future<Response<List<CityAudit>>> _apiCityIdAuditGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/city/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<CityAudit>, CityAudit>($request);
   }
 
   @override
@@ -418,6 +465,9 @@ final class _$Swagger extends Swagger {
     bool? withRequests,
     bool? withRequestsSpareParts,
     bool? withAccount,
+    bool? withCreatedActivities,
+    bool? withUpdatedActivities,
+    bool? withDeletedActivities,
   }) {
     final Uri $url = Uri.parse('/api/employee/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -458,6 +508,9 @@ final class _$Swagger extends Swagger {
       'with_requests': withRequests,
       'with_requests_spare_parts': withRequestsSpareParts,
       'with_account': withAccount,
+      'with_created_activities': withCreatedActivities,
+      'with_updated_activities': withUpdatedActivities,
+      'with_deleted_activities': withDeletedActivities,
     };
     final Request $request = Request(
       'GET',
@@ -482,6 +535,18 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<EmployeeResponse, EmployeeResponse>($request);
+  }
+
+  @override
+  Future<Response<List<EmployeeAudit>>> _apiEmployeeIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/employee/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<EmployeeAudit>, EmployeeAudit>($request);
   }
 
   @override
@@ -537,6 +602,9 @@ final class _$Swagger extends Swagger {
     bool? withRequests,
     bool? withRequestsSpareParts,
     bool? withAccount,
+    bool? withCreatedActivities,
+    bool? withUpdatedActivities,
+    bool? withDeletedActivities,
   }) {
     final Uri $url = Uri.parse('/api/employee/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -581,6 +649,9 @@ final class _$Swagger extends Swagger {
       'with_requests': withRequests,
       'with_requests_spare_parts': withRequestsSpareParts,
       'with_account': withAccount,
+      'with_created_activities': withCreatedActivities,
+      'with_updated_activities': withUpdatedActivities,
+      'with_deleted_activities': withDeletedActivities,
     };
     final Request $request = Request(
       'GET',
@@ -632,19 +703,19 @@ final class _$Swagger extends Swagger {
     required int? id,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCity,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
+    bool? withCity,
   }) {
     final Uri $url = Uri.parse('/api/garage/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
       'with_owners': withOwners,
       'with_owners_vehicles': withOwnersVehicles,
-      'with_city': withCity,
       'with_created_by': withCreatedBy,
       'with_updated_by': withUpdatedBy,
       'with_deleted_by': withDeletedBy,
+      'with_city': withCity,
     };
     final Request $request = Request(
       'GET',
@@ -672,6 +743,17 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<GarageAudit>>> _apiGarageIdAuditGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/garage/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<GarageAudit>, GarageAudit>($request);
+  }
+
+  @override
   Future<Response<List<GarageResponse>>> _apiGarageImportPost(
       {required List<CreateGarage>? garageModel}) {
     final Uri $url = Uri.parse('/api/garage/import');
@@ -693,10 +775,10 @@ final class _$Swagger extends Swagger {
     bool? descending,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCity,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
+    bool? withCity,
   }) {
     final Uri $url = Uri.parse('/api/garage/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -706,10 +788,10 @@ final class _$Swagger extends Swagger {
       'descending': descending,
       'with_owners': withOwners,
       'with_owners_vehicles': withOwnersVehicles,
-      'with_city': withCity,
       'with_created_by': withCreatedBy,
       'with_updated_by': withUpdatedBy,
       'with_deleted_by': withDeletedBy,
+      'with_city': withCity,
     };
     final Request $request = Request(
       'GET',
@@ -791,6 +873,17 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<OwnerResponse, OwnerResponse>($request);
+  }
+
+  @override
+  Future<Response<List<OwnerAudit>>> _apiOwnerIdAuditGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/owner/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<OwnerAudit>, OwnerAudit>($request);
   }
 
   @override
@@ -907,6 +1000,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<PermissionAudit>>> _apiPermissionIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/permission/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<PermissionAudit>, PermissionAudit>($request);
+  }
+
+  @override
   Future<Response<List<PermissionResponse>>> _apiPermissionImportPost(
       {required List<CreatePermission>? permissionModel}) {
     final Uri $url = Uri.parse('/api/permission/import');
@@ -1015,6 +1120,18 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<SparePartResponse, SparePartResponse>($request);
+  }
+
+  @override
+  Future<Response<List<SparePartAudit>>> _apiSparePartIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/spare_part/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<SparePartAudit>, SparePartAudit>($request);
   }
 
   @override
@@ -1134,6 +1251,19 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<SparePartRequestAudit>>> _apiSparePartRequestIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/spare_part_request/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client
+        .send<List<SparePartRequestAudit>, SparePartRequestAudit>($request);
+  }
+
+  @override
   Future<Response<List<SparePartRequestResponse>>>
       _apiSparePartRequestImportPost(
           {required List<CreateSparePartRequest>? sparePartRequestModel}) {
@@ -1217,13 +1347,13 @@ final class _$Swagger extends Swagger {
     required int? id,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
-    bool? withTask,
+    bool? withParentTask,
   }) {
     final Uri $url = Uri.parse('/api/sub_task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
       'with_attached_to': withAttachedTo,
       'with_attached_to_activities': withAttachedToActivities,
-      'with_task': withTask,
+      'with_parent_task': withParentTask,
     };
     final Request $request = Request(
       'GET',
@@ -1251,6 +1381,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<SubTaskAudit>>> _apiSubTaskIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/sub_task/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<SubTaskAudit>, SubTaskAudit>($request);
+  }
+
+  @override
   Future<Response<List<SubTaskResponse>>> _apiSubTaskImportPost(
       {required List<CreateSubTask>? subTaskModel}) {
     final Uri $url = Uri.parse('/api/sub_task/import');
@@ -1272,7 +1414,7 @@ final class _$Swagger extends Swagger {
     bool? descending,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
-    bool? withTask,
+    bool? withParentTask,
   }) {
     final Uri $url = Uri.parse('/api/sub_task/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1282,7 +1424,7 @@ final class _$Swagger extends Swagger {
       'descending': descending,
       'with_attached_to': withAttachedTo,
       'with_attached_to_activities': withAttachedToActivities,
-      'with_task': withTask,
+      'with_parent_task': withParentTask,
     };
     final Request $request = Request(
       'GET',
@@ -1361,6 +1503,18 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<SupplierResponse, SupplierResponse>($request);
+  }
+
+  @override
+  Future<Response<List<SupplierAudit>>> _apiSupplierIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/supplier/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<SupplierAudit>, SupplierAudit>($request);
   }
 
   @override
@@ -1481,6 +1635,17 @@ final class _$Swagger extends Swagger {
       body: $body,
     );
     return client.send<TaskResponse, TaskResponse>($request);
+  }
+
+  @override
+  Future<Response<List<TaskAudit>>> _apiTaskIdAuditGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/task/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<TaskAudit>, TaskAudit>($request);
   }
 
   @override
@@ -1626,6 +1791,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<VehicleAudit>>> _apiVehicleIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/vehicle/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<VehicleAudit>, VehicleAudit>($request);
+  }
+
+  @override
   Future<Response<List<VehicleResponse>>> _apiVehicleImportPost(
       {required List<CreateVehicle>? vehicleModel}) {
     final Uri $url = Uri.parse('/api/vehicle/import');
@@ -1714,23 +1891,23 @@ final class _$Swagger extends Swagger {
   Future<Response<VehicleTaskResponse>> _apiVehicleTaskIdGet({
     required int? id,
     bool? withActivities,
+    bool? withSubTask,
     bool? withCreatedBy,
     bool? withAssignedTo,
     bool? withDeletedBy,
     bool? withUpdatedBy,
     bool? withVehicle,
-    bool? withSubTask,
     bool? withTask,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
       'with_activities': withActivities,
+      'with_sub_task': withSubTask,
       'with_created_by': withCreatedBy,
       'with_assigned_to': withAssignedTo,
       'with_deleted_by': withDeletedBy,
       'with_updated_by': withUpdatedBy,
       'with_vehicle': withVehicle,
-      'with_sub_task': withSubTask,
       'with_task': withTask,
     };
     final Request $request = Request(
@@ -1759,6 +1936,18 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<List<VehicleTaskAudit>>> _apiVehicleTaskIdAuditGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/vehicle_task/${id}/audit');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<VehicleTaskAudit>, VehicleTaskAudit>($request);
+  }
+
+  @override
   Future<Response<List<VehicleTaskResponse>>> _apiVehicleTaskImportPost(
       {required List<CreateVehicleTask>? vehicleTaskModel}) {
     final Uri $url = Uri.parse('/api/vehicle_task/import');
@@ -1780,12 +1969,12 @@ final class _$Swagger extends Swagger {
     String? sortBy,
     bool? descending,
     bool? withActivities,
+    bool? withSubTask,
     bool? withCreatedBy,
     bool? withAssignedTo,
     bool? withDeletedBy,
     bool? withUpdatedBy,
     bool? withVehicle,
-    bool? withSubTask,
     bool? withTask,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/list');
@@ -1795,12 +1984,12 @@ final class _$Swagger extends Swagger {
       'sort_by': sortBy,
       'descending': descending,
       'with_activities': withActivities,
+      'with_sub_task': withSubTask,
       'with_created_by': withCreatedBy,
       'with_assigned_to': withAssignedTo,
       'with_deleted_by': withDeletedBy,
       'with_updated_by': withUpdatedBy,
       'with_vehicle': withVehicle,
-      'with_sub_task': withSubTask,
       'with_task': withTask,
     };
     final Request $request = Request(

@@ -68,7 +68,8 @@ class ActivityCubit extends Cubit<ActivityState> {
       }
       res = response.body!.data!;
       emit(ActivityState.success(res));
-    } catch (e) {
+    } catch (e, s) {
+      print(s);
       emit(ActivityState.failed(e.toString()));
     }
   }

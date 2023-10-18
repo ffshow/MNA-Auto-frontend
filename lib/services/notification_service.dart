@@ -46,6 +46,11 @@ class NotificationService {
   Stream<ActivityResponse> get onCreateActivity =>
       _onCreateActivityStream.stream;
 
+  late final StreamController<ActivityResponse> _onUpdateActivityStream =
+      StreamController.broadcast();
+  Stream<ActivityResponse> get onUpdateActivity =>
+      _onUpdateActivityStream.stream;
+
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
@@ -87,6 +92,10 @@ class NotificationService {
             final data =
                 ActivityResponse.fromJson(json['data'] as Map<String, dynamic>);
             _onCreateActivityStream.sink.add(data);
+          case "Activity.Update":
+            final data =
+                ActivityResponse.fromJson(json['data'] as Map<String, dynamic>);
+            _onUpdateActivityStream.sink.add(data);
           default:
         }
         _notify();

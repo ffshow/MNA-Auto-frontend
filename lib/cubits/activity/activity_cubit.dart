@@ -16,45 +16,53 @@ class ActivityCubit extends Cubit<ActivityState> {
   ActivityCubit(this._swagger, this._notificationService)
       : super(const ActivityState.initial()) {
     onCreate = _notificationService.onCreateActivity.listen((activity) {
-      if (res == null) {
-        return;
+      res = List.from(res)..insert(0, activity);
+      emit(ActivityState.success(res));
+    });
+
+    onUpdate = _notificationService.onUpdateActivity
+        .listen((ActivityResponse activity) {
+      final int index =
+          res.indexWhere((ActivityResponse e) => e.id == activity.id);
+      if (index > -1) {
+        final List<ActivityResponse> a = List.from(res)..removeAt(index);
+        a.insert(index, activity);
+        res = a;
+        emit(ActivityState.success(res));
       }
-      res = res!.copyWith(
-          body: ListActivity(
-        total: res!.body!.total! + 1,
-        data: res!.body!.data!..insert(0, activity),
-      ));
-      emit(ActivityState.success(res!.body!));
     });
   }
 
   late final StreamSubscription<ActivityResponse>? onCreate;
-  Response<ListActivity>? res;
+  late final StreamSubscription<ActivityResponse>? onUpdate;
+  List<ActivityResponse> res = [];
 
   @override
   Future<void> close() {
     onCreate?.cancel();
+    onUpdate?.cancel();
     return super.close();
   }
 
   Future<void> getActivities() async {
     try {
-      res = await _swagger.apiActivityListGet(
+      final response = await _swagger.apiActivityListGet(
         page: 1,
         perPage: 100,
         sortBy: 'created_at',
         descending: true,
         withVehicleTasks: false,
       );
-      if (res == null) {
+      if (response.body == null) {
         emit(const ActivityState.failed("Unknown error"));
         return;
       }
-      if (!res!.isSuccessful) {
+      if (!response.isSuccessful) {
         emit(const ActivityState.failed("Unknown error"));
         return;
       }
-      emit(ActivityState.success(res!.body!));
+      res = response.body!.data!;
+      emit(ActivityState.success(res));
     } catch (e) {
       emit(ActivityState.failed(e.toString()));
     }

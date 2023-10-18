@@ -20,21 +20,21 @@ mixin _$ActivityState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) failed,
-    required TResult Function(ListActivity activities) success,
+    required TResult Function(List<ActivityResponse> activities) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? failed,
-    TResult? Function(ListActivity activities)? success,
+    TResult? Function(List<ActivityResponse> activities)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? failed,
-    TResult Function(ListActivity activities)? success,
+    TResult Function(List<ActivityResponse> activities)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,7 +120,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) failed,
-    required TResult Function(ListActivity activities) success,
+    required TResult Function(List<ActivityResponse> activities) success,
   }) {
     return initial();
   }
@@ -130,7 +130,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? failed,
-    TResult? Function(ListActivity activities)? success,
+    TResult? Function(List<ActivityResponse> activities)? success,
   }) {
     return initial?.call();
   }
@@ -140,7 +140,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? failed,
-    TResult Function(ListActivity activities)? success,
+    TResult Function(List<ActivityResponse> activities)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -254,7 +254,7 @@ class _$FailedImpl implements _Failed {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) failed,
-    required TResult Function(ListActivity activities) success,
+    required TResult Function(List<ActivityResponse> activities) success,
   }) {
     return failed(error);
   }
@@ -264,7 +264,7 @@ class _$FailedImpl implements _Failed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? failed,
-    TResult? Function(ListActivity activities)? success,
+    TResult? Function(List<ActivityResponse> activities)? success,
   }) {
     return failed?.call(error);
   }
@@ -274,7 +274,7 @@ class _$FailedImpl implements _Failed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? failed,
-    TResult Function(ListActivity activities)? success,
+    TResult Function(List<ActivityResponse> activities)? success,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -333,7 +333,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ListActivity activities});
+  $Res call({List<ActivityResponse> activities});
 }
 
 /// @nodoc
@@ -351,9 +351,9 @@ class __$$SuccessImplCopyWithImpl<$Res>
   }) {
     return _then(_$SuccessImpl(
       null == activities
-          ? _value.activities
+          ? _value._activities
           : activities // ignore: cast_nullable_to_non_nullable
-              as ListActivity,
+              as List<ActivityResponse>,
     ));
   }
 }
@@ -361,10 +361,16 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.activities);
+  const _$SuccessImpl(final List<ActivityResponse> activities)
+      : _activities = activities;
 
+  final List<ActivityResponse> _activities;
   @override
-  final ListActivity activities;
+  List<ActivityResponse> get activities {
+    if (_activities is EqualUnmodifiableListView) return _activities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activities);
+  }
 
   @override
   String toString() {
@@ -376,12 +382,13 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            (identical(other.activities, activities) ||
-                other.activities == activities));
+            const DeepCollectionEquality()
+                .equals(other._activities, _activities));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, activities);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_activities));
 
   @JsonKey(ignore: true)
   @override
@@ -394,7 +401,7 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String error) failed,
-    required TResult Function(ListActivity activities) success,
+    required TResult Function(List<ActivityResponse> activities) success,
   }) {
     return success(activities);
   }
@@ -404,7 +411,7 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String error)? failed,
-    TResult? Function(ListActivity activities)? success,
+    TResult? Function(List<ActivityResponse> activities)? success,
   }) {
     return success?.call(activities);
   }
@@ -414,7 +421,7 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String error)? failed,
-    TResult Function(ListActivity activities)? success,
+    TResult Function(List<ActivityResponse> activities)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -459,9 +466,10 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements ActivityState {
-  const factory _Success(final ListActivity activities) = _$SuccessImpl;
+  const factory _Success(final List<ActivityResponse> activities) =
+      _$SuccessImpl;
 
-  ListActivity get activities;
+  List<ActivityResponse> get activities;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;

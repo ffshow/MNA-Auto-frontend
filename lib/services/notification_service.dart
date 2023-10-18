@@ -41,6 +41,11 @@ class NotificationService {
       StreamController.broadcast();
   Stream get onUpdateVehicleTask => _onUpdateVehicleTaskStream.stream;
 
+  late final StreamController<ActivityResponse> _onCreateActivityStream =
+      StreamController.broadcast();
+  Stream<ActivityResponse> get onCreateActivity =>
+      _onCreateActivityStream.stream;
+
   void init() {
     final Uri wsUrl = Uri.parse('ws://localhost:5000/ws');
     WebSocketChannel channel = WebSocketChannel.connect(wsUrl);
@@ -78,6 +83,10 @@ class NotificationService {
             _onCreateVehicleTasksStream.sink.add(tasks);
           case "VehicleTask.Update":
             _onUpdateVehicleTaskStream.sink.add(1);
+          case "Activity.Create":
+            final data =
+                ActivityResponse.fromJson(json['data'] as Map<String, dynamic>);
+            _onCreateActivityStream.sink.add(data);
           default:
         }
         _notify();

@@ -66,8 +66,8 @@ class ActivityPage extends StatelessWidget {
             ),
             OutlinedButton(
               onPressed: () {
-                final value = controller.text;
-                if (value.isNotEmpty) {
+                final String value = controller.text;
+                if (value.trim().isNotEmpty) {
                   _create(context, value);
                 }
                 Navigator.pop(context);
@@ -81,7 +81,7 @@ class ActivityPage extends StatelessWidget {
               labelText: 'Label',
             ),
             onFieldSubmitted: (value) {
-              if (value.isNotEmpty) {
+              if (value.trim().isNotEmpty) {
                 _create(context, value);
               }
             },

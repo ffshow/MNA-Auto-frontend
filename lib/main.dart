@@ -17,7 +17,10 @@ void main() {
   final TaskRepository taskRepository = TaskRepository(swagger);
 
   final TaskCubit taskCubit = TaskCubit(taskRepository);
-  final ActivityCubit activityCubit = ActivityCubit(swagger);
+  final ActivityCubit activityCubit = ActivityCubit(
+    swagger,
+    notificationService,
+  );
 
   runApp(MultiRepositoryProvider(
     providers: [

@@ -51,7 +51,6 @@ class VehicleDetailsCubit extends Cubit<VehicleDetailsState> {
         withVehicleTasks: true,
         withCreatedBy: true,
         withDeletedBy: true,
-        withHistory: true,
         withOwner: true,
         withUpdatedBy: true,
       );

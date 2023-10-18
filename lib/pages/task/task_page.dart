@@ -96,8 +96,8 @@ class CreateTaskWidgt extends StatelessWidget {
               final Swagger swagger = RepositoryProvider.of<Swagger>(context);
               final List<String> labels =
                   value['sub_tasks'] as List<String>? ?? [];
-              final List<Task> tasks =
-                  labels.map((String e) => Task(label: e)).toList();
+              final List<SubTask> tasks =
+                  labels.map((String e) => SubTask(label: e)).toList();
               swagger.apiTaskPost(
                 taskModel: CreateTask(
                   label: value['label'],
@@ -234,12 +234,12 @@ class _TasksWidgetState extends State<_TasksWidget> {
               runAlignment: WrapAlignment.center,
               runSpacing: 8,
               spacing: 8,
-              children: widget.data
-                  .where((e) => e.parentTaskId == null)
-                  .map((TaskResponse e) {
+              children: widget.data.map((TaskResponse e) {
                 return ChoiceChip(
                   selected: _selected == e,
                   label: Text(e.label ?? ''),
+                  backgroundColor:
+                      e.subTasks?.isNotEmpty ?? false ? Colors.purple : null,
                   onSelected: (value) {
                     _selected = e;
                     setState(() {});
@@ -256,7 +256,7 @@ class _TasksWidgetState extends State<_TasksWidget> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                ...?_selected?.subTasks?.map((Task e) {
+                ...?_selected?.subTasks?.map((SubTask e) {
                   return Chip(
                     label: Text(e.label ?? ''),
                   );

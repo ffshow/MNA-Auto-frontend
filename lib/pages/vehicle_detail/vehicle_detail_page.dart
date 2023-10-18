@@ -227,11 +227,7 @@ class _VehicleDetailsWidget extends StatelessWidget {
             return state.when(
               loaded: (ListTask response) {
                 return TaskSelectionWidget(
-                  tasks: response.data
-                          ?.where((TaskResponse e) =>
-                              e.parentTaskId == null || e.parentTaskId == 0)
-                          .toList() ??
-                      [],
+                  tasks: response.data ?? [],
                   vehicleTasks: vehicleTasks,
                 );
               },

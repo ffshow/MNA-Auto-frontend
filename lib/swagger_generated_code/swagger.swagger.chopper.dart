@@ -31,17 +31,24 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiAccountIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/account/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<AccountResponse>> _apiAccountIdGet({
     required int? id,
-    bool? withHistory,
     bool? withEmployee,
-    bool? withHistoryEmployee,
   }) {
     final Uri $url = Uri.parse('/api/account/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
-      'with_employee': withEmployee,
-      'with_history_employee': withHistoryEmployee,
+      'with_employee': withEmployee
     };
     final Request $request = Request(
       'GET',
@@ -88,9 +95,7 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withEmployee,
-    bool? withHistoryEmployee,
   }) {
     final Uri $url = Uri.parse('/api/account/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -98,9 +103,7 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_employee': withEmployee,
-      'with_history_employee': withHistoryEmployee,
     };
     final Request $request = Request(
       'GET',
@@ -123,6 +126,126 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<Object>> _apiActivitiesSeedPost() {
+    final Uri $url = Uri.parse('/api/activities_seed');
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Object, Object>($request);
+  }
+
+  @override
+  Future<Response<ActivityResponse>> _apiActivityPost(
+      {required Object? activityModel}) {
+    final Uri $url = Uri.parse('/api/activity');
+    final $body = activityModel;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<ActivityResponse, ActivityResponse>($request);
+  }
+
+  @override
+  Future<Response<String>> _apiActivityIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/activity/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
+  Future<Response<ActivityResponse>> _apiActivityIdGet({
+    required int? id,
+    bool? withVehicleTasks,
+  }) {
+    final Uri $url = Uri.parse('/api/activity/${id}');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'with_vehicle_tasks': withVehicleTasks
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<ActivityResponse, ActivityResponse>($request);
+  }
+
+  @override
+  Future<Response<ActivityResponse>> _apiActivityIdPatch({
+    required int? id,
+    required Object? activityModel,
+  }) {
+    final Uri $url = Uri.parse('/api/activity/${id}');
+    final $body = activityModel;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<ActivityResponse, ActivityResponse>($request);
+  }
+
+  @override
+  Future<Response<List<ActivityResponse>>> _apiActivityImportPost(
+      {required List<CreateActivity>? activityModel}) {
+    final Uri $url = Uri.parse('/api/activity/import');
+    final $body = activityModel;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<List<ActivityResponse>, ActivityResponse>($request);
+  }
+
+  @override
+  Future<Response<ListActivity>> _apiActivityListGet({
+    int? page,
+    int? perPage,
+    String? sortBy,
+    bool? descending,
+    bool? withVehicleTasks,
+  }) {
+    final Uri $url = Uri.parse('/api/activity/list');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'page': page,
+      'per_page': perPage,
+      'sort_by': sortBy,
+      'descending': descending,
+      'with_vehicle_tasks': withVehicleTasks,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<ListActivity, ListActivity>($request);
+  }
+
+  @override
+  Future<Response<TotalCount>> _apiActivityTotalGet() {
+    final Uri $url = Uri.parse('/api/activity/total');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TotalCount, TotalCount>($request);
+  }
+
+  @override
   Future<Response<CityResponse>> _apiCityPost({required Object? cityModel}) {
     final Uri $url = Uri.parse('/api/city');
     final $body = cityModel;
@@ -136,15 +259,24 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiCityIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/city/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<CityResponse>> _apiCityIdGet({
     required int? id,
-    bool? withHistory,
     bool? withGarages,
     bool? withGaragesOwners,
   }) {
     final Uri $url = Uri.parse('/api/city/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_garages': withGarages,
       'with_garages_owners': withGaragesOwners,
     };
@@ -193,7 +325,6 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withGarages,
     bool? withGaragesOwners,
   }) {
@@ -203,7 +334,6 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_garages': withGarages,
       'with_garages_owners': withGaragesOwners,
     };
@@ -242,9 +372,19 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiEmployeeIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/employee/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<EmployeeResponse>> _apiEmployeeIdGet({
     required int? id,
-    bool? withHistory,
     bool? withCreatedVehicles,
     bool? withCreatedVehiclesVehicleTasks,
     bool? withUpdatedVehicles,
@@ -255,16 +395,25 @@ final class _$Swagger extends Swagger {
     bool? withCreatedGaragesOwners,
     bool? withUpdatedGarages,
     bool? withUpdatedGaragesOwners,
+    bool? withDeletedGarages,
+    bool? withDeletedGaragesOwners,
     bool? withCreatedTasks,
     bool? withCreatedTasksSubTasks,
     bool? withCreatedTasksAttachedTo,
     bool? withUpdatedTasks,
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
+    bool? withDeletedTasks,
+    bool? withDeletedTasksSubTasks,
+    bool? withDeletedTasksAttachedTo,
     bool? withCreatedVehicleTasks,
+    bool? withCreatedVehicleTasksActivities,
     bool? withAssignedVehicleTasks,
+    bool? withAssignedVehicleTasksActivities,
     bool? withDeletedVehicleTasks,
+    bool? withDeletedVehicleTasksActivities,
     bool? withUpdatedVehicleTasks,
+    bool? withUpdatedVehicleTasksActivities,
     bool? withPermission,
     bool? withRequests,
     bool? withRequestsSpareParts,
@@ -272,7 +421,6 @@ final class _$Swagger extends Swagger {
   }) {
     final Uri $url = Uri.parse('/api/employee/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_created_vehicles': withCreatedVehicles,
       'with_created_vehicles_vehicle_tasks': withCreatedVehiclesVehicleTasks,
       'with_updated_vehicles': withUpdatedVehicles,
@@ -283,16 +431,29 @@ final class _$Swagger extends Swagger {
       'with_created_garages_owners': withCreatedGaragesOwners,
       'with_updated_garages': withUpdatedGarages,
       'with_updated_garages_owners': withUpdatedGaragesOwners,
+      'with_deleted_garages': withDeletedGarages,
+      'with_deleted_garages_owners': withDeletedGaragesOwners,
       'with_created_tasks': withCreatedTasks,
       'with_created_tasks_sub_tasks': withCreatedTasksSubTasks,
       'with_created_tasks_attached_to': withCreatedTasksAttachedTo,
       'with_updated_tasks': withUpdatedTasks,
       'with_updated_tasks_sub_tasks': withUpdatedTasksSubTasks,
       'with_updated_tasks_attached_to': withUpdatedTasksAttachedTo,
+      'with_deleted_tasks': withDeletedTasks,
+      'with_deleted_tasks_sub_tasks': withDeletedTasksSubTasks,
+      'with_deleted_tasks_attached_to': withDeletedTasksAttachedTo,
       'with_created_vehicle_tasks': withCreatedVehicleTasks,
+      'with_created_vehicle_tasks_activities':
+          withCreatedVehicleTasksActivities,
       'with_assigned_vehicle_tasks': withAssignedVehicleTasks,
+      'with_assigned_vehicle_tasks_activities':
+          withAssignedVehicleTasksActivities,
       'with_deleted_vehicle_tasks': withDeletedVehicleTasks,
+      'with_deleted_vehicle_tasks_activities':
+          withDeletedVehicleTasksActivities,
       'with_updated_vehicle_tasks': withUpdatedVehicleTasks,
+      'with_updated_vehicle_tasks_activities':
+          withUpdatedVehicleTasksActivities,
       'with_permission': withPermission,
       'with_requests': withRequests,
       'with_requests_spare_parts': withRequestsSpareParts,
@@ -343,7 +504,6 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withCreatedVehicles,
     bool? withCreatedVehiclesVehicleTasks,
     bool? withUpdatedVehicles,
@@ -354,16 +514,25 @@ final class _$Swagger extends Swagger {
     bool? withCreatedGaragesOwners,
     bool? withUpdatedGarages,
     bool? withUpdatedGaragesOwners,
+    bool? withDeletedGarages,
+    bool? withDeletedGaragesOwners,
     bool? withCreatedTasks,
     bool? withCreatedTasksSubTasks,
     bool? withCreatedTasksAttachedTo,
     bool? withUpdatedTasks,
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
+    bool? withDeletedTasks,
+    bool? withDeletedTasksSubTasks,
+    bool? withDeletedTasksAttachedTo,
     bool? withCreatedVehicleTasks,
+    bool? withCreatedVehicleTasksActivities,
     bool? withAssignedVehicleTasks,
+    bool? withAssignedVehicleTasksActivities,
     bool? withDeletedVehicleTasks,
+    bool? withDeletedVehicleTasksActivities,
     bool? withUpdatedVehicleTasks,
+    bool? withUpdatedVehicleTasksActivities,
     bool? withPermission,
     bool? withRequests,
     bool? withRequestsSpareParts,
@@ -375,7 +544,6 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_created_vehicles': withCreatedVehicles,
       'with_created_vehicles_vehicle_tasks': withCreatedVehiclesVehicleTasks,
       'with_updated_vehicles': withUpdatedVehicles,
@@ -386,16 +554,29 @@ final class _$Swagger extends Swagger {
       'with_created_garages_owners': withCreatedGaragesOwners,
       'with_updated_garages': withUpdatedGarages,
       'with_updated_garages_owners': withUpdatedGaragesOwners,
+      'with_deleted_garages': withDeletedGarages,
+      'with_deleted_garages_owners': withDeletedGaragesOwners,
       'with_created_tasks': withCreatedTasks,
       'with_created_tasks_sub_tasks': withCreatedTasksSubTasks,
       'with_created_tasks_attached_to': withCreatedTasksAttachedTo,
       'with_updated_tasks': withUpdatedTasks,
       'with_updated_tasks_sub_tasks': withUpdatedTasksSubTasks,
       'with_updated_tasks_attached_to': withUpdatedTasksAttachedTo,
+      'with_deleted_tasks': withDeletedTasks,
+      'with_deleted_tasks_sub_tasks': withDeletedTasksSubTasks,
+      'with_deleted_tasks_attached_to': withDeletedTasksAttachedTo,
       'with_created_vehicle_tasks': withCreatedVehicleTasks,
+      'with_created_vehicle_tasks_activities':
+          withCreatedVehicleTasksActivities,
       'with_assigned_vehicle_tasks': withAssignedVehicleTasks,
+      'with_assigned_vehicle_tasks_activities':
+          withAssignedVehicleTasksActivities,
       'with_deleted_vehicle_tasks': withDeletedVehicleTasks,
+      'with_deleted_vehicle_tasks_activities':
+          withDeletedVehicleTasksActivities,
       'with_updated_vehicle_tasks': withUpdatedVehicleTasks,
+      'with_updated_vehicle_tasks_activities':
+          withUpdatedVehicleTasksActivities,
       'with_permission': withPermission,
       'with_requests': withRequests,
       'with_requests_spare_parts': withRequestsSpareParts,
@@ -436,29 +617,34 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiGarageIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/garage/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<GarageResponse>> _apiGarageIdGet({
     required int? id,
-    bool? withHistory,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
-    bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
     bool? withCity,
-    bool? withHistoryCity,
+    bool? withCreatedBy,
+    bool? withUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/garage/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_owners': withOwners,
       'with_owners_vehicles': withOwnersVehicles,
-      'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
-      'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
       'with_city': withCity,
-      'with_history_city': withHistoryCity,
+      'with_created_by': withCreatedBy,
+      'with_updated_by': withUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -505,15 +691,12 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withOwners,
     bool? withOwnersVehicles,
-    bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
-    bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
     bool? withCity,
-    bool? withHistoryCity,
+    bool? withCreatedBy,
+    bool? withUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/garage/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -521,15 +704,12 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_owners': withOwners,
       'with_owners_vehicles': withOwnersVehicles,
-      'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
-      'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
       'with_city': withCity,
-      'with_history_city': withHistoryCity,
+      'with_created_by': withCreatedBy,
+      'with_updated_by': withUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -565,21 +745,28 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiOwnerIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/owner/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<OwnerResponse>> _apiOwnerIdGet({
     required int? id,
-    bool? withHistory,
     bool? withVehicles,
     bool? withVehiclesVehicleTasks,
     bool? withGarage,
-    bool? withHistoryGarage,
   }) {
     final Uri $url = Uri.parse('/api/owner/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_vehicles': withVehicles,
       'with_vehicles_vehicle_tasks': withVehiclesVehicleTasks,
       'with_garage': withGarage,
-      'with_history_garage': withHistoryGarage,
     };
     final Request $request = Request(
       'GET',
@@ -626,11 +813,9 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withVehicles,
     bool? withVehiclesVehicleTasks,
     bool? withGarage,
-    bool? withHistoryGarage,
   }) {
     final Uri $url = Uri.parse('/api/owner/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -638,11 +823,9 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_vehicles': withVehicles,
       'with_vehicles_vehicle_tasks': withVehiclesVehicleTasks,
       'with_garage': withGarage,
-      'with_history_garage': withHistoryGarage,
     };
     final Request $request = Request(
       'GET',
@@ -679,17 +862,24 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiPermissionIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/permission/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<PermissionResponse>> _apiPermissionIdGet({
     required int? id,
-    bool? withHistory,
     bool? withEmployees,
-    bool? withHistoryEmployees,
   }) {
     final Uri $url = Uri.parse('/api/permission/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
-      'with_employees': withEmployees,
-      'with_history_employees': withHistoryEmployees,
+      'with_employees': withEmployees
     };
     final Request $request = Request(
       'GET',
@@ -736,9 +926,7 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withEmployees,
-    bool? withHistoryEmployees,
   }) {
     final Uri $url = Uri.parse('/api/permission/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -746,9 +934,7 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_employees': withEmployees,
-      'with_history_employees': withHistoryEmployees,
     };
     final Request $request = Request(
       'GET',
@@ -785,21 +971,26 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiSparePartIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/spare_part/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<SparePartResponse>> _apiSparePartIdGet({
     required int? id,
-    bool? withHistory,
-    bool? withSupplier,
-    bool? withHistorySupplier,
     bool? withRequest,
-    bool? withHistoryRequest,
+    bool? withSupplier,
   }) {
     final Uri $url = Uri.parse('/api/spare_part/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
-      'with_supplier': withSupplier,
-      'with_history_supplier': withHistorySupplier,
       'with_request': withRequest,
-      'with_history_request': withHistoryRequest,
+      'with_supplier': withSupplier,
     };
     final Request $request = Request(
       'GET',
@@ -846,11 +1037,8 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
-    bool? withSupplier,
-    bool? withHistorySupplier,
     bool? withRequest,
-    bool? withHistoryRequest,
+    bool? withSupplier,
   }) {
     final Uri $url = Uri.parse('/api/spare_part/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -858,11 +1046,8 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
-      'with_supplier': withSupplier,
-      'with_history_supplier': withHistorySupplier,
       'with_request': withRequest,
-      'with_history_request': withHistoryRequest,
+      'with_supplier': withSupplier,
     };
     final Request $request = Request(
       'GET',
@@ -900,19 +1085,26 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiSparePartRequestIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/spare_part_request/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<SparePartRequestResponse>> _apiSparePartRequestIdGet({
     required int? id,
-    bool? withHistory,
     bool? withSpareParts,
     bool? withRequestBy,
-    bool? withHistoryRequestBy,
   }) {
     final Uri $url = Uri.parse('/api/spare_part_request/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_spare_parts': withSpareParts,
       'with_request_by': withRequestBy,
-      'with_history_request_by': withHistoryRequestBy,
     };
     final Request $request = Request(
       'GET',
@@ -963,10 +1155,8 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withSpareParts,
     bool? withRequestBy,
-    bool? withHistoryRequestBy,
   }) {
     final Uri $url = Uri.parse('/api/spare_part_request/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -974,10 +1164,8 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_spare_parts': withSpareParts,
       'with_request_by': withRequestBy,
-      'with_history_request_by': withHistoryRequestBy,
     };
     final Request $request = Request(
       'GET',
@@ -991,6 +1179,123 @@ final class _$Swagger extends Swagger {
   @override
   Future<Response<TotalCount>> _apiSparePartRequestTotalGet() {
     final Uri $url = Uri.parse('/api/spare_part_request/total');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TotalCount, TotalCount>($request);
+  }
+
+  @override
+  Future<Response<SubTaskResponse>> _apiSubTaskPost(
+      {required Object? subTaskModel}) {
+    final Uri $url = Uri.parse('/api/sub_task');
+    final $body = subTaskModel;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<SubTaskResponse, SubTaskResponse>($request);
+  }
+
+  @override
+  Future<Response<String>> _apiSubTaskIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/sub_task/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
+  Future<Response<SubTaskResponse>> _apiSubTaskIdGet({
+    required int? id,
+    bool? withAttachedTo,
+    bool? withAttachedToActivities,
+    bool? withTask,
+  }) {
+    final Uri $url = Uri.parse('/api/sub_task/${id}');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'with_attached_to': withAttachedTo,
+      'with_attached_to_activities': withAttachedToActivities,
+      'with_task': withTask,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<SubTaskResponse, SubTaskResponse>($request);
+  }
+
+  @override
+  Future<Response<SubTaskResponse>> _apiSubTaskIdPatch({
+    required int? id,
+    required Object? subTaskModel,
+  }) {
+    final Uri $url = Uri.parse('/api/sub_task/${id}');
+    final $body = subTaskModel;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<SubTaskResponse, SubTaskResponse>($request);
+  }
+
+  @override
+  Future<Response<List<SubTaskResponse>>> _apiSubTaskImportPost(
+      {required List<CreateSubTask>? subTaskModel}) {
+    final Uri $url = Uri.parse('/api/sub_task/import');
+    final $body = subTaskModel;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<List<SubTaskResponse>, SubTaskResponse>($request);
+  }
+
+  @override
+  Future<Response<ListSubTask>> _apiSubTaskListGet({
+    int? page,
+    int? perPage,
+    String? sortBy,
+    bool? descending,
+    bool? withAttachedTo,
+    bool? withAttachedToActivities,
+    bool? withTask,
+  }) {
+    final Uri $url = Uri.parse('/api/sub_task/list');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'page': page,
+      'per_page': perPage,
+      'sort_by': sortBy,
+      'descending': descending,
+      'with_attached_to': withAttachedTo,
+      'with_attached_to_activities': withAttachedToActivities,
+      'with_task': withTask,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<ListSubTask, ListSubTask>($request);
+  }
+
+  @override
+  Future<Response<TotalCount>> _apiSubTaskTotalGet() {
+    final Uri $url = Uri.parse('/api/sub_task/total');
     final Request $request = Request(
       'GET',
       $url,
@@ -1014,15 +1319,24 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiSupplierIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/supplier/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<SupplierResponse>> _apiSupplierIdGet({
     required int? id,
-    bool? withHistory,
     bool? withSpareParts,
   }) {
     final Uri $url = Uri.parse('/api/supplier/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
-      'with_spare_parts': withSpareParts,
+      'with_spare_parts': withSpareParts
     };
     final Request $request = Request(
       'GET',
@@ -1069,7 +1383,6 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withSpareParts,
   }) {
     final Uri $url = Uri.parse('/api/supplier/list');
@@ -1078,7 +1391,6 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_spare_parts': withSpareParts,
     };
     final Request $request = Request(
@@ -1115,29 +1427,36 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiTaskIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/task/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<TaskResponse>> _apiTaskIdGet({
     required int? id,
-    bool? withHistory,
     bool? withSubTasks,
-    bool? withSubTasksSubTasks,
     bool? withSubTasksAttachedTo,
     bool? withAttachedTo,
+    bool? withAttachedToActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_sub_tasks': withSubTasks,
-      'with_sub_tasks_sub_tasks': withSubTasksSubTasks,
       'with_sub_tasks_attached_to': withSubTasksAttachedTo,
       'with_attached_to': withAttachedTo,
+      'with_attached_to_activities': withAttachedToActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -1184,15 +1503,13 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withSubTasks,
-    bool? withSubTasksSubTasks,
     bool? withSubTasksAttachedTo,
     bool? withAttachedTo,
+    bool? withAttachedToActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
+    bool? withDeletedBy,
   }) {
     final Uri $url = Uri.parse('/api/task/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1200,15 +1517,13 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_sub_tasks': withSubTasks,
-      'with_sub_tasks_sub_tasks': withSubTasksSubTasks,
       'with_sub_tasks_attached_to': withSubTasksAttachedTo,
       'with_attached_to': withAttachedTo,
+      'with_attached_to_activities': withAttachedToActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
+      'with_deleted_by': withDeletedBy,
     };
     final Request $request = Request(
       'GET',
@@ -1256,31 +1571,34 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiVehicleIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/vehicle/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<VehicleResponse>> _apiVehicleIdGet({
     required int? id,
-    bool? withHistory,
     bool? withVehicleTasks,
+    bool? withVehicleTasksActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
     bool? withDeletedBy,
-    bool? withHistoryDeletedBy,
     bool? withOwner,
-    bool? withHistoryOwner,
   }) {
     final Uri $url = Uri.parse('/api/vehicle/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
       'with_vehicle_tasks': withVehicleTasks,
+      'with_vehicle_tasks_activities': withVehicleTasksActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
       'with_deleted_by': withDeletedBy,
-      'with_history_deleted_by': withHistoryDeletedBy,
       'with_owner': withOwner,
-      'with_history_owner': withHistoryOwner,
     };
     final Request $request = Request(
       'GET',
@@ -1327,16 +1645,12 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
     bool? withVehicleTasks,
+    bool? withVehicleTasksActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
     bool? withDeletedBy,
-    bool? withHistoryDeletedBy,
     bool? withOwner,
-    bool? withHistoryOwner,
   }) {
     final Uri $url = Uri.parse('/api/vehicle/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1344,16 +1658,12 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
       'with_vehicle_tasks': withVehicleTasks,
+      'with_vehicle_tasks_activities': withVehicleTasksActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
       'with_deleted_by': withDeletedBy,
-      'with_history_deleted_by': withHistoryDeletedBy,
       'with_owner': withOwner,
-      'with_history_owner': withHistoryOwner,
     };
     final Request $request = Request(
       'GET',
@@ -1390,37 +1700,38 @@ final class _$Swagger extends Swagger {
   }
 
   @override
+  Future<Response<String>> _apiVehicleTaskIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/vehicle_task/${id}');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<String, String>($request);
+  }
+
+  @override
   Future<Response<VehicleTaskResponse>> _apiVehicleTaskIdGet({
     required int? id,
-    bool? withHistory,
+    bool? withActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withAssignedTo,
-    bool? withHistoryAssignedTo,
     bool? withDeletedBy,
-    bool? withHistoryDeletedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
-    bool? withTask,
-    bool? withHistoryTask,
     bool? withVehicle,
-    bool? withHistoryVehicle,
+    bool? withSubTask,
+    bool? withTask,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/${id}');
     final Map<String, dynamic> $params = <String, dynamic>{
-      'with_history': withHistory,
+      'with_activities': withActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_assigned_to': withAssignedTo,
-      'with_history_assigned_to': withHistoryAssignedTo,
       'with_deleted_by': withDeletedBy,
-      'with_history_deleted_by': withHistoryDeletedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
-      'with_task': withTask,
-      'with_history_task': withHistoryTask,
       'with_vehicle': withVehicle,
-      'with_history_vehicle': withHistoryVehicle,
+      'with_sub_task': withSubTask,
+      'with_task': withTask,
     };
     final Request $request = Request(
       'GET',
@@ -1468,19 +1779,14 @@ final class _$Swagger extends Swagger {
     int? perPage,
     String? sortBy,
     bool? descending,
-    bool? withHistory,
+    bool? withActivities,
     bool? withCreatedBy,
-    bool? withHistoryCreatedBy,
     bool? withAssignedTo,
-    bool? withHistoryAssignedTo,
     bool? withDeletedBy,
-    bool? withHistoryDeletedBy,
     bool? withUpdatedBy,
-    bool? withHistoryUpdatedBy,
-    bool? withTask,
-    bool? withHistoryTask,
     bool? withVehicle,
-    bool? withHistoryVehicle,
+    bool? withSubTask,
+    bool? withTask,
   }) {
     final Uri $url = Uri.parse('/api/vehicle_task/list');
     final Map<String, dynamic> $params = <String, dynamic>{
@@ -1488,19 +1794,14 @@ final class _$Swagger extends Swagger {
       'per_page': perPage,
       'sort_by': sortBy,
       'descending': descending,
-      'with_history': withHistory,
+      'with_activities': withActivities,
       'with_created_by': withCreatedBy,
-      'with_history_created_by': withHistoryCreatedBy,
       'with_assigned_to': withAssignedTo,
-      'with_history_assigned_to': withHistoryAssignedTo,
       'with_deleted_by': withDeletedBy,
-      'with_history_deleted_by': withHistoryDeletedBy,
       'with_updated_by': withUpdatedBy,
-      'with_history_updated_by': withHistoryUpdatedBy,
-      'with_task': withTask,
-      'with_history_task': withHistoryTask,
       'with_vehicle': withVehicle,
-      'with_history_vehicle': withHistoryVehicle,
+      'with_sub_task': withSubTask,
+      'with_task': withTask,
     };
     final Request $request = Request(
       'GET',

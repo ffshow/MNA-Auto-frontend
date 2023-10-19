@@ -437,27 +437,49 @@ abstract class Swagger extends ChopperService {
   ///@param id City ID
   ///@param with_garages with garages data
   ///@param with_garages_owners with garages owners nested data
+  ///@param with_garages_city with garages city nested data
+  ///@param with_garages_created_by with garages created_by nested data
+  ///@param with_garages_updated_by with garages updated_by nested data
+  ///@param with_garages_deleted_by with garages deleted_by nested data
   Future<chopper.Response<CityResponse>> apiCityIdGet({
     required int? id,
     bool? withGarages,
     bool? withGaragesOwners,
+    bool? withGaragesCity,
+    bool? withGaragesCreatedBy,
+    bool? withGaragesUpdatedBy,
+    bool? withGaragesDeletedBy,
   }) {
     generatedMapping.putIfAbsent(
         CityResponse, () => CityResponse.fromJsonFactory);
 
     return _apiCityIdGet(
-        id: id, withGarages: withGarages, withGaragesOwners: withGaragesOwners);
+        id: id,
+        withGarages: withGarages,
+        withGaragesOwners: withGaragesOwners,
+        withGaragesCity: withGaragesCity,
+        withGaragesCreatedBy: withGaragesCreatedBy,
+        withGaragesUpdatedBy: withGaragesUpdatedBy,
+        withGaragesDeletedBy: withGaragesDeletedBy);
   }
 
   ///Get city by ID
   ///@param id City ID
   ///@param with_garages with garages data
   ///@param with_garages_owners with garages owners nested data
+  ///@param with_garages_city with garages city nested data
+  ///@param with_garages_created_by with garages created_by nested data
+  ///@param with_garages_updated_by with garages updated_by nested data
+  ///@param with_garages_deleted_by with garages deleted_by nested data
   @Get(path: '/api/city/{id}')
   Future<chopper.Response<CityResponse>> _apiCityIdGet({
     @Path('id') required int? id,
     @Query('with_garages') bool? withGarages,
     @Query('with_garages_owners') bool? withGaragesOwners,
+    @Query('with_garages_city') bool? withGaragesCity,
+    @Query('with_garages_created_by') bool? withGaragesCreatedBy,
+    @Query('with_garages_updated_by') bool? withGaragesUpdatedBy,
+    @Query('with_garages_deleted_by') bool? withGaragesDeletedBy,
   });
 
   ///Update a city
@@ -521,6 +543,10 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_garages with garages data
   ///@param with_garages_owners with garages owners data
+  ///@param with_garages_city with garages city nested data
+  ///@param with_garages_created_by with garages created_by nested data
+  ///@param with_garages_updated_by with garages updated_by nested data
+  ///@param with_garages_deleted_by with garages deleted_by nested data
   Future<chopper.Response<ListCity>> apiCityListGet({
     int? page,
     int? perPage,
@@ -528,6 +554,10 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withGarages,
     bool? withGaragesOwners,
+    bool? withGaragesCity,
+    bool? withGaragesCreatedBy,
+    bool? withGaragesUpdatedBy,
+    bool? withGaragesDeletedBy,
   }) {
     generatedMapping.putIfAbsent(ListCity, () => ListCity.fromJsonFactory);
 
@@ -537,7 +567,11 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withGarages: withGarages,
-        withGaragesOwners: withGaragesOwners);
+        withGaragesOwners: withGaragesOwners,
+        withGaragesCity: withGaragesCity,
+        withGaragesCreatedBy: withGaragesCreatedBy,
+        withGaragesUpdatedBy: withGaragesUpdatedBy,
+        withGaragesDeletedBy: withGaragesDeletedBy);
   }
 
   ///List city
@@ -547,6 +581,10 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_garages with garages data
   ///@param with_garages_owners with garages owners data
+  ///@param with_garages_city with garages city nested data
+  ///@param with_garages_created_by with garages created_by nested data
+  ///@param with_garages_updated_by with garages updated_by nested data
+  ///@param with_garages_deleted_by with garages deleted_by nested data
   @Get(path: '/api/city/list')
   Future<chopper.Response<ListCity>> _apiCityListGet({
     @Query('page') int? page,
@@ -555,6 +593,10 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_garages') bool? withGarages,
     @Query('with_garages_owners') bool? withGaragesOwners,
+    @Query('with_garages_city') bool? withGaragesCity,
+    @Query('with_garages_created_by') bool? withGaragesCreatedBy,
+    @Query('with_garages_updated_by') bool? withGaragesUpdatedBy,
+    @Query('with_garages_deleted_by') bool? withGaragesDeletedBy,
   });
 
   ///Total records
@@ -602,78 +644,230 @@ abstract class Swagger extends ChopperService {
   ///@param id Employee ID
   ///@param with_created_vehicles with created_vehicles data
   ///@param with_created_vehicles_vehicle_tasks with created_vehicles vehicle_tasks nested data
+  ///@param with_created_vehicles_created_by with created_vehicles created_by nested data
+  ///@param with_created_vehicles_updated_by with created_vehicles updated_by nested data
+  ///@param with_created_vehicles_deleted_by with created_vehicles deleted_by nested data
+  ///@param with_created_vehicles_owner with created_vehicles owner nested data
   ///@param with_updated_vehicles with updated_vehicles data
   ///@param with_updated_vehicles_vehicle_tasks with updated_vehicles vehicle_tasks nested data
+  ///@param with_updated_vehicles_created_by with updated_vehicles created_by nested data
+  ///@param with_updated_vehicles_updated_by with updated_vehicles updated_by nested data
+  ///@param with_updated_vehicles_deleted_by with updated_vehicles deleted_by nested data
+  ///@param with_updated_vehicles_owner with updated_vehicles owner nested data
   ///@param with_deleted_vehicles with deleted_vehicles data
   ///@param with_deleted_vehicles_vehicle_tasks with deleted_vehicles vehicle_tasks nested data
+  ///@param with_deleted_vehicles_created_by with deleted_vehicles created_by nested data
+  ///@param with_deleted_vehicles_updated_by with deleted_vehicles updated_by nested data
+  ///@param with_deleted_vehicles_deleted_by with deleted_vehicles deleted_by nested data
+  ///@param with_deleted_vehicles_owner with deleted_vehicles owner nested data
   ///@param with_created_garages with created_garages data
   ///@param with_created_garages_owners with created_garages owners nested data
+  ///@param with_created_garages_city with created_garages city nested data
+  ///@param with_created_garages_created_by with created_garages created_by nested data
+  ///@param with_created_garages_updated_by with created_garages updated_by nested data
+  ///@param with_created_garages_deleted_by with created_garages deleted_by nested data
   ///@param with_updated_garages with updated_garages data
   ///@param with_updated_garages_owners with updated_garages owners nested data
+  ///@param with_updated_garages_city with updated_garages city nested data
+  ///@param with_updated_garages_created_by with updated_garages created_by nested data
+  ///@param with_updated_garages_updated_by with updated_garages updated_by nested data
+  ///@param with_updated_garages_deleted_by with updated_garages deleted_by nested data
   ///@param with_deleted_garages with deleted_garages data
   ///@param with_deleted_garages_owners with deleted_garages owners nested data
+  ///@param with_deleted_garages_city with deleted_garages city nested data
+  ///@param with_deleted_garages_created_by with deleted_garages created_by nested data
+  ///@param with_deleted_garages_updated_by with deleted_garages updated_by nested data
+  ///@param with_deleted_garages_deleted_by with deleted_garages deleted_by nested data
   ///@param with_created_tasks with created_tasks data
   ///@param with_created_tasks_sub_tasks with created_tasks sub_tasks nested data
   ///@param with_created_tasks_attached_to with created_tasks attached_to nested data
+  ///@param with_created_tasks_created_by with created_tasks created_by nested data
+  ///@param with_created_tasks_updated_by with created_tasks updated_by nested data
+  ///@param with_created_tasks_deleted_by with created_tasks deleted_by nested data
   ///@param with_updated_tasks with updated_tasks data
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks nested data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to nested data
+  ///@param with_updated_tasks_created_by with updated_tasks created_by nested data
+  ///@param with_updated_tasks_updated_by with updated_tasks updated_by nested data
+  ///@param with_updated_tasks_deleted_by with updated_tasks deleted_by nested data
   ///@param with_deleted_tasks with deleted_tasks data
   ///@param with_deleted_tasks_sub_tasks with deleted_tasks sub_tasks nested data
   ///@param with_deleted_tasks_attached_to with deleted_tasks attached_to nested data
+  ///@param with_deleted_tasks_created_by with deleted_tasks created_by nested data
+  ///@param with_deleted_tasks_updated_by with deleted_tasks updated_by nested data
+  ///@param with_deleted_tasks_deleted_by with deleted_tasks deleted_by nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
   ///@param with_created_vehicle_tasks_activities with created_vehicle_tasks activities nested data
+  ///@param with_created_vehicle_tasks_task with created_vehicle_tasks task nested data
+  ///@param with_created_vehicle_tasks_created_by with created_vehicle_tasks created_by nested data
+  ///@param with_created_vehicle_tasks_assigned_to with created_vehicle_tasks assigned_to nested data
+  ///@param with_created_vehicle_tasks_deleted_by with created_vehicle_tasks deleted_by nested data
+  ///@param with_created_vehicle_tasks_updated_by with created_vehicle_tasks updated_by nested data
+  ///@param with_created_vehicle_tasks_vehicle with created_vehicle_tasks vehicle nested data
+  ///@param with_created_vehicle_tasks_sub_task with created_vehicle_tasks sub_task nested data
   ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
   ///@param with_assigned_vehicle_tasks_activities with assigned_vehicle_tasks activities nested data
+  ///@param with_assigned_vehicle_tasks_task with assigned_vehicle_tasks task nested data
+  ///@param with_assigned_vehicle_tasks_created_by with assigned_vehicle_tasks created_by nested data
+  ///@param with_assigned_vehicle_tasks_assigned_to with assigned_vehicle_tasks assigned_to nested data
+  ///@param with_assigned_vehicle_tasks_deleted_by with assigned_vehicle_tasks deleted_by nested data
+  ///@param with_assigned_vehicle_tasks_updated_by with assigned_vehicle_tasks updated_by nested data
+  ///@param with_assigned_vehicle_tasks_vehicle with assigned_vehicle_tasks vehicle nested data
+  ///@param with_assigned_vehicle_tasks_sub_task with assigned_vehicle_tasks sub_task nested data
   ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
   ///@param with_deleted_vehicle_tasks_activities with deleted_vehicle_tasks activities nested data
+  ///@param with_deleted_vehicle_tasks_task with deleted_vehicle_tasks task nested data
+  ///@param with_deleted_vehicle_tasks_created_by with deleted_vehicle_tasks created_by nested data
+  ///@param with_deleted_vehicle_tasks_assigned_to with deleted_vehicle_tasks assigned_to nested data
+  ///@param with_deleted_vehicle_tasks_deleted_by with deleted_vehicle_tasks deleted_by nested data
+  ///@param with_deleted_vehicle_tasks_updated_by with deleted_vehicle_tasks updated_by nested data
+  ///@param with_deleted_vehicle_tasks_vehicle with deleted_vehicle_tasks vehicle nested data
+  ///@param with_deleted_vehicle_tasks_sub_task with deleted_vehicle_tasks sub_task nested data
   ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_updated_vehicle_tasks_activities with updated_vehicle_tasks activities nested data
+  ///@param with_updated_vehicle_tasks_task with updated_vehicle_tasks task nested data
+  ///@param with_updated_vehicle_tasks_created_by with updated_vehicle_tasks created_by nested data
+  ///@param with_updated_vehicle_tasks_assigned_to with updated_vehicle_tasks assigned_to nested data
+  ///@param with_updated_vehicle_tasks_deleted_by with updated_vehicle_tasks deleted_by nested data
+  ///@param with_updated_vehicle_tasks_updated_by with updated_vehicle_tasks updated_by nested data
+  ///@param with_updated_vehicle_tasks_vehicle with updated_vehicle_tasks vehicle nested data
+  ///@param with_updated_vehicle_tasks_sub_task with updated_vehicle_tasks sub_task nested data
   ///@param with_permission with permission data
+  ///@param with_permission_employees with permission employees nested data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts nested data
+  ///@param with_requests_request_by with requests request_by nested data
   ///@param with_account with account data
+  ///@param with_account_employee with account employee nested data
   ///@param with_created_activities with created_activities data
+  ///@param with_created_activities_vehicle_tasks with created_activities vehicle_tasks nested data
+  ///@param with_created_activities_created_by with created_activities created_by nested data
+  ///@param with_created_activities_updated_by with created_activities updated_by nested data
+  ///@param with_created_activities_deleted_by with created_activities deleted_by nested data
   ///@param with_updated_activities with updated_activities data
+  ///@param with_updated_activities_vehicle_tasks with updated_activities vehicle_tasks nested data
+  ///@param with_updated_activities_created_by with updated_activities created_by nested data
+  ///@param with_updated_activities_updated_by with updated_activities updated_by nested data
+  ///@param with_updated_activities_deleted_by with updated_activities deleted_by nested data
   ///@param with_deleted_activities with deleted_activities data
+  ///@param with_deleted_activities_vehicle_tasks with deleted_activities vehicle_tasks nested data
+  ///@param with_deleted_activities_created_by with deleted_activities created_by nested data
+  ///@param with_deleted_activities_updated_by with deleted_activities updated_by nested data
+  ///@param with_deleted_activities_deleted_by with deleted_activities deleted_by nested data
   Future<chopper.Response<EmployeeResponse>> apiEmployeeIdGet({
     required int? id,
     bool? withCreatedVehicles,
     bool? withCreatedVehiclesVehicleTasks,
+    bool? withCreatedVehiclesCreatedBy,
+    bool? withCreatedVehiclesUpdatedBy,
+    bool? withCreatedVehiclesDeletedBy,
+    bool? withCreatedVehiclesOwner,
     bool? withUpdatedVehicles,
     bool? withUpdatedVehiclesVehicleTasks,
+    bool? withUpdatedVehiclesCreatedBy,
+    bool? withUpdatedVehiclesUpdatedBy,
+    bool? withUpdatedVehiclesDeletedBy,
+    bool? withUpdatedVehiclesOwner,
     bool? withDeletedVehicles,
     bool? withDeletedVehiclesVehicleTasks,
+    bool? withDeletedVehiclesCreatedBy,
+    bool? withDeletedVehiclesUpdatedBy,
+    bool? withDeletedVehiclesDeletedBy,
+    bool? withDeletedVehiclesOwner,
     bool? withCreatedGarages,
     bool? withCreatedGaragesOwners,
+    bool? withCreatedGaragesCity,
+    bool? withCreatedGaragesCreatedBy,
+    bool? withCreatedGaragesUpdatedBy,
+    bool? withCreatedGaragesDeletedBy,
     bool? withUpdatedGarages,
     bool? withUpdatedGaragesOwners,
+    bool? withUpdatedGaragesCity,
+    bool? withUpdatedGaragesCreatedBy,
+    bool? withUpdatedGaragesUpdatedBy,
+    bool? withUpdatedGaragesDeletedBy,
     bool? withDeletedGarages,
     bool? withDeletedGaragesOwners,
+    bool? withDeletedGaragesCity,
+    bool? withDeletedGaragesCreatedBy,
+    bool? withDeletedGaragesUpdatedBy,
+    bool? withDeletedGaragesDeletedBy,
     bool? withCreatedTasks,
     bool? withCreatedTasksSubTasks,
     bool? withCreatedTasksAttachedTo,
+    bool? withCreatedTasksCreatedBy,
+    bool? withCreatedTasksUpdatedBy,
+    bool? withCreatedTasksDeletedBy,
     bool? withUpdatedTasks,
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
+    bool? withUpdatedTasksCreatedBy,
+    bool? withUpdatedTasksUpdatedBy,
+    bool? withUpdatedTasksDeletedBy,
     bool? withDeletedTasks,
     bool? withDeletedTasksSubTasks,
     bool? withDeletedTasksAttachedTo,
+    bool? withDeletedTasksCreatedBy,
+    bool? withDeletedTasksUpdatedBy,
+    bool? withDeletedTasksDeletedBy,
     bool? withCreatedVehicleTasks,
     bool? withCreatedVehicleTasksActivities,
+    bool? withCreatedVehicleTasksTask,
+    bool? withCreatedVehicleTasksCreatedBy,
+    bool? withCreatedVehicleTasksAssignedTo,
+    bool? withCreatedVehicleTasksDeletedBy,
+    bool? withCreatedVehicleTasksUpdatedBy,
+    bool? withCreatedVehicleTasksVehicle,
+    bool? withCreatedVehicleTasksSubTask,
     bool? withAssignedVehicleTasks,
     bool? withAssignedVehicleTasksActivities,
+    bool? withAssignedVehicleTasksTask,
+    bool? withAssignedVehicleTasksCreatedBy,
+    bool? withAssignedVehicleTasksAssignedTo,
+    bool? withAssignedVehicleTasksDeletedBy,
+    bool? withAssignedVehicleTasksUpdatedBy,
+    bool? withAssignedVehicleTasksVehicle,
+    bool? withAssignedVehicleTasksSubTask,
     bool? withDeletedVehicleTasks,
     bool? withDeletedVehicleTasksActivities,
+    bool? withDeletedVehicleTasksTask,
+    bool? withDeletedVehicleTasksCreatedBy,
+    bool? withDeletedVehicleTasksAssignedTo,
+    bool? withDeletedVehicleTasksDeletedBy,
+    bool? withDeletedVehicleTasksUpdatedBy,
+    bool? withDeletedVehicleTasksVehicle,
+    bool? withDeletedVehicleTasksSubTask,
     bool? withUpdatedVehicleTasks,
     bool? withUpdatedVehicleTasksActivities,
+    bool? withUpdatedVehicleTasksTask,
+    bool? withUpdatedVehicleTasksCreatedBy,
+    bool? withUpdatedVehicleTasksAssignedTo,
+    bool? withUpdatedVehicleTasksDeletedBy,
+    bool? withUpdatedVehicleTasksUpdatedBy,
+    bool? withUpdatedVehicleTasksVehicle,
+    bool? withUpdatedVehicleTasksSubTask,
     bool? withPermission,
+    bool? withPermissionEmployees,
     bool? withRequests,
     bool? withRequestsSpareParts,
+    bool? withRequestsRequestBy,
     bool? withAccount,
+    bool? withAccountEmployee,
     bool? withCreatedActivities,
+    bool? withCreatedActivitiesVehicleTasks,
+    bool? withCreatedActivitiesCreatedBy,
+    bool? withCreatedActivitiesUpdatedBy,
+    bool? withCreatedActivitiesDeletedBy,
     bool? withUpdatedActivities,
+    bool? withUpdatedActivitiesVehicleTasks,
+    bool? withUpdatedActivitiesCreatedBy,
+    bool? withUpdatedActivitiesUpdatedBy,
+    bool? withUpdatedActivitiesDeletedBy,
     bool? withDeletedActivities,
+    bool? withDeletedActivitiesVehicleTasks,
+    bool? withDeletedActivitiesCreatedBy,
+    bool? withDeletedActivitiesUpdatedBy,
+    bool? withDeletedActivitiesDeletedBy,
   }) {
     generatedMapping.putIfAbsent(
         EmployeeResponse, () => EmployeeResponse.fromJsonFactory);
@@ -682,126 +876,400 @@ abstract class Swagger extends ChopperService {
         id: id,
         withCreatedVehicles: withCreatedVehicles,
         withCreatedVehiclesVehicleTasks: withCreatedVehiclesVehicleTasks,
+        withCreatedVehiclesCreatedBy: withCreatedVehiclesCreatedBy,
+        withCreatedVehiclesUpdatedBy: withCreatedVehiclesUpdatedBy,
+        withCreatedVehiclesDeletedBy: withCreatedVehiclesDeletedBy,
+        withCreatedVehiclesOwner: withCreatedVehiclesOwner,
         withUpdatedVehicles: withUpdatedVehicles,
         withUpdatedVehiclesVehicleTasks: withUpdatedVehiclesVehicleTasks,
+        withUpdatedVehiclesCreatedBy: withUpdatedVehiclesCreatedBy,
+        withUpdatedVehiclesUpdatedBy: withUpdatedVehiclesUpdatedBy,
+        withUpdatedVehiclesDeletedBy: withUpdatedVehiclesDeletedBy,
+        withUpdatedVehiclesOwner: withUpdatedVehiclesOwner,
         withDeletedVehicles: withDeletedVehicles,
         withDeletedVehiclesVehicleTasks: withDeletedVehiclesVehicleTasks,
+        withDeletedVehiclesCreatedBy: withDeletedVehiclesCreatedBy,
+        withDeletedVehiclesUpdatedBy: withDeletedVehiclesUpdatedBy,
+        withDeletedVehiclesDeletedBy: withDeletedVehiclesDeletedBy,
+        withDeletedVehiclesOwner: withDeletedVehiclesOwner,
         withCreatedGarages: withCreatedGarages,
         withCreatedGaragesOwners: withCreatedGaragesOwners,
+        withCreatedGaragesCity: withCreatedGaragesCity,
+        withCreatedGaragesCreatedBy: withCreatedGaragesCreatedBy,
+        withCreatedGaragesUpdatedBy: withCreatedGaragesUpdatedBy,
+        withCreatedGaragesDeletedBy: withCreatedGaragesDeletedBy,
         withUpdatedGarages: withUpdatedGarages,
         withUpdatedGaragesOwners: withUpdatedGaragesOwners,
+        withUpdatedGaragesCity: withUpdatedGaragesCity,
+        withUpdatedGaragesCreatedBy: withUpdatedGaragesCreatedBy,
+        withUpdatedGaragesUpdatedBy: withUpdatedGaragesUpdatedBy,
+        withUpdatedGaragesDeletedBy: withUpdatedGaragesDeletedBy,
         withDeletedGarages: withDeletedGarages,
         withDeletedGaragesOwners: withDeletedGaragesOwners,
+        withDeletedGaragesCity: withDeletedGaragesCity,
+        withDeletedGaragesCreatedBy: withDeletedGaragesCreatedBy,
+        withDeletedGaragesUpdatedBy: withDeletedGaragesUpdatedBy,
+        withDeletedGaragesDeletedBy: withDeletedGaragesDeletedBy,
         withCreatedTasks: withCreatedTasks,
         withCreatedTasksSubTasks: withCreatedTasksSubTasks,
         withCreatedTasksAttachedTo: withCreatedTasksAttachedTo,
+        withCreatedTasksCreatedBy: withCreatedTasksCreatedBy,
+        withCreatedTasksUpdatedBy: withCreatedTasksUpdatedBy,
+        withCreatedTasksDeletedBy: withCreatedTasksDeletedBy,
         withUpdatedTasks: withUpdatedTasks,
         withUpdatedTasksSubTasks: withUpdatedTasksSubTasks,
         withUpdatedTasksAttachedTo: withUpdatedTasksAttachedTo,
+        withUpdatedTasksCreatedBy: withUpdatedTasksCreatedBy,
+        withUpdatedTasksUpdatedBy: withUpdatedTasksUpdatedBy,
+        withUpdatedTasksDeletedBy: withUpdatedTasksDeletedBy,
         withDeletedTasks: withDeletedTasks,
         withDeletedTasksSubTasks: withDeletedTasksSubTasks,
         withDeletedTasksAttachedTo: withDeletedTasksAttachedTo,
+        withDeletedTasksCreatedBy: withDeletedTasksCreatedBy,
+        withDeletedTasksUpdatedBy: withDeletedTasksUpdatedBy,
+        withDeletedTasksDeletedBy: withDeletedTasksDeletedBy,
         withCreatedVehicleTasks: withCreatedVehicleTasks,
         withCreatedVehicleTasksActivities: withCreatedVehicleTasksActivities,
+        withCreatedVehicleTasksTask: withCreatedVehicleTasksTask,
+        withCreatedVehicleTasksCreatedBy: withCreatedVehicleTasksCreatedBy,
+        withCreatedVehicleTasksAssignedTo: withCreatedVehicleTasksAssignedTo,
+        withCreatedVehicleTasksDeletedBy: withCreatedVehicleTasksDeletedBy,
+        withCreatedVehicleTasksUpdatedBy: withCreatedVehicleTasksUpdatedBy,
+        withCreatedVehicleTasksVehicle: withCreatedVehicleTasksVehicle,
+        withCreatedVehicleTasksSubTask: withCreatedVehicleTasksSubTask,
         withAssignedVehicleTasks: withAssignedVehicleTasks,
         withAssignedVehicleTasksActivities: withAssignedVehicleTasksActivities,
+        withAssignedVehicleTasksTask: withAssignedVehicleTasksTask,
+        withAssignedVehicleTasksCreatedBy: withAssignedVehicleTasksCreatedBy,
+        withAssignedVehicleTasksAssignedTo: withAssignedVehicleTasksAssignedTo,
+        withAssignedVehicleTasksDeletedBy: withAssignedVehicleTasksDeletedBy,
+        withAssignedVehicleTasksUpdatedBy: withAssignedVehicleTasksUpdatedBy,
+        withAssignedVehicleTasksVehicle: withAssignedVehicleTasksVehicle,
+        withAssignedVehicleTasksSubTask: withAssignedVehicleTasksSubTask,
         withDeletedVehicleTasks: withDeletedVehicleTasks,
         withDeletedVehicleTasksActivities: withDeletedVehicleTasksActivities,
+        withDeletedVehicleTasksTask: withDeletedVehicleTasksTask,
+        withDeletedVehicleTasksCreatedBy: withDeletedVehicleTasksCreatedBy,
+        withDeletedVehicleTasksAssignedTo: withDeletedVehicleTasksAssignedTo,
+        withDeletedVehicleTasksDeletedBy: withDeletedVehicleTasksDeletedBy,
+        withDeletedVehicleTasksUpdatedBy: withDeletedVehicleTasksUpdatedBy,
+        withDeletedVehicleTasksVehicle: withDeletedVehicleTasksVehicle,
+        withDeletedVehicleTasksSubTask: withDeletedVehicleTasksSubTask,
         withUpdatedVehicleTasks: withUpdatedVehicleTasks,
         withUpdatedVehicleTasksActivities: withUpdatedVehicleTasksActivities,
+        withUpdatedVehicleTasksTask: withUpdatedVehicleTasksTask,
+        withUpdatedVehicleTasksCreatedBy: withUpdatedVehicleTasksCreatedBy,
+        withUpdatedVehicleTasksAssignedTo: withUpdatedVehicleTasksAssignedTo,
+        withUpdatedVehicleTasksDeletedBy: withUpdatedVehicleTasksDeletedBy,
+        withUpdatedVehicleTasksUpdatedBy: withUpdatedVehicleTasksUpdatedBy,
+        withUpdatedVehicleTasksVehicle: withUpdatedVehicleTasksVehicle,
+        withUpdatedVehicleTasksSubTask: withUpdatedVehicleTasksSubTask,
         withPermission: withPermission,
+        withPermissionEmployees: withPermissionEmployees,
         withRequests: withRequests,
         withRequestsSpareParts: withRequestsSpareParts,
+        withRequestsRequestBy: withRequestsRequestBy,
         withAccount: withAccount,
+        withAccountEmployee: withAccountEmployee,
         withCreatedActivities: withCreatedActivities,
+        withCreatedActivitiesVehicleTasks: withCreatedActivitiesVehicleTasks,
+        withCreatedActivitiesCreatedBy: withCreatedActivitiesCreatedBy,
+        withCreatedActivitiesUpdatedBy: withCreatedActivitiesUpdatedBy,
+        withCreatedActivitiesDeletedBy: withCreatedActivitiesDeletedBy,
         withUpdatedActivities: withUpdatedActivities,
-        withDeletedActivities: withDeletedActivities);
+        withUpdatedActivitiesVehicleTasks: withUpdatedActivitiesVehicleTasks,
+        withUpdatedActivitiesCreatedBy: withUpdatedActivitiesCreatedBy,
+        withUpdatedActivitiesUpdatedBy: withUpdatedActivitiesUpdatedBy,
+        withUpdatedActivitiesDeletedBy: withUpdatedActivitiesDeletedBy,
+        withDeletedActivities: withDeletedActivities,
+        withDeletedActivitiesVehicleTasks: withDeletedActivitiesVehicleTasks,
+        withDeletedActivitiesCreatedBy: withDeletedActivitiesCreatedBy,
+        withDeletedActivitiesUpdatedBy: withDeletedActivitiesUpdatedBy,
+        withDeletedActivitiesDeletedBy: withDeletedActivitiesDeletedBy);
   }
 
   ///Get employee by ID
   ///@param id Employee ID
   ///@param with_created_vehicles with created_vehicles data
   ///@param with_created_vehicles_vehicle_tasks with created_vehicles vehicle_tasks nested data
+  ///@param with_created_vehicles_created_by with created_vehicles created_by nested data
+  ///@param with_created_vehicles_updated_by with created_vehicles updated_by nested data
+  ///@param with_created_vehicles_deleted_by with created_vehicles deleted_by nested data
+  ///@param with_created_vehicles_owner with created_vehicles owner nested data
   ///@param with_updated_vehicles with updated_vehicles data
   ///@param with_updated_vehicles_vehicle_tasks with updated_vehicles vehicle_tasks nested data
+  ///@param with_updated_vehicles_created_by with updated_vehicles created_by nested data
+  ///@param with_updated_vehicles_updated_by with updated_vehicles updated_by nested data
+  ///@param with_updated_vehicles_deleted_by with updated_vehicles deleted_by nested data
+  ///@param with_updated_vehicles_owner with updated_vehicles owner nested data
   ///@param with_deleted_vehicles with deleted_vehicles data
   ///@param with_deleted_vehicles_vehicle_tasks with deleted_vehicles vehicle_tasks nested data
+  ///@param with_deleted_vehicles_created_by with deleted_vehicles created_by nested data
+  ///@param with_deleted_vehicles_updated_by with deleted_vehicles updated_by nested data
+  ///@param with_deleted_vehicles_deleted_by with deleted_vehicles deleted_by nested data
+  ///@param with_deleted_vehicles_owner with deleted_vehicles owner nested data
   ///@param with_created_garages with created_garages data
   ///@param with_created_garages_owners with created_garages owners nested data
+  ///@param with_created_garages_city with created_garages city nested data
+  ///@param with_created_garages_created_by with created_garages created_by nested data
+  ///@param with_created_garages_updated_by with created_garages updated_by nested data
+  ///@param with_created_garages_deleted_by with created_garages deleted_by nested data
   ///@param with_updated_garages with updated_garages data
   ///@param with_updated_garages_owners with updated_garages owners nested data
+  ///@param with_updated_garages_city with updated_garages city nested data
+  ///@param with_updated_garages_created_by with updated_garages created_by nested data
+  ///@param with_updated_garages_updated_by with updated_garages updated_by nested data
+  ///@param with_updated_garages_deleted_by with updated_garages deleted_by nested data
   ///@param with_deleted_garages with deleted_garages data
   ///@param with_deleted_garages_owners with deleted_garages owners nested data
+  ///@param with_deleted_garages_city with deleted_garages city nested data
+  ///@param with_deleted_garages_created_by with deleted_garages created_by nested data
+  ///@param with_deleted_garages_updated_by with deleted_garages updated_by nested data
+  ///@param with_deleted_garages_deleted_by with deleted_garages deleted_by nested data
   ///@param with_created_tasks with created_tasks data
   ///@param with_created_tasks_sub_tasks with created_tasks sub_tasks nested data
   ///@param with_created_tasks_attached_to with created_tasks attached_to nested data
+  ///@param with_created_tasks_created_by with created_tasks created_by nested data
+  ///@param with_created_tasks_updated_by with created_tasks updated_by nested data
+  ///@param with_created_tasks_deleted_by with created_tasks deleted_by nested data
   ///@param with_updated_tasks with updated_tasks data
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks nested data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to nested data
+  ///@param with_updated_tasks_created_by with updated_tasks created_by nested data
+  ///@param with_updated_tasks_updated_by with updated_tasks updated_by nested data
+  ///@param with_updated_tasks_deleted_by with updated_tasks deleted_by nested data
   ///@param with_deleted_tasks with deleted_tasks data
   ///@param with_deleted_tasks_sub_tasks with deleted_tasks sub_tasks nested data
   ///@param with_deleted_tasks_attached_to with deleted_tasks attached_to nested data
+  ///@param with_deleted_tasks_created_by with deleted_tasks created_by nested data
+  ///@param with_deleted_tasks_updated_by with deleted_tasks updated_by nested data
+  ///@param with_deleted_tasks_deleted_by with deleted_tasks deleted_by nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
   ///@param with_created_vehicle_tasks_activities with created_vehicle_tasks activities nested data
+  ///@param with_created_vehicle_tasks_task with created_vehicle_tasks task nested data
+  ///@param with_created_vehicle_tasks_created_by with created_vehicle_tasks created_by nested data
+  ///@param with_created_vehicle_tasks_assigned_to with created_vehicle_tasks assigned_to nested data
+  ///@param with_created_vehicle_tasks_deleted_by with created_vehicle_tasks deleted_by nested data
+  ///@param with_created_vehicle_tasks_updated_by with created_vehicle_tasks updated_by nested data
+  ///@param with_created_vehicle_tasks_vehicle with created_vehicle_tasks vehicle nested data
+  ///@param with_created_vehicle_tasks_sub_task with created_vehicle_tasks sub_task nested data
   ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
   ///@param with_assigned_vehicle_tasks_activities with assigned_vehicle_tasks activities nested data
+  ///@param with_assigned_vehicle_tasks_task with assigned_vehicle_tasks task nested data
+  ///@param with_assigned_vehicle_tasks_created_by with assigned_vehicle_tasks created_by nested data
+  ///@param with_assigned_vehicle_tasks_assigned_to with assigned_vehicle_tasks assigned_to nested data
+  ///@param with_assigned_vehicle_tasks_deleted_by with assigned_vehicle_tasks deleted_by nested data
+  ///@param with_assigned_vehicle_tasks_updated_by with assigned_vehicle_tasks updated_by nested data
+  ///@param with_assigned_vehicle_tasks_vehicle with assigned_vehicle_tasks vehicle nested data
+  ///@param with_assigned_vehicle_tasks_sub_task with assigned_vehicle_tasks sub_task nested data
   ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
   ///@param with_deleted_vehicle_tasks_activities with deleted_vehicle_tasks activities nested data
+  ///@param with_deleted_vehicle_tasks_task with deleted_vehicle_tasks task nested data
+  ///@param with_deleted_vehicle_tasks_created_by with deleted_vehicle_tasks created_by nested data
+  ///@param with_deleted_vehicle_tasks_assigned_to with deleted_vehicle_tasks assigned_to nested data
+  ///@param with_deleted_vehicle_tasks_deleted_by with deleted_vehicle_tasks deleted_by nested data
+  ///@param with_deleted_vehicle_tasks_updated_by with deleted_vehicle_tasks updated_by nested data
+  ///@param with_deleted_vehicle_tasks_vehicle with deleted_vehicle_tasks vehicle nested data
+  ///@param with_deleted_vehicle_tasks_sub_task with deleted_vehicle_tasks sub_task nested data
   ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_updated_vehicle_tasks_activities with updated_vehicle_tasks activities nested data
+  ///@param with_updated_vehicle_tasks_task with updated_vehicle_tasks task nested data
+  ///@param with_updated_vehicle_tasks_created_by with updated_vehicle_tasks created_by nested data
+  ///@param with_updated_vehicle_tasks_assigned_to with updated_vehicle_tasks assigned_to nested data
+  ///@param with_updated_vehicle_tasks_deleted_by with updated_vehicle_tasks deleted_by nested data
+  ///@param with_updated_vehicle_tasks_updated_by with updated_vehicle_tasks updated_by nested data
+  ///@param with_updated_vehicle_tasks_vehicle with updated_vehicle_tasks vehicle nested data
+  ///@param with_updated_vehicle_tasks_sub_task with updated_vehicle_tasks sub_task nested data
   ///@param with_permission with permission data
+  ///@param with_permission_employees with permission employees nested data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts nested data
+  ///@param with_requests_request_by with requests request_by nested data
   ///@param with_account with account data
+  ///@param with_account_employee with account employee nested data
   ///@param with_created_activities with created_activities data
+  ///@param with_created_activities_vehicle_tasks with created_activities vehicle_tasks nested data
+  ///@param with_created_activities_created_by with created_activities created_by nested data
+  ///@param with_created_activities_updated_by with created_activities updated_by nested data
+  ///@param with_created_activities_deleted_by with created_activities deleted_by nested data
   ///@param with_updated_activities with updated_activities data
+  ///@param with_updated_activities_vehicle_tasks with updated_activities vehicle_tasks nested data
+  ///@param with_updated_activities_created_by with updated_activities created_by nested data
+  ///@param with_updated_activities_updated_by with updated_activities updated_by nested data
+  ///@param with_updated_activities_deleted_by with updated_activities deleted_by nested data
   ///@param with_deleted_activities with deleted_activities data
+  ///@param with_deleted_activities_vehicle_tasks with deleted_activities vehicle_tasks nested data
+  ///@param with_deleted_activities_created_by with deleted_activities created_by nested data
+  ///@param with_deleted_activities_updated_by with deleted_activities updated_by nested data
+  ///@param with_deleted_activities_deleted_by with deleted_activities deleted_by nested data
   @Get(path: '/api/employee/{id}')
   Future<chopper.Response<EmployeeResponse>> _apiEmployeeIdGet({
     @Path('id') required int? id,
     @Query('with_created_vehicles') bool? withCreatedVehicles,
     @Query('with_created_vehicles_vehicle_tasks')
     bool? withCreatedVehiclesVehicleTasks,
+    @Query('with_created_vehicles_created_by')
+    bool? withCreatedVehiclesCreatedBy,
+    @Query('with_created_vehicles_updated_by')
+    bool? withCreatedVehiclesUpdatedBy,
+    @Query('with_created_vehicles_deleted_by')
+    bool? withCreatedVehiclesDeletedBy,
+    @Query('with_created_vehicles_owner') bool? withCreatedVehiclesOwner,
     @Query('with_updated_vehicles') bool? withUpdatedVehicles,
     @Query('with_updated_vehicles_vehicle_tasks')
     bool? withUpdatedVehiclesVehicleTasks,
+    @Query('with_updated_vehicles_created_by')
+    bool? withUpdatedVehiclesCreatedBy,
+    @Query('with_updated_vehicles_updated_by')
+    bool? withUpdatedVehiclesUpdatedBy,
+    @Query('with_updated_vehicles_deleted_by')
+    bool? withUpdatedVehiclesDeletedBy,
+    @Query('with_updated_vehicles_owner') bool? withUpdatedVehiclesOwner,
     @Query('with_deleted_vehicles') bool? withDeletedVehicles,
     @Query('with_deleted_vehicles_vehicle_tasks')
     bool? withDeletedVehiclesVehicleTasks,
+    @Query('with_deleted_vehicles_created_by')
+    bool? withDeletedVehiclesCreatedBy,
+    @Query('with_deleted_vehicles_updated_by')
+    bool? withDeletedVehiclesUpdatedBy,
+    @Query('with_deleted_vehicles_deleted_by')
+    bool? withDeletedVehiclesDeletedBy,
+    @Query('with_deleted_vehicles_owner') bool? withDeletedVehiclesOwner,
     @Query('with_created_garages') bool? withCreatedGarages,
     @Query('with_created_garages_owners') bool? withCreatedGaragesOwners,
+    @Query('with_created_garages_city') bool? withCreatedGaragesCity,
+    @Query('with_created_garages_created_by') bool? withCreatedGaragesCreatedBy,
+    @Query('with_created_garages_updated_by') bool? withCreatedGaragesUpdatedBy,
+    @Query('with_created_garages_deleted_by') bool? withCreatedGaragesDeletedBy,
     @Query('with_updated_garages') bool? withUpdatedGarages,
     @Query('with_updated_garages_owners') bool? withUpdatedGaragesOwners,
+    @Query('with_updated_garages_city') bool? withUpdatedGaragesCity,
+    @Query('with_updated_garages_created_by') bool? withUpdatedGaragesCreatedBy,
+    @Query('with_updated_garages_updated_by') bool? withUpdatedGaragesUpdatedBy,
+    @Query('with_updated_garages_deleted_by') bool? withUpdatedGaragesDeletedBy,
     @Query('with_deleted_garages') bool? withDeletedGarages,
     @Query('with_deleted_garages_owners') bool? withDeletedGaragesOwners,
+    @Query('with_deleted_garages_city') bool? withDeletedGaragesCity,
+    @Query('with_deleted_garages_created_by') bool? withDeletedGaragesCreatedBy,
+    @Query('with_deleted_garages_updated_by') bool? withDeletedGaragesUpdatedBy,
+    @Query('with_deleted_garages_deleted_by') bool? withDeletedGaragesDeletedBy,
     @Query('with_created_tasks') bool? withCreatedTasks,
     @Query('with_created_tasks_sub_tasks') bool? withCreatedTasksSubTasks,
     @Query('with_created_tasks_attached_to') bool? withCreatedTasksAttachedTo,
+    @Query('with_created_tasks_created_by') bool? withCreatedTasksCreatedBy,
+    @Query('with_created_tasks_updated_by') bool? withCreatedTasksUpdatedBy,
+    @Query('with_created_tasks_deleted_by') bool? withCreatedTasksDeletedBy,
     @Query('with_updated_tasks') bool? withUpdatedTasks,
     @Query('with_updated_tasks_sub_tasks') bool? withUpdatedTasksSubTasks,
     @Query('with_updated_tasks_attached_to') bool? withUpdatedTasksAttachedTo,
+    @Query('with_updated_tasks_created_by') bool? withUpdatedTasksCreatedBy,
+    @Query('with_updated_tasks_updated_by') bool? withUpdatedTasksUpdatedBy,
+    @Query('with_updated_tasks_deleted_by') bool? withUpdatedTasksDeletedBy,
     @Query('with_deleted_tasks') bool? withDeletedTasks,
     @Query('with_deleted_tasks_sub_tasks') bool? withDeletedTasksSubTasks,
     @Query('with_deleted_tasks_attached_to') bool? withDeletedTasksAttachedTo,
+    @Query('with_deleted_tasks_created_by') bool? withDeletedTasksCreatedBy,
+    @Query('with_deleted_tasks_updated_by') bool? withDeletedTasksUpdatedBy,
+    @Query('with_deleted_tasks_deleted_by') bool? withDeletedTasksDeletedBy,
     @Query('with_created_vehicle_tasks') bool? withCreatedVehicleTasks,
     @Query('with_created_vehicle_tasks_activities')
     bool? withCreatedVehicleTasksActivities,
+    @Query('with_created_vehicle_tasks_task') bool? withCreatedVehicleTasksTask,
+    @Query('with_created_vehicle_tasks_created_by')
+    bool? withCreatedVehicleTasksCreatedBy,
+    @Query('with_created_vehicle_tasks_assigned_to')
+    bool? withCreatedVehicleTasksAssignedTo,
+    @Query('with_created_vehicle_tasks_deleted_by')
+    bool? withCreatedVehicleTasksDeletedBy,
+    @Query('with_created_vehicle_tasks_updated_by')
+    bool? withCreatedVehicleTasksUpdatedBy,
+    @Query('with_created_vehicle_tasks_vehicle')
+    bool? withCreatedVehicleTasksVehicle,
+    @Query('with_created_vehicle_tasks_sub_task')
+    bool? withCreatedVehicleTasksSubTask,
     @Query('with_assigned_vehicle_tasks') bool? withAssignedVehicleTasks,
     @Query('with_assigned_vehicle_tasks_activities')
     bool? withAssignedVehicleTasksActivities,
+    @Query('with_assigned_vehicle_tasks_task')
+    bool? withAssignedVehicleTasksTask,
+    @Query('with_assigned_vehicle_tasks_created_by')
+    bool? withAssignedVehicleTasksCreatedBy,
+    @Query('with_assigned_vehicle_tasks_assigned_to')
+    bool? withAssignedVehicleTasksAssignedTo,
+    @Query('with_assigned_vehicle_tasks_deleted_by')
+    bool? withAssignedVehicleTasksDeletedBy,
+    @Query('with_assigned_vehicle_tasks_updated_by')
+    bool? withAssignedVehicleTasksUpdatedBy,
+    @Query('with_assigned_vehicle_tasks_vehicle')
+    bool? withAssignedVehicleTasksVehicle,
+    @Query('with_assigned_vehicle_tasks_sub_task')
+    bool? withAssignedVehicleTasksSubTask,
     @Query('with_deleted_vehicle_tasks') bool? withDeletedVehicleTasks,
     @Query('with_deleted_vehicle_tasks_activities')
     bool? withDeletedVehicleTasksActivities,
+    @Query('with_deleted_vehicle_tasks_task') bool? withDeletedVehicleTasksTask,
+    @Query('with_deleted_vehicle_tasks_created_by')
+    bool? withDeletedVehicleTasksCreatedBy,
+    @Query('with_deleted_vehicle_tasks_assigned_to')
+    bool? withDeletedVehicleTasksAssignedTo,
+    @Query('with_deleted_vehicle_tasks_deleted_by')
+    bool? withDeletedVehicleTasksDeletedBy,
+    @Query('with_deleted_vehicle_tasks_updated_by')
+    bool? withDeletedVehicleTasksUpdatedBy,
+    @Query('with_deleted_vehicle_tasks_vehicle')
+    bool? withDeletedVehicleTasksVehicle,
+    @Query('with_deleted_vehicle_tasks_sub_task')
+    bool? withDeletedVehicleTasksSubTask,
     @Query('with_updated_vehicle_tasks') bool? withUpdatedVehicleTasks,
     @Query('with_updated_vehicle_tasks_activities')
     bool? withUpdatedVehicleTasksActivities,
+    @Query('with_updated_vehicle_tasks_task') bool? withUpdatedVehicleTasksTask,
+    @Query('with_updated_vehicle_tasks_created_by')
+    bool? withUpdatedVehicleTasksCreatedBy,
+    @Query('with_updated_vehicle_tasks_assigned_to')
+    bool? withUpdatedVehicleTasksAssignedTo,
+    @Query('with_updated_vehicle_tasks_deleted_by')
+    bool? withUpdatedVehicleTasksDeletedBy,
+    @Query('with_updated_vehicle_tasks_updated_by')
+    bool? withUpdatedVehicleTasksUpdatedBy,
+    @Query('with_updated_vehicle_tasks_vehicle')
+    bool? withUpdatedVehicleTasksVehicle,
+    @Query('with_updated_vehicle_tasks_sub_task')
+    bool? withUpdatedVehicleTasksSubTask,
     @Query('with_permission') bool? withPermission,
+    @Query('with_permission_employees') bool? withPermissionEmployees,
     @Query('with_requests') bool? withRequests,
     @Query('with_requests_spare_parts') bool? withRequestsSpareParts,
+    @Query('with_requests_request_by') bool? withRequestsRequestBy,
     @Query('with_account') bool? withAccount,
+    @Query('with_account_employee') bool? withAccountEmployee,
     @Query('with_created_activities') bool? withCreatedActivities,
+    @Query('with_created_activities_vehicle_tasks')
+    bool? withCreatedActivitiesVehicleTasks,
+    @Query('with_created_activities_created_by')
+    bool? withCreatedActivitiesCreatedBy,
+    @Query('with_created_activities_updated_by')
+    bool? withCreatedActivitiesUpdatedBy,
+    @Query('with_created_activities_deleted_by')
+    bool? withCreatedActivitiesDeletedBy,
     @Query('with_updated_activities') bool? withUpdatedActivities,
+    @Query('with_updated_activities_vehicle_tasks')
+    bool? withUpdatedActivitiesVehicleTasks,
+    @Query('with_updated_activities_created_by')
+    bool? withUpdatedActivitiesCreatedBy,
+    @Query('with_updated_activities_updated_by')
+    bool? withUpdatedActivitiesUpdatedBy,
+    @Query('with_updated_activities_deleted_by')
+    bool? withUpdatedActivitiesDeletedBy,
     @Query('with_deleted_activities') bool? withDeletedActivities,
+    @Query('with_deleted_activities_vehicle_tasks')
+    bool? withDeletedActivitiesVehicleTasks,
+    @Query('with_deleted_activities_created_by')
+    bool? withDeletedActivitiesCreatedBy,
+    @Query('with_deleted_activities_updated_by')
+    bool? withDeletedActivitiesUpdatedBy,
+    @Query('with_deleted_activities_deleted_by')
+    bool? withDeletedActivitiesDeletedBy,
   });
 
   ///Update a employee
@@ -867,40 +1335,116 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_created_vehicles with created_vehicles data
   ///@param with_created_vehicles_vehicle_tasks with created_vehicles vehicle_tasks data
+  ///@param with_created_vehicles_created_by with created_vehicles created_by nested data
+  ///@param with_created_vehicles_updated_by with created_vehicles updated_by nested data
+  ///@param with_created_vehicles_deleted_by with created_vehicles deleted_by nested data
+  ///@param with_created_vehicles_owner with created_vehicles owner nested data
   ///@param with_updated_vehicles with updated_vehicles data
   ///@param with_updated_vehicles_vehicle_tasks with updated_vehicles vehicle_tasks data
+  ///@param with_updated_vehicles_created_by with updated_vehicles created_by nested data
+  ///@param with_updated_vehicles_updated_by with updated_vehicles updated_by nested data
+  ///@param with_updated_vehicles_deleted_by with updated_vehicles deleted_by nested data
+  ///@param with_updated_vehicles_owner with updated_vehicles owner nested data
   ///@param with_deleted_vehicles with deleted_vehicles data
   ///@param with_deleted_vehicles_vehicle_tasks with deleted_vehicles vehicle_tasks data
+  ///@param with_deleted_vehicles_created_by with deleted_vehicles created_by nested data
+  ///@param with_deleted_vehicles_updated_by with deleted_vehicles updated_by nested data
+  ///@param with_deleted_vehicles_deleted_by with deleted_vehicles deleted_by nested data
+  ///@param with_deleted_vehicles_owner with deleted_vehicles owner nested data
   ///@param with_created_garages with created_garages data
   ///@param with_created_garages_owners with created_garages owners data
+  ///@param with_created_garages_city with created_garages city nested data
+  ///@param with_created_garages_created_by with created_garages created_by nested data
+  ///@param with_created_garages_updated_by with created_garages updated_by nested data
+  ///@param with_created_garages_deleted_by with created_garages deleted_by nested data
   ///@param with_updated_garages with updated_garages data
   ///@param with_updated_garages_owners with updated_garages owners data
+  ///@param with_updated_garages_city with updated_garages city nested data
+  ///@param with_updated_garages_created_by with updated_garages created_by nested data
+  ///@param with_updated_garages_updated_by with updated_garages updated_by nested data
+  ///@param with_updated_garages_deleted_by with updated_garages deleted_by nested data
   ///@param with_deleted_garages with deleted_garages data
   ///@param with_deleted_garages_owners with deleted_garages owners data
+  ///@param with_deleted_garages_city with deleted_garages city nested data
+  ///@param with_deleted_garages_created_by with deleted_garages created_by nested data
+  ///@param with_deleted_garages_updated_by with deleted_garages updated_by nested data
+  ///@param with_deleted_garages_deleted_by with deleted_garages deleted_by nested data
   ///@param with_created_tasks with created_tasks data
   ///@param with_created_tasks_sub_tasks with created_tasks sub_tasks data
   ///@param with_created_tasks_attached_to with created_tasks attached_to data
+  ///@param with_created_tasks_created_by with created_tasks created_by nested data
+  ///@param with_created_tasks_updated_by with created_tasks updated_by nested data
+  ///@param with_created_tasks_deleted_by with created_tasks deleted_by nested data
   ///@param with_updated_tasks with updated_tasks data
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to data
+  ///@param with_updated_tasks_created_by with updated_tasks created_by nested data
+  ///@param with_updated_tasks_updated_by with updated_tasks updated_by nested data
+  ///@param with_updated_tasks_deleted_by with updated_tasks deleted_by nested data
   ///@param with_deleted_tasks with deleted_tasks data
   ///@param with_deleted_tasks_sub_tasks with deleted_tasks sub_tasks data
   ///@param with_deleted_tasks_attached_to with deleted_tasks attached_to data
+  ///@param with_deleted_tasks_created_by with deleted_tasks created_by nested data
+  ///@param with_deleted_tasks_updated_by with deleted_tasks updated_by nested data
+  ///@param with_deleted_tasks_deleted_by with deleted_tasks deleted_by nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
   ///@param with_created_vehicle_tasks_activities with created_vehicle_tasks activities data
+  ///@param with_created_vehicle_tasks_task with created_vehicle_tasks task nested data
+  ///@param with_created_vehicle_tasks_created_by with created_vehicle_tasks created_by nested data
+  ///@param with_created_vehicle_tasks_assigned_to with created_vehicle_tasks assigned_to nested data
+  ///@param with_created_vehicle_tasks_deleted_by with created_vehicle_tasks deleted_by nested data
+  ///@param with_created_vehicle_tasks_updated_by with created_vehicle_tasks updated_by nested data
+  ///@param with_created_vehicle_tasks_vehicle with created_vehicle_tasks vehicle nested data
+  ///@param with_created_vehicle_tasks_sub_task with created_vehicle_tasks sub_task nested data
   ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
   ///@param with_assigned_vehicle_tasks_activities with assigned_vehicle_tasks activities data
+  ///@param with_assigned_vehicle_tasks_task with assigned_vehicle_tasks task nested data
+  ///@param with_assigned_vehicle_tasks_created_by with assigned_vehicle_tasks created_by nested data
+  ///@param with_assigned_vehicle_tasks_assigned_to with assigned_vehicle_tasks assigned_to nested data
+  ///@param with_assigned_vehicle_tasks_deleted_by with assigned_vehicle_tasks deleted_by nested data
+  ///@param with_assigned_vehicle_tasks_updated_by with assigned_vehicle_tasks updated_by nested data
+  ///@param with_assigned_vehicle_tasks_vehicle with assigned_vehicle_tasks vehicle nested data
+  ///@param with_assigned_vehicle_tasks_sub_task with assigned_vehicle_tasks sub_task nested data
   ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
   ///@param with_deleted_vehicle_tasks_activities with deleted_vehicle_tasks activities data
+  ///@param with_deleted_vehicle_tasks_task with deleted_vehicle_tasks task nested data
+  ///@param with_deleted_vehicle_tasks_created_by with deleted_vehicle_tasks created_by nested data
+  ///@param with_deleted_vehicle_tasks_assigned_to with deleted_vehicle_tasks assigned_to nested data
+  ///@param with_deleted_vehicle_tasks_deleted_by with deleted_vehicle_tasks deleted_by nested data
+  ///@param with_deleted_vehicle_tasks_updated_by with deleted_vehicle_tasks updated_by nested data
+  ///@param with_deleted_vehicle_tasks_vehicle with deleted_vehicle_tasks vehicle nested data
+  ///@param with_deleted_vehicle_tasks_sub_task with deleted_vehicle_tasks sub_task nested data
   ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_updated_vehicle_tasks_activities with updated_vehicle_tasks activities data
+  ///@param with_updated_vehicle_tasks_task with updated_vehicle_tasks task nested data
+  ///@param with_updated_vehicle_tasks_created_by with updated_vehicle_tasks created_by nested data
+  ///@param with_updated_vehicle_tasks_assigned_to with updated_vehicle_tasks assigned_to nested data
+  ///@param with_updated_vehicle_tasks_deleted_by with updated_vehicle_tasks deleted_by nested data
+  ///@param with_updated_vehicle_tasks_updated_by with updated_vehicle_tasks updated_by nested data
+  ///@param with_updated_vehicle_tasks_vehicle with updated_vehicle_tasks vehicle nested data
+  ///@param with_updated_vehicle_tasks_sub_task with updated_vehicle_tasks sub_task nested data
   ///@param with_permission with permission data
+  ///@param with_permission_employees with permission employees nested data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts data
+  ///@param with_requests_request_by with requests request_by nested data
   ///@param with_account with account data
+  ///@param with_account_employee with account employee nested data
   ///@param with_created_activities with created_activities data
+  ///@param with_created_activities_vehicle_tasks with created_activities vehicle_tasks nested data
+  ///@param with_created_activities_created_by with created_activities created_by nested data
+  ///@param with_created_activities_updated_by with created_activities updated_by nested data
+  ///@param with_created_activities_deleted_by with created_activities deleted_by nested data
   ///@param with_updated_activities with updated_activities data
+  ///@param with_updated_activities_vehicle_tasks with updated_activities vehicle_tasks nested data
+  ///@param with_updated_activities_created_by with updated_activities created_by nested data
+  ///@param with_updated_activities_updated_by with updated_activities updated_by nested data
+  ///@param with_updated_activities_deleted_by with updated_activities deleted_by nested data
   ///@param with_deleted_activities with deleted_activities data
+  ///@param with_deleted_activities_vehicle_tasks with deleted_activities vehicle_tasks nested data
+  ///@param with_deleted_activities_created_by with deleted_activities created_by nested data
+  ///@param with_deleted_activities_updated_by with deleted_activities updated_by nested data
+  ///@param with_deleted_activities_deleted_by with deleted_activities deleted_by nested data
   Future<chopper.Response<ListEmployee>> apiEmployeeListGet({
     int? page,
     int? perPage,
@@ -908,40 +1452,116 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withCreatedVehicles,
     bool? withCreatedVehiclesVehicleTasks,
+    bool? withCreatedVehiclesCreatedBy,
+    bool? withCreatedVehiclesUpdatedBy,
+    bool? withCreatedVehiclesDeletedBy,
+    bool? withCreatedVehiclesOwner,
     bool? withUpdatedVehicles,
     bool? withUpdatedVehiclesVehicleTasks,
+    bool? withUpdatedVehiclesCreatedBy,
+    bool? withUpdatedVehiclesUpdatedBy,
+    bool? withUpdatedVehiclesDeletedBy,
+    bool? withUpdatedVehiclesOwner,
     bool? withDeletedVehicles,
     bool? withDeletedVehiclesVehicleTasks,
+    bool? withDeletedVehiclesCreatedBy,
+    bool? withDeletedVehiclesUpdatedBy,
+    bool? withDeletedVehiclesDeletedBy,
+    bool? withDeletedVehiclesOwner,
     bool? withCreatedGarages,
     bool? withCreatedGaragesOwners,
+    bool? withCreatedGaragesCity,
+    bool? withCreatedGaragesCreatedBy,
+    bool? withCreatedGaragesUpdatedBy,
+    bool? withCreatedGaragesDeletedBy,
     bool? withUpdatedGarages,
     bool? withUpdatedGaragesOwners,
+    bool? withUpdatedGaragesCity,
+    bool? withUpdatedGaragesCreatedBy,
+    bool? withUpdatedGaragesUpdatedBy,
+    bool? withUpdatedGaragesDeletedBy,
     bool? withDeletedGarages,
     bool? withDeletedGaragesOwners,
+    bool? withDeletedGaragesCity,
+    bool? withDeletedGaragesCreatedBy,
+    bool? withDeletedGaragesUpdatedBy,
+    bool? withDeletedGaragesDeletedBy,
     bool? withCreatedTasks,
     bool? withCreatedTasksSubTasks,
     bool? withCreatedTasksAttachedTo,
+    bool? withCreatedTasksCreatedBy,
+    bool? withCreatedTasksUpdatedBy,
+    bool? withCreatedTasksDeletedBy,
     bool? withUpdatedTasks,
     bool? withUpdatedTasksSubTasks,
     bool? withUpdatedTasksAttachedTo,
+    bool? withUpdatedTasksCreatedBy,
+    bool? withUpdatedTasksUpdatedBy,
+    bool? withUpdatedTasksDeletedBy,
     bool? withDeletedTasks,
     bool? withDeletedTasksSubTasks,
     bool? withDeletedTasksAttachedTo,
+    bool? withDeletedTasksCreatedBy,
+    bool? withDeletedTasksUpdatedBy,
+    bool? withDeletedTasksDeletedBy,
     bool? withCreatedVehicleTasks,
     bool? withCreatedVehicleTasksActivities,
+    bool? withCreatedVehicleTasksTask,
+    bool? withCreatedVehicleTasksCreatedBy,
+    bool? withCreatedVehicleTasksAssignedTo,
+    bool? withCreatedVehicleTasksDeletedBy,
+    bool? withCreatedVehicleTasksUpdatedBy,
+    bool? withCreatedVehicleTasksVehicle,
+    bool? withCreatedVehicleTasksSubTask,
     bool? withAssignedVehicleTasks,
     bool? withAssignedVehicleTasksActivities,
+    bool? withAssignedVehicleTasksTask,
+    bool? withAssignedVehicleTasksCreatedBy,
+    bool? withAssignedVehicleTasksAssignedTo,
+    bool? withAssignedVehicleTasksDeletedBy,
+    bool? withAssignedVehicleTasksUpdatedBy,
+    bool? withAssignedVehicleTasksVehicle,
+    bool? withAssignedVehicleTasksSubTask,
     bool? withDeletedVehicleTasks,
     bool? withDeletedVehicleTasksActivities,
+    bool? withDeletedVehicleTasksTask,
+    bool? withDeletedVehicleTasksCreatedBy,
+    bool? withDeletedVehicleTasksAssignedTo,
+    bool? withDeletedVehicleTasksDeletedBy,
+    bool? withDeletedVehicleTasksUpdatedBy,
+    bool? withDeletedVehicleTasksVehicle,
+    bool? withDeletedVehicleTasksSubTask,
     bool? withUpdatedVehicleTasks,
     bool? withUpdatedVehicleTasksActivities,
+    bool? withUpdatedVehicleTasksTask,
+    bool? withUpdatedVehicleTasksCreatedBy,
+    bool? withUpdatedVehicleTasksAssignedTo,
+    bool? withUpdatedVehicleTasksDeletedBy,
+    bool? withUpdatedVehicleTasksUpdatedBy,
+    bool? withUpdatedVehicleTasksVehicle,
+    bool? withUpdatedVehicleTasksSubTask,
     bool? withPermission,
+    bool? withPermissionEmployees,
     bool? withRequests,
     bool? withRequestsSpareParts,
+    bool? withRequestsRequestBy,
     bool? withAccount,
+    bool? withAccountEmployee,
     bool? withCreatedActivities,
+    bool? withCreatedActivitiesVehicleTasks,
+    bool? withCreatedActivitiesCreatedBy,
+    bool? withCreatedActivitiesUpdatedBy,
+    bool? withCreatedActivitiesDeletedBy,
     bool? withUpdatedActivities,
+    bool? withUpdatedActivitiesVehicleTasks,
+    bool? withUpdatedActivitiesCreatedBy,
+    bool? withUpdatedActivitiesUpdatedBy,
+    bool? withUpdatedActivitiesDeletedBy,
     bool? withDeletedActivities,
+    bool? withDeletedActivitiesVehicleTasks,
+    bool? withDeletedActivitiesCreatedBy,
+    bool? withDeletedActivitiesUpdatedBy,
+    bool? withDeletedActivitiesDeletedBy,
   }) {
     generatedMapping.putIfAbsent(
         ListEmployee, () => ListEmployee.fromJsonFactory);
@@ -953,40 +1573,116 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withCreatedVehicles: withCreatedVehicles,
         withCreatedVehiclesVehicleTasks: withCreatedVehiclesVehicleTasks,
+        withCreatedVehiclesCreatedBy: withCreatedVehiclesCreatedBy,
+        withCreatedVehiclesUpdatedBy: withCreatedVehiclesUpdatedBy,
+        withCreatedVehiclesDeletedBy: withCreatedVehiclesDeletedBy,
+        withCreatedVehiclesOwner: withCreatedVehiclesOwner,
         withUpdatedVehicles: withUpdatedVehicles,
         withUpdatedVehiclesVehicleTasks: withUpdatedVehiclesVehicleTasks,
+        withUpdatedVehiclesCreatedBy: withUpdatedVehiclesCreatedBy,
+        withUpdatedVehiclesUpdatedBy: withUpdatedVehiclesUpdatedBy,
+        withUpdatedVehiclesDeletedBy: withUpdatedVehiclesDeletedBy,
+        withUpdatedVehiclesOwner: withUpdatedVehiclesOwner,
         withDeletedVehicles: withDeletedVehicles,
         withDeletedVehiclesVehicleTasks: withDeletedVehiclesVehicleTasks,
+        withDeletedVehiclesCreatedBy: withDeletedVehiclesCreatedBy,
+        withDeletedVehiclesUpdatedBy: withDeletedVehiclesUpdatedBy,
+        withDeletedVehiclesDeletedBy: withDeletedVehiclesDeletedBy,
+        withDeletedVehiclesOwner: withDeletedVehiclesOwner,
         withCreatedGarages: withCreatedGarages,
         withCreatedGaragesOwners: withCreatedGaragesOwners,
+        withCreatedGaragesCity: withCreatedGaragesCity,
+        withCreatedGaragesCreatedBy: withCreatedGaragesCreatedBy,
+        withCreatedGaragesUpdatedBy: withCreatedGaragesUpdatedBy,
+        withCreatedGaragesDeletedBy: withCreatedGaragesDeletedBy,
         withUpdatedGarages: withUpdatedGarages,
         withUpdatedGaragesOwners: withUpdatedGaragesOwners,
+        withUpdatedGaragesCity: withUpdatedGaragesCity,
+        withUpdatedGaragesCreatedBy: withUpdatedGaragesCreatedBy,
+        withUpdatedGaragesUpdatedBy: withUpdatedGaragesUpdatedBy,
+        withUpdatedGaragesDeletedBy: withUpdatedGaragesDeletedBy,
         withDeletedGarages: withDeletedGarages,
         withDeletedGaragesOwners: withDeletedGaragesOwners,
+        withDeletedGaragesCity: withDeletedGaragesCity,
+        withDeletedGaragesCreatedBy: withDeletedGaragesCreatedBy,
+        withDeletedGaragesUpdatedBy: withDeletedGaragesUpdatedBy,
+        withDeletedGaragesDeletedBy: withDeletedGaragesDeletedBy,
         withCreatedTasks: withCreatedTasks,
         withCreatedTasksSubTasks: withCreatedTasksSubTasks,
         withCreatedTasksAttachedTo: withCreatedTasksAttachedTo,
+        withCreatedTasksCreatedBy: withCreatedTasksCreatedBy,
+        withCreatedTasksUpdatedBy: withCreatedTasksUpdatedBy,
+        withCreatedTasksDeletedBy: withCreatedTasksDeletedBy,
         withUpdatedTasks: withUpdatedTasks,
         withUpdatedTasksSubTasks: withUpdatedTasksSubTasks,
         withUpdatedTasksAttachedTo: withUpdatedTasksAttachedTo,
+        withUpdatedTasksCreatedBy: withUpdatedTasksCreatedBy,
+        withUpdatedTasksUpdatedBy: withUpdatedTasksUpdatedBy,
+        withUpdatedTasksDeletedBy: withUpdatedTasksDeletedBy,
         withDeletedTasks: withDeletedTasks,
         withDeletedTasksSubTasks: withDeletedTasksSubTasks,
         withDeletedTasksAttachedTo: withDeletedTasksAttachedTo,
+        withDeletedTasksCreatedBy: withDeletedTasksCreatedBy,
+        withDeletedTasksUpdatedBy: withDeletedTasksUpdatedBy,
+        withDeletedTasksDeletedBy: withDeletedTasksDeletedBy,
         withCreatedVehicleTasks: withCreatedVehicleTasks,
         withCreatedVehicleTasksActivities: withCreatedVehicleTasksActivities,
+        withCreatedVehicleTasksTask: withCreatedVehicleTasksTask,
+        withCreatedVehicleTasksCreatedBy: withCreatedVehicleTasksCreatedBy,
+        withCreatedVehicleTasksAssignedTo: withCreatedVehicleTasksAssignedTo,
+        withCreatedVehicleTasksDeletedBy: withCreatedVehicleTasksDeletedBy,
+        withCreatedVehicleTasksUpdatedBy: withCreatedVehicleTasksUpdatedBy,
+        withCreatedVehicleTasksVehicle: withCreatedVehicleTasksVehicle,
+        withCreatedVehicleTasksSubTask: withCreatedVehicleTasksSubTask,
         withAssignedVehicleTasks: withAssignedVehicleTasks,
         withAssignedVehicleTasksActivities: withAssignedVehicleTasksActivities,
+        withAssignedVehicleTasksTask: withAssignedVehicleTasksTask,
+        withAssignedVehicleTasksCreatedBy: withAssignedVehicleTasksCreatedBy,
+        withAssignedVehicleTasksAssignedTo: withAssignedVehicleTasksAssignedTo,
+        withAssignedVehicleTasksDeletedBy: withAssignedVehicleTasksDeletedBy,
+        withAssignedVehicleTasksUpdatedBy: withAssignedVehicleTasksUpdatedBy,
+        withAssignedVehicleTasksVehicle: withAssignedVehicleTasksVehicle,
+        withAssignedVehicleTasksSubTask: withAssignedVehicleTasksSubTask,
         withDeletedVehicleTasks: withDeletedVehicleTasks,
         withDeletedVehicleTasksActivities: withDeletedVehicleTasksActivities,
+        withDeletedVehicleTasksTask: withDeletedVehicleTasksTask,
+        withDeletedVehicleTasksCreatedBy: withDeletedVehicleTasksCreatedBy,
+        withDeletedVehicleTasksAssignedTo: withDeletedVehicleTasksAssignedTo,
+        withDeletedVehicleTasksDeletedBy: withDeletedVehicleTasksDeletedBy,
+        withDeletedVehicleTasksUpdatedBy: withDeletedVehicleTasksUpdatedBy,
+        withDeletedVehicleTasksVehicle: withDeletedVehicleTasksVehicle,
+        withDeletedVehicleTasksSubTask: withDeletedVehicleTasksSubTask,
         withUpdatedVehicleTasks: withUpdatedVehicleTasks,
         withUpdatedVehicleTasksActivities: withUpdatedVehicleTasksActivities,
+        withUpdatedVehicleTasksTask: withUpdatedVehicleTasksTask,
+        withUpdatedVehicleTasksCreatedBy: withUpdatedVehicleTasksCreatedBy,
+        withUpdatedVehicleTasksAssignedTo: withUpdatedVehicleTasksAssignedTo,
+        withUpdatedVehicleTasksDeletedBy: withUpdatedVehicleTasksDeletedBy,
+        withUpdatedVehicleTasksUpdatedBy: withUpdatedVehicleTasksUpdatedBy,
+        withUpdatedVehicleTasksVehicle: withUpdatedVehicleTasksVehicle,
+        withUpdatedVehicleTasksSubTask: withUpdatedVehicleTasksSubTask,
         withPermission: withPermission,
+        withPermissionEmployees: withPermissionEmployees,
         withRequests: withRequests,
         withRequestsSpareParts: withRequestsSpareParts,
+        withRequestsRequestBy: withRequestsRequestBy,
         withAccount: withAccount,
+        withAccountEmployee: withAccountEmployee,
         withCreatedActivities: withCreatedActivities,
+        withCreatedActivitiesVehicleTasks: withCreatedActivitiesVehicleTasks,
+        withCreatedActivitiesCreatedBy: withCreatedActivitiesCreatedBy,
+        withCreatedActivitiesUpdatedBy: withCreatedActivitiesUpdatedBy,
+        withCreatedActivitiesDeletedBy: withCreatedActivitiesDeletedBy,
         withUpdatedActivities: withUpdatedActivities,
-        withDeletedActivities: withDeletedActivities);
+        withUpdatedActivitiesVehicleTasks: withUpdatedActivitiesVehicleTasks,
+        withUpdatedActivitiesCreatedBy: withUpdatedActivitiesCreatedBy,
+        withUpdatedActivitiesUpdatedBy: withUpdatedActivitiesUpdatedBy,
+        withUpdatedActivitiesDeletedBy: withUpdatedActivitiesDeletedBy,
+        withDeletedActivities: withDeletedActivities,
+        withDeletedActivitiesVehicleTasks: withDeletedActivitiesVehicleTasks,
+        withDeletedActivitiesCreatedBy: withDeletedActivitiesCreatedBy,
+        withDeletedActivitiesUpdatedBy: withDeletedActivitiesUpdatedBy,
+        withDeletedActivitiesDeletedBy: withDeletedActivitiesDeletedBy);
   }
 
   ///List employee
@@ -996,40 +1692,116 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_created_vehicles with created_vehicles data
   ///@param with_created_vehicles_vehicle_tasks with created_vehicles vehicle_tasks data
+  ///@param with_created_vehicles_created_by with created_vehicles created_by nested data
+  ///@param with_created_vehicles_updated_by with created_vehicles updated_by nested data
+  ///@param with_created_vehicles_deleted_by with created_vehicles deleted_by nested data
+  ///@param with_created_vehicles_owner with created_vehicles owner nested data
   ///@param with_updated_vehicles with updated_vehicles data
   ///@param with_updated_vehicles_vehicle_tasks with updated_vehicles vehicle_tasks data
+  ///@param with_updated_vehicles_created_by with updated_vehicles created_by nested data
+  ///@param with_updated_vehicles_updated_by with updated_vehicles updated_by nested data
+  ///@param with_updated_vehicles_deleted_by with updated_vehicles deleted_by nested data
+  ///@param with_updated_vehicles_owner with updated_vehicles owner nested data
   ///@param with_deleted_vehicles with deleted_vehicles data
   ///@param with_deleted_vehicles_vehicle_tasks with deleted_vehicles vehicle_tasks data
+  ///@param with_deleted_vehicles_created_by with deleted_vehicles created_by nested data
+  ///@param with_deleted_vehicles_updated_by with deleted_vehicles updated_by nested data
+  ///@param with_deleted_vehicles_deleted_by with deleted_vehicles deleted_by nested data
+  ///@param with_deleted_vehicles_owner with deleted_vehicles owner nested data
   ///@param with_created_garages with created_garages data
   ///@param with_created_garages_owners with created_garages owners data
+  ///@param with_created_garages_city with created_garages city nested data
+  ///@param with_created_garages_created_by with created_garages created_by nested data
+  ///@param with_created_garages_updated_by with created_garages updated_by nested data
+  ///@param with_created_garages_deleted_by with created_garages deleted_by nested data
   ///@param with_updated_garages with updated_garages data
   ///@param with_updated_garages_owners with updated_garages owners data
+  ///@param with_updated_garages_city with updated_garages city nested data
+  ///@param with_updated_garages_created_by with updated_garages created_by nested data
+  ///@param with_updated_garages_updated_by with updated_garages updated_by nested data
+  ///@param with_updated_garages_deleted_by with updated_garages deleted_by nested data
   ///@param with_deleted_garages with deleted_garages data
   ///@param with_deleted_garages_owners with deleted_garages owners data
+  ///@param with_deleted_garages_city with deleted_garages city nested data
+  ///@param with_deleted_garages_created_by with deleted_garages created_by nested data
+  ///@param with_deleted_garages_updated_by with deleted_garages updated_by nested data
+  ///@param with_deleted_garages_deleted_by with deleted_garages deleted_by nested data
   ///@param with_created_tasks with created_tasks data
   ///@param with_created_tasks_sub_tasks with created_tasks sub_tasks data
   ///@param with_created_tasks_attached_to with created_tasks attached_to data
+  ///@param with_created_tasks_created_by with created_tasks created_by nested data
+  ///@param with_created_tasks_updated_by with created_tasks updated_by nested data
+  ///@param with_created_tasks_deleted_by with created_tasks deleted_by nested data
   ///@param with_updated_tasks with updated_tasks data
   ///@param with_updated_tasks_sub_tasks with updated_tasks sub_tasks data
   ///@param with_updated_tasks_attached_to with updated_tasks attached_to data
+  ///@param with_updated_tasks_created_by with updated_tasks created_by nested data
+  ///@param with_updated_tasks_updated_by with updated_tasks updated_by nested data
+  ///@param with_updated_tasks_deleted_by with updated_tasks deleted_by nested data
   ///@param with_deleted_tasks with deleted_tasks data
   ///@param with_deleted_tasks_sub_tasks with deleted_tasks sub_tasks data
   ///@param with_deleted_tasks_attached_to with deleted_tasks attached_to data
+  ///@param with_deleted_tasks_created_by with deleted_tasks created_by nested data
+  ///@param with_deleted_tasks_updated_by with deleted_tasks updated_by nested data
+  ///@param with_deleted_tasks_deleted_by with deleted_tasks deleted_by nested data
   ///@param with_created_vehicle_tasks with created_vehicle_tasks data
   ///@param with_created_vehicle_tasks_activities with created_vehicle_tasks activities data
+  ///@param with_created_vehicle_tasks_task with created_vehicle_tasks task nested data
+  ///@param with_created_vehicle_tasks_created_by with created_vehicle_tasks created_by nested data
+  ///@param with_created_vehicle_tasks_assigned_to with created_vehicle_tasks assigned_to nested data
+  ///@param with_created_vehicle_tasks_deleted_by with created_vehicle_tasks deleted_by nested data
+  ///@param with_created_vehicle_tasks_updated_by with created_vehicle_tasks updated_by nested data
+  ///@param with_created_vehicle_tasks_vehicle with created_vehicle_tasks vehicle nested data
+  ///@param with_created_vehicle_tasks_sub_task with created_vehicle_tasks sub_task nested data
   ///@param with_assigned_vehicle_tasks with assigned_vehicle_tasks data
   ///@param with_assigned_vehicle_tasks_activities with assigned_vehicle_tasks activities data
+  ///@param with_assigned_vehicle_tasks_task with assigned_vehicle_tasks task nested data
+  ///@param with_assigned_vehicle_tasks_created_by with assigned_vehicle_tasks created_by nested data
+  ///@param with_assigned_vehicle_tasks_assigned_to with assigned_vehicle_tasks assigned_to nested data
+  ///@param with_assigned_vehicle_tasks_deleted_by with assigned_vehicle_tasks deleted_by nested data
+  ///@param with_assigned_vehicle_tasks_updated_by with assigned_vehicle_tasks updated_by nested data
+  ///@param with_assigned_vehicle_tasks_vehicle with assigned_vehicle_tasks vehicle nested data
+  ///@param with_assigned_vehicle_tasks_sub_task with assigned_vehicle_tasks sub_task nested data
   ///@param with_deleted_vehicle_tasks with deleted_vehicle_tasks data
   ///@param with_deleted_vehicle_tasks_activities with deleted_vehicle_tasks activities data
+  ///@param with_deleted_vehicle_tasks_task with deleted_vehicle_tasks task nested data
+  ///@param with_deleted_vehicle_tasks_created_by with deleted_vehicle_tasks created_by nested data
+  ///@param with_deleted_vehicle_tasks_assigned_to with deleted_vehicle_tasks assigned_to nested data
+  ///@param with_deleted_vehicle_tasks_deleted_by with deleted_vehicle_tasks deleted_by nested data
+  ///@param with_deleted_vehicle_tasks_updated_by with deleted_vehicle_tasks updated_by nested data
+  ///@param with_deleted_vehicle_tasks_vehicle with deleted_vehicle_tasks vehicle nested data
+  ///@param with_deleted_vehicle_tasks_sub_task with deleted_vehicle_tasks sub_task nested data
   ///@param with_updated_vehicle_tasks with updated_vehicle_tasks data
   ///@param with_updated_vehicle_tasks_activities with updated_vehicle_tasks activities data
+  ///@param with_updated_vehicle_tasks_task with updated_vehicle_tasks task nested data
+  ///@param with_updated_vehicle_tasks_created_by with updated_vehicle_tasks created_by nested data
+  ///@param with_updated_vehicle_tasks_assigned_to with updated_vehicle_tasks assigned_to nested data
+  ///@param with_updated_vehicle_tasks_deleted_by with updated_vehicle_tasks deleted_by nested data
+  ///@param with_updated_vehicle_tasks_updated_by with updated_vehicle_tasks updated_by nested data
+  ///@param with_updated_vehicle_tasks_vehicle with updated_vehicle_tasks vehicle nested data
+  ///@param with_updated_vehicle_tasks_sub_task with updated_vehicle_tasks sub_task nested data
   ///@param with_permission with permission data
+  ///@param with_permission_employees with permission employees nested data
   ///@param with_requests with requests data
   ///@param with_requests_spare_parts with requests spare_parts data
+  ///@param with_requests_request_by with requests request_by nested data
   ///@param with_account with account data
+  ///@param with_account_employee with account employee nested data
   ///@param with_created_activities with created_activities data
+  ///@param with_created_activities_vehicle_tasks with created_activities vehicle_tasks nested data
+  ///@param with_created_activities_created_by with created_activities created_by nested data
+  ///@param with_created_activities_updated_by with created_activities updated_by nested data
+  ///@param with_created_activities_deleted_by with created_activities deleted_by nested data
   ///@param with_updated_activities with updated_activities data
+  ///@param with_updated_activities_vehicle_tasks with updated_activities vehicle_tasks nested data
+  ///@param with_updated_activities_created_by with updated_activities created_by nested data
+  ///@param with_updated_activities_updated_by with updated_activities updated_by nested data
+  ///@param with_updated_activities_deleted_by with updated_activities deleted_by nested data
   ///@param with_deleted_activities with deleted_activities data
+  ///@param with_deleted_activities_vehicle_tasks with deleted_activities vehicle_tasks nested data
+  ///@param with_deleted_activities_created_by with deleted_activities created_by nested data
+  ///@param with_deleted_activities_updated_by with deleted_activities updated_by nested data
+  ///@param with_deleted_activities_deleted_by with deleted_activities deleted_by nested data
   @Get(path: '/api/employee/list')
   Future<chopper.Response<ListEmployee>> _apiEmployeeListGet({
     @Query('page') int? page,
@@ -1039,46 +1811,168 @@ abstract class Swagger extends ChopperService {
     @Query('with_created_vehicles') bool? withCreatedVehicles,
     @Query('with_created_vehicles_vehicle_tasks')
     bool? withCreatedVehiclesVehicleTasks,
+    @Query('with_created_vehicles_created_by')
+    bool? withCreatedVehiclesCreatedBy,
+    @Query('with_created_vehicles_updated_by')
+    bool? withCreatedVehiclesUpdatedBy,
+    @Query('with_created_vehicles_deleted_by')
+    bool? withCreatedVehiclesDeletedBy,
+    @Query('with_created_vehicles_owner') bool? withCreatedVehiclesOwner,
     @Query('with_updated_vehicles') bool? withUpdatedVehicles,
     @Query('with_updated_vehicles_vehicle_tasks')
     bool? withUpdatedVehiclesVehicleTasks,
+    @Query('with_updated_vehicles_created_by')
+    bool? withUpdatedVehiclesCreatedBy,
+    @Query('with_updated_vehicles_updated_by')
+    bool? withUpdatedVehiclesUpdatedBy,
+    @Query('with_updated_vehicles_deleted_by')
+    bool? withUpdatedVehiclesDeletedBy,
+    @Query('with_updated_vehicles_owner') bool? withUpdatedVehiclesOwner,
     @Query('with_deleted_vehicles') bool? withDeletedVehicles,
     @Query('with_deleted_vehicles_vehicle_tasks')
     bool? withDeletedVehiclesVehicleTasks,
+    @Query('with_deleted_vehicles_created_by')
+    bool? withDeletedVehiclesCreatedBy,
+    @Query('with_deleted_vehicles_updated_by')
+    bool? withDeletedVehiclesUpdatedBy,
+    @Query('with_deleted_vehicles_deleted_by')
+    bool? withDeletedVehiclesDeletedBy,
+    @Query('with_deleted_vehicles_owner') bool? withDeletedVehiclesOwner,
     @Query('with_created_garages') bool? withCreatedGarages,
     @Query('with_created_garages_owners') bool? withCreatedGaragesOwners,
+    @Query('with_created_garages_city') bool? withCreatedGaragesCity,
+    @Query('with_created_garages_created_by') bool? withCreatedGaragesCreatedBy,
+    @Query('with_created_garages_updated_by') bool? withCreatedGaragesUpdatedBy,
+    @Query('with_created_garages_deleted_by') bool? withCreatedGaragesDeletedBy,
     @Query('with_updated_garages') bool? withUpdatedGarages,
     @Query('with_updated_garages_owners') bool? withUpdatedGaragesOwners,
+    @Query('with_updated_garages_city') bool? withUpdatedGaragesCity,
+    @Query('with_updated_garages_created_by') bool? withUpdatedGaragesCreatedBy,
+    @Query('with_updated_garages_updated_by') bool? withUpdatedGaragesUpdatedBy,
+    @Query('with_updated_garages_deleted_by') bool? withUpdatedGaragesDeletedBy,
     @Query('with_deleted_garages') bool? withDeletedGarages,
     @Query('with_deleted_garages_owners') bool? withDeletedGaragesOwners,
+    @Query('with_deleted_garages_city') bool? withDeletedGaragesCity,
+    @Query('with_deleted_garages_created_by') bool? withDeletedGaragesCreatedBy,
+    @Query('with_deleted_garages_updated_by') bool? withDeletedGaragesUpdatedBy,
+    @Query('with_deleted_garages_deleted_by') bool? withDeletedGaragesDeletedBy,
     @Query('with_created_tasks') bool? withCreatedTasks,
     @Query('with_created_tasks_sub_tasks') bool? withCreatedTasksSubTasks,
     @Query('with_created_tasks_attached_to') bool? withCreatedTasksAttachedTo,
+    @Query('with_created_tasks_created_by') bool? withCreatedTasksCreatedBy,
+    @Query('with_created_tasks_updated_by') bool? withCreatedTasksUpdatedBy,
+    @Query('with_created_tasks_deleted_by') bool? withCreatedTasksDeletedBy,
     @Query('with_updated_tasks') bool? withUpdatedTasks,
     @Query('with_updated_tasks_sub_tasks') bool? withUpdatedTasksSubTasks,
     @Query('with_updated_tasks_attached_to') bool? withUpdatedTasksAttachedTo,
+    @Query('with_updated_tasks_created_by') bool? withUpdatedTasksCreatedBy,
+    @Query('with_updated_tasks_updated_by') bool? withUpdatedTasksUpdatedBy,
+    @Query('with_updated_tasks_deleted_by') bool? withUpdatedTasksDeletedBy,
     @Query('with_deleted_tasks') bool? withDeletedTasks,
     @Query('with_deleted_tasks_sub_tasks') bool? withDeletedTasksSubTasks,
     @Query('with_deleted_tasks_attached_to') bool? withDeletedTasksAttachedTo,
+    @Query('with_deleted_tasks_created_by') bool? withDeletedTasksCreatedBy,
+    @Query('with_deleted_tasks_updated_by') bool? withDeletedTasksUpdatedBy,
+    @Query('with_deleted_tasks_deleted_by') bool? withDeletedTasksDeletedBy,
     @Query('with_created_vehicle_tasks') bool? withCreatedVehicleTasks,
     @Query('with_created_vehicle_tasks_activities')
     bool? withCreatedVehicleTasksActivities,
+    @Query('with_created_vehicle_tasks_task') bool? withCreatedVehicleTasksTask,
+    @Query('with_created_vehicle_tasks_created_by')
+    bool? withCreatedVehicleTasksCreatedBy,
+    @Query('with_created_vehicle_tasks_assigned_to')
+    bool? withCreatedVehicleTasksAssignedTo,
+    @Query('with_created_vehicle_tasks_deleted_by')
+    bool? withCreatedVehicleTasksDeletedBy,
+    @Query('with_created_vehicle_tasks_updated_by')
+    bool? withCreatedVehicleTasksUpdatedBy,
+    @Query('with_created_vehicle_tasks_vehicle')
+    bool? withCreatedVehicleTasksVehicle,
+    @Query('with_created_vehicle_tasks_sub_task')
+    bool? withCreatedVehicleTasksSubTask,
     @Query('with_assigned_vehicle_tasks') bool? withAssignedVehicleTasks,
     @Query('with_assigned_vehicle_tasks_activities')
     bool? withAssignedVehicleTasksActivities,
+    @Query('with_assigned_vehicle_tasks_task')
+    bool? withAssignedVehicleTasksTask,
+    @Query('with_assigned_vehicle_tasks_created_by')
+    bool? withAssignedVehicleTasksCreatedBy,
+    @Query('with_assigned_vehicle_tasks_assigned_to')
+    bool? withAssignedVehicleTasksAssignedTo,
+    @Query('with_assigned_vehicle_tasks_deleted_by')
+    bool? withAssignedVehicleTasksDeletedBy,
+    @Query('with_assigned_vehicle_tasks_updated_by')
+    bool? withAssignedVehicleTasksUpdatedBy,
+    @Query('with_assigned_vehicle_tasks_vehicle')
+    bool? withAssignedVehicleTasksVehicle,
+    @Query('with_assigned_vehicle_tasks_sub_task')
+    bool? withAssignedVehicleTasksSubTask,
     @Query('with_deleted_vehicle_tasks') bool? withDeletedVehicleTasks,
     @Query('with_deleted_vehicle_tasks_activities')
     bool? withDeletedVehicleTasksActivities,
+    @Query('with_deleted_vehicle_tasks_task') bool? withDeletedVehicleTasksTask,
+    @Query('with_deleted_vehicle_tasks_created_by')
+    bool? withDeletedVehicleTasksCreatedBy,
+    @Query('with_deleted_vehicle_tasks_assigned_to')
+    bool? withDeletedVehicleTasksAssignedTo,
+    @Query('with_deleted_vehicle_tasks_deleted_by')
+    bool? withDeletedVehicleTasksDeletedBy,
+    @Query('with_deleted_vehicle_tasks_updated_by')
+    bool? withDeletedVehicleTasksUpdatedBy,
+    @Query('with_deleted_vehicle_tasks_vehicle')
+    bool? withDeletedVehicleTasksVehicle,
+    @Query('with_deleted_vehicle_tasks_sub_task')
+    bool? withDeletedVehicleTasksSubTask,
     @Query('with_updated_vehicle_tasks') bool? withUpdatedVehicleTasks,
     @Query('with_updated_vehicle_tasks_activities')
     bool? withUpdatedVehicleTasksActivities,
+    @Query('with_updated_vehicle_tasks_task') bool? withUpdatedVehicleTasksTask,
+    @Query('with_updated_vehicle_tasks_created_by')
+    bool? withUpdatedVehicleTasksCreatedBy,
+    @Query('with_updated_vehicle_tasks_assigned_to')
+    bool? withUpdatedVehicleTasksAssignedTo,
+    @Query('with_updated_vehicle_tasks_deleted_by')
+    bool? withUpdatedVehicleTasksDeletedBy,
+    @Query('with_updated_vehicle_tasks_updated_by')
+    bool? withUpdatedVehicleTasksUpdatedBy,
+    @Query('with_updated_vehicle_tasks_vehicle')
+    bool? withUpdatedVehicleTasksVehicle,
+    @Query('with_updated_vehicle_tasks_sub_task')
+    bool? withUpdatedVehicleTasksSubTask,
     @Query('with_permission') bool? withPermission,
+    @Query('with_permission_employees') bool? withPermissionEmployees,
     @Query('with_requests') bool? withRequests,
     @Query('with_requests_spare_parts') bool? withRequestsSpareParts,
+    @Query('with_requests_request_by') bool? withRequestsRequestBy,
     @Query('with_account') bool? withAccount,
+    @Query('with_account_employee') bool? withAccountEmployee,
     @Query('with_created_activities') bool? withCreatedActivities,
+    @Query('with_created_activities_vehicle_tasks')
+    bool? withCreatedActivitiesVehicleTasks,
+    @Query('with_created_activities_created_by')
+    bool? withCreatedActivitiesCreatedBy,
+    @Query('with_created_activities_updated_by')
+    bool? withCreatedActivitiesUpdatedBy,
+    @Query('with_created_activities_deleted_by')
+    bool? withCreatedActivitiesDeletedBy,
     @Query('with_updated_activities') bool? withUpdatedActivities,
+    @Query('with_updated_activities_vehicle_tasks')
+    bool? withUpdatedActivitiesVehicleTasks,
+    @Query('with_updated_activities_created_by')
+    bool? withUpdatedActivitiesCreatedBy,
+    @Query('with_updated_activities_updated_by')
+    bool? withUpdatedActivitiesUpdatedBy,
+    @Query('with_updated_activities_deleted_by')
+    bool? withUpdatedActivitiesDeletedBy,
     @Query('with_deleted_activities') bool? withDeletedActivities,
+    @Query('with_deleted_activities_vehicle_tasks')
+    bool? withDeletedActivitiesVehicleTasks,
+    @Query('with_deleted_activities_created_by')
+    bool? withDeletedActivitiesCreatedBy,
+    @Query('with_deleted_activities_updated_by')
+    bool? withDeletedActivitiesUpdatedBy,
+    @Query('with_deleted_activities_deleted_by')
+    bool? withDeletedActivitiesDeletedBy,
   });
 
   ///Total records
@@ -1126,18 +2020,20 @@ abstract class Swagger extends ChopperService {
   ///@param id Garage ID
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles nested data
+  ///@param with_owners_garage with owners garage nested data
+  ///@param with_city with city data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
-  ///@param with_city with city data
   Future<chopper.Response<GarageResponse>> apiGarageIdGet({
     required int? id,
     bool? withOwners,
     bool? withOwnersVehicles,
+    bool? withOwnersGarage,
+    bool? withCity,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
-    bool? withCity,
   }) {
     generatedMapping.putIfAbsent(
         GarageResponse, () => GarageResponse.fromJsonFactory);
@@ -1146,29 +2042,32 @@ abstract class Swagger extends ChopperService {
         id: id,
         withOwners: withOwners,
         withOwnersVehicles: withOwnersVehicles,
+        withOwnersGarage: withOwnersGarage,
+        withCity: withCity,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
-        withDeletedBy: withDeletedBy,
-        withCity: withCity);
+        withDeletedBy: withDeletedBy);
   }
 
   ///Get garage by ID
   ///@param id Garage ID
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles nested data
+  ///@param with_owners_garage with owners garage nested data
+  ///@param with_city with city data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
-  ///@param with_city with city data
   @Get(path: '/api/garage/{id}')
   Future<chopper.Response<GarageResponse>> _apiGarageIdGet({
     @Path('id') required int? id,
     @Query('with_owners') bool? withOwners,
     @Query('with_owners_vehicles') bool? withOwnersVehicles,
+    @Query('with_owners_garage') bool? withOwnersGarage,
+    @Query('with_city') bool? withCity,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
-    @Query('with_city') bool? withCity,
   });
 
   ///Update a garage
@@ -1234,10 +2133,11 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles data
+  ///@param with_owners_garage with owners garage nested data
+  ///@param with_city with city data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
-  ///@param with_city with city data
   Future<chopper.Response<ListGarage>> apiGarageListGet({
     int? page,
     int? perPage,
@@ -1245,10 +2145,11 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withOwners,
     bool? withOwnersVehicles,
+    bool? withOwnersGarage,
+    bool? withCity,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
-    bool? withCity,
   }) {
     generatedMapping.putIfAbsent(ListGarage, () => ListGarage.fromJsonFactory);
 
@@ -1259,10 +2160,11 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withOwners: withOwners,
         withOwnersVehicles: withOwnersVehicles,
+        withOwnersGarage: withOwnersGarage,
+        withCity: withCity,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
-        withDeletedBy: withDeletedBy,
-        withCity: withCity);
+        withDeletedBy: withDeletedBy);
   }
 
   ///List garage
@@ -1272,10 +2174,11 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_owners with owners data
   ///@param with_owners_vehicles with owners vehicles data
+  ///@param with_owners_garage with owners garage nested data
+  ///@param with_city with city data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
-  ///@param with_city with city data
   @Get(path: '/api/garage/list')
   Future<chopper.Response<ListGarage>> _apiGarageListGet({
     @Query('page') int? page,
@@ -1284,10 +2187,11 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_owners') bool? withOwners,
     @Query('with_owners_vehicles') bool? withOwnersVehicles,
+    @Query('with_owners_garage') bool? withOwnersGarage,
+    @Query('with_city') bool? withCity,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
-    @Query('with_city') bool? withCity,
   });
 
   ///Total records
@@ -1335,11 +2239,19 @@ abstract class Swagger extends ChopperService {
   ///@param id Owner ID
   ///@param with_vehicles with vehicles data
   ///@param with_vehicles_vehicle_tasks with vehicles vehicle_tasks nested data
+  ///@param with_vehicles_created_by with vehicles created_by nested data
+  ///@param with_vehicles_updated_by with vehicles updated_by nested data
+  ///@param with_vehicles_deleted_by with vehicles deleted_by nested data
+  ///@param with_vehicles_owner with vehicles owner nested data
   ///@param with_garage with garage data
   Future<chopper.Response<OwnerResponse>> apiOwnerIdGet({
     required int? id,
     bool? withVehicles,
     bool? withVehiclesVehicleTasks,
+    bool? withVehiclesCreatedBy,
+    bool? withVehiclesUpdatedBy,
+    bool? withVehiclesDeletedBy,
+    bool? withVehiclesOwner,
     bool? withGarage,
   }) {
     generatedMapping.putIfAbsent(
@@ -1349,6 +2261,10 @@ abstract class Swagger extends ChopperService {
         id: id,
         withVehicles: withVehicles,
         withVehiclesVehicleTasks: withVehiclesVehicleTasks,
+        withVehiclesCreatedBy: withVehiclesCreatedBy,
+        withVehiclesUpdatedBy: withVehiclesUpdatedBy,
+        withVehiclesDeletedBy: withVehiclesDeletedBy,
+        withVehiclesOwner: withVehiclesOwner,
         withGarage: withGarage);
   }
 
@@ -1356,12 +2272,20 @@ abstract class Swagger extends ChopperService {
   ///@param id Owner ID
   ///@param with_vehicles with vehicles data
   ///@param with_vehicles_vehicle_tasks with vehicles vehicle_tasks nested data
+  ///@param with_vehicles_created_by with vehicles created_by nested data
+  ///@param with_vehicles_updated_by with vehicles updated_by nested data
+  ///@param with_vehicles_deleted_by with vehicles deleted_by nested data
+  ///@param with_vehicles_owner with vehicles owner nested data
   ///@param with_garage with garage data
   @Get(path: '/api/owner/{id}')
   Future<chopper.Response<OwnerResponse>> _apiOwnerIdGet({
     @Path('id') required int? id,
     @Query('with_vehicles') bool? withVehicles,
     @Query('with_vehicles_vehicle_tasks') bool? withVehiclesVehicleTasks,
+    @Query('with_vehicles_created_by') bool? withVehiclesCreatedBy,
+    @Query('with_vehicles_updated_by') bool? withVehiclesUpdatedBy,
+    @Query('with_vehicles_deleted_by') bool? withVehiclesDeletedBy,
+    @Query('with_vehicles_owner') bool? withVehiclesOwner,
     @Query('with_garage') bool? withGarage,
   });
 
@@ -1427,6 +2351,10 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_vehicles with vehicles data
   ///@param with_vehicles_vehicle_tasks with vehicles vehicle_tasks data
+  ///@param with_vehicles_created_by with vehicles created_by nested data
+  ///@param with_vehicles_updated_by with vehicles updated_by nested data
+  ///@param with_vehicles_deleted_by with vehicles deleted_by nested data
+  ///@param with_vehicles_owner with vehicles owner nested data
   ///@param with_garage with garage data
   Future<chopper.Response<ListOwner>> apiOwnerListGet({
     int? page,
@@ -1435,6 +2363,10 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withVehicles,
     bool? withVehiclesVehicleTasks,
+    bool? withVehiclesCreatedBy,
+    bool? withVehiclesUpdatedBy,
+    bool? withVehiclesDeletedBy,
+    bool? withVehiclesOwner,
     bool? withGarage,
   }) {
     generatedMapping.putIfAbsent(ListOwner, () => ListOwner.fromJsonFactory);
@@ -1446,6 +2378,10 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withVehicles: withVehicles,
         withVehiclesVehicleTasks: withVehiclesVehicleTasks,
+        withVehiclesCreatedBy: withVehiclesCreatedBy,
+        withVehiclesUpdatedBy: withVehiclesUpdatedBy,
+        withVehiclesDeletedBy: withVehiclesDeletedBy,
+        withVehiclesOwner: withVehiclesOwner,
         withGarage: withGarage);
   }
 
@@ -1456,6 +2392,10 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_vehicles with vehicles data
   ///@param with_vehicles_vehicle_tasks with vehicles vehicle_tasks data
+  ///@param with_vehicles_created_by with vehicles created_by nested data
+  ///@param with_vehicles_updated_by with vehicles updated_by nested data
+  ///@param with_vehicles_deleted_by with vehicles deleted_by nested data
+  ///@param with_vehicles_owner with vehicles owner nested data
   ///@param with_garage with garage data
   @Get(path: '/api/owner/list')
   Future<chopper.Response<ListOwner>> _apiOwnerListGet({
@@ -1465,6 +2405,10 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_vehicles') bool? withVehicles,
     @Query('with_vehicles_vehicle_tasks') bool? withVehiclesVehicleTasks,
+    @Query('with_vehicles_created_by') bool? withVehiclesCreatedBy,
+    @Query('with_vehicles_updated_by') bool? withVehiclesUpdatedBy,
+    @Query('with_vehicles_deleted_by') bool? withVehiclesDeletedBy,
+    @Query('with_vehicles_owner') bool? withVehiclesOwner,
     @Query('with_garage') bool? withGarage,
   });
 
@@ -1840,27 +2784,39 @@ abstract class Swagger extends ChopperService {
   ///Get spare_part_request by ID
   ///@param id SparePartRequest ID
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   ///@param with_request_by with request_by data
   Future<chopper.Response<SparePartRequestResponse>> apiSparePartRequestIdGet({
     required int? id,
     bool? withSpareParts,
+    bool? withSparePartsRequest,
+    bool? withSparePartsSupplier,
     bool? withRequestBy,
   }) {
     generatedMapping.putIfAbsent(SparePartRequestResponse,
         () => SparePartRequestResponse.fromJsonFactory);
 
     return _apiSparePartRequestIdGet(
-        id: id, withSpareParts: withSpareParts, withRequestBy: withRequestBy);
+        id: id,
+        withSpareParts: withSpareParts,
+        withSparePartsRequest: withSparePartsRequest,
+        withSparePartsSupplier: withSparePartsSupplier,
+        withRequestBy: withRequestBy);
   }
 
   ///Get spare_part_request by ID
   ///@param id SparePartRequest ID
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   ///@param with_request_by with request_by data
   @Get(path: '/api/spare_part_request/{id}')
   Future<chopper.Response<SparePartRequestResponse>> _apiSparePartRequestIdGet({
     @Path('id') required int? id,
     @Query('with_spare_parts') bool? withSpareParts,
+    @Query('with_spare_parts_request') bool? withSparePartsRequest,
+    @Query('with_spare_parts_supplier') bool? withSparePartsSupplier,
     @Query('with_request_by') bool? withRequestBy,
   });
 
@@ -1933,6 +2889,8 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   ///@param with_request_by with request_by data
   Future<chopper.Response<ListSparePartRequest>> apiSparePartRequestListGet({
     int? page,
@@ -1940,6 +2898,8 @@ abstract class Swagger extends ChopperService {
     String? sortBy,
     bool? descending,
     bool? withSpareParts,
+    bool? withSparePartsRequest,
+    bool? withSparePartsSupplier,
     bool? withRequestBy,
   }) {
     generatedMapping.putIfAbsent(
@@ -1951,6 +2911,8 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withSpareParts: withSpareParts,
+        withSparePartsRequest: withSparePartsRequest,
+        withSparePartsSupplier: withSparePartsSupplier,
         withRequestBy: withRequestBy);
   }
 
@@ -1960,6 +2922,8 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   ///@param with_request_by with request_by data
   @Get(path: '/api/spare_part_request/list')
   Future<chopper.Response<ListSparePartRequest>> _apiSparePartRequestListGet({
@@ -1968,6 +2932,8 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_spare_parts') bool? withSpareParts,
+    @Query('with_spare_parts_request') bool? withSparePartsRequest,
+    @Query('with_spare_parts_supplier') bool? withSparePartsSupplier,
     @Query('with_request_by') bool? withRequestBy,
   });
 
@@ -2016,11 +2982,25 @@ abstract class Swagger extends ChopperService {
   ///@param id SubTask ID
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities nested data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_parent_task with parent_task data
   Future<chopper.Response<SubTaskResponse>> apiSubTaskIdGet({
     required int? id,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
+    bool? withAttachedToTask,
+    bool? withAttachedToCreatedBy,
+    bool? withAttachedToAssignedTo,
+    bool? withAttachedToDeletedBy,
+    bool? withAttachedToUpdatedBy,
+    bool? withAttachedToVehicle,
+    bool? withAttachedToSubTask,
     bool? withParentTask,
   }) {
     generatedMapping.putIfAbsent(
@@ -2030,6 +3010,13 @@ abstract class Swagger extends ChopperService {
         id: id,
         withAttachedTo: withAttachedTo,
         withAttachedToActivities: withAttachedToActivities,
+        withAttachedToTask: withAttachedToTask,
+        withAttachedToCreatedBy: withAttachedToCreatedBy,
+        withAttachedToAssignedTo: withAttachedToAssignedTo,
+        withAttachedToDeletedBy: withAttachedToDeletedBy,
+        withAttachedToUpdatedBy: withAttachedToUpdatedBy,
+        withAttachedToVehicle: withAttachedToVehicle,
+        withAttachedToSubTask: withAttachedToSubTask,
         withParentTask: withParentTask);
   }
 
@@ -2037,12 +3024,26 @@ abstract class Swagger extends ChopperService {
   ///@param id SubTask ID
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities nested data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_parent_task with parent_task data
   @Get(path: '/api/sub_task/{id}')
   Future<chopper.Response<SubTaskResponse>> _apiSubTaskIdGet({
     @Path('id') required int? id,
     @Query('with_attached_to') bool? withAttachedTo,
     @Query('with_attached_to_activities') bool? withAttachedToActivities,
+    @Query('with_attached_to_task') bool? withAttachedToTask,
+    @Query('with_attached_to_created_by') bool? withAttachedToCreatedBy,
+    @Query('with_attached_to_assigned_to') bool? withAttachedToAssignedTo,
+    @Query('with_attached_to_deleted_by') bool? withAttachedToDeletedBy,
+    @Query('with_attached_to_updated_by') bool? withAttachedToUpdatedBy,
+    @Query('with_attached_to_vehicle') bool? withAttachedToVehicle,
+    @Query('with_attached_to_sub_task') bool? withAttachedToSubTask,
     @Query('with_parent_task') bool? withParentTask,
   });
 
@@ -2109,6 +3110,13 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_parent_task with parent_task data
   Future<chopper.Response<ListSubTask>> apiSubTaskListGet({
     int? page,
@@ -2117,6 +3125,13 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
+    bool? withAttachedToTask,
+    bool? withAttachedToCreatedBy,
+    bool? withAttachedToAssignedTo,
+    bool? withAttachedToDeletedBy,
+    bool? withAttachedToUpdatedBy,
+    bool? withAttachedToVehicle,
+    bool? withAttachedToSubTask,
     bool? withParentTask,
   }) {
     generatedMapping.putIfAbsent(
@@ -2129,6 +3144,13 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withAttachedTo: withAttachedTo,
         withAttachedToActivities: withAttachedToActivities,
+        withAttachedToTask: withAttachedToTask,
+        withAttachedToCreatedBy: withAttachedToCreatedBy,
+        withAttachedToAssignedTo: withAttachedToAssignedTo,
+        withAttachedToDeletedBy: withAttachedToDeletedBy,
+        withAttachedToUpdatedBy: withAttachedToUpdatedBy,
+        withAttachedToVehicle: withAttachedToVehicle,
+        withAttachedToSubTask: withAttachedToSubTask,
         withParentTask: withParentTask);
   }
 
@@ -2139,6 +3161,13 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_parent_task with parent_task data
   @Get(path: '/api/sub_task/list')
   Future<chopper.Response<ListSubTask>> _apiSubTaskListGet({
@@ -2148,6 +3177,13 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_attached_to') bool? withAttachedTo,
     @Query('with_attached_to_activities') bool? withAttachedToActivities,
+    @Query('with_attached_to_task') bool? withAttachedToTask,
+    @Query('with_attached_to_created_by') bool? withAttachedToCreatedBy,
+    @Query('with_attached_to_assigned_to') bool? withAttachedToAssignedTo,
+    @Query('with_attached_to_deleted_by') bool? withAttachedToDeletedBy,
+    @Query('with_attached_to_updated_by') bool? withAttachedToUpdatedBy,
+    @Query('with_attached_to_vehicle') bool? withAttachedToVehicle,
+    @Query('with_attached_to_sub_task') bool? withAttachedToSubTask,
     @Query('with_parent_task') bool? withParentTask,
   });
 
@@ -2195,23 +3231,35 @@ abstract class Swagger extends ChopperService {
   ///Get supplier by ID
   ///@param id Supplier ID
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   Future<chopper.Response<SupplierResponse>> apiSupplierIdGet({
     required int? id,
     bool? withSpareParts,
+    bool? withSparePartsRequest,
+    bool? withSparePartsSupplier,
   }) {
     generatedMapping.putIfAbsent(
         SupplierResponse, () => SupplierResponse.fromJsonFactory);
 
-    return _apiSupplierIdGet(id: id, withSpareParts: withSpareParts);
+    return _apiSupplierIdGet(
+        id: id,
+        withSpareParts: withSpareParts,
+        withSparePartsRequest: withSparePartsRequest,
+        withSparePartsSupplier: withSparePartsSupplier);
   }
 
   ///Get supplier by ID
   ///@param id Supplier ID
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   @Get(path: '/api/supplier/{id}')
   Future<chopper.Response<SupplierResponse>> _apiSupplierIdGet({
     @Path('id') required int? id,
     @Query('with_spare_parts') bool? withSpareParts,
+    @Query('with_spare_parts_request') bool? withSparePartsRequest,
+    @Query('with_spare_parts_supplier') bool? withSparePartsSupplier,
   });
 
   ///Update a supplier
@@ -2276,12 +3324,16 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   Future<chopper.Response<ListSupplier>> apiSupplierListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? withSpareParts,
+    bool? withSparePartsRequest,
+    bool? withSparePartsSupplier,
   }) {
     generatedMapping.putIfAbsent(
         ListSupplier, () => ListSupplier.fromJsonFactory);
@@ -2291,7 +3343,9 @@ abstract class Swagger extends ChopperService {
         perPage: perPage,
         sortBy: sortBy,
         descending: descending,
-        withSpareParts: withSpareParts);
+        withSpareParts: withSpareParts,
+        withSparePartsRequest: withSparePartsRequest,
+        withSparePartsSupplier: withSparePartsSupplier);
   }
 
   ///List supplier
@@ -2300,6 +3354,8 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_spare_parts with spare_parts data
+  ///@param with_spare_parts_request with spare_parts request nested data
+  ///@param with_spare_parts_supplier with spare_parts supplier nested data
   @Get(path: '/api/supplier/list')
   Future<chopper.Response<ListSupplier>> _apiSupplierListGet({
     @Query('page') int? page,
@@ -2307,6 +3363,8 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_spare_parts') bool? withSpareParts,
+    @Query('with_spare_parts_request') bool? withSparePartsRequest,
+    @Query('with_spare_parts_supplier') bool? withSparePartsSupplier,
   });
 
   ///Total records
@@ -2353,8 +3411,16 @@ abstract class Swagger extends ChopperService {
   ///@param id Task ID
   ///@param with_sub_tasks with sub_tasks data
   ///@param with_sub_tasks_attached_to with sub_tasks attached_to nested data
+  ///@param with_sub_tasks_parent_task with sub_tasks parent_task nested data
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities nested data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2362,8 +3428,16 @@ abstract class Swagger extends ChopperService {
     required int? id,
     bool? withSubTasks,
     bool? withSubTasksAttachedTo,
+    bool? withSubTasksParentTask,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
+    bool? withAttachedToTask,
+    bool? withAttachedToCreatedBy,
+    bool? withAttachedToAssignedTo,
+    bool? withAttachedToDeletedBy,
+    bool? withAttachedToUpdatedBy,
+    bool? withAttachedToVehicle,
+    bool? withAttachedToSubTask,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
@@ -2375,8 +3449,16 @@ abstract class Swagger extends ChopperService {
         id: id,
         withSubTasks: withSubTasks,
         withSubTasksAttachedTo: withSubTasksAttachedTo,
+        withSubTasksParentTask: withSubTasksParentTask,
         withAttachedTo: withAttachedTo,
         withAttachedToActivities: withAttachedToActivities,
+        withAttachedToTask: withAttachedToTask,
+        withAttachedToCreatedBy: withAttachedToCreatedBy,
+        withAttachedToAssignedTo: withAttachedToAssignedTo,
+        withAttachedToDeletedBy: withAttachedToDeletedBy,
+        withAttachedToUpdatedBy: withAttachedToUpdatedBy,
+        withAttachedToVehicle: withAttachedToVehicle,
+        withAttachedToSubTask: withAttachedToSubTask,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
         withDeletedBy: withDeletedBy);
@@ -2386,8 +3468,16 @@ abstract class Swagger extends ChopperService {
   ///@param id Task ID
   ///@param with_sub_tasks with sub_tasks data
   ///@param with_sub_tasks_attached_to with sub_tasks attached_to nested data
+  ///@param with_sub_tasks_parent_task with sub_tasks parent_task nested data
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities nested data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2396,8 +3486,16 @@ abstract class Swagger extends ChopperService {
     @Path('id') required int? id,
     @Query('with_sub_tasks') bool? withSubTasks,
     @Query('with_sub_tasks_attached_to') bool? withSubTasksAttachedTo,
+    @Query('with_sub_tasks_parent_task') bool? withSubTasksParentTask,
     @Query('with_attached_to') bool? withAttachedTo,
     @Query('with_attached_to_activities') bool? withAttachedToActivities,
+    @Query('with_attached_to_task') bool? withAttachedToTask,
+    @Query('with_attached_to_created_by') bool? withAttachedToCreatedBy,
+    @Query('with_attached_to_assigned_to') bool? withAttachedToAssignedTo,
+    @Query('with_attached_to_deleted_by') bool? withAttachedToDeletedBy,
+    @Query('with_attached_to_updated_by') bool? withAttachedToUpdatedBy,
+    @Query('with_attached_to_vehicle') bool? withAttachedToVehicle,
+    @Query('with_attached_to_sub_task') bool? withAttachedToSubTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
@@ -2464,8 +3562,16 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_sub_tasks with sub_tasks data
   ///@param with_sub_tasks_attached_to with sub_tasks attached_to data
+  ///@param with_sub_tasks_parent_task with sub_tasks parent_task nested data
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2476,8 +3582,16 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withSubTasks,
     bool? withSubTasksAttachedTo,
+    bool? withSubTasksParentTask,
     bool? withAttachedTo,
     bool? withAttachedToActivities,
+    bool? withAttachedToTask,
+    bool? withAttachedToCreatedBy,
+    bool? withAttachedToAssignedTo,
+    bool? withAttachedToDeletedBy,
+    bool? withAttachedToUpdatedBy,
+    bool? withAttachedToVehicle,
+    bool? withAttachedToSubTask,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
@@ -2491,8 +3605,16 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withSubTasks: withSubTasks,
         withSubTasksAttachedTo: withSubTasksAttachedTo,
+        withSubTasksParentTask: withSubTasksParentTask,
         withAttachedTo: withAttachedTo,
         withAttachedToActivities: withAttachedToActivities,
+        withAttachedToTask: withAttachedToTask,
+        withAttachedToCreatedBy: withAttachedToCreatedBy,
+        withAttachedToAssignedTo: withAttachedToAssignedTo,
+        withAttachedToDeletedBy: withAttachedToDeletedBy,
+        withAttachedToUpdatedBy: withAttachedToUpdatedBy,
+        withAttachedToVehicle: withAttachedToVehicle,
+        withAttachedToSubTask: withAttachedToSubTask,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
         withDeletedBy: withDeletedBy);
@@ -2505,8 +3627,16 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_sub_tasks with sub_tasks data
   ///@param with_sub_tasks_attached_to with sub_tasks attached_to data
+  ///@param with_sub_tasks_parent_task with sub_tasks parent_task nested data
   ///@param with_attached_to with attached_to data
   ///@param with_attached_to_activities with attached_to activities data
+  ///@param with_attached_to_task with attached_to task nested data
+  ///@param with_attached_to_created_by with attached_to created_by nested data
+  ///@param with_attached_to_assigned_to with attached_to assigned_to nested data
+  ///@param with_attached_to_deleted_by with attached_to deleted_by nested data
+  ///@param with_attached_to_updated_by with attached_to updated_by nested data
+  ///@param with_attached_to_vehicle with attached_to vehicle nested data
+  ///@param with_attached_to_sub_task with attached_to sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2518,8 +3648,16 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_sub_tasks') bool? withSubTasks,
     @Query('with_sub_tasks_attached_to') bool? withSubTasksAttachedTo,
+    @Query('with_sub_tasks_parent_task') bool? withSubTasksParentTask,
     @Query('with_attached_to') bool? withAttachedTo,
     @Query('with_attached_to_activities') bool? withAttachedToActivities,
+    @Query('with_attached_to_task') bool? withAttachedToTask,
+    @Query('with_attached_to_created_by') bool? withAttachedToCreatedBy,
+    @Query('with_attached_to_assigned_to') bool? withAttachedToAssignedTo,
+    @Query('with_attached_to_deleted_by') bool? withAttachedToDeletedBy,
+    @Query('with_attached_to_updated_by') bool? withAttachedToUpdatedBy,
+    @Query('with_attached_to_vehicle') bool? withAttachedToVehicle,
+    @Query('with_attached_to_sub_task') bool? withAttachedToSubTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
@@ -2582,6 +3720,13 @@ abstract class Swagger extends ChopperService {
   ///@param id Vehicle ID
   ///@param with_vehicle_tasks with vehicle_tasks data
   ///@param with_vehicle_tasks_activities with vehicle_tasks activities nested data
+  ///@param with_vehicle_tasks_task with vehicle_tasks task nested data
+  ///@param with_vehicle_tasks_created_by with vehicle_tasks created_by nested data
+  ///@param with_vehicle_tasks_assigned_to with vehicle_tasks assigned_to nested data
+  ///@param with_vehicle_tasks_deleted_by with vehicle_tasks deleted_by nested data
+  ///@param with_vehicle_tasks_updated_by with vehicle_tasks updated_by nested data
+  ///@param with_vehicle_tasks_vehicle with vehicle_tasks vehicle nested data
+  ///@param with_vehicle_tasks_sub_task with vehicle_tasks sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2590,6 +3735,13 @@ abstract class Swagger extends ChopperService {
     required int? id,
     bool? withVehicleTasks,
     bool? withVehicleTasksActivities,
+    bool? withVehicleTasksTask,
+    bool? withVehicleTasksCreatedBy,
+    bool? withVehicleTasksAssignedTo,
+    bool? withVehicleTasksDeletedBy,
+    bool? withVehicleTasksUpdatedBy,
+    bool? withVehicleTasksVehicle,
+    bool? withVehicleTasksSubTask,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
@@ -2602,6 +3754,13 @@ abstract class Swagger extends ChopperService {
         id: id,
         withVehicleTasks: withVehicleTasks,
         withVehicleTasksActivities: withVehicleTasksActivities,
+        withVehicleTasksTask: withVehicleTasksTask,
+        withVehicleTasksCreatedBy: withVehicleTasksCreatedBy,
+        withVehicleTasksAssignedTo: withVehicleTasksAssignedTo,
+        withVehicleTasksDeletedBy: withVehicleTasksDeletedBy,
+        withVehicleTasksUpdatedBy: withVehicleTasksUpdatedBy,
+        withVehicleTasksVehicle: withVehicleTasksVehicle,
+        withVehicleTasksSubTask: withVehicleTasksSubTask,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
         withDeletedBy: withDeletedBy,
@@ -2612,6 +3771,13 @@ abstract class Swagger extends ChopperService {
   ///@param id Vehicle ID
   ///@param with_vehicle_tasks with vehicle_tasks data
   ///@param with_vehicle_tasks_activities with vehicle_tasks activities nested data
+  ///@param with_vehicle_tasks_task with vehicle_tasks task nested data
+  ///@param with_vehicle_tasks_created_by with vehicle_tasks created_by nested data
+  ///@param with_vehicle_tasks_assigned_to with vehicle_tasks assigned_to nested data
+  ///@param with_vehicle_tasks_deleted_by with vehicle_tasks deleted_by nested data
+  ///@param with_vehicle_tasks_updated_by with vehicle_tasks updated_by nested data
+  ///@param with_vehicle_tasks_vehicle with vehicle_tasks vehicle nested data
+  ///@param with_vehicle_tasks_sub_task with vehicle_tasks sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2621,6 +3787,13 @@ abstract class Swagger extends ChopperService {
     @Path('id') required int? id,
     @Query('with_vehicle_tasks') bool? withVehicleTasks,
     @Query('with_vehicle_tasks_activities') bool? withVehicleTasksActivities,
+    @Query('with_vehicle_tasks_task') bool? withVehicleTasksTask,
+    @Query('with_vehicle_tasks_created_by') bool? withVehicleTasksCreatedBy,
+    @Query('with_vehicle_tasks_assigned_to') bool? withVehicleTasksAssignedTo,
+    @Query('with_vehicle_tasks_deleted_by') bool? withVehicleTasksDeletedBy,
+    @Query('with_vehicle_tasks_updated_by') bool? withVehicleTasksUpdatedBy,
+    @Query('with_vehicle_tasks_vehicle') bool? withVehicleTasksVehicle,
+    @Query('with_vehicle_tasks_sub_task') bool? withVehicleTasksSubTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
@@ -2690,6 +3863,13 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_vehicle_tasks with vehicle_tasks data
   ///@param with_vehicle_tasks_activities with vehicle_tasks activities data
+  ///@param with_vehicle_tasks_task with vehicle_tasks task nested data
+  ///@param with_vehicle_tasks_created_by with vehicle_tasks created_by nested data
+  ///@param with_vehicle_tasks_assigned_to with vehicle_tasks assigned_to nested data
+  ///@param with_vehicle_tasks_deleted_by with vehicle_tasks deleted_by nested data
+  ///@param with_vehicle_tasks_updated_by with vehicle_tasks updated_by nested data
+  ///@param with_vehicle_tasks_vehicle with vehicle_tasks vehicle nested data
+  ///@param with_vehicle_tasks_sub_task with vehicle_tasks sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2701,6 +3881,13 @@ abstract class Swagger extends ChopperService {
     bool? descending,
     bool? withVehicleTasks,
     bool? withVehicleTasksActivities,
+    bool? withVehicleTasksTask,
+    bool? withVehicleTasksCreatedBy,
+    bool? withVehicleTasksAssignedTo,
+    bool? withVehicleTasksDeletedBy,
+    bool? withVehicleTasksUpdatedBy,
+    bool? withVehicleTasksVehicle,
+    bool? withVehicleTasksSubTask,
     bool? withCreatedBy,
     bool? withUpdatedBy,
     bool? withDeletedBy,
@@ -2716,6 +3903,13 @@ abstract class Swagger extends ChopperService {
         descending: descending,
         withVehicleTasks: withVehicleTasks,
         withVehicleTasksActivities: withVehicleTasksActivities,
+        withVehicleTasksTask: withVehicleTasksTask,
+        withVehicleTasksCreatedBy: withVehicleTasksCreatedBy,
+        withVehicleTasksAssignedTo: withVehicleTasksAssignedTo,
+        withVehicleTasksDeletedBy: withVehicleTasksDeletedBy,
+        withVehicleTasksUpdatedBy: withVehicleTasksUpdatedBy,
+        withVehicleTasksVehicle: withVehicleTasksVehicle,
+        withVehicleTasksSubTask: withVehicleTasksSubTask,
         withCreatedBy: withCreatedBy,
         withUpdatedBy: withUpdatedBy,
         withDeletedBy: withDeletedBy,
@@ -2729,6 +3923,13 @@ abstract class Swagger extends ChopperService {
   ///@param descending order
   ///@param with_vehicle_tasks with vehicle_tasks data
   ///@param with_vehicle_tasks_activities with vehicle_tasks activities data
+  ///@param with_vehicle_tasks_task with vehicle_tasks task nested data
+  ///@param with_vehicle_tasks_created_by with vehicle_tasks created_by nested data
+  ///@param with_vehicle_tasks_assigned_to with vehicle_tasks assigned_to nested data
+  ///@param with_vehicle_tasks_deleted_by with vehicle_tasks deleted_by nested data
+  ///@param with_vehicle_tasks_updated_by with vehicle_tasks updated_by nested data
+  ///@param with_vehicle_tasks_vehicle with vehicle_tasks vehicle nested data
+  ///@param with_vehicle_tasks_sub_task with vehicle_tasks sub_task nested data
   ///@param with_created_by with created_by data
   ///@param with_updated_by with updated_by data
   ///@param with_deleted_by with deleted_by data
@@ -2741,6 +3942,13 @@ abstract class Swagger extends ChopperService {
     @Query('descending') bool? descending,
     @Query('with_vehicle_tasks') bool? withVehicleTasks,
     @Query('with_vehicle_tasks_activities') bool? withVehicleTasksActivities,
+    @Query('with_vehicle_tasks_task') bool? withVehicleTasksTask,
+    @Query('with_vehicle_tasks_created_by') bool? withVehicleTasksCreatedBy,
+    @Query('with_vehicle_tasks_assigned_to') bool? withVehicleTasksAssignedTo,
+    @Query('with_vehicle_tasks_deleted_by') bool? withVehicleTasksDeletedBy,
+    @Query('with_vehicle_tasks_updated_by') bool? withVehicleTasksUpdatedBy,
+    @Query('with_vehicle_tasks_vehicle') bool? withVehicleTasksVehicle,
+    @Query('with_vehicle_tasks_sub_task') bool? withVehicleTasksSubTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_deleted_by') bool? withDeletedBy,
@@ -2791,23 +3999,31 @@ abstract class Swagger extends ChopperService {
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
   ///@param with_activities with activities data
-  ///@param with_sub_task with sub_task data
+  ///@param with_activities_vehicle_tasks with activities vehicle_tasks nested data
+  ///@param with_activities_created_by with activities created_by nested data
+  ///@param with_activities_updated_by with activities updated_by nested data
+  ///@param with_activities_deleted_by with activities deleted_by nested data
+  ///@param with_task with task data
   ///@param with_created_by with created_by data
   ///@param with_assigned_to with assigned_to data
   ///@param with_deleted_by with deleted_by data
   ///@param with_updated_by with updated_by data
   ///@param with_vehicle with vehicle data
-  ///@param with_task with task data
+  ///@param with_sub_task with sub_task data
   Future<chopper.Response<VehicleTaskResponse>> apiVehicleTaskIdGet({
     required int? id,
     bool? withActivities,
-    bool? withSubTask,
+    bool? withActivitiesVehicleTasks,
+    bool? withActivitiesCreatedBy,
+    bool? withActivitiesUpdatedBy,
+    bool? withActivitiesDeletedBy,
+    bool? withTask,
     bool? withCreatedBy,
     bool? withAssignedTo,
     bool? withDeletedBy,
     bool? withUpdatedBy,
     bool? withVehicle,
-    bool? withTask,
+    bool? withSubTask,
   }) {
     generatedMapping.putIfAbsent(
         VehicleTaskResponse, () => VehicleTaskResponse.fromJsonFactory);
@@ -2815,36 +4031,48 @@ abstract class Swagger extends ChopperService {
     return _apiVehicleTaskIdGet(
         id: id,
         withActivities: withActivities,
-        withSubTask: withSubTask,
+        withActivitiesVehicleTasks: withActivitiesVehicleTasks,
+        withActivitiesCreatedBy: withActivitiesCreatedBy,
+        withActivitiesUpdatedBy: withActivitiesUpdatedBy,
+        withActivitiesDeletedBy: withActivitiesDeletedBy,
+        withTask: withTask,
         withCreatedBy: withCreatedBy,
         withAssignedTo: withAssignedTo,
         withDeletedBy: withDeletedBy,
         withUpdatedBy: withUpdatedBy,
         withVehicle: withVehicle,
-        withTask: withTask);
+        withSubTask: withSubTask);
   }
 
   ///Get vehicle_task by ID
   ///@param id VehicleTask ID
   ///@param with_activities with activities data
-  ///@param with_sub_task with sub_task data
+  ///@param with_activities_vehicle_tasks with activities vehicle_tasks nested data
+  ///@param with_activities_created_by with activities created_by nested data
+  ///@param with_activities_updated_by with activities updated_by nested data
+  ///@param with_activities_deleted_by with activities deleted_by nested data
+  ///@param with_task with task data
   ///@param with_created_by with created_by data
   ///@param with_assigned_to with assigned_to data
   ///@param with_deleted_by with deleted_by data
   ///@param with_updated_by with updated_by data
   ///@param with_vehicle with vehicle data
-  ///@param with_task with task data
+  ///@param with_sub_task with sub_task data
   @Get(path: '/api/vehicle_task/{id}')
   Future<chopper.Response<VehicleTaskResponse>> _apiVehicleTaskIdGet({
     @Path('id') required int? id,
     @Query('with_activities') bool? withActivities,
-    @Query('with_sub_task') bool? withSubTask,
+    @Query('with_activities_vehicle_tasks') bool? withActivitiesVehicleTasks,
+    @Query('with_activities_created_by') bool? withActivitiesCreatedBy,
+    @Query('with_activities_updated_by') bool? withActivitiesUpdatedBy,
+    @Query('with_activities_deleted_by') bool? withActivitiesDeletedBy,
+    @Query('with_task') bool? withTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_assigned_to') bool? withAssignedTo,
     @Query('with_deleted_by') bool? withDeletedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_vehicle') bool? withVehicle,
-    @Query('with_task') bool? withTask,
+    @Query('with_sub_task') bool? withSubTask,
   });
 
   ///Update a vehicle_task
@@ -2909,26 +4137,34 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_activities with activities data
-  ///@param with_sub_task with sub_task data
+  ///@param with_activities_vehicle_tasks with activities vehicle_tasks nested data
+  ///@param with_activities_created_by with activities created_by nested data
+  ///@param with_activities_updated_by with activities updated_by nested data
+  ///@param with_activities_deleted_by with activities deleted_by nested data
+  ///@param with_task with task data
   ///@param with_created_by with created_by data
   ///@param with_assigned_to with assigned_to data
   ///@param with_deleted_by with deleted_by data
   ///@param with_updated_by with updated_by data
   ///@param with_vehicle with vehicle data
-  ///@param with_task with task data
+  ///@param with_sub_task with sub_task data
   Future<chopper.Response<ListVehicleTask>> apiVehicleTaskListGet({
     int? page,
     int? perPage,
     String? sortBy,
     bool? descending,
     bool? withActivities,
-    bool? withSubTask,
+    bool? withActivitiesVehicleTasks,
+    bool? withActivitiesCreatedBy,
+    bool? withActivitiesUpdatedBy,
+    bool? withActivitiesDeletedBy,
+    bool? withTask,
     bool? withCreatedBy,
     bool? withAssignedTo,
     bool? withDeletedBy,
     bool? withUpdatedBy,
     bool? withVehicle,
-    bool? withTask,
+    bool? withSubTask,
   }) {
     generatedMapping.putIfAbsent(
         ListVehicleTask, () => ListVehicleTask.fromJsonFactory);
@@ -2939,13 +4175,17 @@ abstract class Swagger extends ChopperService {
         sortBy: sortBy,
         descending: descending,
         withActivities: withActivities,
-        withSubTask: withSubTask,
+        withActivitiesVehicleTasks: withActivitiesVehicleTasks,
+        withActivitiesCreatedBy: withActivitiesCreatedBy,
+        withActivitiesUpdatedBy: withActivitiesUpdatedBy,
+        withActivitiesDeletedBy: withActivitiesDeletedBy,
+        withTask: withTask,
         withCreatedBy: withCreatedBy,
         withAssignedTo: withAssignedTo,
         withDeletedBy: withDeletedBy,
         withUpdatedBy: withUpdatedBy,
         withVehicle: withVehicle,
-        withTask: withTask);
+        withSubTask: withSubTask);
   }
 
   ///List vehicle_task
@@ -2954,13 +4194,17 @@ abstract class Swagger extends ChopperService {
   ///@param sort_by sort field
   ///@param descending order
   ///@param with_activities with activities data
-  ///@param with_sub_task with sub_task data
+  ///@param with_activities_vehicle_tasks with activities vehicle_tasks nested data
+  ///@param with_activities_created_by with activities created_by nested data
+  ///@param with_activities_updated_by with activities updated_by nested data
+  ///@param with_activities_deleted_by with activities deleted_by nested data
+  ///@param with_task with task data
   ///@param with_created_by with created_by data
   ///@param with_assigned_to with assigned_to data
   ///@param with_deleted_by with deleted_by data
   ///@param with_updated_by with updated_by data
   ///@param with_vehicle with vehicle data
-  ///@param with_task with task data
+  ///@param with_sub_task with sub_task data
   @Get(path: '/api/vehicle_task/list')
   Future<chopper.Response<ListVehicleTask>> _apiVehicleTaskListGet({
     @Query('page') int? page,
@@ -2968,13 +4212,17 @@ abstract class Swagger extends ChopperService {
     @Query('sort_by') String? sortBy,
     @Query('descending') bool? descending,
     @Query('with_activities') bool? withActivities,
-    @Query('with_sub_task') bool? withSubTask,
+    @Query('with_activities_vehicle_tasks') bool? withActivitiesVehicleTasks,
+    @Query('with_activities_created_by') bool? withActivitiesCreatedBy,
+    @Query('with_activities_updated_by') bool? withActivitiesUpdatedBy,
+    @Query('with_activities_deleted_by') bool? withActivitiesDeletedBy,
+    @Query('with_task') bool? withTask,
     @Query('with_created_by') bool? withCreatedBy,
     @Query('with_assigned_to') bool? withAssignedTo,
     @Query('with_deleted_by') bool? withDeletedBy,
     @Query('with_updated_by') bool? withUpdatedBy,
     @Query('with_vehicle') bool? withVehicle,
-    @Query('with_task') bool? withTask,
+    @Query('with_sub_task') bool? withSubTask,
   });
 
   ///Total records

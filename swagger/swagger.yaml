@@ -2827,7 +2827,6 @@ definitions:
         - $ref: '#/definitions/SubTask'
         x-nullable: false
       sub_task_id:
-        description: Activities []*ActivityModel `gorm:"many2many:vehicle_task_model_activities;"`
         type: integer
         x-nullable: false
       task:
@@ -2835,6 +2834,7 @@ definitions:
         - $ref: '#/definitions/Task'
         x-nullable: false
       task_id:
+        description: Activities []*ActivityModel `gorm:"many2many:vehicle_task_model_activities;"`
         type: integer
         x-nullable: false
       updated_at:
@@ -3548,6 +3548,22 @@ paths:
         in: query
         name: with_garages_owners
         type: boolean
+      - description: with garages city nested data
+        in: query
+        name: with_garages_city
+        type: boolean
+      - description: with garages created_by nested data
+        in: query
+        name: with_garages_created_by
+        type: boolean
+      - description: with garages updated_by nested data
+        in: query
+        name: with_garages_updated_by
+        type: boolean
+      - description: with garages deleted_by nested data
+        in: query
+        name: with_garages_deleted_by
+        type: boolean
       produces:
       - application/json
       responses:
@@ -3691,6 +3707,22 @@ paths:
         in: query
         name: with_garages_owners
         type: boolean
+      - description: with garages city nested data
+        in: query
+        name: with_garages_city
+        type: boolean
+      - description: with garages created_by nested data
+        in: query
+        name: with_garages_created_by
+        type: boolean
+      - description: with garages updated_by nested data
+        in: query
+        name: with_garages_updated_by
+        type: boolean
+      - description: with garages deleted_by nested data
+        in: query
+        name: with_garages_deleted_by
+        type: boolean
       produces:
       - application/json
       responses:
@@ -3795,6 +3827,22 @@ paths:
         in: query
         name: with_created_vehicles_vehicle_tasks
         type: boolean
+      - description: with created_vehicles created_by nested data
+        in: query
+        name: with_created_vehicles_created_by
+        type: boolean
+      - description: with created_vehicles updated_by nested data
+        in: query
+        name: with_created_vehicles_updated_by
+        type: boolean
+      - description: with created_vehicles deleted_by nested data
+        in: query
+        name: with_created_vehicles_deleted_by
+        type: boolean
+      - description: with created_vehicles owner nested data
+        in: query
+        name: with_created_vehicles_owner
+        type: boolean
       - description: with updated_vehicles data
         in: query
         name: with_updated_vehicles
@@ -3802,6 +3850,22 @@ paths:
       - description: with updated_vehicles vehicle_tasks nested data
         in: query
         name: with_updated_vehicles_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicles created_by nested data
+        in: query
+        name: with_updated_vehicles_created_by
+        type: boolean
+      - description: with updated_vehicles updated_by nested data
+        in: query
+        name: with_updated_vehicles_updated_by
+        type: boolean
+      - description: with updated_vehicles deleted_by nested data
+        in: query
+        name: with_updated_vehicles_deleted_by
+        type: boolean
+      - description: with updated_vehicles owner nested data
+        in: query
+        name: with_updated_vehicles_owner
         type: boolean
       - description: with deleted_vehicles data
         in: query
@@ -3811,6 +3875,22 @@ paths:
         in: query
         name: with_deleted_vehicles_vehicle_tasks
         type: boolean
+      - description: with deleted_vehicles created_by nested data
+        in: query
+        name: with_deleted_vehicles_created_by
+        type: boolean
+      - description: with deleted_vehicles updated_by nested data
+        in: query
+        name: with_deleted_vehicles_updated_by
+        type: boolean
+      - description: with deleted_vehicles deleted_by nested data
+        in: query
+        name: with_deleted_vehicles_deleted_by
+        type: boolean
+      - description: with deleted_vehicles owner nested data
+        in: query
+        name: with_deleted_vehicles_owner
+        type: boolean
       - description: with created_garages data
         in: query
         name: with_created_garages
@@ -3818,6 +3898,22 @@ paths:
       - description: with created_garages owners nested data
         in: query
         name: with_created_garages_owners
+        type: boolean
+      - description: with created_garages city nested data
+        in: query
+        name: with_created_garages_city
+        type: boolean
+      - description: with created_garages created_by nested data
+        in: query
+        name: with_created_garages_created_by
+        type: boolean
+      - description: with created_garages updated_by nested data
+        in: query
+        name: with_created_garages_updated_by
+        type: boolean
+      - description: with created_garages deleted_by nested data
+        in: query
+        name: with_created_garages_deleted_by
         type: boolean
       - description: with updated_garages data
         in: query
@@ -3827,6 +3923,22 @@ paths:
         in: query
         name: with_updated_garages_owners
         type: boolean
+      - description: with updated_garages city nested data
+        in: query
+        name: with_updated_garages_city
+        type: boolean
+      - description: with updated_garages created_by nested data
+        in: query
+        name: with_updated_garages_created_by
+        type: boolean
+      - description: with updated_garages updated_by nested data
+        in: query
+        name: with_updated_garages_updated_by
+        type: boolean
+      - description: with updated_garages deleted_by nested data
+        in: query
+        name: with_updated_garages_deleted_by
+        type: boolean
       - description: with deleted_garages data
         in: query
         name: with_deleted_garages
@@ -3834,6 +3946,22 @@ paths:
       - description: with deleted_garages owners nested data
         in: query
         name: with_deleted_garages_owners
+        type: boolean
+      - description: with deleted_garages city nested data
+        in: query
+        name: with_deleted_garages_city
+        type: boolean
+      - description: with deleted_garages created_by nested data
+        in: query
+        name: with_deleted_garages_created_by
+        type: boolean
+      - description: with deleted_garages updated_by nested data
+        in: query
+        name: with_deleted_garages_updated_by
+        type: boolean
+      - description: with deleted_garages deleted_by nested data
+        in: query
+        name: with_deleted_garages_deleted_by
         type: boolean
       - description: with created_tasks data
         in: query
@@ -3847,6 +3975,18 @@ paths:
         in: query
         name: with_created_tasks_attached_to
         type: boolean
+      - description: with created_tasks created_by nested data
+        in: query
+        name: with_created_tasks_created_by
+        type: boolean
+      - description: with created_tasks updated_by nested data
+        in: query
+        name: with_created_tasks_updated_by
+        type: boolean
+      - description: with created_tasks deleted_by nested data
+        in: query
+        name: with_created_tasks_deleted_by
+        type: boolean
       - description: with updated_tasks data
         in: query
         name: with_updated_tasks
@@ -3858,6 +3998,18 @@ paths:
       - description: with updated_tasks attached_to nested data
         in: query
         name: with_updated_tasks_attached_to
+        type: boolean
+      - description: with updated_tasks created_by nested data
+        in: query
+        name: with_updated_tasks_created_by
+        type: boolean
+      - description: with updated_tasks updated_by nested data
+        in: query
+        name: with_updated_tasks_updated_by
+        type: boolean
+      - description: with updated_tasks deleted_by nested data
+        in: query
+        name: with_updated_tasks_deleted_by
         type: boolean
       - description: with deleted_tasks data
         in: query
@@ -3871,6 +4023,18 @@ paths:
         in: query
         name: with_deleted_tasks_attached_to
         type: boolean
+      - description: with deleted_tasks created_by nested data
+        in: query
+        name: with_deleted_tasks_created_by
+        type: boolean
+      - description: with deleted_tasks updated_by nested data
+        in: query
+        name: with_deleted_tasks_updated_by
+        type: boolean
+      - description: with deleted_tasks deleted_by nested data
+        in: query
+        name: with_deleted_tasks_deleted_by
+        type: boolean
       - description: with created_vehicle_tasks data
         in: query
         name: with_created_vehicle_tasks
@@ -3878,6 +4042,34 @@ paths:
       - description: with created_vehicle_tasks activities nested data
         in: query
         name: with_created_vehicle_tasks_activities
+        type: boolean
+      - description: with created_vehicle_tasks task nested data
+        in: query
+        name: with_created_vehicle_tasks_task
+        type: boolean
+      - description: with created_vehicle_tasks created_by nested data
+        in: query
+        name: with_created_vehicle_tasks_created_by
+        type: boolean
+      - description: with created_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_created_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with created_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_created_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with created_vehicle_tasks updated_by nested data
+        in: query
+        name: with_created_vehicle_tasks_updated_by
+        type: boolean
+      - description: with created_vehicle_tasks vehicle nested data
+        in: query
+        name: with_created_vehicle_tasks_vehicle
+        type: boolean
+      - description: with created_vehicle_tasks sub_task nested data
+        in: query
+        name: with_created_vehicle_tasks_sub_task
         type: boolean
       - description: with assigned_vehicle_tasks data
         in: query
@@ -3887,6 +4079,34 @@ paths:
         in: query
         name: with_assigned_vehicle_tasks_activities
         type: boolean
+      - description: with assigned_vehicle_tasks task nested data
+        in: query
+        name: with_assigned_vehicle_tasks_task
+        type: boolean
+      - description: with assigned_vehicle_tasks created_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_created_by
+        type: boolean
+      - description: with assigned_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_assigned_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with assigned_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with assigned_vehicle_tasks updated_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_updated_by
+        type: boolean
+      - description: with assigned_vehicle_tasks vehicle nested data
+        in: query
+        name: with_assigned_vehicle_tasks_vehicle
+        type: boolean
+      - description: with assigned_vehicle_tasks sub_task nested data
+        in: query
+        name: with_assigned_vehicle_tasks_sub_task
+        type: boolean
       - description: with deleted_vehicle_tasks data
         in: query
         name: with_deleted_vehicle_tasks
@@ -3894,6 +4114,34 @@ paths:
       - description: with deleted_vehicle_tasks activities nested data
         in: query
         name: with_deleted_vehicle_tasks_activities
+        type: boolean
+      - description: with deleted_vehicle_tasks task nested data
+        in: query
+        name: with_deleted_vehicle_tasks_task
+        type: boolean
+      - description: with deleted_vehicle_tasks created_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_created_by
+        type: boolean
+      - description: with deleted_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_deleted_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with deleted_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with deleted_vehicle_tasks updated_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_updated_by
+        type: boolean
+      - description: with deleted_vehicle_tasks vehicle nested data
+        in: query
+        name: with_deleted_vehicle_tasks_vehicle
+        type: boolean
+      - description: with deleted_vehicle_tasks sub_task nested data
+        in: query
+        name: with_deleted_vehicle_tasks_sub_task
         type: boolean
       - description: with updated_vehicle_tasks data
         in: query
@@ -3903,9 +4151,41 @@ paths:
         in: query
         name: with_updated_vehicle_tasks_activities
         type: boolean
+      - description: with updated_vehicle_tasks task nested data
+        in: query
+        name: with_updated_vehicle_tasks_task
+        type: boolean
+      - description: with updated_vehicle_tasks created_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_created_by
+        type: boolean
+      - description: with updated_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_updated_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with updated_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with updated_vehicle_tasks updated_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_updated_by
+        type: boolean
+      - description: with updated_vehicle_tasks vehicle nested data
+        in: query
+        name: with_updated_vehicle_tasks_vehicle
+        type: boolean
+      - description: with updated_vehicle_tasks sub_task nested data
+        in: query
+        name: with_updated_vehicle_tasks_sub_task
+        type: boolean
       - description: with permission data
         in: query
         name: with_permission
+        type: boolean
+      - description: with permission employees nested data
+        in: query
+        name: with_permission_employees
         type: boolean
       - description: with requests data
         in: query
@@ -3915,21 +4195,77 @@ paths:
         in: query
         name: with_requests_spare_parts
         type: boolean
+      - description: with requests request_by nested data
+        in: query
+        name: with_requests_request_by
+        type: boolean
       - description: with account data
         in: query
         name: with_account
+        type: boolean
+      - description: with account employee nested data
+        in: query
+        name: with_account_employee
         type: boolean
       - description: with created_activities data
         in: query
         name: with_created_activities
         type: boolean
+      - description: with created_activities vehicle_tasks nested data
+        in: query
+        name: with_created_activities_vehicle_tasks
+        type: boolean
+      - description: with created_activities created_by nested data
+        in: query
+        name: with_created_activities_created_by
+        type: boolean
+      - description: with created_activities updated_by nested data
+        in: query
+        name: with_created_activities_updated_by
+        type: boolean
+      - description: with created_activities deleted_by nested data
+        in: query
+        name: with_created_activities_deleted_by
+        type: boolean
       - description: with updated_activities data
         in: query
         name: with_updated_activities
         type: boolean
+      - description: with updated_activities vehicle_tasks nested data
+        in: query
+        name: with_updated_activities_vehicle_tasks
+        type: boolean
+      - description: with updated_activities created_by nested data
+        in: query
+        name: with_updated_activities_created_by
+        type: boolean
+      - description: with updated_activities updated_by nested data
+        in: query
+        name: with_updated_activities_updated_by
+        type: boolean
+      - description: with updated_activities deleted_by nested data
+        in: query
+        name: with_updated_activities_deleted_by
+        type: boolean
       - description: with deleted_activities data
         in: query
         name: with_deleted_activities
+        type: boolean
+      - description: with deleted_activities vehicle_tasks nested data
+        in: query
+        name: with_deleted_activities_vehicle_tasks
+        type: boolean
+      - description: with deleted_activities created_by nested data
+        in: query
+        name: with_deleted_activities_created_by
+        type: boolean
+      - description: with deleted_activities updated_by nested data
+        in: query
+        name: with_deleted_activities_updated_by
+        type: boolean
+      - description: with deleted_activities deleted_by nested data
+        in: query
+        name: with_deleted_activities_deleted_by
         type: boolean
       produces:
       - application/json
@@ -4074,6 +4410,22 @@ paths:
         in: query
         name: with_created_vehicles_vehicle_tasks
         type: boolean
+      - description: with created_vehicles created_by nested data
+        in: query
+        name: with_created_vehicles_created_by
+        type: boolean
+      - description: with created_vehicles updated_by nested data
+        in: query
+        name: with_created_vehicles_updated_by
+        type: boolean
+      - description: with created_vehicles deleted_by nested data
+        in: query
+        name: with_created_vehicles_deleted_by
+        type: boolean
+      - description: with created_vehicles owner nested data
+        in: query
+        name: with_created_vehicles_owner
+        type: boolean
       - description: with updated_vehicles data
         in: query
         name: with_updated_vehicles
@@ -4081,6 +4433,22 @@ paths:
       - description: with updated_vehicles vehicle_tasks data
         in: query
         name: with_updated_vehicles_vehicle_tasks
+        type: boolean
+      - description: with updated_vehicles created_by nested data
+        in: query
+        name: with_updated_vehicles_created_by
+        type: boolean
+      - description: with updated_vehicles updated_by nested data
+        in: query
+        name: with_updated_vehicles_updated_by
+        type: boolean
+      - description: with updated_vehicles deleted_by nested data
+        in: query
+        name: with_updated_vehicles_deleted_by
+        type: boolean
+      - description: with updated_vehicles owner nested data
+        in: query
+        name: with_updated_vehicles_owner
         type: boolean
       - description: with deleted_vehicles data
         in: query
@@ -4090,6 +4458,22 @@ paths:
         in: query
         name: with_deleted_vehicles_vehicle_tasks
         type: boolean
+      - description: with deleted_vehicles created_by nested data
+        in: query
+        name: with_deleted_vehicles_created_by
+        type: boolean
+      - description: with deleted_vehicles updated_by nested data
+        in: query
+        name: with_deleted_vehicles_updated_by
+        type: boolean
+      - description: with deleted_vehicles deleted_by nested data
+        in: query
+        name: with_deleted_vehicles_deleted_by
+        type: boolean
+      - description: with deleted_vehicles owner nested data
+        in: query
+        name: with_deleted_vehicles_owner
+        type: boolean
       - description: with created_garages data
         in: query
         name: with_created_garages
@@ -4097,6 +4481,22 @@ paths:
       - description: with created_garages owners data
         in: query
         name: with_created_garages_owners
+        type: boolean
+      - description: with created_garages city nested data
+        in: query
+        name: with_created_garages_city
+        type: boolean
+      - description: with created_garages created_by nested data
+        in: query
+        name: with_created_garages_created_by
+        type: boolean
+      - description: with created_garages updated_by nested data
+        in: query
+        name: with_created_garages_updated_by
+        type: boolean
+      - description: with created_garages deleted_by nested data
+        in: query
+        name: with_created_garages_deleted_by
         type: boolean
       - description: with updated_garages data
         in: query
@@ -4106,6 +4506,22 @@ paths:
         in: query
         name: with_updated_garages_owners
         type: boolean
+      - description: with updated_garages city nested data
+        in: query
+        name: with_updated_garages_city
+        type: boolean
+      - description: with updated_garages created_by nested data
+        in: query
+        name: with_updated_garages_created_by
+        type: boolean
+      - description: with updated_garages updated_by nested data
+        in: query
+        name: with_updated_garages_updated_by
+        type: boolean
+      - description: with updated_garages deleted_by nested data
+        in: query
+        name: with_updated_garages_deleted_by
+        type: boolean
       - description: with deleted_garages data
         in: query
         name: with_deleted_garages
@@ -4113,6 +4529,22 @@ paths:
       - description: with deleted_garages owners data
         in: query
         name: with_deleted_garages_owners
+        type: boolean
+      - description: with deleted_garages city nested data
+        in: query
+        name: with_deleted_garages_city
+        type: boolean
+      - description: with deleted_garages created_by nested data
+        in: query
+        name: with_deleted_garages_created_by
+        type: boolean
+      - description: with deleted_garages updated_by nested data
+        in: query
+        name: with_deleted_garages_updated_by
+        type: boolean
+      - description: with deleted_garages deleted_by nested data
+        in: query
+        name: with_deleted_garages_deleted_by
         type: boolean
       - description: with created_tasks data
         in: query
@@ -4126,6 +4558,18 @@ paths:
         in: query
         name: with_created_tasks_attached_to
         type: boolean
+      - description: with created_tasks created_by nested data
+        in: query
+        name: with_created_tasks_created_by
+        type: boolean
+      - description: with created_tasks updated_by nested data
+        in: query
+        name: with_created_tasks_updated_by
+        type: boolean
+      - description: with created_tasks deleted_by nested data
+        in: query
+        name: with_created_tasks_deleted_by
+        type: boolean
       - description: with updated_tasks data
         in: query
         name: with_updated_tasks
@@ -4137,6 +4581,18 @@ paths:
       - description: with updated_tasks attached_to data
         in: query
         name: with_updated_tasks_attached_to
+        type: boolean
+      - description: with updated_tasks created_by nested data
+        in: query
+        name: with_updated_tasks_created_by
+        type: boolean
+      - description: with updated_tasks updated_by nested data
+        in: query
+        name: with_updated_tasks_updated_by
+        type: boolean
+      - description: with updated_tasks deleted_by nested data
+        in: query
+        name: with_updated_tasks_deleted_by
         type: boolean
       - description: with deleted_tasks data
         in: query
@@ -4150,6 +4606,18 @@ paths:
         in: query
         name: with_deleted_tasks_attached_to
         type: boolean
+      - description: with deleted_tasks created_by nested data
+        in: query
+        name: with_deleted_tasks_created_by
+        type: boolean
+      - description: with deleted_tasks updated_by nested data
+        in: query
+        name: with_deleted_tasks_updated_by
+        type: boolean
+      - description: with deleted_tasks deleted_by nested data
+        in: query
+        name: with_deleted_tasks_deleted_by
+        type: boolean
       - description: with created_vehicle_tasks data
         in: query
         name: with_created_vehicle_tasks
@@ -4157,6 +4625,34 @@ paths:
       - description: with created_vehicle_tasks activities data
         in: query
         name: with_created_vehicle_tasks_activities
+        type: boolean
+      - description: with created_vehicle_tasks task nested data
+        in: query
+        name: with_created_vehicle_tasks_task
+        type: boolean
+      - description: with created_vehicle_tasks created_by nested data
+        in: query
+        name: with_created_vehicle_tasks_created_by
+        type: boolean
+      - description: with created_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_created_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with created_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_created_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with created_vehicle_tasks updated_by nested data
+        in: query
+        name: with_created_vehicle_tasks_updated_by
+        type: boolean
+      - description: with created_vehicle_tasks vehicle nested data
+        in: query
+        name: with_created_vehicle_tasks_vehicle
+        type: boolean
+      - description: with created_vehicle_tasks sub_task nested data
+        in: query
+        name: with_created_vehicle_tasks_sub_task
         type: boolean
       - description: with assigned_vehicle_tasks data
         in: query
@@ -4166,6 +4662,34 @@ paths:
         in: query
         name: with_assigned_vehicle_tasks_activities
         type: boolean
+      - description: with assigned_vehicle_tasks task nested data
+        in: query
+        name: with_assigned_vehicle_tasks_task
+        type: boolean
+      - description: with assigned_vehicle_tasks created_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_created_by
+        type: boolean
+      - description: with assigned_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_assigned_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with assigned_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with assigned_vehicle_tasks updated_by nested data
+        in: query
+        name: with_assigned_vehicle_tasks_updated_by
+        type: boolean
+      - description: with assigned_vehicle_tasks vehicle nested data
+        in: query
+        name: with_assigned_vehicle_tasks_vehicle
+        type: boolean
+      - description: with assigned_vehicle_tasks sub_task nested data
+        in: query
+        name: with_assigned_vehicle_tasks_sub_task
+        type: boolean
       - description: with deleted_vehicle_tasks data
         in: query
         name: with_deleted_vehicle_tasks
@@ -4173,6 +4697,34 @@ paths:
       - description: with deleted_vehicle_tasks activities data
         in: query
         name: with_deleted_vehicle_tasks_activities
+        type: boolean
+      - description: with deleted_vehicle_tasks task nested data
+        in: query
+        name: with_deleted_vehicle_tasks_task
+        type: boolean
+      - description: with deleted_vehicle_tasks created_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_created_by
+        type: boolean
+      - description: with deleted_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_deleted_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with deleted_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with deleted_vehicle_tasks updated_by nested data
+        in: query
+        name: with_deleted_vehicle_tasks_updated_by
+        type: boolean
+      - description: with deleted_vehicle_tasks vehicle nested data
+        in: query
+        name: with_deleted_vehicle_tasks_vehicle
+        type: boolean
+      - description: with deleted_vehicle_tasks sub_task nested data
+        in: query
+        name: with_deleted_vehicle_tasks_sub_task
         type: boolean
       - description: with updated_vehicle_tasks data
         in: query
@@ -4182,9 +4734,41 @@ paths:
         in: query
         name: with_updated_vehicle_tasks_activities
         type: boolean
+      - description: with updated_vehicle_tasks task nested data
+        in: query
+        name: with_updated_vehicle_tasks_task
+        type: boolean
+      - description: with updated_vehicle_tasks created_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_created_by
+        type: boolean
+      - description: with updated_vehicle_tasks assigned_to nested data
+        in: query
+        name: with_updated_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with updated_vehicle_tasks deleted_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with updated_vehicle_tasks updated_by nested data
+        in: query
+        name: with_updated_vehicle_tasks_updated_by
+        type: boolean
+      - description: with updated_vehicle_tasks vehicle nested data
+        in: query
+        name: with_updated_vehicle_tasks_vehicle
+        type: boolean
+      - description: with updated_vehicle_tasks sub_task nested data
+        in: query
+        name: with_updated_vehicle_tasks_sub_task
+        type: boolean
       - description: with permission data
         in: query
         name: with_permission
+        type: boolean
+      - description: with permission employees nested data
+        in: query
+        name: with_permission_employees
         type: boolean
       - description: with requests data
         in: query
@@ -4194,21 +4778,77 @@ paths:
         in: query
         name: with_requests_spare_parts
         type: boolean
+      - description: with requests request_by nested data
+        in: query
+        name: with_requests_request_by
+        type: boolean
       - description: with account data
         in: query
         name: with_account
+        type: boolean
+      - description: with account employee nested data
+        in: query
+        name: with_account_employee
         type: boolean
       - description: with created_activities data
         in: query
         name: with_created_activities
         type: boolean
+      - description: with created_activities vehicle_tasks nested data
+        in: query
+        name: with_created_activities_vehicle_tasks
+        type: boolean
+      - description: with created_activities created_by nested data
+        in: query
+        name: with_created_activities_created_by
+        type: boolean
+      - description: with created_activities updated_by nested data
+        in: query
+        name: with_created_activities_updated_by
+        type: boolean
+      - description: with created_activities deleted_by nested data
+        in: query
+        name: with_created_activities_deleted_by
+        type: boolean
       - description: with updated_activities data
         in: query
         name: with_updated_activities
         type: boolean
+      - description: with updated_activities vehicle_tasks nested data
+        in: query
+        name: with_updated_activities_vehicle_tasks
+        type: boolean
+      - description: with updated_activities created_by nested data
+        in: query
+        name: with_updated_activities_created_by
+        type: boolean
+      - description: with updated_activities updated_by nested data
+        in: query
+        name: with_updated_activities_updated_by
+        type: boolean
+      - description: with updated_activities deleted_by nested data
+        in: query
+        name: with_updated_activities_deleted_by
+        type: boolean
       - description: with deleted_activities data
         in: query
         name: with_deleted_activities
+        type: boolean
+      - description: with deleted_activities vehicle_tasks nested data
+        in: query
+        name: with_deleted_activities_vehicle_tasks
+        type: boolean
+      - description: with deleted_activities created_by nested data
+        in: query
+        name: with_deleted_activities_created_by
+        type: boolean
+      - description: with deleted_activities updated_by nested data
+        in: query
+        name: with_deleted_activities_updated_by
+        type: boolean
+      - description: with deleted_activities deleted_by nested data
+        in: query
+        name: with_deleted_activities_deleted_by
         type: boolean
       produces:
       - application/json
@@ -4314,6 +4954,14 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
+      - description: with owners garage nested data
+        in: query
+        name: with_owners_garage
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4325,10 +4973,6 @@ paths:
       - description: with deleted_by data
         in: query
         name: with_deleted_by
-        type: boolean
-      - description: with city data
-        in: query
-        name: with_city
         type: boolean
       produces:
       - application/json
@@ -4473,6 +5117,14 @@ paths:
         in: query
         name: with_owners_vehicles
         type: boolean
+      - description: with owners garage nested data
+        in: query
+        name: with_owners_garage
+        type: boolean
+      - description: with city data
+        in: query
+        name: with_city
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -4484,10 +5136,6 @@ paths:
       - description: with deleted_by data
         in: query
         name: with_deleted_by
-        type: boolean
-      - description: with city data
-        in: query
-        name: with_city
         type: boolean
       produces:
       - application/json
@@ -4592,6 +5240,22 @@ paths:
       - description: with vehicles vehicle_tasks nested data
         in: query
         name: with_vehicles_vehicle_tasks
+        type: boolean
+      - description: with vehicles created_by nested data
+        in: query
+        name: with_vehicles_created_by
+        type: boolean
+      - description: with vehicles updated_by nested data
+        in: query
+        name: with_vehicles_updated_by
+        type: boolean
+      - description: with vehicles deleted_by nested data
+        in: query
+        name: with_vehicles_deleted_by
+        type: boolean
+      - description: with vehicles owner nested data
+        in: query
+        name: with_vehicles_owner
         type: boolean
       - description: with garage data
         in: query
@@ -4739,6 +5403,22 @@ paths:
       - description: with vehicles vehicle_tasks data
         in: query
         name: with_vehicles_vehicle_tasks
+        type: boolean
+      - description: with vehicles created_by nested data
+        in: query
+        name: with_vehicles_created_by
+        type: boolean
+      - description: with vehicles updated_by nested data
+        in: query
+        name: with_vehicles_updated_by
+        type: boolean
+      - description: with vehicles deleted_by nested data
+        in: query
+        name: with_vehicles_deleted_by
+        type: boolean
+      - description: with vehicles owner nested data
+        in: query
+        name: with_vehicles_owner
         type: boolean
       - description: with garage data
         in: query
@@ -5330,6 +6010,14 @@ paths:
         in: query
         name: with_spare_parts
         type: boolean
+      - description: with spare_parts request nested data
+        in: query
+        name: with_spare_parts_request
+        type: boolean
+      - description: with spare_parts supplier nested data
+        in: query
+        name: with_spare_parts_supplier
+        type: boolean
       - description: with request_by data
         in: query
         name: with_request_by
@@ -5473,6 +6161,14 @@ paths:
         in: query
         name: with_spare_parts
         type: boolean
+      - description: with spare_parts request nested data
+        in: query
+        name: with_spare_parts_request
+        type: boolean
+      - description: with spare_parts supplier nested data
+        in: query
+        name: with_spare_parts_supplier
+        type: boolean
       - description: with request_by data
         in: query
         name: with_request_by
@@ -5580,6 +6276,34 @@ paths:
       - description: with attached_to activities nested data
         in: query
         name: with_attached_to_activities
+        type: boolean
+      - description: with attached_to task nested data
+        in: query
+        name: with_attached_to_task
+        type: boolean
+      - description: with attached_to created_by nested data
+        in: query
+        name: with_attached_to_created_by
+        type: boolean
+      - description: with attached_to assigned_to nested data
+        in: query
+        name: with_attached_to_assigned_to
+        type: boolean
+      - description: with attached_to deleted_by nested data
+        in: query
+        name: with_attached_to_deleted_by
+        type: boolean
+      - description: with attached_to updated_by nested data
+        in: query
+        name: with_attached_to_updated_by
+        type: boolean
+      - description: with attached_to vehicle nested data
+        in: query
+        name: with_attached_to_vehicle
+        type: boolean
+      - description: with attached_to sub_task nested data
+        in: query
+        name: with_attached_to_sub_task
         type: boolean
       - description: with parent_task data
         in: query
@@ -5728,6 +6452,34 @@ paths:
         in: query
         name: with_attached_to_activities
         type: boolean
+      - description: with attached_to task nested data
+        in: query
+        name: with_attached_to_task
+        type: boolean
+      - description: with attached_to created_by nested data
+        in: query
+        name: with_attached_to_created_by
+        type: boolean
+      - description: with attached_to assigned_to nested data
+        in: query
+        name: with_attached_to_assigned_to
+        type: boolean
+      - description: with attached_to deleted_by nested data
+        in: query
+        name: with_attached_to_deleted_by
+        type: boolean
+      - description: with attached_to updated_by nested data
+        in: query
+        name: with_attached_to_updated_by
+        type: boolean
+      - description: with attached_to vehicle nested data
+        in: query
+        name: with_attached_to_vehicle
+        type: boolean
+      - description: with attached_to sub_task nested data
+        in: query
+        name: with_attached_to_sub_task
+        type: boolean
       - description: with parent_task data
         in: query
         name: with_parent_task
@@ -5831,6 +6583,14 @@ paths:
       - description: with spare_parts data
         in: query
         name: with_spare_parts
+        type: boolean
+      - description: with spare_parts request nested data
+        in: query
+        name: with_spare_parts_request
+        type: boolean
+      - description: with spare_parts supplier nested data
+        in: query
+        name: with_spare_parts_supplier
         type: boolean
       produces:
       - application/json
@@ -5971,6 +6731,14 @@ paths:
         in: query
         name: with_spare_parts
         type: boolean
+      - description: with spare_parts request nested data
+        in: query
+        name: with_spare_parts_request
+        type: boolean
+      - description: with spare_parts supplier nested data
+        in: query
+        name: with_spare_parts_supplier
+        type: boolean
       produces:
       - application/json
       responses:
@@ -6075,6 +6843,10 @@ paths:
         in: query
         name: with_sub_tasks_attached_to
         type: boolean
+      - description: with sub_tasks parent_task nested data
+        in: query
+        name: with_sub_tasks_parent_task
+        type: boolean
       - description: with attached_to data
         in: query
         name: with_attached_to
@@ -6082,6 +6854,34 @@ paths:
       - description: with attached_to activities nested data
         in: query
         name: with_attached_to_activities
+        type: boolean
+      - description: with attached_to task nested data
+        in: query
+        name: with_attached_to_task
+        type: boolean
+      - description: with attached_to created_by nested data
+        in: query
+        name: with_attached_to_created_by
+        type: boolean
+      - description: with attached_to assigned_to nested data
+        in: query
+        name: with_attached_to_assigned_to
+        type: boolean
+      - description: with attached_to deleted_by nested data
+        in: query
+        name: with_attached_to_deleted_by
+        type: boolean
+      - description: with attached_to updated_by nested data
+        in: query
+        name: with_attached_to_updated_by
+        type: boolean
+      - description: with attached_to vehicle nested data
+        in: query
+        name: with_attached_to_vehicle
+        type: boolean
+      - description: with attached_to sub_task nested data
+        in: query
+        name: with_attached_to_sub_task
         type: boolean
       - description: with created_by data
         in: query
@@ -6238,6 +7038,10 @@ paths:
         in: query
         name: with_sub_tasks_attached_to
         type: boolean
+      - description: with sub_tasks parent_task nested data
+        in: query
+        name: with_sub_tasks_parent_task
+        type: boolean
       - description: with attached_to data
         in: query
         name: with_attached_to
@@ -6245,6 +7049,34 @@ paths:
       - description: with attached_to activities data
         in: query
         name: with_attached_to_activities
+        type: boolean
+      - description: with attached_to task nested data
+        in: query
+        name: with_attached_to_task
+        type: boolean
+      - description: with attached_to created_by nested data
+        in: query
+        name: with_attached_to_created_by
+        type: boolean
+      - description: with attached_to assigned_to nested data
+        in: query
+        name: with_attached_to_assigned_to
+        type: boolean
+      - description: with attached_to deleted_by nested data
+        in: query
+        name: with_attached_to_deleted_by
+        type: boolean
+      - description: with attached_to updated_by nested data
+        in: query
+        name: with_attached_to_updated_by
+        type: boolean
+      - description: with attached_to vehicle nested data
+        in: query
+        name: with_attached_to_vehicle
+        type: boolean
+      - description: with attached_to sub_task nested data
+        in: query
+        name: with_attached_to_sub_task
         type: boolean
       - description: with created_by data
         in: query
@@ -6375,6 +7207,34 @@ paths:
       - description: with vehicle_tasks activities nested data
         in: query
         name: with_vehicle_tasks_activities
+        type: boolean
+      - description: with vehicle_tasks task nested data
+        in: query
+        name: with_vehicle_tasks_task
+        type: boolean
+      - description: with vehicle_tasks created_by nested data
+        in: query
+        name: with_vehicle_tasks_created_by
+        type: boolean
+      - description: with vehicle_tasks assigned_to nested data
+        in: query
+        name: with_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with vehicle_tasks deleted_by nested data
+        in: query
+        name: with_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with vehicle_tasks updated_by nested data
+        in: query
+        name: with_vehicle_tasks_updated_by
+        type: boolean
+      - description: with vehicle_tasks vehicle nested data
+        in: query
+        name: with_vehicle_tasks_vehicle
+        type: boolean
+      - description: with vehicle_tasks sub_task nested data
+        in: query
+        name: with_vehicle_tasks_sub_task
         type: boolean
       - description: with created_by data
         in: query
@@ -6535,6 +7395,34 @@ paths:
         in: query
         name: with_vehicle_tasks_activities
         type: boolean
+      - description: with vehicle_tasks task nested data
+        in: query
+        name: with_vehicle_tasks_task
+        type: boolean
+      - description: with vehicle_tasks created_by nested data
+        in: query
+        name: with_vehicle_tasks_created_by
+        type: boolean
+      - description: with vehicle_tasks assigned_to nested data
+        in: query
+        name: with_vehicle_tasks_assigned_to
+        type: boolean
+      - description: with vehicle_tasks deleted_by nested data
+        in: query
+        name: with_vehicle_tasks_deleted_by
+        type: boolean
+      - description: with vehicle_tasks updated_by nested data
+        in: query
+        name: with_vehicle_tasks_updated_by
+        type: boolean
+      - description: with vehicle_tasks vehicle nested data
+        in: query
+        name: with_vehicle_tasks_vehicle
+        type: boolean
+      - description: with vehicle_tasks sub_task nested data
+        in: query
+        name: with_vehicle_tasks_sub_task
+        type: boolean
       - description: with created_by data
         in: query
         name: with_created_by
@@ -6651,9 +7539,25 @@ paths:
         in: query
         name: with_activities
         type: boolean
-      - description: with sub_task data
+      - description: with activities vehicle_tasks nested data
         in: query
-        name: with_sub_task
+        name: with_activities_vehicle_tasks
+        type: boolean
+      - description: with activities created_by nested data
+        in: query
+        name: with_activities_created_by
+        type: boolean
+      - description: with activities updated_by nested data
+        in: query
+        name: with_activities_updated_by
+        type: boolean
+      - description: with activities deleted_by nested data
+        in: query
+        name: with_activities_deleted_by
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_task
         type: boolean
       - description: with created_by data
         in: query
@@ -6675,9 +7579,9 @@ paths:
         in: query
         name: with_vehicle
         type: boolean
-      - description: with task data
+      - description: with sub_task data
         in: query
-        name: with_task
+        name: with_sub_task
         type: boolean
       produces:
       - application/json
@@ -6818,9 +7722,25 @@ paths:
         in: query
         name: with_activities
         type: boolean
-      - description: with sub_task data
+      - description: with activities vehicle_tasks nested data
         in: query
-        name: with_sub_task
+        name: with_activities_vehicle_tasks
+        type: boolean
+      - description: with activities created_by nested data
+        in: query
+        name: with_activities_created_by
+        type: boolean
+      - description: with activities updated_by nested data
+        in: query
+        name: with_activities_updated_by
+        type: boolean
+      - description: with activities deleted_by nested data
+        in: query
+        name: with_activities_deleted_by
+        type: boolean
+      - description: with task data
+        in: query
+        name: with_task
         type: boolean
       - description: with created_by data
         in: query
@@ -6842,9 +7762,9 @@ paths:
         in: query
         name: with_vehicle
         type: boolean
-      - description: with task data
+      - description: with sub_task data
         in: query
-        name: with_task
+        name: with_sub_task
         type: boolean
       produces:
       - application/json

@@ -1,3 +1,4 @@
+import 'package:chopper/src/response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mna/cubits/cubits.dart';
@@ -62,6 +63,15 @@ class _VehicleDetailsWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(response.registration ?? ''),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // get audit of vehicle
+              _getVehicleAudit(context, response.id!);
+            },
+            icon: const Icon(Icons.history),
+          )
+        ],
       ),
       body: BlocListener<VehicleTaskCubit, VehicleTaskState>(
         listener: (BuildContext context, VehicleTaskState state) {
@@ -256,6 +266,57 @@ class _VehicleDetailsWidget extends StatelessWidget {
               ),
             )
             .toList());
+  }
+
+  void _getVehicleAudit(BuildContext context, int id) {
+    print(id);
+    final Swagger swagger = RepositoryProvider.of<Swagger>(context);
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: FutureBuilder(
+            future: swagger.apiVehicleIdAuditGet(id: id),
+            builder: (BuildContext context,
+                AsyncSnapshot<Response<List<VehicleAudit>>> snapshot) {
+              if (snapshot.hasData) {
+                final List<VehicleAudit> data =
+                    snapshot.data?.body ?? <VehicleAudit>[];
+                return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final VehicleAudit item = data[index];
+                    String actionBy = "";
+                    switch (item.action) {
+                      case "Create":
+                        actionBy = "Created by ${item.createdBy?.name}";
+                        break;
+                      case "Update":
+                        actionBy = "Updated by ${item.updatedBy?.name}";
+                        break;
+                      case "Delete":
+                        actionBy = "Deleted by ${item.deletedBy?.name}";
+                        break;
+                      default:
+                    }
+                    return ListTile(
+                      leading: Text(item.action ?? '-'),
+                      subtitle: Text(actionBy),
+                      trailing: Text(item.actionAt.dateLong),
+                    );
+                  },
+                );
+              }
+              if (snapshot.hasError) {
+                return AppErrorWidget(error: snapshot.error.toString());
+              }
+              return const LoadingWidget();
+            },
+          ),
+        );
+      },
+    );
   }
 }
 
